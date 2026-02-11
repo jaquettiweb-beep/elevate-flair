@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   DumbbellIcon,
   SwimGoggleIcon,
@@ -7,13 +7,15 @@ import {
   WaterWaveIcon,
   KettlebellIcon,
   YogaPoseIcon,
+  BoxingGloveIcon,
+  JumpRopeIcon,
 } from "@/components/GymDecorations";
 import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
 /*
   Phases:
   1. "appear"   – Logo fades in large + centered (0→1s)
-  2. "hold"     – Logo stays big, tagline + icons appear (1→3.5s)
+  2. "hold"     – Logo stays big, tagline + icons + particles appear (1→3.5s)
   3. "fly"      – Logo shrinks & flies to header top-left (3.5→4.5s)
   4. "curtain"  – Background wipes away revealing site (4.5→5.2s)
   5. done       – onComplete called
@@ -26,12 +28,30 @@ const iconItems = [
   { Icon: KettlebellIcon, x: "85%", y: "75%", size: 50, delay: 0.7 },
   { Icon: WaterWaveIcon, x: "50%", y: "85%", size: 76, delay: 1.0 },
   { Icon: YogaPoseIcon, x: "72%", y: "45%", size: 44, delay: 0.9 },
+  { Icon: BoxingGloveIcon, x: "25%", y: "80%", size: 46, delay: 0.5 },
+  { Icon: JumpRopeIcon, x: "88%", y: "45%", size: 42, delay: 1.1 },
+  { Icon: DumbbellIcon, x: "35%", y: "12%", size: 38, delay: 0.7 },
+  { Icon: SwimGoggleIcon, x: "65%", y: "78%", size: 48, delay: 0.9 },
 ];
+
+// Floating particles for depth
+function generateParticles(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: 2 + Math.random() * 4,
+    delay: Math.random() * 2,
+    duration: 3 + Math.random() * 4,
+    drift: -30 + Math.random() * 60,
+  }));
+}
 
 type Phase = "appear" | "hold" | "fly" | "curtain";
 
 export default function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<Phase>("appear");
+  const particles = useMemo(() => generateParticles(24), []);
 
   useEffect(() => {
     const timers = [
@@ -62,25 +82,127 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
         }}
       />
 
-      {/* Ripple rings behind logo */}
-      {[0, 1, 2, 3].map((i) => (
+      {/* Ambient light orbs for depth */}
+      {[
+        { x: "20%", y: "30%", size: 300, color: "hsla(30,100%,70%,0.08)", delay: 0 },
+        { x: "75%", y: "60%", size: 250, color: "hsla(200,80%,60%,0.06)", delay: 0.5 },
+        { x: "50%", y: "80%", size: 350, color: "hsla(20,90%,50%,0.05)", delay: 1 },
+      ].map((orb, i) => (
         <motion.div
-          key={`ripple-${i}`}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8"
-          style={{ width: 200 + i * 160, height: 200 + i * 160 }}
+          key={`orb-${i}`}
+          className="absolute rounded-full"
+          style={{
+            left: orb.x,
+            top: orb.y,
+            width: orb.size,
+            height: orb.size,
+            background: `radial-gradient(circle, ${orb.color}, transparent 70%)`,
+            transform: "translate(-50%, -50%)",
+          }}
           initial={{ scale: 0, opacity: 0 }}
           animate={
             isFlyingOrLater
-              ? { scale: 2, opacity: 0 }
-              : { scale: [0, 1.5, 0], opacity: [0, 0.3, 0] }
+              ? { scale: 3, opacity: 0 }
+              : showElements
+              ? { scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }
+              : { scale: 0, opacity: 0 }
           }
           transition={
             isFlyingOrLater
               ? { duration: 0.5 }
-              : { duration: 3, delay: 0.6 + i * 0.4, repeat: Infinity, ease: "easeOut" }
+              : { duration: 4, delay: orb.delay, repeat: Infinity, ease: "easeInOut" }
           }
         />
       ))}
+
+      {/* Floating sparkle particles */}
+      {particles.map((p) => (
+        <motion.div
+          key={`particle-${p.id}`}
+          className="absolute rounded-full bg-white"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+          }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { opacity: 0, scale: 0, y: -100 }
+              : showElements
+              ? {
+                  opacity: [0, 0.6, 0],
+                  scale: [0, 1, 0],
+                  y: [0, p.drift, p.drift * 2],
+                  x: [0, p.drift * 0.5],
+                }
+              : { opacity: 0, scale: 0 }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.3 }
+              : {
+                  duration: p.duration,
+                  delay: p.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
+        />
+      ))}
+
+      {/* Ripple rings behind logo */}
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <motion.div
+          key={`ripple-${i}`}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8"
+          style={{ width: 160 + i * 130, height: 160 + i * 130 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { scale: 2, opacity: 0 }
+              : { scale: [0, 1.5, 0], opacity: [0, 0.25, 0] }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.5 }
+              : { duration: 3, delay: 0.4 + i * 0.35, repeat: Infinity, ease: "easeOut" }
+          }
+        />
+      ))}
+
+      {/* Rotating orbit ring */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/6"
+        style={{ width: 500, height: 500 }}
+        initial={{ scale: 0, opacity: 0, rotate: 0 }}
+        animate={
+          isFlyingOrLater
+            ? { scale: 2, opacity: 0 }
+            : showElements
+            ? { scale: 1, opacity: 1, rotate: 360 }
+            : { scale: 0, opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.5 }
+            : { scale: { duration: 0.8 }, opacity: { duration: 0.8 }, rotate: { duration: 20, repeat: Infinity, ease: "linear" } }
+        }
+      >
+        {/* Orbiting dots */}
+        {[0, 90, 180, 270].map((angle) => (
+          <motion.div
+            key={`orbit-dot-${angle}`}
+            className="absolute w-2 h-2 rounded-full bg-white/30"
+            style={{
+              left: `${50 + 50 * Math.cos((angle * Math.PI) / 180)}%`,
+              top: `${50 + 50 * Math.sin((angle * Math.PI) / 180)}%`,
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        ))}
+      </motion.div>
 
       {/* Floating gym icons */}
       {iconItems.map(({ Icon, x, y, size, delay }, i) => (
@@ -103,7 +225,7 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -10, 0], rotate: [0, i % 2 === 0 ? 5 : -5, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay }}
           >
             <Icon className="w-full h-full drop-shadow-[0_0_15px_hsla(0,0%,100%,0.15)]" />
@@ -114,7 +236,6 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
       {/* ─── LOGO ─── */}
       <motion.div
         className="absolute z-20 flex flex-col items-center"
-        /* Start centered on screen */
         initial={{
           top: "50%",
           left: "50%",
@@ -126,7 +247,6 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
         animate={
           isFlyingOrLater
             ? {
-                /* Fly to header top-left position */
                 top: "10px",
                 left: "24px",
                 x: "0%",
@@ -176,23 +296,47 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
         />
 
-        {/* Logo image */}
+        {/* Secondary outer glow */}
+        <motion.div
+          className="absolute w-[550px] h-[550px] rounded-full -z-10"
+          style={{
+            background: "radial-gradient(circle, hsla(30,100%,70%,0.12) 0%, transparent 70%)",
+          }}
+          animate={
+            isFlyingOrLater
+              ? { scale: 0, opacity: 0 }
+              : { scale: [1.1, 1.5, 1.1], opacity: [0.2, 0.4, 0.2] }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.4 }
+              : { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
+          }
+        />
+
+        {/* Logo image with 3D perspective */}
         <motion.img
           src={flipperLogo}
           alt="Academia Flipper"
           className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl"
           style={{
-            boxShadow: "0 0 80px hsla(0,0%,100%,0.35), 0 25px 50px hsla(0,0%,0%,0.4)",
+            boxShadow: "0 0 80px hsla(0,0%,100%,0.35), 0 25px 50px hsla(0,0%,0%,0.4), 0 0 120px hsla(30,90%,50%,0.2)",
           }}
-          initial={{ rotate: -8 }}
+          initial={{ rotate: -8, rotateY: 15 }}
           animate={
             isFlyingOrLater
-              ? { rotate: 0, borderRadius: "12px" }
+              ? { rotate: 0, rotateY: 0, borderRadius: "12px" }
               : phase !== "appear"
-              ? { rotate: 0 }
-              : { rotate: -8 }
+              ? { rotate: [0, 1, -1, 0], rotateY: [0, 3, -3, 0] }
+              : { rotate: -8, rotateY: 15 }
           }
-          transition={{ duration: 0.6, type: "spring" }}
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.6, type: "spring" }
+              : phase !== "appear"
+              ? { duration: 6, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0.6, type: "spring" }
+          }
         />
 
         {/* Tagline */}
@@ -236,7 +380,34 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
         </motion.div>
       </motion.div>
 
-      {/* Bottom wave decoration */}
+      {/* Diagonal light streak */}
+      <motion.div
+        className="absolute -z-0"
+        style={{
+          width: "200%",
+          height: 2,
+          background: "linear-gradient(90deg, transparent, hsla(0,0%,100%,0.15), transparent)",
+          top: "40%",
+          left: "-50%",
+          transform: "rotate(-35deg)",
+          transformOrigin: "center",
+        }}
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={
+          isFlyingOrLater
+            ? { x: "100%", opacity: 0 }
+            : showElements
+            ? { x: ["−100%", "100%"], opacity: [0, 1, 0] }
+            : { x: "-100%", opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.3 }
+            : { duration: 3, delay: 1.5, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }
+        }
+      />
+
+      {/* Bottom wave decoration - doubled */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 text-white/6"
         style={{ height: 80 }}
@@ -246,6 +417,20 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           isFlyingOrLater
             ? { duration: 0.5, ease: "easeIn" }
             : { duration: 1.5, ease: [0.42, 0, 0.58, 1], delay: 0.5 }
+        }
+      >
+        <WaterWaveIcon className="w-full h-full" />
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-12 left-0 right-0 text-white/4"
+        style={{ height: 60 }}
+        initial={{ x: "100%" }}
+        animate={isFlyingOrLater ? { x: "-100%", opacity: 0 } : { x: "0%" }}
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.5, ease: "easeIn" }
+            : { duration: 2, ease: [0.42, 0, 0.58, 1], delay: 0.8 }
         }
       >
         <WaterWaveIcon className="w-full h-full" />

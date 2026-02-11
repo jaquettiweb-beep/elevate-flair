@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Dumbbell, Award, Clock } from "lucide-react";
 import { useRef } from "react";
 import { GymDecorWhyFlipper } from "@/components/GymDecorations";
+import TextReveal, { TextRevealHighlight } from "@/components/TextReveal";
 
 const FEATURES = [
   {
@@ -91,7 +92,7 @@ export default function WhyFlipper() {
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Por que escolher a <span className="gradient-text">Flipper</span>?
+            <TextReveal>Por que escolher a </TextReveal><TextRevealHighlight>Flipper</TextRevealHighlight><TextReveal>?</TextReveal>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Há mais de 15 anos transformando vidas através do esporte e bem-estar em São Paulo.

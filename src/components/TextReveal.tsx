@@ -53,9 +53,9 @@ function CharReveal({
 }) {
   // Each char reveals at a staggered point within the scroll progress
   const start = index / total;
-  const end = Math.min(start + 0.4, 1);
+  const end = Math.min(start + 0.5, 1);
 
-  const opacity = useTransform(progress, [start, end], [0, 1]);
+  const opacity = useTransform(progress, [start, end], [0.15, 1]);
   const y = useTransform(progress, [start, end], [12, 0]);
   const blur = useTransform(progress, [start, end], [4, 0]);
   const filter = useTransform(blur, (v) => (v > 0.1 ? `blur(${v}px)` : "none"));

@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
   DumbbellIcon,
   SwimGoggleIcon,
@@ -10,44 +10,75 @@ import {
 } from "@/components/GymDecorations";
 import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
-const INTRO_DURATION = 3400;
+/*
+  Phases:
+  1. "appear"   – Logo fades in large + centered (0→1s)
+  2. "hold"     – Logo stays big, tagline + icons appear (1→3.5s)
+  3. "fly"      – Logo shrinks & flies to header top-left (3.5→4.5s)
+  4. "curtain"  – Background wipes away revealing site (4.5→5.2s)
+  5. done       – onComplete called
+*/
 
 const iconItems = [
-  { Icon: SwimGoggleIcon, x: "18%", y: "22%", size: 56, delay: 0.2 },
-  { Icon: DumbbellIcon, x: "78%", y: "18%", size: 64, delay: 0.35 },
-  { Icon: SwimCapIcon, x: "12%", y: "68%", size: 50, delay: 0.5 },
-  { Icon: KettlebellIcon, x: "82%", y: "72%", size: 48, delay: 0.45 },
-  { Icon: WaterWaveIcon, x: "50%", y: "82%", size: 72, delay: 0.6 },
-  { Icon: YogaPoseIcon, x: "70%", y: "42%", size: 42, delay: 0.7 },
+  { Icon: SwimGoggleIcon, x: "15%", y: "20%", size: 60, delay: 0.4 },
+  { Icon: DumbbellIcon, x: "80%", y: "15%", size: 68, delay: 0.6 },
+  { Icon: SwimCapIcon, x: "10%", y: "70%", size: 52, delay: 0.8 },
+  { Icon: KettlebellIcon, x: "85%", y: "75%", size: 50, delay: 0.7 },
+  { Icon: WaterWaveIcon, x: "50%", y: "85%", size: 76, delay: 1.0 },
+  { Icon: YogaPoseIcon, x: "72%", y: "45%", size: 44, delay: 0.9 },
 ];
 
+type Phase = "appear" | "hold" | "fly" | "curtain";
+
 export default function IntroAnimation({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<"icons" | "logo" | "exit">("icons");
+  const [phase, setPhase] = useState<Phase>("appear");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("logo"), 600);
-    const t2 = setTimeout(() => setPhase("exit"), 2400);
-    const t3 = setTimeout(onComplete, INTRO_DURATION);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const timers = [
+      setTimeout(() => setPhase("hold"), 800),
+      setTimeout(() => setPhase("fly"), 3200),
+      setTimeout(() => setPhase("curtain"), 4200),
+      setTimeout(onComplete, 5000),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, [onComplete]);
+
+  const isFlyingOrLater = phase === "fly" || phase === "curtain";
+  const showElements = phase === "hold";
 
   return (
     <motion.div
-      className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(30,90%,50%) 0%, hsl(25,95%,45%) 50%, hsl(20,90%,40%) 100%)" }}
+      className="fixed inset-0 z-[99999] overflow-hidden"
       initial={{ opacity: 1 }}
-      animate={phase === "exit" ? { opacity: 0 } : { opacity: 1 }}
-      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+      animate={phase === "curtain" ? { opacity: 0 } : { opacity: 1 }}
+      transition={phase === "curtain" ? { duration: 0.7, ease: [0.76, 0, 0.24, 1] } : {}}
+      style={{ pointerEvents: phase === "curtain" ? "none" : "auto" }}
     >
-      {/* Water ripple rings */}
-      {[0, 1, 2].map((i) => (
+      {/* Background gradient */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(135deg, hsl(30,90%,50%) 0%, hsl(25,95%,45%) 40%, hsl(20,90%,38%) 100%)",
+        }}
+      />
+
+      {/* Ripple rings behind logo */}
+      {[0, 1, 2, 3].map((i) => (
         <motion.div
           key={`ripple-${i}`}
-          className="absolute rounded-full border-2 border-white/10"
-          style={{ width: 250 + i * 180, height: 250 + i * 180 }}
-          initial={{ scale: 0, opacity: 0.5 }}
-          animate={{ scale: [0, 1.8], opacity: [0.4, 0] }}
-          transition={{ duration: 2.5, delay: 0.3 + i * 0.35, repeat: Infinity, ease: "easeOut" }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8"
+          style={{ width: 200 + i * 160, height: 200 + i * 160 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { scale: 2, opacity: 0 }
+              : { scale: [0, 1.5, 0], opacity: [0, 0.3, 0] }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.5 }
+              : { duration: 3, delay: 0.6 + i * 0.4, repeat: Infinity, ease: "easeOut" }
+          }
         />
       ))}
 
@@ -55,66 +86,132 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
       {iconItems.map(({ Icon, x, y, size, delay }, i) => (
         <motion.div
           key={i}
-          className="absolute text-white/20"
+          className="absolute text-white/15"
           style={{ left: x, top: y, width: size, height: size }}
-          initial={{ scale: 0, opacity: 0, rotate: -20 }}
+          initial={{ scale: 0, opacity: 0, rotate: -25 }}
           animate={
-            phase === "exit"
-              ? { scale: 0, opacity: 0, y: -50 }
-              : { scale: 1, opacity: 1, rotate: 0 }
+            isFlyingOrLater
+              ? { scale: 0, opacity: 0, y: -80, rotate: 15 }
+              : showElements
+              ? { scale: 1, opacity: 1, rotate: 0 }
+              : { scale: 0, opacity: 0 }
           }
-          transition={{ delay: phase === "exit" ? 0 : delay, duration: 0.5, type: "spring", stiffness: 130 }}
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.4, ease: "easeIn" }
+              : { delay, duration: 0.6, type: "spring", stiffness: 120 }
+          }
         >
           <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay }}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay }}
           >
-            <Icon className="w-full h-full drop-shadow-[0_0_12px_hsla(0,0%,100%,0.2)]" />
+            <Icon className="w-full h-full drop-shadow-[0_0_15px_hsla(0,0%,100%,0.15)]" />
           </motion.div>
         </motion.div>
       ))}
 
-      {/* Center: Official Flipper logo */}
+      {/* ─── LOGO ─── */}
       <motion.div
-        className="relative z-10 flex flex-col items-center gap-6"
-        initial={{ scale: 0.3, opacity: 0, y: 30 }}
+        className="absolute z-20 flex flex-col items-center"
+        /* Start centered on screen */
+        initial={{
+          top: "50%",
+          left: "50%",
+          x: "-50%",
+          y: "-50%",
+          scale: 0,
+          opacity: 0,
+        }}
         animate={
-          phase === "exit"
-            ? { scale: 1.3, opacity: 0, y: -40 }
-            : phase === "logo"
-            ? { scale: 1, opacity: 1, y: 0 }
-            : { scale: 0.3, opacity: 0, y: 30 }
+          isFlyingOrLater
+            ? {
+                /* Fly to header top-left position */
+                top: "16px",
+                left: "80px",
+                x: "0%",
+                y: "0%",
+                scale: 0.22,
+                opacity: phase === "curtain" ? 0 : 1,
+              }
+            : {
+                top: "50%",
+                left: "50%",
+                x: "-50%",
+                y: "-50%",
+                scale: 1,
+                opacity: 1,
+              }
         }
-        transition={{ duration: 0.8, type: "spring", stiffness: 90, damping: 14 }}
+        transition={
+          isFlyingOrLater
+            ? {
+                duration: 0.9,
+                ease: [0.65, 0, 0.35, 1],
+                opacity: { duration: 0.3, delay: 0.6 },
+              }
+            : {
+                duration: 0.8,
+                type: "spring",
+                stiffness: 80,
+                damping: 15,
+              }
+        }
       >
-        {/* Glow behind logo */}
+        {/* Glow */}
         <motion.div
-          className="absolute w-72 h-72 rounded-full"
-          style={{ background: "radial-gradient(circle, hsla(0,0%,100%,0.25) 0%, transparent 65%)" }}
-          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute w-[400px] h-[400px] rounded-full -z-10"
+          style={{
+            background: "radial-gradient(circle, hsla(0,0%,100%,0.3) 0%, transparent 60%)",
+          }}
+          animate={
+            isFlyingOrLater
+              ? { scale: 0, opacity: 0 }
+              : { scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.4 }
+              : { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+          }
         />
 
         {/* Logo image */}
         <motion.img
           src={flipperLogo}
           alt="Academia Flipper"
-          className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl shadow-2xl"
-          style={{ boxShadow: "0 0 60px hsla(0,0%,100%,0.3), 0 20px 40px hsla(0,0%,0%,0.3)" }}
-          initial={{ rotate: -10 }}
-          animate={phase === "logo" ? { rotate: 0 } : {}}
+          className="w-40 h-40 sm:w-52 sm:h-52 rounded-3xl"
+          style={{
+            boxShadow: "0 0 80px hsla(0,0%,100%,0.35), 0 25px 50px hsla(0,0%,0%,0.4)",
+          }}
+          initial={{ rotate: -8 }}
+          animate={
+            isFlyingOrLater
+              ? { rotate: 0, borderRadius: "12px" }
+              : phase !== "appear"
+              ? { rotate: 0 }
+              : { rotate: -8 }
+          }
           transition={{ duration: 0.6, type: "spring" }}
         />
 
-        {/* Tagline with staggered letters */}
-        <motion.div className="flex gap-0.5 overflow-hidden mt-2">
-          {"ACADEMIA & NATAÇÃO".split("").map((char, i) => (
+        {/* Tagline */}
+        <motion.div
+          className="flex gap-0.5 mt-6 overflow-hidden"
+          animate={isFlyingOrLater ? { opacity: 0, y: -20 } : {}}
+          transition={{ duration: 0.3 }}
+        >
+          {"ACADEMIA & NATAÇÃO".split("").map((char, idx) => (
             <motion.span
-              key={i}
-              className="text-white/80 text-xs sm:text-sm font-bold tracking-[0.25em]"
-              initial={{ y: 24, opacity: 0 }}
-              animate={phase !== "icons" ? { y: 0, opacity: 1 } : { y: 24, opacity: 0 }}
-              transition={{ delay: 0.8 + i * 0.025, duration: 0.3 }}
+              key={idx}
+              className="text-white/90 text-sm sm:text-base font-bold tracking-[0.3em]"
+              initial={{ y: 30, opacity: 0 }}
+              animate={
+                showElements || isFlyingOrLater
+                  ? { y: 0, opacity: isFlyingOrLater ? 0 : 1 }
+                  : { y: 30, opacity: 0 }
+              }
+              transition={{ delay: 1.2 + idx * 0.03, duration: 0.35 }}
             >
               {char === " " ? "\u00A0" : char}
             </motion.span>
@@ -123,27 +220,33 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
 
         {/* Loading bar */}
         <motion.div
-          className="w-40 h-0.5 mt-2 rounded-full overflow-hidden bg-white/15"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: phase !== "icons" ? 1 : 0 }}
+          className="w-48 h-1 mt-5 rounded-full overflow-hidden bg-white/15"
+          animate={isFlyingOrLater ? { opacity: 0, y: -10 } : { opacity: showElements ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
         >
           <motion.div
             className="h-full rounded-full origin-left"
-            style={{ background: "linear-gradient(90deg, hsl(0,0%,100%), hsla(0,0%,100%,0.6))" }}
+            style={{
+              background: "linear-gradient(90deg, hsl(0,0%,100%), hsla(0,0%,100%,0.5))",
+            }}
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: phase !== "icons" ? 1 : 0 }}
-            transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
+            animate={{ scaleX: showElements ? 1 : 0 }}
+            transition={{ duration: 2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
           />
         </motion.div>
       </motion.div>
 
-      {/* Bottom wave sweep */}
+      {/* Bottom wave decoration */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 text-white/8"
-        style={{ height: 70 }}
+        className="absolute bottom-0 left-0 right-0 text-white/6"
+        style={{ height: 80 }}
         initial={{ x: "-100%" }}
-        animate={{ x: "0%" }}
-        transition={{ duration: 1.2, ease: [0.42, 0, 0.58, 1], delay: 0.4 }}
+        animate={isFlyingOrLater ? { x: "100%", opacity: 0 } : { x: "0%" }}
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.5, ease: "easeIn" }
+            : { duration: 1.5, ease: [0.42, 0, 0.58, 1], delay: 0.5 }
+        }
       >
         <WaterWaveIcon className="w-full h-full" />
       </motion.div>

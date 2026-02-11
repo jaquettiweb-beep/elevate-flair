@@ -19,19 +19,19 @@ const Index = () => {
           path="/"
         />
         <HeroSection />
-        <ScrollReveal direction="up">
+        <ScrollReveal direction="up" intensity="high">
           <WhyFlipper />
         </ScrollReveal>
-        <ScrollReveal direction="left">
+        <ScrollReveal direction="left" intensity="high">
           <Modalities />
         </ScrollReveal>
-        <ScrollReveal direction="zoom">
+        <ScrollReveal direction="zoom" intensity="high">
           <Stats />
         </ScrollReveal>
-        <ScrollReveal direction="right">
+        <ScrollReveal direction="right" intensity="high">
           <Testimonials />
         </ScrollReveal>
-        <ScrollReveal direction="up">
+        <ScrollReveal direction="flip" intensity="high">
           <CTASection />
         </ScrollReveal>
       </PageTransition>

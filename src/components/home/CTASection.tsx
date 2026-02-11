@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Phone, ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { GymDecorCTA } from "@/components/GymDecorations";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -18,6 +19,8 @@ export default function CTASection() {
 
   return (
     <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden">
+      {/* Gym decorative icons */}
+      <GymDecorCTA />
       {/* Animated gradient bg */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark"

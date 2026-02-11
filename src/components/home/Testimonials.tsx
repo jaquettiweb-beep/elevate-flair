@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { GymDecorTestimonials } from "@/components/GymDecorations";
 
 const TESTIMONIALS = [
   {
@@ -48,7 +49,9 @@ const cardVariants = {
 
 export default function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-background overflow-hidden">
+    <section className="py-20 lg:py-28 bg-background overflow-hidden relative">
+      {/* Gym decorative icons */}
+      <GymDecorTestimonials />
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-14"

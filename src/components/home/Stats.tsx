@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Users, Trophy, Layers, ThumbsUp } from "lucide-react";
+import { GymDecorStats } from "@/components/GymDecorations";
 
 const STATS = [
   { icon: Users, value: 5000, suffix: "+", label: "Alunos Ativos" },
@@ -84,6 +85,8 @@ export default function Stats() {
 
   return (
     <section className="py-20 section-dark" ref={ref}>
+      {/* Gym decorative icons */}
+      <GymDecorStats />
       {/* Moving glow orb */}
       <motion.div
         className="absolute top-0 left-1/4 w-96 h-96 rounded-full"

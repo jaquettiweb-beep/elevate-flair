@@ -4,11 +4,10 @@ import { Navigate } from "react-router-dom";
 import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 
 export default function AdminLogin() {
-  const { user, loading, signIn, signUp } = useAuth();
+  const { user, loading, signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -27,9 +26,7 @@ export default function AdminLogin() {
     setError("");
     setSubmitting(true);
 
-    const { error } = isSignUp
-      ? await signUp(email, password)
-      : await signIn(email, password);
+    const { error } = await signIn(email, password);
 
     if (error) {
       setError(error.message);
@@ -98,16 +95,9 @@ export default function AdminLogin() {
             disabled={submitting}
             className="w-full bg-primary text-primary-foreground py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            {submitting ? "Carregando..." : isSignUp ? "Criar Conta" : "Entrar"}
+            {submitting ? "Carregando..." : "Entrar"}
           </button>
         </form>
-
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          {isSignUp ? "Já tem conta?" : "Primeiro acesso?"}{" "}
-          <button onClick={() => setIsSignUp(!isSignUp)} className="text-primary font-medium hover:underline">
-            {isSignUp ? "Fazer login" : "Criar conta admin"}
-          </button>
-        </p>
       </div>
     </div>
   );

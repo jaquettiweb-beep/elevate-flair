@@ -180,7 +180,7 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
         <motion.img
           src={flipperLogo}
           alt="Academia Flipper"
-          className="w-40 h-40 sm:w-52 sm:h-52 rounded-3xl"
+          className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl"
           style={{
             boxShadow: "0 0 80px hsla(0,0%,100%,0.35), 0 25px 50px hsla(0,0%,0%,0.4)",
           }}

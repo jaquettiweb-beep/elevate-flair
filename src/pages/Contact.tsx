@@ -2,7 +2,7 @@ import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
 import { z } from "zod";
@@ -21,7 +21,6 @@ const contactSchema = z.object({
 type FormData = z.infer<typeof contactSchema>;
 
 export default function Contact() {
-  const ref = useScrollAnimation();
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", phone: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -73,11 +72,11 @@ export default function Contact() {
       </section>
 
       {/* Content */}
-      <section className="py-16 bg-background" ref={ref}>
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Form */}
-            <div className="animate-on-scroll">
+            <ScrollReveal direction="left" intensity="high">
               {submitted ? (
                 <div className="bg-[hsl(142,60%,95%)] border border-[hsl(142,60%,80%)] rounded-xl p-8 text-center">
                   <CheckCircle size={48} className="mx-auto mb-4 text-[hsl(142,70%,40%)]" />
@@ -165,47 +164,49 @@ export default function Contact() {
                   </button>
                 </form>
               )}
-            </div>
+            </ScrollReveal>
 
             {/* Info */}
-            <div className="space-y-6 animate-on-scroll-3d">
-              {[
-                { icon: MapPin, title: "Endereço", content: "R. Alcântara, 261 – Vila Mariana, São Paulo – SP", link: "https://www.google.com/maps/dir//Academia+Flipper/@-23.6147526,-46.6866098,13z/" },
-                { icon: Phone, title: "WhatsApp / Telefone", content: "(11) 94444-0557", link: WHATSAPP_URL },
-                { icon: Mail, title: "Email", content: "contato@academiaflipper.com.br", link: "mailto:contato@academiaflipper.com.br" },
-                { icon: Clock, title: "Horários", content: "Seg–Sex: 6h – 22h | Sáb: 8h – 18h" },
-              ].map((item) => (
-                <div key={item.title} className="card-3d bg-card border border-border rounded-xl p-6 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0">
-                    <item.icon size={22} className="text-primary" />
+            <ScrollReveal direction="right" intensity="high">
+              <div className="space-y-6">
+                {[
+                  { icon: MapPin, title: "Endereço", content: "R. Alcântara, 261 – Vila Mariana, São Paulo – SP", link: "https://www.google.com/maps/dir//Academia+Flipper/@-23.6147526,-46.6866098,13z/" },
+                  { icon: Phone, title: "WhatsApp / Telefone", content: "(11) 94444-0557", link: WHATSAPP_URL },
+                  { icon: Mail, title: "Email", content: "contato@academiaflipper.com.br", link: "mailto:contato@academiaflipper.com.br" },
+                  { icon: Clock, title: "Horários", content: "Seg–Sex: 6h – 22h | Sáb: 8h – 18h" },
+                ].map((item) => (
+                  <div key={item.title} className="card-3d bg-card border border-border rounded-xl p-6 flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0">
+                      <item.icon size={22} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
+                      {item.link ? (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                          {item.content}
+                        </a>
+                      ) : (
+                        <p className="text-muted-foreground text-sm">{item.content}</p>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-                    {item.link ? (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                        {item.content}
-                      </a>
-                    ) : (
-                      <p className="text-muted-foreground text-sm">{item.content}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
+                ))}
 
-              {/* Map */}
-              <div className="rounded-xl overflow-hidden border border-border aspect-video">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.5!2d-46.6813073!3d-23.6234957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50978ff3462b%3A0x84af2af537efb30a!2sAcademia%20Flipper!5e0!3m2!1spt-BR!2sbr!4v1"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Localização da Academia Flipper no Google Maps"
-                />
+                {/* Map */}
+                <div className="rounded-xl overflow-hidden border border-border aspect-video">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.5!2d-46.6813073!3d-23.6234957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce50978ff3462b%3A0x84af2af537efb30a!2sAcademia%20Flipper!5e0!3m2!1spt-BR!2sbr!4v1"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localização da Academia Flipper no Google Maps"
+                  />
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, X, ChevronLeft, ChevronRightIcon } from "lucide-react";
 
@@ -25,7 +25,6 @@ const IMAGES = [
 const CATEGORIES = ["Todas", "Equipamentos", "Espaços", "Aulas"];
 
 export default function Gallery() {
-  const ref = useScrollAnimation();
   const [filter, setFilter] = useState("Todas");
   const [lightbox, setLightbox] = useState<number | null>(null);
 
@@ -63,46 +62,52 @@ export default function Gallery() {
       </section>
 
       {/* Gallery */}
-      <section className="py-16 bg-background" ref={ref}>
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 justify-center mb-10 animate-on-scroll">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  filter === cat
-                    ? "bg-primary text-primary-foreground shadow-lg"
-                    : "bg-muted text-muted-foreground hover:bg-accent"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap gap-3 justify-center mb-10">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                    filter === cat
+                      ? "bg-primary text-primary-foreground shadow-lg"
+                      : "bg-muted text-muted-foreground hover:bg-accent"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
 
           {/* Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((img, i) => (
-              <button
+              <ScrollReveal
                 key={img.alt + i}
-                onClick={() => openLightbox(i)}
-                className="animate-on-scroll-3d group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer"
-                style={{ transitionDelay: `${i * 0.06}s` }}
+                direction={i % 3 === 0 ? "left" : i % 3 === 1 ? "zoom" : "right"}
+                intensity="high"
               >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-center justify-center">
-                  <span className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity font-semibold text-sm">
-                    Ampliar
-                  </span>
-                </div>
-              </button>
+                <button
+                  onClick={() => openLightbox(i)}
+                  className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer w-full"
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-center justify-center">
+                    <span className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity font-semibold text-sm">
+                      Ampliar
+                    </span>
+                  </div>
+                </button>
+              </ScrollReveal>
             ))}
           </div>
         </div>

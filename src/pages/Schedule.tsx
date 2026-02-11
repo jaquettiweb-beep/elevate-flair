@@ -1,7 +1,7 @@
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Phone } from "lucide-react";
 
@@ -45,8 +45,6 @@ function getCellColor(val: string) {
 }
 
 export default function Schedule() {
-  const ref = useScrollAnimation();
-
   return (
     <Layout>
       <PageTransition>
@@ -74,56 +72,60 @@ export default function Schedule() {
       </section>
 
       {/* Schedule Table */}
-      <section className="py-16 bg-background" ref={ref}>
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="overflow-x-auto rounded-xl border border-border animate-on-scroll">
-            <table className="w-full min-w-[700px] text-sm">
-              <thead>
-                <tr className="bg-muted">
-                  <th className="px-4 py-3 text-left font-semibold text-foreground sticky left-0 bg-muted z-10">Horário</th>
-                  {DAYS.map((d) => (
-                    <th key={d.key} className="px-4 py-3 text-center font-semibold text-foreground">{d.label}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {SCHEDULE_DATA.map((row) => (
-                  <tr key={row.time} className="border-t border-border hover:bg-muted/50 transition-colors">
-                    <td className="px-4 py-3 font-mono font-semibold text-foreground sticky left-0 bg-background z-10">
-                      {row.time}
-                    </td>
-                    {DAYS.map((d) => {
-                      const val = row[d.key];
-                      return (
-                        <td key={d.key} className="px-3 py-2 text-center">
-                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getCellColor(val)}`}>
-                            {val}
-                          </span>
-                        </td>
-                      );
-                    })}
+          <ScrollReveal direction="up" intensity="high">
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full min-w-[700px] text-sm">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground sticky left-0 bg-muted z-10">Horário</th>
+                    {DAYS.map((d) => (
+                      <th key={d.key} className="px-4 py-3 text-center font-semibold text-foreground">{d.label}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {SCHEDULE_DATA.map((row) => (
+                    <tr key={row.time} className="border-t border-border hover:bg-muted/50 transition-colors">
+                      <td className="px-4 py-3 font-mono font-semibold text-foreground sticky left-0 bg-background z-10">
+                        {row.time}
+                      </td>
+                      {DAYS.map((d) => {
+                        const val = row[d.key];
+                        return (
+                          <td key={d.key} className="px-3 py-2 text-center">
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getCellColor(val)}`}>
+                              {val}
+                            </span>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </ScrollReveal>
 
           <p className="text-muted-foreground text-sm mt-6 text-center">
             * Horários sujeitos a alteração. Entre em contato para confirmar disponibilidade.
           </p>
 
           {/* CTA */}
-          <div className="text-center mt-10 animate-on-scroll">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-cta rounded-full px-8 py-4 text-lg font-bold inline-flex items-center gap-2"
-            >
-              <Phone size={20} />
-              Agendar Aula Experimental
-            </a>
-          </div>
+          <ScrollReveal direction="zoom" intensity="high">
+            <div className="text-center mt-10">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-cta rounded-full px-8 py-4 text-lg font-bold inline-flex items-center gap-2"
+              >
+                <Phone size={20} />
+                Agendar Aula Experimental
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
       </PageTransition>

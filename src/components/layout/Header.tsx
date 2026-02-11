@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
 const NAV_ITEMS = [
   { label: "Home", path: "/" },
@@ -37,7 +38,12 @@ export default function Header() {
       >
         <div className="container mx-auto flex items-center justify-between px-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2.5">
+            <img
+              src={flipperLogo}
+              alt="Academia Flipper"
+              className="w-9 h-9 rounded-lg object-cover shadow-md"
+            />
             <span className={`font-display text-2xl font-900 tracking-wider ${scrolled ? "text-primary" : "text-primary-foreground"}`}>
               FLIPPER
             </span>

@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Dumbbell, Award, Clock } from "lucide-react";
 import { useRef } from "react";
+import { GymDecorWhyFlipper } from "@/components/GymDecorations";
 
 const FEATURES = [
   {
@@ -58,6 +59,9 @@ export default function WhyFlipper() {
 
   return (
     <section ref={ref} className="py-20 lg:py-28 bg-background relative overflow-hidden">
+      {/* Gym decorative icons */}
+      <GymDecorWhyFlipper />
+
       {/* Subtle parallax grid texture */}
       <motion.div
         className="absolute inset-0 opacity-[0.03]"

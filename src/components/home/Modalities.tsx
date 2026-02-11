@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { GymDecorModalities } from "@/components/GymDecorations";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -50,6 +51,8 @@ export default function Modalities() {
 
   return (
     <section id="modalidades" className="py-20 lg:py-28 bg-muted relative overflow-hidden" ref={ref}>
+      {/* Gym decorative icons */}
+      <GymDecorModalities />
       {/* Diagonal gym stripes bg */}
       <motion.div
         className="absolute inset-0 opacity-[0.02]"

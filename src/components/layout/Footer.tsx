@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
+import { GymDecorFooter } from "@/components/GymDecorations";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
 
 export default function Footer() {
   return (
-    <footer className="section-dark">
-      <div className="container mx-auto px-4 py-16">
+    <footer className="section-dark relative">
+      <GymDecorFooter />
+      <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* About */}
           <div>

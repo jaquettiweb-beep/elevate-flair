@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Trash2, Loader2, Star, ToggleLeft, ToggleRight } from "lucide-react";
 import { toast } from "sonner";
+import { testimonialSchema, getValidationError } from "@/lib/admin-validation";
 
 export default function AdminTestimonials() {
   const queryClient = useQueryClient();
@@ -24,8 +25,10 @@ export default function AdminTestimonials() {
 
   const addMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("testimonials").insert({ name, text, modality, rating });
-      if (error) throw error;
+      const error = getValidationError(testimonialSchema, { name, text, modality, rating });
+      if (error) throw new Error(error);
+      const { error: dbError } = await supabase.from("testimonials").insert({ name: name.trim(), text: text.trim(), modality: modality.trim(), rating });
+      if (dbError) throw dbError;
     },
     onSuccess: () => {
       toast.success("Depoimento adicionado!");
@@ -69,16 +72,16 @@ export default function AdminTestimonials() {
 
         {adding && (
           <div className="bg-card border border-border rounded-xl p-6 mb-6 space-y-3">
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome do aluno" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Depoimento" rows={3} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none" />
+            <input value={name} onChange={(e) => setName(e.target.value)} maxLength={100} placeholder="Nome do aluno" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+            <textarea value={text} onChange={(e) => setText(e.target.value)} maxLength={500} placeholder="Depoimento" rows={3} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none" />
             <div className="grid grid-cols-2 gap-3">
-              <input value={modality} onChange={(e) => setModality(e.target.value)} placeholder="Modalidade" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+              <input value={modality} onChange={(e) => setModality(e.target.value)} maxLength={50} placeholder="Modalidade" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
               <select value={rating} onChange={(e) => setRating(Number(e.target.value))} className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm">
                 {[5, 4, 3, 2, 1].map((r) => <option key={r} value={r}>{r} estrela{r > 1 ? "s" : ""}</option>)}
               </select>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => addMutation.mutate()} disabled={!name || !text} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
+              <button onClick={() => addMutation.mutate()} disabled={!name.trim() || name.trim().length < 2 || !text.trim() || text.trim().length < 10} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
               <button onClick={() => setAdding(false)} className="text-muted-foreground px-4 py-2 text-sm">Cancelar</button>
             </div>
           </div>

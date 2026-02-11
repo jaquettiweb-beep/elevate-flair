@@ -2,15 +2,16 @@ import { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Plus, Trash2, Loader2, Save, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Trash2, Loader2, ToggleLeft, ToggleRight } from "lucide-react";
 import { toast } from "sonner";
+import { notificationSchema, getValidationError } from "@/lib/admin-validation";
 
 export default function AdminNotifications() {
   const queryClient = useQueryClient();
   const [adding, setAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newMessage, setNewMessage] = useState("");
-  const [newType, setNewType] = useState("info");
+  const [newType, setNewType] = useState<"info" | "success" | "warning" | "error">("info");
 
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["admin-notifications"],
@@ -23,12 +24,14 @@ export default function AdminNotifications() {
 
   const addMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("notifications").insert({
-        title: newTitle,
-        message: newMessage,
+      const error = getValidationError(notificationSchema, { title: newTitle, message: newMessage, type: newType });
+      if (error) throw new Error(error);
+      const { error: dbError } = await supabase.from("notifications").insert({
+        title: newTitle.trim(),
+        message: newMessage.trim(),
         type: newType,
       });
-      if (error) throw error;
+      if (dbError) throw dbError;
     },
     onSuccess: () => {
       toast.success("Notificação criada!");
@@ -79,19 +82,21 @@ export default function AdminNotifications() {
               <input
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
+                maxLength={150}
                 placeholder="Título"
                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none"
               />
               <textarea
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
+                maxLength={500}
                 placeholder="Mensagem"
                 rows={2}
                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none"
               />
               <select
                 value={newType}
-                onChange={(e) => setNewType(e.target.value)}
+                onChange={(e) => setNewType(e.target.value as any)}
                 className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm"
               >
                 <option value="info">Info</option>
@@ -100,7 +105,7 @@ export default function AdminNotifications() {
                 <option value="error">Erro</option>
               </select>
               <div className="flex gap-2">
-                <button onClick={() => addMutation.mutate()} disabled={!newTitle || !newMessage} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">
+                <button onClick={() => addMutation.mutate()} disabled={!newTitle.trim() || newTitle.trim().length < 2 || !newMessage.trim() || newMessage.trim().length < 5} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">
                   Salvar
                 </button>
                 <button onClick={() => setAdding(false)} className="text-muted-foreground px-4 py-2 text-sm">Cancelar</button>

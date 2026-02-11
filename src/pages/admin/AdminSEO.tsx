@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Save, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { seoSchema, getValidationError } from "@/lib/admin-validation";
 
 export default function AdminSEO() {
   const queryClient = useQueryClient();
@@ -41,11 +42,13 @@ function SEOCard({ page, queryClient }: { page: any; queryClient: any }) {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase
+      const error = getValidationError(seoSchema, { title, description, keywords });
+      if (error) throw new Error(error);
+      const { error: dbError } = await supabase
         .from("page_seo")
-        .update({ title, description, keywords })
+        .update({ title: title.trim(), description: description.trim(), keywords: keywords.trim() })
         .eq("id", page.id);
-      if (error) throw error;
+      if (dbError) throw dbError;
     },
     onSuccess: () => {
       toast.success(`SEO de /${page.page_slug} atualizado!`);
@@ -60,27 +63,30 @@ function SEOCard({ page, queryClient }: { page: any; queryClient: any }) {
 
       <div className="space-y-3">
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Title ({title.length}/60)</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Title ({title.length}/70)</label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            maxLength={70}
             className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Description ({description.length}/160)</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Description ({description.length}/200)</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            maxLength={200}
             rows={2}
             className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Keywords</label>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">Keywords ({keywords.length}/300)</label>
           <input
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
+            maxLength={300}
             className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none"
           />
         </div>

@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Trash2, Loader2, ToggleLeft, ToggleRight } from "lucide-react";
 import { toast } from "sonner";
+import { modalitySchema, getValidationError } from "@/lib/admin-validation";
 
 export default function AdminModalities() {
   const queryClient = useQueryClient();
@@ -22,8 +23,10 @@ export default function AdminModalities() {
 
   const addMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("modalities").insert({ name, description });
-      if (error) throw error;
+      const error = getValidationError(modalitySchema, { name, description });
+      if (error) throw new Error(error);
+      const { error: dbError } = await supabase.from("modalities").insert({ name: name.trim(), description: description.trim() });
+      if (dbError) throw dbError;
     },
     onSuccess: () => {
       toast.success("Modalidade adicionada!");
@@ -66,10 +69,10 @@ export default function AdminModalities() {
 
         {adding && (
           <div className="bg-card border border-border rounded-xl p-6 mb-6 space-y-3">
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome da modalidade" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Descrição" rows={2} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none" />
+            <input value={name} onChange={(e) => setName(e.target.value)} maxLength={100} placeholder="Nome da modalidade" className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} placeholder="Descrição" rows={2} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none resize-none" />
             <div className="flex gap-2">
-              <button onClick={() => addMutation.mutate()} disabled={!name} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
+              <button onClick={() => addMutation.mutate()} disabled={!name.trim() || name.trim().length < 2} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
               <button onClick={() => setAdding(false)} className="text-muted-foreground px-4 py-2 text-sm">Cancelar</button>
             </div>
           </div>

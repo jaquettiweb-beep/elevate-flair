@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { scheduleSchema, getValidationError } from "@/lib/admin-validation";
 
 const DAYS = [
   { key: "mon", label: "Segunda" },
@@ -33,13 +34,20 @@ export default function AdminSchedule() {
 
   const addMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("schedule_classes").insert({
+      const error = getValidationError(scheduleSchema, {
         time_slot: newTime,
         day_of_week: newDay,
         class_name: newClass,
-        instructor: newInstructor || null,
+        instructor: newInstructor || undefined,
       });
-      if (error) throw error;
+      if (error) throw new Error(error);
+      const { error: dbError } = await supabase.from("schedule_classes").insert({
+        time_slot: newTime.trim(),
+        day_of_week: newDay,
+        class_name: newClass.trim(),
+        instructor: newInstructor.trim() || null,
+      });
+      if (dbError) throw dbError;
     },
     onSuccess: () => {
       toast.success("Aula adicionada!");
@@ -76,15 +84,15 @@ export default function AdminSchedule() {
         {adding && (
           <div className="bg-card border border-border rounded-xl p-6 mb-6 space-y-3">
             <div className="grid grid-cols-2 gap-3">
-              <input value={newTime} onChange={(e) => setNewTime(e.target.value)} placeholder="Horário (ex: 06:00)" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+              <input value={newTime} onChange={(e) => setNewTime(e.target.value)} maxLength={5} placeholder="Horário (ex: 06:00)" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
               <select value={newDay} onChange={(e) => setNewDay(e.target.value)} className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm">
                 {DAYS.map((d) => <option key={d.key} value={d.key}>{d.label}</option>)}
               </select>
-              <input value={newClass} onChange={(e) => setNewClass(e.target.value)} placeholder="Nome da aula" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
-              <input value={newInstructor} onChange={(e) => setNewInstructor(e.target.value)} placeholder="Instrutor (opcional)" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+              <input value={newClass} onChange={(e) => setNewClass(e.target.value)} maxLength={100} placeholder="Nome da aula" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+              <input value={newInstructor} onChange={(e) => setNewInstructor(e.target.value)} maxLength={100} placeholder="Instrutor (opcional)" className="px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none" />
             </div>
             <div className="flex gap-2">
-              <button onClick={() => addMutation.mutate()} disabled={!newTime || !newClass} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
+              <button onClick={() => addMutation.mutate()} disabled={!/^\d{2}:\d{2}$/.test(newTime) || !newClass.trim() || newClass.trim().length < 2} className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">Salvar</button>
               <button onClick={() => setAdding(false)} className="text-muted-foreground px-4 py-2 text-sm">Cancelar</button>
             </div>
           </div>

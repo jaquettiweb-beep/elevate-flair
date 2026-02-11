@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { GymDecorTestimonials } from "@/components/GymDecorations";
-import TextReveal, { TextRevealHighlight } from "@/components/TextReveal";
 
 const TESTIMONIALS = [
   {
@@ -69,7 +68,7 @@ export default function Testimonials() {
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            <TextReveal>O que nossos </TextReveal><TextRevealHighlight>alunos</TextRevealHighlight><TextReveal> dizem</TextReveal>
+            O que nossos <span className="gradient-text">alunos</span> dizem
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Milhares de alunos satisfeitos confiam na Flipper para alcançar seus objetivos.

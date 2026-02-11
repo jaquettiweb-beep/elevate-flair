@@ -17,37 +17,35 @@ export default function ScrollReveal({
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 100%", "start 75%"],
+    offset: ["start 100%", "start 60%"],
   });
 
-  const mult = intensity === "high" ? 1.4 : 1;
-
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 1], [0.2, 1, 1]);
+  const mult = intensity === "high" ? 1.2 : 1;
 
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "up" ? [100 * mult, 0] : [0, 0]
+    direction === "up" ? [60 * mult, 0] : [0, 0]
   );
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "left" ? [-100 * mult, 0] : direction === "right" ? [100 * mult, 0] : [0, 0]
+    direction === "left" ? [-60 * mult, 0] : direction === "right" ? [60 * mult, 0] : [0, 0]
   );
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "zoom" ? [0.75, 1] : [1, 1]
+    direction === "zoom" ? [0.92, 1] : [1, 1]
   );
   const rotateX = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "flip" ? [25, 0] : direction === "up" ? [10 * mult, 0] : [0, 0]
+    direction === "flip" ? [12, 0] : direction === "up" ? [4 * mult, 0] : [0, 0]
   );
   const rotateY = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "left" ? [12, 0] : direction === "right" ? [-12, 0] : [0, 0]
+    direction === "left" ? [6, 0] : direction === "right" ? [-6, 0] : [0, 0]
   );
 
   return (
@@ -55,14 +53,13 @@ export default function ScrollReveal({
       ref={ref}
       className={className}
       style={{
-        opacity,
         y,
         x,
         scale,
         rotateX,
         rotateY,
         perspective: 1200,
-        willChange: "transform, opacity",
+        willChange: "transform",
       }}
     >
       {children}

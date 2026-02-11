@@ -131,7 +131,7 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
                 left: "24px",
                 x: "0%",
                 y: "0%",
-                scale: 0.2,
+                scale: 0.12,
                 opacity: phase === "curtain" ? 0 : 1,
               }
             : {

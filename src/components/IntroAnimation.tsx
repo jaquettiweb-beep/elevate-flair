@@ -127,11 +127,11 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           isFlyingOrLater
             ? {
                 /* Fly to header top-left position */
-                top: "8px",
-                left: "24px",
+                top: "12px",
+                left: "28px",
                 x: "0%",
                 y: "0%",
-                scale: 0.12,
+                scale: 0.1125,
                 opacity: phase === "curtain" ? 0 : 1,
               }
             : {

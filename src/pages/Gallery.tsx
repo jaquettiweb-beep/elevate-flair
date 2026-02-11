@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
+import PageTransition from "@/components/layout/PageTransition";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { ChevronRight, X, ChevronLeft, ChevronRightIcon } from "lucide-react";
@@ -37,6 +38,7 @@ export default function Gallery() {
 
   return (
     <Layout>
+      <PageTransition>
       <SEOHead
         title="Galeria de Fotos - Conheça a Infraestrutura da Academia Flipper"
         description="Veja fotos da nossa academia: equipamentos modernos, piscina aquecida, espaços amplos e climatizados. Estrutura completa para seu treino em São Paulo."
@@ -126,6 +128,7 @@ export default function Gallery() {
           />
         </div>
       )}
+      </PageTransition>
     </Layout>
   );
 }

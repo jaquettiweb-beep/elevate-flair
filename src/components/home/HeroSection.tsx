@@ -1,6 +1,13 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Phone, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect, useCallback } from "react";
+import {
+  DumbbellIcon,
+  SwimGoggleIcon,
+  SwimCapIcon,
+  WaterWaveIcon,
+  KettlebellIcon,
+} from "@/components/GymDecorations";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import heroImage from "@/assets/hero-gym.jpg";
@@ -175,6 +182,87 @@ export default function HeroSection() {
         animate={{ x: [0, -15, 0], y: [0, 20, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
+
+      {/* 4D Gym/Swimming decorative elements — visible, part of hero */}
+      {/* Top-right: Swimming goggles */}
+      <motion.div
+        className="absolute top-[12%] right-[8%] z-[5] text-white/15 hidden md:block"
+        style={{ width: 120, height: 120, y: useTransform(scrollYProgress, [0, 1], ["0px", "80px"]) }}
+        initial={{ opacity: 0, scale: 0, rotate: -30 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ delay: 0.8, duration: 0.8, type: "spring", stiffness: 120 }}
+      >
+        <motion.div
+          animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <SwimGoggleIcon className="w-full h-full drop-shadow-[0_0_30px_hsla(200,100%,70%,0.3)]" />
+        </motion.div>
+      </motion.div>
+
+      {/* Bottom-left: Dumbbell */}
+      <motion.div
+        className="absolute bottom-[18%] left-[6%] z-[5] text-white/12 hidden md:block"
+        style={{ width: 100, height: 100, y: useTransform(scrollYProgress, [0, 1], ["0px", "60px"]) }}
+        initial={{ opacity: 0, x: -40, rotate: 20 }}
+        animate={{ opacity: 1, x: 0, rotate: -15 }}
+        transition={{ delay: 1, duration: 0.7, type: "spring" }}
+      >
+        <motion.div
+          animate={{ y: [0, -8, 0], rotate: [-15, -10, -15] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <DumbbellIcon className="w-full h-full drop-shadow-[0_0_25px_hsla(221,83%,53%,0.3)]" />
+        </motion.div>
+      </motion.div>
+
+      {/* Top-left: Swim cap */}
+      <motion.div
+        className="absolute top-[20%] left-[4%] z-[5] text-white/10 hidden lg:block"
+        style={{ width: 80, height: 80, y: useTransform(scrollYProgress, [0, 1], ["0px", "50px"]) }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.2, duration: 0.6, type: "spring", stiffness: 150 }}
+      >
+        <motion.div
+          animate={{ y: [0, -6, 0], rotate: [0, -6, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          <SwimCapIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(200,100%,70%,0.25)]" />
+        </motion.div>
+      </motion.div>
+
+      {/* Bottom-right: Water wave */}
+      <motion.div
+        className="absolute bottom-[10%] right-[5%] z-[5] text-white/10 hidden lg:block"
+        style={{ width: 140, height: 80, y: useTransform(scrollYProgress, [0, 1], ["0px", "40px"]) }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
+      >
+        <motion.div
+          animate={{ x: [0, 12, 0], y: [0, -4, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <WaterWaveIcon className="w-full h-full drop-shadow-[0_0_25px_hsla(200,80%,60%,0.3)]" />
+        </motion.div>
+      </motion.div>
+
+      {/* Center-right: Kettlebell */}
+      <motion.div
+        className="absolute top-[55%] right-[3%] z-[5] text-white/8 hidden xl:block"
+        style={{ width: 70, height: 70, y: useTransform(scrollYProgress, [0, 1], ["0px", "70px"]) }}
+        initial={{ opacity: 0, scale: 0, rotate: 15 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ delay: 1.6, duration: 0.7, type: "spring" }}
+      >
+        <motion.div
+          animate={{ y: [0, -10, 0], rotate: [0, 8, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <KettlebellIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(24,95%,53%,0.25)]" />
+        </motion.div>
+      </motion.div>
 
       {/* Carousel content */}
       <motion.div

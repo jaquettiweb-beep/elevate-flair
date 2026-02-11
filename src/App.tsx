@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -31,6 +32,35 @@ const Loading = () => (
   </div>
 );
 
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* Public */}
+        <Route path="/" element={<Index />} />
+        <Route path="/horarios" element={<Schedule />} />
+        <Route path="/galeria" element={<Gallery />} />
+        <Route path="/contato" element={<Contact />} />
+
+        {/* Admin */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/seo" element={<AdminSEO />} />
+        <Route path="/admin/galeria" element={<AdminGallery />} />
+        <Route path="/admin/notificacoes" element={<AdminNotifications />} />
+        <Route path="/admin/horarios" element={<AdminSchedule />} />
+        <Route path="/admin/depoimentos" element={<AdminTestimonials />} />
+        <Route path="/admin/modalidades" element={<AdminModalities />} />
+        <Route path="/admin/configuracoes" element={<AdminSettings />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
@@ -39,26 +69,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Suspense fallback={<Loading />}>
-            <Routes>
-              {/* Public */}
-              <Route path="/" element={<Index />} />
-              <Route path="/horarios" element={<Schedule />} />
-              <Route path="/galeria" element={<Gallery />} />
-              <Route path="/contato" element={<Contact />} />
-
-              {/* Admin */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/seo" element={<AdminSEO />} />
-              <Route path="/admin/galeria" element={<AdminGallery />} />
-              <Route path="/admin/notificacoes" element={<AdminNotifications />} />
-              <Route path="/admin/horarios" element={<AdminSchedule />} />
-              <Route path="/admin/depoimentos" element={<AdminTestimonials />} />
-              <Route path="/admin/modalidades" element={<AdminModalities />} />
-              <Route path="/admin/configuracoes" element={<AdminSettings />} />
-
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>

@@ -1,5 +1,6 @@
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
+import PageTransition from "@/components/layout/PageTransition";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { ChevronRight, Phone } from "lucide-react";
@@ -48,6 +49,7 @@ export default function Schedule() {
 
   return (
     <Layout>
+      <PageTransition>
       <SEOHead
         title="Horários das Aulas - Academia Flipper | Confira Nossa Grade"
         description="Veja os horários de todas as modalidades da Academia Flipper: natação, musculação, pilates, artes marciais e mais. Segunda a sábado das 6h às 22h."
@@ -124,6 +126,7 @@ export default function Schedule() {
           </div>
         </div>
       </section>
+      </PageTransition>
     </Layout>
   );
 }

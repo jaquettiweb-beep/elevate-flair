@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
+import PageTransition from "@/components/layout/PageTransition";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { ChevronRight, MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
@@ -47,6 +48,7 @@ export default function Contact() {
 
   return (
     <Layout>
+      <PageTransition>
       <SEOHead
         title="Contato - Academia Flipper | Tire suas Dúvidas e Agende sua Aula"
         description="Entre em contato com a Academia Flipper. WhatsApp, telefone, email e endereço. Agende sua aula experimental grátis em São Paulo!"
@@ -207,6 +209,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
+      </PageTransition>
     </Layout>
   );
 }

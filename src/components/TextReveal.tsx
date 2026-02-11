@@ -1,80 +1,55 @@
-import { motion, Variants } from "framer-motion";
-import { ReactNode } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface TextRevealProps {
   children: string;
   className?: string;
 }
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.025,
-    },
-  },
-};
-
-const charVariants: Variants = {
-  hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.35, ease: "easeOut" },
-  },
-};
-
-/**
- * Reveals text letter-by-letter when scrolled into view.
- */
 export default function TextReveal({ children, className = "" }: TextRevealProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
   const chars = children.split("");
 
   return (
-    <motion.span
-      className={`inline-flex flex-wrap ${className}`}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-    >
+    <span ref={ref} className={className} style={{ display: "inline" }}>
       {chars.map((char, i) => (
-        <motion.span
+        <span
           key={`${i}-${char}`}
-          variants={charVariants}
-          className="inline-block whitespace-pre"
+          style={{
+            display: "inline-block",
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? "translateY(0)" : "translateY(8px)",
+            transition: `opacity 0.3s ease ${i * 0.02}s, transform 0.3s ease ${i * 0.02}s`,
+          }}
         >
           {char === " " ? "\u00A0" : char}
-        </motion.span>
+        </span>
       ))}
-    </motion.span>
+    </span>
   );
 }
 
-/**
- * Highlighted variant with gradient text.
- */
 export function TextRevealHighlight({ children, className = "" }: { children: string; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
   const chars = children.split("");
 
   return (
-    <motion.span
-      className={`gradient-text inline-flex flex-wrap ${className}`}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-    >
+    <span ref={ref} className={`gradient-text ${className}`} style={{ display: "inline" }}>
       {chars.map((char, i) => (
-        <motion.span
+        <span
           key={`${i}-${char}`}
-          variants={charVariants}
-          className="inline-block whitespace-pre"
+          style={{
+            display: "inline-block",
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? "translateY(0)" : "translateY(8px)",
+            transition: `opacity 0.3s ease ${i * 0.02}s, transform 0.3s ease ${i * 0.02}s`,
+          }}
         >
           {char === " " ? "\u00A0" : char}
-        </motion.span>
+        </span>
       ))}
-    </motion.span>
+    </span>
   );
 }

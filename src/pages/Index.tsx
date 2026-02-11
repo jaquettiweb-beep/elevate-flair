@@ -7,7 +7,6 @@ import Modalities from "@/components/home/Modalities";
 import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import ScrollReveal from "@/components/ScrollReveal";
 
 const Index = () => {
   return (
@@ -19,21 +18,11 @@ const Index = () => {
           path="/"
         />
         <HeroSection />
-        <ScrollReveal direction="up" intensity="high">
-          <WhyFlipper />
-        </ScrollReveal>
-        <ScrollReveal direction="left" intensity="high">
-          <Modalities />
-        </ScrollReveal>
-        <ScrollReveal direction="zoom" intensity="high">
-          <Stats />
-        </ScrollReveal>
-        <ScrollReveal direction="right" intensity="high">
-          <Testimonials />
-        </ScrollReveal>
-        <ScrollReveal direction="flip" intensity="high">
-          <CTASection />
-        </ScrollReveal>
+        <WhyFlipper />
+        <Modalities />
+        <Stats />
+        <Testimonials />
+        <CTASection />
       </PageTransition>
     </Layout>
   );

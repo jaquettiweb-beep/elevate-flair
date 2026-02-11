@@ -17,12 +17,12 @@ export default function ScrollReveal({
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 95%", "start 65%"],
+    offset: ["start 100%", "start 75%"],
   });
 
-  const mult = intensity === "high" ? 1.6 : 1;
+  const mult = intensity === "high" ? 1.4 : 1;
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 1, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 1], [0.2, 1, 1]);
 
   const y = useTransform(
     scrollYProgress,

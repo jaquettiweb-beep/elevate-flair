@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { GymDecorModalities } from "@/components/GymDecorations";
+import TextReveal, { TextRevealHighlight } from "@/components/TextReveal";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -84,7 +85,7 @@ export default function Modalities() {
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Nossas <span className="gradient-text">Modalidades</span>
+            <TextReveal>Nossas </TextReveal><TextRevealHighlight>Modalidades</TextRevealHighlight>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Mais de 15 modalidades para você encontrar a atividade perfeita para seus objetivos.

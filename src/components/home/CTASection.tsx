@@ -3,6 +3,7 @@ import { Phone, ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { GymDecorCTA } from "@/components/GymDecorations";
+import TextReveal from "@/components/TextReveal";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -74,7 +75,7 @@ export default function CTASection() {
           </motion.div>
 
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
-            Pronto para Começar sua Transformação?
+            <TextReveal>Pronto para Começar sua Transformação?</TextReveal>
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-10 leading-relaxed">
             Venha conhecer a Academia Flipper e descubra por que somos referência em São Paulo.

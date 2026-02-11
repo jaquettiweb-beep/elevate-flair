@@ -42,7 +42,7 @@ export default function Header() {
             <img
               src={flipperLogo}
               alt="Academia Flipper"
-              className="w-9 h-9 rounded-lg object-cover shadow-md"
+              className="w-12 h-12 rounded-lg object-cover shadow-md"
             />
             <span className={`font-display text-2xl font-900 tracking-wider ${scrolled ? "text-primary" : "text-primary-foreground"}`}>
               FLIPPER

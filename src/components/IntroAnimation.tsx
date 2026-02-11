@@ -8,7 +8,7 @@ import {
   KettlebellIcon,
   YogaPoseIcon,
 } from "@/components/GymDecorations";
-import flipperLogo from "@/assets/flipper-logo.jpg";
+import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
 const INTRO_DURATION = 3400;
 

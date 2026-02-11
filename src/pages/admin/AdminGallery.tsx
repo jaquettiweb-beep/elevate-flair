@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Trash2, Loader2, Upload } from "lucide-react";
 import { toast } from "sonner";
+import { validateFile } from "@/lib/admin-validation";
 
 export default function AdminGallery() {
   const queryClient = useQueryClient();
@@ -33,9 +34,22 @@ export default function AdminGallery() {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files?.length) return;
+
+    // Validate all files first
+    const validFiles: File[] = [];
+    for (const file of Array.from(files)) {
+      const error = validateFile(file);
+      if (error) {
+        toast.error(error);
+      } else {
+        validFiles.push(file);
+      }
+    }
+    if (!validFiles.length) return;
+
     setUploading(true);
 
-    for (const file of Array.from(files)) {
+    for (const file of validFiles) {
       const ext = file.name.split(".").pop();
       const path = `gallery/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
@@ -49,7 +63,7 @@ export default function AdminGallery() {
 
       const { error: insertError } = await supabase.from("gallery_images").insert({
         image_url: publicUrl,
-        alt_text: file.name.replace(/\.[^.]+$/, ""),
+        alt_text: file.name.replace(/\.[^.]+$/, "").slice(0, 200),
         category: "Todas",
         sort_order: (images?.length ?? 0),
       });
@@ -70,7 +84,7 @@ export default function AdminGallery() {
           <label className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 hover:opacity-90 cursor-pointer">
             {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
             {uploading ? "Enviando..." : "Upload"}
-            <input type="file" accept="image/*" multiple onChange={handleUpload} className="hidden" disabled={uploading} />
+            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple onChange={handleUpload} className="hidden" disabled={uploading} />
           </label>
         </div>
 

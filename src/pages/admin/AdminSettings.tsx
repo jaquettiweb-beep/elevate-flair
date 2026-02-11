@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Save, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { settingsFieldSchema } from "@/lib/admin-validation";
 
 export default function AdminSettings() {
   const queryClient = useQueryClient();
@@ -65,7 +66,19 @@ function SettingCard({ title, settingKey, data, queryClient, fields }: {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("site_settings").update({ value: values }).eq("id", data.id);
+      // Validate all fields
+      for (const f of fields) {
+        const result = settingsFieldSchema.safeParse(values[f.key] || "");
+        if (!result.success) {
+          throw new Error(`${f.label}: ${result.error.errors[0]?.message}`);
+        }
+      }
+      // Trim values before saving
+      const trimmed: Record<string, string> = {};
+      for (const [k, v] of Object.entries(values)) {
+        trimmed[k] = (v || "").trim();
+      }
+      const { error } = await supabase.from("site_settings").update({ value: trimmed }).eq("id", data.id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -85,6 +98,7 @@ function SettingCard({ title, settingKey, data, queryClient, fields }: {
             <input
               value={values[f.key] || ""}
               onChange={(e) => setValues({ ...values, [f.key]: e.target.value })}
+              maxLength={500}
               className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { GymDecorTestimonials } from "@/components/GymDecorations";
+import FloatingParticles from "@/components/FloatingParticles";
 
 const TESTIMONIALS = [
   {
@@ -30,7 +31,6 @@ const cardVariants = {
     rotateX: 20,
     rotateY: (i - 1) * 12,
     scale: 0.8,
-    filter: "blur(5px)",
   }),
   visible: (i: number) => ({
     opacity: 1,
@@ -38,7 +38,6 @@ const cardVariants = {
     rotateX: 0,
     rotateY: 0,
     scale: 1,
-    filter: "blur(0px)",
     transition: {
       duration: 0.8,
       delay: i * 0.15,
@@ -50,8 +49,17 @@ const cardVariants = {
 export default function Testimonials() {
   return (
     <section className="py-20 lg:py-28 bg-background overflow-hidden relative">
-      {/* Gym decorative icons */}
       <GymDecorTestimonials />
+      <FloatingParticles count={6} color="hsla(221,83%,53%,0.1)" />
+
+      {/* Background radial pulse */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, hsla(221,83%,53%,0.04) 0%, transparent 60%)" }}
+        animate={{ scale: [0.8, 1.1, 0.8], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-14"
@@ -85,14 +93,14 @@ export default function Testimonials() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               whileHover={{
-                y: -8,
-                rotateY: 5,
-                rotateX: -3,
-                scale: 1.03,
-                boxShadow: "0 25px 50px -12px hsla(221, 83%, 53%, 0.2)",
+                y: -12,
+                rotateY: 6,
+                rotateX: -4,
+                scale: 1.04,
+                boxShadow: "0 30px 60px -15px hsla(221, 83%, 53%, 0.25)",
                 transition: { duration: 0.3 },
               }}
-              className="gym-card p-8 cursor-default"
+              className="gym-card glow-border shimmer p-8 cursor-default"
               style={{ transformStyle: "preserve-3d" }}
             >
               <Quote size={24} className="text-primary/20 mb-3" />
@@ -114,9 +122,12 @@ export default function Testimonials() {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 italic">"{t.text}"</p>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground font-bold text-sm">
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground font-bold text-sm depth-shadow"
+                  whileHover={{ scale: 1.15, rotate: 10 }}
+                >
                   {t.name.charAt(0)}
-                </div>
+                </motion.div>
                 <div>
                   <p className="font-semibold text-foreground text-sm">{t.name}</p>
                   <p className="text-xs text-primary">{t.modality}</p>

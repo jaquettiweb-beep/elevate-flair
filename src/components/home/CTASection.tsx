@@ -3,6 +3,7 @@ import { Phone, ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { GymDecorCTA } from "@/components/GymDecorations";
+import FloatingParticles from "@/components/FloatingParticles";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -19,8 +20,9 @@ export default function CTASection() {
 
   return (
     <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden">
-      {/* Gym decorative icons */}
       <GymDecorCTA />
+      <FloatingParticles count={20} color="hsla(0,0%,100%,0.1)" />
+
       {/* Animated gradient bg */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark"
@@ -28,27 +30,38 @@ export default function CTASection() {
       />
       <div className="absolute inset-0 hero-gradient opacity-60" />
 
+      {/* Scanning light beam */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, hsla(0,0%,100%,0.03) 50%, transparent 100%)",
+          backgroundSize: "200% 100%",
+        }}
+        animate={{ backgroundPosition: ["200% 0%", "-200% 0%"] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+      />
+
       {/* Energy particles */}
-      {[...Array(6)].map((_, i) => (
+      {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 rounded-full"
           style={{
-            background: `hsl(var(--secondary))`,
-            left: `${15 + i * 15}%`,
-            top: `${20 + (i % 3) * 25}%`,
+            background: i % 2 === 0 ? `hsl(var(--secondary))` : `hsl(var(--primary-glow))`,
+            left: `${10 + i * 11}%`,
+            top: `${15 + (i % 4) * 20}%`,
           }}
           animate={{
-            y: [0, -40, 0],
-            x: [0, (i % 2 ? 20 : -20), 0],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [0.8, 1.2, 0.8],
+            y: [0, -50, 0],
+            x: [0, (i % 2 ? 25 : -25), 0],
+            opacity: [0.15, 0.7, 0.15],
+            scale: [0.6, 1.4, 0.6],
           }}
           transition={{
             duration: 3 + i * 0.5,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: i * 0.4,
+            delay: i * 0.3,
           }}
         />
       ))}
@@ -65,12 +78,17 @@ export default function CTASection() {
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
+            initial={{ scale: 0, rotate: -180 }}
+            whileInView={{ scale: 1, rotate: 0 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
           >
-            <Zap size={40} className="mx-auto mb-6 text-secondary" />
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Zap size={40} className="mx-auto mb-6 text-secondary drop-shadow-[0_0_15px_hsla(24,95%,53%,0.5)]" />
+            </motion.div>
           </motion.div>
 
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
@@ -86,8 +104,8 @@ export default function CTASection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-cta rounded-full px-8 py-4 text-lg font-bold flex items-center justify-center gap-2 animate-pulse-glow"
-              whileHover={{ scale: 1.05, y: -3 }}
+              className="btn-cta rounded-full px-8 py-4 text-lg font-bold flex items-center justify-center gap-2 animate-pulse-glow depth-shadow"
+              whileHover={{ scale: 1.06, y: -4 }}
               whileTap={{ scale: 0.97 }}
             >
               <Phone size={20} />
@@ -96,7 +114,7 @@ export default function CTASection() {
             <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
                 to="/contato"
-                className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:border-primary-foreground/60 transition-colors flex items-center justify-center gap-2"
+                className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:border-primary-foreground/60 transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_20px_hsla(0,0%,100%,0.1)]"
               >
                 Entrar em Contato
                 <ArrowRight size={18} />

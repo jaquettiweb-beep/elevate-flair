@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { GymDecorModalities } from "@/components/GymDecorations";
+import FloatingParticles from "@/components/FloatingParticles";
+import SectionWave from "@/components/SectionWave";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -23,7 +25,6 @@ const cardVariants = {
     rotateY: (i % 3 - 1) * 20,
     rotateX: 15,
     scale: 0.7,
-    filter: "blur(8px)",
   }),
   visible: (i: number) => ({
     opacity: 1,
@@ -31,7 +32,6 @@ const cardVariants = {
     rotateY: 0,
     rotateX: 0,
     scale: 1,
-    filter: "blur(0px)",
     transition: {
       duration: 0.9,
       delay: i * 0.1,
@@ -51,8 +51,9 @@ export default function Modalities() {
 
   return (
     <section id="modalidades" className="py-20 lg:py-28 bg-muted relative overflow-hidden" ref={ref}>
-      {/* Gym decorative icons */}
       <GymDecorModalities />
+      <FloatingParticles count={10} color="hsla(200,100%,55%,0.12)" />
+
       {/* Diagonal gym stripes bg */}
       <motion.div
         className="absolute inset-0 opacity-[0.02]"
@@ -67,6 +68,10 @@ export default function Modalities() {
           )`,
         }}
       />
+
+      {/* Dual radial glows */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, hsla(200,100%,55%,0.05) 0%, transparent 70%)" }} />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, hsla(24,95%,53%,0.05) 0%, transparent 70%)" }} />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -101,13 +106,13 @@ export default function Modalities() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               whileHover={{
-                y: -10,
+                y: -12,
                 rotateY: 6,
                 rotateX: -4,
-                scale: 1.02,
+                scale: 1.03,
                 transition: { duration: 0.35, ease: "easeOut" },
               }}
-              className="gym-card group cursor-default"
+              className="gym-card glow-border group cursor-default"
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="aspect-[4/3] overflow-hidden relative">
@@ -118,19 +123,22 @@ export default function Modalities() {
                   loading="lazy"
                   width={768}
                   height={512}
-                  whileHover={{ scale: 1.12 }}
+                  whileHover={{ scale: 1.15 }}
                   transition={{ duration: 0.6 }}
                 />
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                {/* Depth overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Name badge floating on hover */}
+                {/* Name badge floating */}
                 <motion.div
-                  className="absolute bottom-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ translateZ: 30 }}
+                  className="absolute bottom-3 left-3 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 depth-shadow"
+                  style={{ translateZ: 40 }}
                 >
                   {m.name}
                 </motion.div>
+
+                {/* Corner glow on hover */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
               <div className="p-6">
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">{m.name}</h3>
@@ -140,6 +148,8 @@ export default function Modalities() {
           ))}
         </div>
       </div>
+
+      <SectionWave position="bottom" color="hsl(var(--background))" />
     </section>
   );
 }

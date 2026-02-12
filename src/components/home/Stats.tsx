@@ -105,7 +105,7 @@ export default function Stats() {
               variants={statVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: true, amount: 0.1 }}
               whileHover={{ scale: 1.08, y: -4 }}
               className="text-center cursor-default"
             >

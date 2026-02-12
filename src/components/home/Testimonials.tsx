@@ -57,7 +57,7 @@ export default function Testimonials() {
           className="text-center mb-14"
           initial={{ opacity: 0, y: 50, rotateX: 10 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
         >
           <motion.div
@@ -83,7 +83,7 @@ export default function Testimonials() {
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: true, amount: 0.1 }}
               whileHover={{
                 y: -8,
                 rotateY: 5,

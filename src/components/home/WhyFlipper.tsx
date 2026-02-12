@@ -27,11 +27,10 @@ const FEATURES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 80,
-    rotateX: 25,
-    rotateY: i === 0 ? -15 : i === 2 ? 15 : 0,
-    scale: 0.85,
-    filter: "blur(6px)",
+    y: 60,
+    rotateX: 15,
+    rotateY: i === 0 ? -10 : i === 2 ? 10 : 0,
+    scale: 0.9,
   }),
   visible: (i: number) => ({
     opacity: 1,
@@ -39,9 +38,8 @@ const cardVariants = {
     rotateX: 0,
     rotateY: 0,
     scale: 1,
-    filter: "blur(0px)",
     transition: {
-      duration: 0.8,
+      duration: 0.7,
       delay: i * 0.15,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
@@ -59,10 +57,8 @@ export default function WhyFlipper() {
 
   return (
     <section ref={ref} className="py-20 lg:py-28 bg-background relative overflow-hidden">
-      {/* Gym decorative icons */}
       <GymDecorWhyFlipper />
 
-      {/* Subtle parallax grid texture */}
       <motion.div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -80,7 +76,7 @@ export default function WhyFlipper() {
           className="text-center mb-14"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
         >
           <motion.div
@@ -106,7 +102,7 @@ export default function WhyFlipper() {
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: true, amount: 0.1 }}
               whileHover={{
                 y: -8,
                 rotateY: 5,
@@ -127,7 +123,6 @@ export default function WhyFlipper() {
               <h3 className="font-display text-xl font-bold text-foreground mb-3">{f.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
 
-              {/* Bottom energy accent */}
               <motion.div
                 className="absolute bottom-0 left-0 right-0 h-1 rounded-b-lg"
                 style={{

@@ -2,6 +2,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Dumbbell, Award, Clock } from "lucide-react";
 import { useRef } from "react";
 import { GymDecorWhyFlipper } from "@/components/GymDecorations";
+import FloatingParticles from "@/components/FloatingParticles";
+import SectionWave from "@/components/SectionWave";
 
 const FEATURES = [
   {
@@ -58,7 +60,9 @@ export default function WhyFlipper() {
   return (
     <section ref={ref} className="py-20 lg:py-28 bg-background relative overflow-hidden">
       <GymDecorWhyFlipper />
+      <FloatingParticles count={8} color="hsla(221,83%,53%,0.15)" />
 
+      {/* Parallax grid */}
       <motion.div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -69,6 +73,16 @@ export default function WhyFlipper() {
           `,
           backgroundSize: "60px 60px",
         }}
+      />
+
+      {/* Radial glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, hsla(221,83%,53%,0.06) 0%, transparent 70%)",
+        }}
+        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -104,18 +118,18 @@ export default function WhyFlipper() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               whileHover={{
-                y: -8,
-                rotateY: 5,
-                rotateX: -3,
-                scale: 1.03,
+                y: -12,
+                rotateY: 6,
+                rotateX: -4,
+                scale: 1.04,
                 transition: { duration: 0.3 },
               }}
-              className="gym-card p-8 cursor-default"
+              className="gym-card glow-border shimmer p-8 cursor-default"
               style={{ transformStyle: "preserve-3d" }}
             >
               <motion.div
-                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5`}
-                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5 depth-shadow`}
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.15 }}
                 transition={{ duration: 0.5 }}
               >
                 <f.icon size={28} className="text-primary-foreground" />
@@ -137,6 +151,8 @@ export default function WhyFlipper() {
           ))}
         </div>
       </div>
+
+      <SectionWave position="bottom" color="hsl(var(--muted))" />
     </section>
   );
 }

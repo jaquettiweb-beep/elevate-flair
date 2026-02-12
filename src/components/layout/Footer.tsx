@@ -1,27 +1,52 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
+import { motion } from "framer-motion";
 import { GymDecorFooter } from "@/components/GymDecorations";
+import FloatingParticles from "@/components/FloatingParticles";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 export default function Footer() {
   return (
-    <footer className="section-dark relative">
+    <footer className="section-dark relative overflow-hidden">
       <GymDecorFooter />
-      <div className="container mx-auto px-4 py-16 relative z-10">
+      <FloatingParticles count={6} color="hsla(0,0%,100%,0.04)" />
+
+      {/* Top glow line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+      <motion.div
+        className="container mx-auto px-4 py-16 relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* About */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="font-display text-2xl font-bold text-primary-foreground mb-4">FLIPPER</h3>
             <p className="text-footer-foreground text-sm leading-relaxed">
-              Academia completa em São Paulo, oferecendo as melhores modalidades esportivas e aquáticas. 
+              Academia completa em São Paulo, oferecendo as melhores modalidades esportivas e aquáticas.
               Transformando vidas através do esporte desde 2010.
             </p>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h4 className="font-display font-bold text-primary-foreground mb-4">Links Rápidos</h4>
             <nav className="flex flex-col gap-2" aria-label="Links do rodapé">
               {[
@@ -33,16 +58,16 @@ export default function Footer() {
                 <Link
                   key={l.path}
                   to={l.path}
-                  className="text-footer-foreground text-sm hover:text-primary-foreground transition-colors"
+                  className="text-footer-foreground text-sm hover:text-primary-foreground hover:translate-x-1 transition-all duration-200"
                 >
                   {l.label}
                 </Link>
               ))}
             </nav>
-          </div>
+          </motion.div>
 
           {/* Contact */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h4 className="font-display font-bold text-primary-foreground mb-4">Contato</h4>
             <ul className="space-y-3 text-sm text-footer-foreground">
               <li className="flex items-start gap-2">
@@ -69,10 +94,10 @@ export default function Footer() {
                 </div>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Social */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h4 className="font-display font-bold text-primary-foreground mb-4">Siga-nos</h4>
             <div className="flex flex-wrap gap-3">
               {[
@@ -81,35 +106,45 @@ export default function Footer() {
                 { icon: Linkedin, href: "https://www.linkedin.com/company/academiaflipper", color: "bg-[hsl(201,100%,35%)]" },
                 { icon: Youtube, href: "https://www.youtube.com/@academiaflipper", color: "bg-[hsl(0,100%,42%)]" },
               ].map(({ icon: Icon, href, color }) => (
-                <a
+                <motion.a
                   key={href}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${color} w-10 h-10 rounded-full flex items-center justify-center text-primary-foreground transition-transform hover:scale-110`}
+                  className={`${color} w-10 h-10 rounded-full flex items-center justify-center text-primary-foreground transition-all`}
                   aria-label={`Seguir no ${Icon.displayName || "social"}`}
+                  whileHover={{ scale: 1.2, y: -3, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <Icon size={18} />
-                </a>
+                </motion.a>
               ))}
             </div>
-            <a
+            <motion.a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 bg-[hsl(142,70%,40%)] text-primary-foreground rounded-full px-5 py-2 text-sm font-semibold hover:scale-105 transition-transform"
+              className="mt-4 inline-flex items-center gap-2 bg-[hsl(142,70%,40%)] text-primary-foreground rounded-full px-5 py-2 text-sm font-semibold"
+              whileHover={{ scale: 1.08, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
               <Phone size={16} />
               WhatsApp
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-footer-foreground text-xs">
+        <motion.div
+          className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-footer-foreground text-xs"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
           <p>© {new Date().getFullYear()} Academia Flipper. Todos os direitos reservados.</p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* JSON-LD Schema */}
       <script

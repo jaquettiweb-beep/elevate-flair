@@ -12,6 +12,27 @@ import {
 } from "@/components/GymDecorations";
 import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
+/** Dolphin SVG – Flipper's mascot */
+function DolphinIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 80" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      {/* Body */}
+      <path d="M10 50 C10 50 15 20 45 15 C60 12 75 18 85 30 C95 42 100 45 115 42 C112 48 105 52 95 50 C98 55 96 62 88 65 C80 68 65 66 55 60 C45 54 30 55 20 58 C15 60 10 55 10 50Z" />
+      {/* Dorsal fin */}
+      <path d="M55 18 C52 5 60 2 65 8 C68 12 65 18 62 20Z" />
+      {/* Tail */}
+      <path d="M10 50 C5 45 2 38 8 35 C12 33 15 38 15 42Z" />
+      <path d="M10 50 C5 55 2 62 8 65 C12 67 15 62 15 58Z" />
+      {/* Eye */}
+      <circle cx="80" cy="28" r="2.5" fill="white" opacity="0.9" />
+      {/* Smile */}
+      <path d="M88 34 C92 36 96 35 100 33" fill="none" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.7" />
+      {/* Pectoral fin */}
+      <path d="M65 40 C60 48 55 52 50 48 C52 42 58 38 65 40Z" />
+    </svg>
+  );
+}
+
 /*
   Phases:
   1. "appear"   – Logo fades in large + centered (0→1s)
@@ -231,6 +252,91 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
             <Icon className="w-full h-full drop-shadow-[0_0_15px_hsla(0,0%,100%,0.15)]" />
           </motion.div>
         </motion.div>
+      ))}
+
+      {/* ─── DOLPHIN MASCOT ─── */}
+      {/* Main dolphin – jumps in an arc across the screen */}
+      <motion.div
+        className="absolute z-30 text-white/40"
+        style={{ width: 100, height: 70 }}
+        initial={{ left: "-10%", top: "70%", rotate: -30, opacity: 0 }}
+        animate={
+          isFlyingOrLater
+            ? { left: "110%", top: "80%", rotate: 15, opacity: 0 }
+            : showElements
+            ? {
+                left: ["-10%", "25%", "50%", "75%", "110%"],
+                top: ["70%", "25%", "15%", "25%", "70%"],
+                rotate: [-30, -50, 0, 50, 30],
+                opacity: [0, 1, 1, 1, 0],
+                scaleX: [1, 1, 1, 1, 1],
+              }
+            : { left: "-10%", top: "70%", opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.4 }
+            : { duration: 3.5, delay: 0.8, repeat: Infinity, repeatDelay: 1.5, ease: "easeInOut" }
+        }
+      >
+        <DolphinIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(200,100%,70%,0.4)]" />
+      </motion.div>
+
+      {/* Second smaller dolphin – follows behind */}
+      <motion.div
+        className="absolute z-30 text-white/25"
+        style={{ width: 65, height: 45 }}
+        initial={{ left: "-15%", top: "75%", rotate: -30, opacity: 0 }}
+        animate={
+          isFlyingOrLater
+            ? { left: "115%", top: "85%", rotate: 15, opacity: 0 }
+            : showElements
+            ? {
+                left: ["-15%", "20%", "45%", "70%", "115%"],
+                top: ["75%", "35%", "22%", "35%", "75%"],
+                rotate: [-25, -45, 5, 45, 25],
+                opacity: [0, 0.8, 0.8, 0.8, 0],
+              }
+            : { left: "-15%", top: "75%", opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.4 }
+            : { duration: 3.5, delay: 1.2, repeat: Infinity, repeatDelay: 1.5, ease: "easeInOut" }
+        }
+      >
+        <DolphinIcon className="w-full h-full drop-shadow-[0_0_15px_hsla(200,100%,70%,0.3)]" />
+      </motion.div>
+
+      {/* Water splash particles – triggered with dolphin jump */}
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <motion.div
+          key={`splash-${i}`}
+          className="absolute z-25 rounded-full"
+          style={{
+            width: 4 + i * 2,
+            height: 4 + i * 2,
+            background: `hsla(200, 100%, ${70 + i * 5}%, ${0.4 - i * 0.05})`,
+          }}
+          initial={{ left: "50%", top: "45%", opacity: 0, scale: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { opacity: 0, scale: 0 }
+              : showElements
+              ? {
+                  left: `${45 + (i - 2.5) * 4}%`,
+                  top: [`45%`, `${30 - i * 3}%`, `55%`],
+                  opacity: [0, 0.8, 0],
+                  scale: [0, 1.5, 0],
+                }
+              : { opacity: 0, scale: 0 }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.3 }
+              : { duration: 1.2, delay: 2.2 + i * 0.08, repeat: Infinity, repeatDelay: 3.8, ease: "easeOut" }
+          }
+        />
       ))}
 
       {/* ─── LOGO ─── */}

@@ -7,6 +7,7 @@ import Modalities from "@/components/home/Modalities";
 import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import Section3DTransition from "@/components/Section3DTransition";
 
 const Index = () => {
   return (
@@ -18,11 +19,21 @@ const Index = () => {
           path="/"
         />
         <HeroSection />
-        <WhyFlipper />
-        <Modalities />
-        <Stats />
-        <Testimonials />
-        <CTASection />
+        <Section3DTransition effect="foldUp">
+          <WhyFlipper />
+        </Section3DTransition>
+        <Section3DTransition effect="swingDoor">
+          <Modalities />
+        </Section3DTransition>
+        <Section3DTransition effect="flipIn">
+          <Stats />
+        </Section3DTransition>
+        <Section3DTransition effect="foldRight">
+          <Testimonials />
+        </Section3DTransition>
+        <Section3DTransition effect="cubeRotate">
+          <CTASection />
+        </Section3DTransition>
       </PageTransition>
     </Layout>
   );

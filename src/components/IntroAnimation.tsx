@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import {
   DumbbellIcon,
   SwimGoggleIcon,
@@ -12,77 +12,119 @@ import {
 } from "@/components/GymDecorations";
 import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
-/** Dolphin SVG – Flipper's mascot */
+/* ─── Dolphin SVG ─── */
 function DolphinIcon({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 80" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-      {/* Body */}
       <path d="M10 50 C10 50 15 20 45 15 C60 12 75 18 85 30 C95 42 100 45 115 42 C112 48 105 52 95 50 C98 55 96 62 88 65 C80 68 65 66 55 60 C45 54 30 55 20 58 C15 60 10 55 10 50Z" />
-      {/* Dorsal fin */}
       <path d="M55 18 C52 5 60 2 65 8 C68 12 65 18 62 20Z" />
-      {/* Tail */}
       <path d="M10 50 C5 45 2 38 8 35 C12 33 15 38 15 42Z" />
       <path d="M10 50 C5 55 2 62 8 65 C12 67 15 62 15 58Z" />
-      {/* Eye */}
       <circle cx="80" cy="28" r="2.5" fill="white" opacity="0.9" />
-      {/* Smile */}
       <path d="M88 34 C92 36 96 35 100 33" fill="none" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.7" />
-      {/* Pectoral fin */}
       <path d="M65 40 C60 48 55 52 50 48 C52 42 58 38 65 40Z" />
     </svg>
   );
 }
 
-/*
-  Phases:
-  1. "appear"   – Logo fades in large + centered (0→1s)
-  2. "hold"     – Logo stays big, tagline + icons + particles appear (1→3.5s)
-  3. "fly"      – Logo shrinks & flies to header top-left (3.5→4.5s)
-  4. "curtain"  – Background wipes away revealing site (4.5→5.2s)
-  5. done       – onComplete called
-*/
+/* ─── Splash sound via Web Audio API ─── */
+function useSplashSound() {
+  const ctxRef = useRef<AudioContext | null>(null);
 
-const iconItems = [
-  { Icon: SwimGoggleIcon, x: "15%", y: "20%", size: 60, delay: 0.4 },
-  { Icon: DumbbellIcon, x: "80%", y: "15%", size: 68, delay: 0.6 },
-  { Icon: SwimCapIcon, x: "10%", y: "70%", size: 52, delay: 0.8 },
-  { Icon: KettlebellIcon, x: "85%", y: "75%", size: 50, delay: 0.7 },
-  { Icon: WaterWaveIcon, x: "50%", y: "85%", size: 76, delay: 1.0 },
-  { Icon: YogaPoseIcon, x: "72%", y: "45%", size: 44, delay: 0.9 },
-  { Icon: BoxingGloveIcon, x: "25%", y: "80%", size: 46, delay: 0.5 },
-  { Icon: JumpRopeIcon, x: "88%", y: "45%", size: 42, delay: 1.1 },
-  { Icon: DumbbellIcon, x: "35%", y: "12%", size: 38, delay: 0.7 },
-  { Icon: SwimGoggleIcon, x: "65%", y: "78%", size: 48, delay: 0.9 },
-];
+  const play = useCallback(() => {
+    try {
+      if (!ctxRef.current) ctxRef.current = new AudioContext();
+      const ctx = ctxRef.current;
 
-// Floating particles for depth
-function generateParticles(count: number) {
+      // White noise burst = water splash
+      const duration = 0.25;
+      const sampleRate = ctx.sampleRate;
+      const len = sampleRate * duration;
+      const buffer = ctx.createBuffer(1, len, sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < len; i++) {
+        // Envelope: quick attack, fast decay
+        const env = Math.exp(-i / (sampleRate * 0.04));
+        data[i] = (Math.random() * 2 - 1) * env * 0.3;
+      }
+
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+
+      // Bandpass filter to sound more watery
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.value = 2000;
+      filter.Q.value = 0.8;
+
+      const gain = ctx.createGain();
+      gain.gain.value = 0.15;
+
+      src.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      src.start();
+    } catch {
+      // Audio not available, silently ignore
+    }
+  }, []);
+
+  return play;
+}
+
+/* ─── Bubble particles ─── */
+function generateBubbles(count: number) {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: 2 + Math.random() * 4,
-    delay: Math.random() * 2,
-    duration: 3 + Math.random() * 4,
-    drift: -30 + Math.random() * 60,
+    x: 5 + Math.random() * 90,
+    y: 60 + Math.random() * 40,
+    size: 3 + Math.random() * 8,
+    delay: Math.random() * 3,
+    duration: 3 + Math.random() * 3,
   }));
 }
+
+const iconItems = [
+  { Icon: SwimGoggleIcon, x: "12%", y: "18%", size: 50, delay: 0.5 },
+  { Icon: DumbbellIcon, x: "82%", y: "12%", size: 55, delay: 0.7 },
+  { Icon: SwimCapIcon, x: "8%", y: "72%", size: 42, delay: 0.9 },
+  { Icon: KettlebellIcon, x: "88%", y: "78%", size: 40, delay: 0.8 },
+  { Icon: YogaPoseIcon, x: "75%", y: "42%", size: 36, delay: 1.0 },
+  { Icon: BoxingGloveIcon, x: "22%", y: "82%", size: 38, delay: 0.6 },
+  { Icon: JumpRopeIcon, x: "90%", y: "42%", size: 34, delay: 1.1 },
+];
 
 type Phase = "appear" | "hold" | "fly" | "curtain";
 
 export default function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<Phase>("appear");
-  const particles = useMemo(() => generateParticles(24), []);
+  const bubbles = useMemo(() => generateBubbles(20), []);
+  const playSplash = useSplashSound();
+  const splashPlayed = useRef(false);
 
   useEffect(() => {
     const timers = [
       setTimeout(() => setPhase("hold"), 800),
-      setTimeout(() => setPhase("fly"), 3200),
-      setTimeout(() => setPhase("curtain"), 4200),
-      setTimeout(onComplete, 5000),
+      setTimeout(() => setPhase("fly"), 3600),
+      setTimeout(() => setPhase("curtain"), 4600),
+      setTimeout(onComplete, 5400),
     ];
     return () => timers.forEach(clearTimeout);
   }, [onComplete]);
+
+  // Play splash when dolphins are in hold phase
+  useEffect(() => {
+    if (phase === "hold" && !splashPlayed.current) {
+      splashPlayed.current = true;
+      // First splash when main dolphin emerges
+      const t1 = setTimeout(playSplash, 1200);
+      // Second splash at apex
+      const t2 = setTimeout(playSplash, 2600);
+      // Third splash for second dolphin
+      const t3 = setTimeout(playSplash, 1600);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    }
+  }, [phase, playSplash]);
 
   const isFlyingOrLater = phase === "fly" || phase === "curtain";
   const showElements = phase === "hold";
@@ -95,141 +137,115 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
       transition={phase === "curtain" ? { duration: 0.7, ease: [0.76, 0, 0.24, 1] } : {}}
       style={{ pointerEvents: phase === "curtain" ? "none" : "auto" }}
     >
-      {/* Background gradient */}
+      {/* ─── OCEAN BACKGROUND ─── */}
       <motion.div
         className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, hsl(30,90%,50%) 0%, hsl(25,95%,45%) 40%, hsl(20,90%,38%) 100%)",
+        initial={{ background: "linear-gradient(180deg, hsl(200,80%,25%) 0%, hsl(210,90%,15%) 50%, hsl(220,85%,10%) 100%)" }}
+        animate={{
+          background: [
+            "linear-gradient(180deg, hsl(200,80%,25%) 0%, hsl(210,90%,15%) 50%, hsl(220,85%,10%) 100%)",
+            "linear-gradient(180deg, hsl(195,75%,30%) 0%, hsl(205,85%,18%) 50%, hsl(215,80%,12%) 100%)",
+            "linear-gradient(180deg, hsl(200,80%,25%) 0%, hsl(210,90%,15%) 50%, hsl(220,85%,10%) 100%)",
+          ],
         }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Ambient light orbs for depth */}
+      {/* Water surface light caustics */}
+      <motion.div
+        className="absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage: `
+            radial-gradient(ellipse 80px 40px at 20% 30%, hsla(190,100%,70%,0.5) 0%, transparent 100%),
+            radial-gradient(ellipse 60px 30px at 50% 50%, hsla(200,100%,75%,0.4) 0%, transparent 100%),
+            radial-gradient(ellipse 90px 45px at 80% 40%, hsla(195,100%,65%,0.5) 0%, transparent 100%),
+            radial-gradient(ellipse 70px 35px at 35% 70%, hsla(205,100%,70%,0.3) 0%, transparent 100%)
+          `,
+        }}
+        animate={{ opacity: [0.04, 0.08, 0.04], scale: [1, 1.05, 1] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Ambient underwater light shafts */}
       {[
-        { x: "20%", y: "30%", size: 300, color: "hsla(30,100%,70%,0.08)", delay: 0 },
-        { x: "75%", y: "60%", size: 250, color: "hsla(200,80%,60%,0.06)", delay: 0.5 },
-        { x: "50%", y: "80%", size: 350, color: "hsla(20,90%,50%,0.05)", delay: 1 },
-      ].map((orb, i) => (
+        { x: "25%", w: 80, angle: -15, delay: 0 },
+        { x: "55%", w: 60, angle: -8, delay: 1 },
+        { x: "80%", w: 70, angle: -20, delay: 0.5 },
+      ].map((shaft, i) => (
         <motion.div
-          key={`orb-${i}`}
-          className="absolute rounded-full"
+          key={`shaft-${i}`}
+          className="absolute top-0 pointer-events-none"
           style={{
-            left: orb.x,
-            top: orb.y,
-            width: orb.size,
-            height: orb.size,
-            background: `radial-gradient(circle, ${orb.color}, transparent 70%)`,
-            transform: "translate(-50%, -50%)",
+            left: shaft.x,
+            width: shaft.w,
+            height: "100%",
+            background: "linear-gradient(180deg, hsla(195,100%,80%,0.06) 0%, transparent 70%)",
+            transform: `rotate(${shaft.angle}deg)`,
+            transformOrigin: "top center",
           }}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={
-            isFlyingOrLater
-              ? { scale: 3, opacity: 0 }
-              : showElements
-              ? { scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }
-              : { scale: 0, opacity: 0 }
-          }
-          transition={
-            isFlyingOrLater
-              ? { duration: 0.5 }
-              : { duration: 4, delay: orb.delay, repeat: Infinity, ease: "easeInOut" }
-          }
+          animate={{ opacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 3, delay: shaft.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
 
-      {/* Floating sparkle particles */}
-      {particles.map((p) => (
+      {/* ─── BUBBLES ─── */}
+      {bubbles.map((b) => (
         <motion.div
-          key={`particle-${p.id}`}
-          className="absolute rounded-full bg-white"
+          key={`bubble-${b.id}`}
+          className="absolute rounded-full border border-white/20"
           style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
+            left: `${b.x}%`,
+            top: `${b.y}%`,
+            width: b.size,
+            height: b.size,
+            background: "radial-gradient(circle at 30% 30%, hsla(0,0%,100%,0.25), transparent)",
           }}
           initial={{ opacity: 0, scale: 0 }}
           animate={
             isFlyingOrLater
-              ? { opacity: 0, scale: 0, y: -100 }
+              ? { opacity: 0, scale: 0, y: -200 }
               : showElements
               ? {
                   opacity: [0, 0.6, 0],
-                  scale: [0, 1, 0],
-                  y: [0, p.drift, p.drift * 2],
-                  x: [0, p.drift * 0.5],
+                  scale: [0, 1, 0.8],
+                  y: [0, -(100 + b.y * 3)],
+                  x: [0, (b.id % 2 ? 15 : -15)],
                 }
               : { opacity: 0, scale: 0 }
           }
           transition={
             isFlyingOrLater
               ? { duration: 0.3 }
-              : {
-                  duration: p.duration,
-                  delay: p.delay,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }
+              : { duration: b.duration, delay: b.delay, repeat: Infinity, ease: "easeOut" }
           }
         />
       ))}
 
       {/* Ripple rings behind logo */}
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+      {[0, 1, 2, 3].map((i) => (
         <motion.div
           key={`ripple-${i}`}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/8"
-          style={{ width: 160 + i * 130, height: 160 + i * 130 }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6"
+          style={{ width: 200 + i * 140, height: 200 + i * 140 }}
           initial={{ scale: 0, opacity: 0 }}
           animate={
             isFlyingOrLater
               ? { scale: 2, opacity: 0 }
-              : { scale: [0, 1.5, 0], opacity: [0, 0.25, 0] }
+              : { scale: [0, 1.3, 0], opacity: [0, 0.2, 0] }
           }
           transition={
             isFlyingOrLater
               ? { duration: 0.5 }
-              : { duration: 3, delay: 0.4 + i * 0.35, repeat: Infinity, ease: "easeOut" }
+              : { duration: 3, delay: 0.5 + i * 0.4, repeat: Infinity, ease: "easeOut" }
           }
         />
       ))}
 
-      {/* Rotating orbit ring */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/6"
-        style={{ width: 500, height: 500 }}
-        initial={{ scale: 0, opacity: 0, rotate: 0 }}
-        animate={
-          isFlyingOrLater
-            ? { scale: 2, opacity: 0 }
-            : showElements
-            ? { scale: 1, opacity: 1, rotate: 360 }
-            : { scale: 0, opacity: 0 }
-        }
-        transition={
-          isFlyingOrLater
-            ? { duration: 0.5 }
-            : { scale: { duration: 0.8 }, opacity: { duration: 0.8 }, rotate: { duration: 20, repeat: Infinity, ease: "linear" } }
-        }
-      >
-        {/* Orbiting dots */}
-        {[0, 90, 180, 270].map((angle) => (
-          <motion.div
-            key={`orbit-dot-${angle}`}
-            className="absolute w-2 h-2 rounded-full bg-white/30"
-            style={{
-              left: `${50 + 50 * Math.cos((angle * Math.PI) / 180)}%`,
-              top: `${50 + 50 * Math.sin((angle * Math.PI) / 180)}%`,
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ))}
-      </motion.div>
-
-      {/* Floating gym icons */}
+      {/* Floating gym icons (smaller, background) */}
       {iconItems.map(({ Icon, x, y, size, delay }, i) => (
         <motion.div
           key={i}
-          className="absolute text-white/15"
+          className="absolute text-white/10"
           style={{ left: x, top: y, width: size, height: size }}
           initial={{ scale: 0, opacity: 0, rotate: -25 }}
           animate={
@@ -246,86 +262,185 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
         >
           <motion.div
-            animate={{ y: [0, -10, 0], rotate: [0, i % 2 === 0 ? 5 : -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay }}
+            animate={{ y: [0, -8, 0], rotate: [0, i % 2 === 0 ? 4 : -4, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay }}
           >
-            <Icon className="w-full h-full drop-shadow-[0_0_15px_hsla(0,0%,100%,0.15)]" />
+            <Icon className="w-full h-full drop-shadow-[0_0_10px_hsla(0,0%,100%,0.1)]" />
           </motion.div>
         </motion.div>
       ))}
 
-      {/* ─── DOLPHIN MASCOT ─── */}
-      {/* Main dolphin – jumps in an arc across the screen */}
-      <motion.div
-        className="absolute z-30 text-white/40"
-        style={{ width: 100, height: 70 }}
-        initial={{ left: "-10%", top: "70%", rotate: -30, opacity: 0 }}
-        animate={
-          isFlyingOrLater
-            ? { left: "110%", top: "80%", rotate: 15, opacity: 0 }
-            : showElements
-            ? {
-                left: ["-10%", "25%", "50%", "75%", "110%"],
-                top: ["70%", "25%", "15%", "25%", "70%"],
-                rotate: [-30, -50, 0, 50, 30],
-                opacity: [0, 1, 1, 1, 0],
-                scaleX: [1, 1, 1, 1, 1],
-              }
-            : { left: "-10%", top: "70%", opacity: 0 }
-        }
-        transition={
-          isFlyingOrLater
-            ? { duration: 0.4 }
-            : { duration: 3.5, delay: 0.8, repeat: Infinity, repeatDelay: 1.5, ease: "easeInOut" }
-        }
-      >
-        <DolphinIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(200,100%,70%,0.4)]" />
-      </motion.div>
+      {/* ═══════════════════════════════════════════════
+          ─── DOLPHINS – Main visual element ───
+          ═══════════════════════════════════════════════ */}
 
-      {/* Second smaller dolphin – follows behind */}
+      {/* HERO DOLPHIN – Large, jumps in a dramatic arc */}
       <motion.div
-        className="absolute z-30 text-white/25"
-        style={{ width: 65, height: 45 }}
-        initial={{ left: "-15%", top: "75%", rotate: -30, opacity: 0 }}
+        className="absolute z-40 text-white"
+        style={{ width: 180, height: 120 }}
+        initial={{ left: "-15%", top: "75%", rotate: -35, opacity: 0, scale: 0.8 }}
         animate={
           isFlyingOrLater
-            ? { left: "115%", top: "85%", rotate: 15, opacity: 0 }
+            ? { left: "110%", top: "20%", rotate: 20, opacity: 0, scale: 0.5 }
             : showElements
             ? {
-                left: ["-15%", "20%", "45%", "70%", "115%"],
-                top: ["75%", "35%", "22%", "35%", "75%"],
-                rotate: [-25, -45, 5, 45, 25],
-                opacity: [0, 0.8, 0.8, 0.8, 0],
+                left: ["-15%", "15%", "40%", "65%", "110%"],
+                top: ["75%", "15%", "5%", "15%", "75%"],
+                rotate: [-35, -55, 0, 55, 35],
+                opacity: [0, 1, 1, 1, 0],
+                scale: [0.8, 1.1, 1.2, 1.1, 0.8],
               }
             : { left: "-15%", top: "75%", opacity: 0 }
         }
         transition={
           isFlyingOrLater
-            ? { duration: 0.4 }
-            : { duration: 3.5, delay: 1.2, repeat: Infinity, repeatDelay: 1.5, ease: "easeInOut" }
+            ? { duration: 0.5 }
+            : { duration: 3, delay: 0.6, repeat: Infinity, repeatDelay: 2, ease: [0.37, 0, 0.63, 1] }
         }
       >
-        <DolphinIcon className="w-full h-full drop-shadow-[0_0_15px_hsla(200,100%,70%,0.3)]" />
+        <DolphinIcon className="w-full h-full drop-shadow-[0_0_40px_hsla(200,100%,70%,0.6)] filter brightness-110" />
+        {/* Glow aura around dolphin */}
+        <motion.div
+          className="absolute -inset-8 rounded-full -z-10"
+          style={{ background: "radial-gradient(circle, hsla(200,100%,70%,0.2) 0%, transparent 70%)" }}
+        />
       </motion.div>
 
-      {/* Water splash particles – triggered with dolphin jump */}
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+      {/* SECOND DOLPHIN – Medium, follows with offset */}
+      <motion.div
+        className="absolute z-40 text-white/80"
+        style={{ width: 130, height: 87 }}
+        initial={{ left: "-20%", top: "80%", rotate: -30, opacity: 0, scale: 0.7 }}
+        animate={
+          isFlyingOrLater
+            ? { left: "115%", top: "30%", rotate: 20, opacity: 0, scale: 0.4 }
+            : showElements
+            ? {
+                left: ["-20%", "10%", "35%", "60%", "115%"],
+                top: ["80%", "25%", "12%", "25%", "80%"],
+                rotate: [-30, -50, 5, 50, 30],
+                opacity: [0, 0.9, 0.9, 0.9, 0],
+                scale: [0.7, 1, 1.05, 1, 0.7],
+              }
+            : { left: "-20%", top: "80%", opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.5 }
+            : { duration: 3, delay: 1.0, repeat: Infinity, repeatDelay: 2, ease: [0.37, 0, 0.63, 1] }
+        }
+      >
+        <DolphinIcon className="w-full h-full drop-shadow-[0_0_30px_hsla(200,100%,70%,0.5)]" />
+      </motion.div>
+
+      {/* THIRD DOLPHIN – Small baby dolphin, cute trailing */}
+      <motion.div
+        className="absolute z-40 text-white/60"
+        style={{ width: 80, height: 53 }}
+        initial={{ left: "-25%", top: "82%", rotate: -25, opacity: 0, scale: 0.6 }}
+        animate={
+          isFlyingOrLater
+            ? { left: "120%", top: "35%", rotate: 15, opacity: 0, scale: 0.3 }
+            : showElements
+            ? {
+                left: ["-25%", "8%", "32%", "56%", "120%"],
+                top: ["82%", "32%", "18%", "32%", "82%"],
+                rotate: [-25, -45, 8, 45, 25],
+                opacity: [0, 0.7, 0.7, 0.7, 0],
+                scale: [0.6, 0.9, 0.95, 0.9, 0.6],
+              }
+            : { left: "-25%", top: "82%", opacity: 0 }
+        }
+        transition={
+          isFlyingOrLater
+            ? { duration: 0.5 }
+            : { duration: 3, delay: 1.4, repeat: Infinity, repeatDelay: 2, ease: [0.37, 0, 0.63, 1] }
+        }
+      >
+        <DolphinIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(200,100%,70%,0.4)]" />
+      </motion.div>
+
+      {/* ─── WATER SPLASH at entry point (left) ─── */}
+      {[...Array(10)].map((_, i) => (
         <motion.div
-          key={`splash-${i}`}
-          className="absolute z-25 rounded-full"
+          key={`splash-entry-${i}`}
+          className="absolute z-35 rounded-full"
           style={{
-            width: 4 + i * 2,
-            height: 4 + i * 2,
-            background: `hsla(200, 100%, ${70 + i * 5}%, ${0.4 - i * 0.05})`,
+            width: 3 + Math.random() * 8,
+            height: 3 + Math.random() * 8,
+            background: `hsla(${190 + i * 3}, 100%, ${75 + i * 2}%, ${0.6 - i * 0.04})`,
           }}
-          initial={{ left: "50%", top: "45%", opacity: 0, scale: 0 }}
+          initial={{ left: "5%", top: "75%", opacity: 0, scale: 0 }}
           animate={
             isFlyingOrLater
               ? { opacity: 0, scale: 0 }
               : showElements
               ? {
-                  left: `${45 + (i - 2.5) * 4}%`,
-                  top: [`45%`, `${30 - i * 3}%`, `55%`],
+                  left: `${2 + i * 2.5}%`,
+                  top: [`75%`, `${55 - i * 4}%`, `80%`],
+                  opacity: [0, 0.9, 0],
+                  scale: [0, 1.8, 0],
+                }
+              : { opacity: 0, scale: 0 }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.2 }
+              : { duration: 0.8, delay: 0.8 + i * 0.04, repeat: Infinity, repeatDelay: 4.2, ease: "easeOut" }
+          }
+        />
+      ))}
+
+      {/* ─── WATER SPLASH at apex (center) ─── */}
+      {[...Array(12)].map((_, i) => (
+        <motion.div
+          key={`splash-apex-${i}`}
+          className="absolute z-35 rounded-full"
+          style={{
+            width: 4 + Math.random() * 10,
+            height: 4 + Math.random() * 10,
+            background: `hsla(${195 + i * 2}, 100%, ${80 + i}%, ${0.7 - i * 0.04})`,
+          }}
+          initial={{ left: "40%", top: "10%", opacity: 0, scale: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { opacity: 0, scale: 0 }
+              : showElements
+              ? {
+                  left: `${35 + (i - 5) * 3}%`,
+                  top: [`10%`, `${-5 + Math.abs(i - 5) * 3}%`, `25%`],
+                  opacity: [0, 1, 0],
+                  scale: [0, 2, 0],
+                  rotate: [0, (i - 5) * 30, (i - 5) * 60],
+                }
+              : { opacity: 0, scale: 0 }
+          }
+          transition={
+            isFlyingOrLater
+              ? { duration: 0.2 }
+              : { duration: 1, delay: 2.0 + i * 0.03, repeat: Infinity, repeatDelay: 4, ease: "easeOut" }
+          }
+        />
+      ))}
+
+      {/* ─── WATER SPLASH at exit (right) ─── */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={`splash-exit-${i}`}
+          className="absolute z-35 rounded-full"
+          style={{
+            width: 3 + Math.random() * 7,
+            height: 3 + Math.random() * 7,
+            background: `hsla(${192 + i * 2}, 100%, ${72 + i * 3}%, ${0.5 - i * 0.04})`,
+          }}
+          initial={{ left: "90%", top: "75%", opacity: 0, scale: 0 }}
+          animate={
+            isFlyingOrLater
+              ? { opacity: 0, scale: 0 }
+              : showElements
+              ? {
+                  left: `${85 + i * 2}%`,
+                  top: [`75%`, `${58 - i * 3}%`, `82%`],
                   opacity: [0, 0.8, 0],
                   scale: [0, 1.5, 0],
                 }
@@ -333,11 +448,34 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
           transition={
             isFlyingOrLater
-              ? { duration: 0.3 }
-              : { duration: 1.2, delay: 2.2 + i * 0.08, repeat: Infinity, repeatDelay: 3.8, ease: "easeOut" }
+              ? { duration: 0.2 }
+              : { duration: 0.7, delay: 3.2 + i * 0.04, repeat: Infinity, repeatDelay: 4.3, ease: "easeOut" }
           }
         />
       ))}
+
+      {/* ─── WATER SURFACE LINE ─── animated across bottom */}
+      <motion.div
+        className="absolute z-30 left-0 right-0"
+        style={{ bottom: "22%", height: 3 }}
+      >
+        <svg width="100%" height="100%" viewBox="0 0 1440 3" preserveAspectRatio="none">
+          <motion.path
+            d="M0 1.5 C240 0 480 3 720 1.5 C960 0 1200 3 1440 1.5"
+            stroke="hsla(200,100%,80%,0.15)"
+            strokeWidth="1.5"
+            fill="none"
+            animate={{
+              d: [
+                "M0 1.5 C240 0 480 3 720 1.5 C960 0 1200 3 1440 1.5",
+                "M0 1.5 C240 3 480 0 720 1.5 C960 3 1200 0 1440 1.5",
+                "M0 1.5 C240 0 480 3 720 1.5 C960 0 1200 3 1440 1.5",
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </svg>
+      </motion.div>
 
       {/* ─── LOGO ─── */}
       <motion.div
@@ -388,7 +526,7 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
         <motion.div
           className="absolute w-[400px] h-[400px] rounded-full -z-10"
           style={{
-            background: "radial-gradient(circle, hsla(0,0%,100%,0.3) 0%, transparent 60%)",
+            background: "radial-gradient(circle, hsla(200,100%,80%,0.25) 0%, transparent 60%)",
           }}
           animate={
             isFlyingOrLater
@@ -402,11 +540,11 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
         />
 
-        {/* Secondary outer glow */}
+        {/* Secondary outer glow – ocean blue */}
         <motion.div
           className="absolute w-[550px] h-[550px] rounded-full -z-10"
           style={{
-            background: "radial-gradient(circle, hsla(30,100%,70%,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, hsla(200,90%,60%,0.1) 0%, transparent 70%)",
           }}
           animate={
             isFlyingOrLater
@@ -420,13 +558,13 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           }
         />
 
-        {/* Logo image with 3D perspective */}
+        {/* Logo image */}
         <motion.img
           src={flipperLogo}
           alt="Academia Flipper"
           className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl"
           style={{
-            boxShadow: "0 0 80px hsla(0,0%,100%,0.35), 0 25px 50px hsla(0,0%,0%,0.4), 0 0 120px hsla(30,90%,50%,0.2)",
+            boxShadow: "0 0 80px hsla(200,100%,70%,0.3), 0 25px 50px hsla(0,0%,0%,0.4), 0 0 120px hsla(200,80%,50%,0.15)",
           }}
           initial={{ rotate: -8, rotateY: 15 }}
           animate={
@@ -477,66 +615,39 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           <motion.div
             className="h-full rounded-full origin-left"
             style={{
-              background: "linear-gradient(90deg, hsl(0,0%,100%), hsla(0,0%,100%,0.5))",
+              background: "linear-gradient(90deg, hsla(200,100%,80%,1), hsla(200,100%,60%,0.5))",
             }}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: showElements ? 1 : 0 }}
-            transition={{ duration: 2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
+            transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
           />
         </motion.div>
       </motion.div>
 
-      {/* Diagonal light streak */}
+      {/* ─── BOTTOM WAVES ─── */}
       <motion.div
-        className="absolute -z-0"
-        style={{
-          width: "200%",
-          height: 2,
-          background: "linear-gradient(90deg, transparent, hsla(0,0%,100%,0.15), transparent)",
-          top: "40%",
-          left: "-50%",
-          transform: "rotate(-35deg)",
-          transformOrigin: "center",
-        }}
-        initial={{ x: "-100%", opacity: 0 }}
-        animate={
-          isFlyingOrLater
-            ? { x: "100%", opacity: 0 }
-            : showElements
-            ? { x: ["−100%", "100%"], opacity: [0, 1, 0] }
-            : { x: "-100%", opacity: 0 }
-        }
-        transition={
-          isFlyingOrLater
-            ? { duration: 0.3 }
-            : { duration: 3, delay: 1.5, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }
-        }
-      />
-
-      {/* Bottom wave decoration - doubled */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 text-white/6"
-        style={{ height: 80 }}
+        className="absolute bottom-0 left-0 right-0 text-white/8"
+        style={{ height: 90 }}
         initial={{ x: "-100%" }}
         animate={isFlyingOrLater ? { x: "100%", opacity: 0 } : { x: "0%" }}
         transition={
           isFlyingOrLater
             ? { duration: 0.5, ease: "easeIn" }
-            : { duration: 1.5, ease: [0.42, 0, 0.58, 1], delay: 0.5 }
+            : { duration: 1.5, ease: [0.42, 0, 0.58, 1], delay: 0.3 }
         }
       >
         <WaterWaveIcon className="w-full h-full" />
       </motion.div>
 
       <motion.div
-        className="absolute bottom-12 left-0 right-0 text-white/4"
-        style={{ height: 60 }}
+        className="absolute bottom-14 left-0 right-0 text-white/5"
+        style={{ height: 70 }}
         initial={{ x: "100%" }}
         animate={isFlyingOrLater ? { x: "-100%", opacity: 0 } : { x: "0%" }}
         transition={
           isFlyingOrLater
             ? { duration: 0.5, ease: "easeIn" }
-            : { duration: 2, ease: [0.42, 0, 0.58, 1], delay: 0.8 }
+            : { duration: 2, ease: [0.42, 0, 0.58, 1], delay: 0.6 }
         }
       >
         <WaterWaveIcon className="w-full h-full" />

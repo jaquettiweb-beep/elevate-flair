@@ -3,14 +3,25 @@ import { useState } from "react";
 
 function DolphinIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 120 80" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 50 C10 50 15 20 45 15 C60 12 75 18 85 30 C95 42 100 45 115 42 C112 48 105 52 95 50 C98 55 96 62 88 65 C80 68 65 66 55 60 C45 54 30 55 20 58 C15 60 10 55 10 50Z" />
-      <path d="M55 18 C52 5 60 2 65 8 C68 12 65 18 62 20Z" />
-      <path d="M10 50 C5 45 2 38 8 35 C12 33 15 38 15 42Z" />
-      <path d="M10 50 C5 55 2 62 8 65 C12 67 15 62 15 58Z" />
-      <circle cx="80" cy="28" r="2.5" fill="white" opacity="0.9" />
-      <path d="M88 34 C92 36 96 35 100 33" fill="none" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.7" />
-      <path d="M65 40 C60 48 55 52 50 48 C52 42 58 38 65 40Z" />
+    <svg viewBox="0 0 200 140" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      {/* Body */}
+      <path d="M30 80 C30 65 40 40 70 30 C90 24 110 28 130 40 C145 50 155 55 170 52 C175 51 180 52 178 56 C175 60 168 63 158 60 C162 68 158 78 148 82 C138 86 120 84 105 76 C90 68 70 68 55 74 C45 78 35 80 30 80Z" />
+      {/* Dorsal fin */}
+      <path d="M85 30 C82 10 92 4 98 14 C102 20 98 28 94 32Z" />
+      {/* Beak/rostrum - elongated snout */}
+      <path d="M170 52 C180 48 192 46 198 48 C194 52 184 54 178 56Z" />
+      {/* Tail flukes */}
+      <path d="M30 80 C20 72 10 62 14 55 C18 50 26 56 28 64Z" />
+      <path d="M30 80 C18 84 8 90 12 97 C16 102 26 96 28 88Z" />
+      {/* Pectoral fin */}
+      <path d="M120 60 C115 72 108 80 102 76 C100 70 108 62 118 58Z" />
+      {/* Eye */}
+      <circle cx="162" cy="46" r="3.5" fill="white" opacity="0.95" />
+      <circle cx="162.5" cy="46" r="1.8" fill="hsl(221, 83%, 20%)" />
+      {/* Mouth line */}
+      <path d="M172 54 C180 52 188 50 194 49" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      {/* Belly highlight */}
+      <path d="M60 75 C75 70 95 68 115 72 C105 78 85 80 60 75Z" fill="white" opacity="0.15" />
     </svg>
   );
 }

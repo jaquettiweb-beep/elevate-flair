@@ -19,7 +19,7 @@ export default function Section3DTransition({
   });
 
   // Spring-smooth the raw scroll progress for buttery feel
-  const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, mass: 0.5 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 40, damping: 28, mass: 0.8 });
 
   const configs: Record<string, {
     rotateX: [number, number];
@@ -30,50 +30,50 @@ export default function Section3DTransition({
     originY: number;
   }> = {
     foldUp: {
-      rotateX: [18, 0],
+      rotateX: [4, 0],
       rotateY: [0, 0],
-      scale: [0.92, 1],
-      y: [50, 0],
+      scale: [0.97, 1],
+      y: [40, 0],
       originX: 0.5,
       originY: 0.8,
     },
     foldLeft: {
       rotateX: [0, 0],
-      rotateY: [-14, 0],
-      scale: [0.93, 1],
-      y: [30, 0],
-      originX: 0,
+      rotateY: [-3, 0],
+      scale: [0.97, 1],
+      y: [35, 0],
+      originX: 0.3,
       originY: 0.5,
     },
     foldRight: {
       rotateX: [0, 0],
-      rotateY: [14, 0],
-      scale: [0.93, 1],
-      y: [30, 0],
-      originX: 1,
+      rotateY: [3, 0],
+      scale: [0.97, 1],
+      y: [35, 0],
+      originX: 0.7,
       originY: 0.5,
     },
     flipIn: {
-      rotateX: [22, 0],
+      rotateX: [5, 0],
       rotateY: [0, 0],
-      scale: [0.88, 1],
-      y: [60, 0],
+      scale: [0.96, 1],
+      y: [45, 0],
       originX: 0.5,
       originY: 0.7,
     },
     swingDoor: {
       rotateX: [0, 0],
-      rotateY: [-20, 0],
-      scale: [0.94, 1],
-      y: [25, 0],
-      originX: 0,
+      rotateY: [-4, 0],
+      scale: [0.97, 1],
+      y: [30, 0],
+      originX: 0.2,
       originY: 0.5,
     },
     cubeRotate: {
-      rotateX: [12, 0],
-      rotateY: [12, 0],
-      scale: [0.9, 1],
-      y: [40, 0],
+      rotateX: [3, 0],
+      rotateY: [3, 0],
+      scale: [0.96, 1],
+      y: [35, 0],
       originX: 0.5,
       originY: 0.5,
     },
@@ -85,7 +85,7 @@ export default function Section3DTransition({
   const rotateY = useTransform(smooth, [0, 1], c.rotateY);
   const scale = useTransform(smooth, [0, 1], c.scale);
   const y = useTransform(smooth, [0, 1], c.y);
-  const opacity = useTransform(smooth, [0, 0.15, 1], [0.2, 0.7, 1]);
+  const opacity = useTransform(smooth, [0, 0.25, 1], [0.4, 0.85, 1]);
 
   return (
     <div

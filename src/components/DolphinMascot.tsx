@@ -1,30 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState } from "react";
-
-function DolphinIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 200 140" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-      {/* Body */}
-      <path d="M30 80 C30 65 40 40 70 30 C90 24 110 28 130 40 C145 50 155 55 170 52 C175 51 180 52 178 56 C175 60 168 63 158 60 C162 68 158 78 148 82 C138 86 120 84 105 76 C90 68 70 68 55 74 C45 78 35 80 30 80Z" />
-      {/* Dorsal fin */}
-      <path d="M85 30 C82 10 92 4 98 14 C102 20 98 28 94 32Z" />
-      {/* Beak/rostrum - elongated snout */}
-      <path d="M170 52 C180 48 192 46 198 48 C194 52 184 54 178 56Z" />
-      {/* Tail flukes */}
-      <path d="M30 80 C20 72 10 62 14 55 C18 50 26 56 28 64Z" />
-      <path d="M30 80 C18 84 8 90 12 97 C16 102 26 96 28 88Z" />
-      {/* Pectoral fin */}
-      <path d="M120 60 C115 72 108 80 102 76 C100 70 108 62 118 58Z" />
-      {/* Eye */}
-      <circle cx="162" cy="46" r="3.5" fill="white" opacity="0.95" />
-      <circle cx="162.5" cy="46" r="1.8" fill="hsl(221, 83%, 20%)" />
-      {/* Mouth line */}
-      <path d="M172 54 C180 52 188 50 194 49" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-      {/* Belly highlight */}
-      <path d="M60 75 C75 70 95 68 115 72 C105 78 85 80 60 75Z" fill="white" opacity="0.15" />
-    </svg>
-  );
-}
+import dolphinImg from "@/assets/dolphin-mascot.png";
 
 export default function DolphinMascot() {
   const { scrollYProgress } = useScroll();
@@ -81,7 +57,7 @@ export default function DolphinMascot() {
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <DolphinIcon className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)]" />
+          <img src={dolphinImg} alt="Flipper" className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)] object-contain" />
         </motion.div>
       </motion.div>
 

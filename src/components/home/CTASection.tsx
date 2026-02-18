@@ -75,7 +75,7 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 60, scale: 0.9, rotateX: 15 }}
           whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.8 }}
         >
           <motion.div
             initial={{ scale: 0, rotate: -180 }}

@@ -28,7 +28,7 @@ const TESTIMONIALS = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 40,
+    y: 50,
     rotateX: 6,
     rotateY: (i - 1) * 4,
     scale: 0.96,
@@ -40,16 +40,18 @@ const cardVariants = {
     rotateY: 0,
     scale: 1,
     transition: {
-      duration: 0.7,
+      type: "spring" as const,
+      stiffness: 60,
+      damping: 14,
+      mass: 0.8,
       delay: i * 0.12,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
 };
 
 export default function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-background overflow-hidden relative">
+    <section className="py-20 lg:py-28 overflow-hidden relative" style={{ background: "linear-gradient(180deg, hsl(210 75% 22%), hsl(215 80% 16%))" }}>
       <GymDecorTestimonials />
       <FloatingParticles count={6} color="hsla(221,83%,53%,0.1)" />
 
@@ -67,7 +69,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 50, rotateX: 10 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7 }}
+          transition={{ type: "spring", stiffness: 60, damping: 14 }}
         >
           <motion.div
             className="energy-line w-16 mx-auto mb-6"
@@ -76,10 +78,10 @@ export default function Testimonials() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           />
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            O que nossos <span className="gradient-text">alunos</span> dizem
+          <h2 className="font-display text-3xl lg:text-4xl font-bold text-primary-foreground mb-4">
+            O que nossos <span className="text-secondary">alunos</span> dizem
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-primary-foreground/70 max-w-2xl mx-auto">
             Milhares de alunos satisfeitos confiam na Flipper para alcançar seus objetivos.
           </p>
         </motion.div>
@@ -112,7 +114,7 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6 italic">"{t.text}"</p>
+              <p className="text-primary-foreground/60 text-sm leading-relaxed mb-6 italic">"{t.text}"</p>
 
               <div className="flex items-center gap-3">
                 <motion.div
@@ -122,7 +124,7 @@ export default function Testimonials() {
                   {t.name.charAt(0)}
                 </motion.div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">{t.name}</p>
+                  <p className="font-semibold text-primary-foreground text-sm">{t.name}</p>
                   <p className="text-xs text-primary">{t.modality}</p>
                 </div>
               </div>

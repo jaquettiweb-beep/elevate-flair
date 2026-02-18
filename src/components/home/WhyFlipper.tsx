@@ -30,7 +30,7 @@ const FEATURES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 40,
+    y: 50,
     rotateX: 6,
     rotateY: i === 0 ? -4 : i === 2 ? 4 : 0,
     scale: 0.95,
@@ -42,9 +42,11 @@ const cardVariants = {
     rotateY: 0,
     scale: 1,
     transition: {
-      duration: 0.7,
+      type: "spring" as const,
+      stiffness: 60,
+      damping: 14,
+      mass: 0.8,
       delay: i * 0.12,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
 };
@@ -59,7 +61,7 @@ export default function WhyFlipper() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-background relative overflow-hidden">
+    <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(185 70% 92%), hsl(195 65% 88%))" }}>
       <GymDecorWhyFlipper />
       <FloatingParticles count={8} color="hsla(221,83%,53%,0.15)" />
 
@@ -92,7 +94,7 @@ export default function WhyFlipper() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7 }}
+          transition={{ type: "spring", stiffness: 60, damping: 14 }}
         >
           <motion.div
             className="energy-line w-16 mx-auto mb-6"

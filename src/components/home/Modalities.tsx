@@ -22,7 +22,7 @@ const MODALITIES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 30,
+    y: 40,
     rotateY: (i % 3 - 1) * 5,
     rotateX: 5,
     scale: 0.96,
@@ -34,9 +34,11 @@ const cardVariants = {
     rotateX: 0,
     scale: 1,
     transition: {
-      duration: 0.7,
+      type: "spring" as const,
+      stiffness: 60,
+      damping: 14,
+      mass: 0.8,
       delay: i * 0.08,
-      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
 };
@@ -51,7 +53,7 @@ export default function Modalities() {
   const sectionY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <section id="modalidades" className="py-20 lg:py-28 bg-muted relative overflow-hidden" ref={ref}>
+    <section id="modalidades" className="py-20 lg:py-28 relative overflow-hidden" ref={ref} style={{ background: "linear-gradient(180deg, hsl(195 65% 88%), hsl(205 70% 78%))" }}>
       <GymDecorModalities />
       <FloatingParticles count={10} color="hsla(200,100%,55%,0.12)" />
 
@@ -80,7 +82,7 @@ export default function Modalities() {
           initial={{ opacity: 0, y: 50, rotateX: 10 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7 }}
+          transition={{ type: "spring", stiffness: 60, damping: 14 }}
         >
           <motion.div
             className="energy-line w-16 mx-auto mb-6"

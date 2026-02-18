@@ -83,7 +83,7 @@ export default function Stats() {
   const orbX = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
   return (
-    <section className="py-20 section-dark" ref={ref}>
+    <section className="py-20 relative overflow-hidden" ref={ref} style={{ background: "linear-gradient(180deg, hsl(205 70% 78%), hsl(210 75% 22%))" }}>
       <GymDecorStats />
       <FloatingParticles count={15} color="hsla(0,0%,100%,0.08)" />
 

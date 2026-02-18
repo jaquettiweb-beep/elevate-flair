@@ -162,8 +162,8 @@ export default function HeroSection() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[hsla(210,90%,8%,0.6)] to-[hsla(210,90%,8%,0.9)]" />
+      {/* Gradient overlay – lighter for crystal water feel */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[hsla(195,80%,15%,0.3)] to-[hsla(210,85%,10%,0.7)]" />
 
       {/* Three.js ocean scene */}
       <Suspense fallback={null}>
@@ -173,12 +173,12 @@ export default function HeroSection() {
       {/* 2D scroll bubbles */}
       <ScrollBubbles scrollProgress={scrollVal} />
 
-      {/* Content */}
+      {/* Content – Glassmorphism floating card */}
       <motion.div
-        className="relative z-10 container mx-auto px-4 py-32"
+        className="relative z-10 container mx-auto px-4 py-32 flex items-center justify-center min-h-screen"
         style={{ y: contentY, opacity: contentOpacity, scale: contentScale }}
       >
-        <div className="max-w-3xl">
+        <div className="max-w-3xl w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
@@ -187,12 +187,13 @@ export default function HeroSection() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl p-8 sm:p-12 backdrop-blur-xl bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_hsla(190,80%,40%,0.12)]"
             >
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-900 text-primary-foreground leading-tight mb-6 drop-shadow-[0_2px_10px_hsla(200,100%,50%,0.3)]">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-900 text-primary-foreground leading-tight mb-6 tracking-tight drop-shadow-[0_2px_12px_hsla(185,100%,60%,0.25)]">
                 {slide.title}
               </h1>
 
-              <p className="text-lg sm:text-xl text-primary-foreground/80 mb-10 max-w-xl leading-relaxed">
+              <p className="text-lg sm:text-xl text-primary-foreground/75 mb-10 max-w-xl leading-relaxed tracking-wide">
                 {slide.subtitle}
               </p>
 
@@ -210,7 +211,7 @@ export default function HeroSection() {
                 </motion.a>
                 <motion.a
                   href="#modalidades"
-                  className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:border-primary-foreground/60 transition-colors text-center backdrop-blur-sm"
+                  className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border border-white/20 hover:border-white/40 hover:bg-white/[0.06] transition-all text-center backdrop-blur-sm tracking-wide"
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                 >

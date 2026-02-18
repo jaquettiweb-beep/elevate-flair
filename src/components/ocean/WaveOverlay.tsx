@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 
 /**
- * Animated SVG wave overlay at the bottom of the hero section.
+ * Animated SVG wave overlay – fluid transition at the bottom of hero.
  */
 export default function WaveOverlay() {
   return (
     <div className="absolute bottom-0 left-0 right-0 z-[6] pointer-events-none">
-      {/* Back wave */}
+      {/* Back wave – translucent turquoise */}
       <svg
         viewBox="0 0 1440 120"
         fill="none"
@@ -17,7 +17,7 @@ export default function WaveOverlay() {
       >
         <motion.path
           d="M0 60C200 20 400 100 600 60C800 20 1000 100 1200 60C1400 20 1440 40 1440 40V120H0V60Z"
-          fill="hsla(200, 70%, 30%, 0.4)"
+          fill="hsla(190, 70%, 35%, 0.35)"
           animate={{
             d: [
               "M0 60C200 20 400 100 600 60C800 20 1000 100 1200 60C1400 20 1440 40 1440 40V120H0V60Z",
@@ -29,7 +29,7 @@ export default function WaveOverlay() {
         />
       </svg>
 
-      {/* Front wave */}
+      {/* Front wave – matches background */}
       <svg
         viewBox="0 0 1440 120"
         fill="none"

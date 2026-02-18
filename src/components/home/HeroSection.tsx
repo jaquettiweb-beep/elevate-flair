@@ -1,23 +1,20 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Phone, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState, useEffect, useCallback } from "react";
-import {
-  DumbbellIcon,
-  SwimGoggleIcon,
-  SwimCapIcon,
-  WaterWaveIcon,
-  KettlebellIcon,
-} from "@/components/GymDecorations";
+import { useRef, useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import heroImage from "@/assets/hero-gym.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
+import OceanParallax from "@/components/ocean/OceanParallax";
+import WaveOverlay from "@/components/ocean/WaveOverlay";
+import ScrollBubbles from "@/components/ocean/ScrollBubbles";
+
+const OceanScene = lazy(() => import("@/components/ocean/OceanScene"));
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
 
-// Fallback images when banner has no image_url
 const FALLBACK_IMAGES = [heroImage, swimmingImg, martialImg];
 
 interface Banner {
@@ -43,13 +40,17 @@ export default function HeroSection() {
     offset: ["start start", "end start"],
   });
 
+  // Scroll progress as a number for Three.js
+  const [scrollVal, setScrollVal] = useState(0);
+  useEffect(() => {
+    const unsub = scrollYProgress.on("change", (v) => setScrollVal(v));
+    return unsub;
+  }, [scrollYProgress]);
+
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
-  const imageRotateX = useTransform(scrollYProgress, [0, 1], [0, 6]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0.85, 1]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
   const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const contentRotateX = useTransform(scrollYProgress, [0, 1], [0, -8]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
@@ -101,7 +102,6 @@ export default function HeroSection() {
     setCurrent((p) => (p - 1 + slideCount) % slideCount);
   }, [slideCount]);
 
-  // Autoplay
   useEffect(() => {
     if (slideCount <= 1) return;
     const timer = setInterval(next, AUTOPLAY_MS);
@@ -117,11 +117,7 @@ export default function HeroSection() {
       opacity: 0,
       scale: 1.1,
     }),
-    center: {
-      x: "0%",
-      opacity: 1,
-      scale: 1,
-    },
+    center: { x: "0%", opacity: 1, scale: 1 },
     exit: (dir: number) => ({
       x: dir > 0 ? "-100%" : "100%",
       opacity: 0,
@@ -141,14 +137,20 @@ export default function HeroSection() {
       className="relative min-h-screen flex items-center overflow-hidden"
       aria-label="Apresentação"
     >
-      {/* Parallax carousel background */}
-      <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale, rotateX: imageRotateX, transformOrigin: "50% 100%" }}>
+      {/* Ocean parallax background layers */}
+      <OceanParallax scrollYProgress={scrollYProgress} />
+
+      {/* Carousel background image (behind 3D) */}
+      <motion.div
+        className="absolute inset-0 z-[1]"
+        style={{ y: imageY, scale: imageScale }}
+      >
         <AnimatePresence custom={direction} mode="popLayout">
           <motion.img
             key={slide.id}
             src={bgImage}
             alt={slide.title}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
             loading="eager"
             custom={direction}
             variants={slideVariants}
@@ -161,116 +163,20 @@ export default function HeroSection() {
       </motion.div>
 
       {/* Gradient overlay */}
-      <motion.div
-        className="absolute inset-0 hero-gradient"
-        style={{ opacity: overlayOpacity }}
-      />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[hsla(210,90%,8%,0.6)] to-[hsla(210,90%,8%,0.9)]" />
 
-      {/* Floating orbs */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full"
-        style={{
-          background: "radial-gradient(circle, hsla(221,83%,53%,0.15) 0%, transparent 70%)",
-          y: useTransform(scrollYProgress, [0, 1], ["0px", "100px"]),
-        }}
-        animate={{ x: [0, 20, 0], y: [0, -15, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 left-[10%] w-48 h-48 rounded-full"
-        style={{
-          background: "radial-gradient(circle, hsla(24,95%,53%,0.1) 0%, transparent 70%)",
-          y: useTransform(scrollYProgress, [0, 1], ["0px", "60px"]),
-        }}
-        animate={{ x: [0, -15, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Three.js ocean scene */}
+      <Suspense fallback={null}>
+        <OceanScene scrollProgress={scrollVal} />
+      </Suspense>
 
-      {/* 4D Gym/Swimming decorative elements — visible, part of hero */}
-      {/* Top-right: Swimming goggles */}
-      <motion.div
-        className="absolute top-[12%] right-[8%] z-[5] text-white/15 hidden md:block"
-        style={{ width: 120, height: 120, y: useTransform(scrollYProgress, [0, 1], ["0px", "80px"]) }}
-        initial={{ opacity: 0, scale: 0, rotate: -30 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ delay: 0.8, duration: 0.8, type: "spring", stiffness: 120 }}
-      >
-        <motion.div
-          animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <SwimGoggleIcon className="w-full h-full drop-shadow-[0_0_30px_hsla(200,100%,70%,0.3)]" />
-        </motion.div>
-      </motion.div>
+      {/* 2D scroll bubbles */}
+      <ScrollBubbles scrollProgress={scrollVal} />
 
-      {/* Bottom-left: Dumbbell */}
-      <motion.div
-        className="absolute bottom-[18%] left-[6%] z-[5] text-white/12 hidden md:block"
-        style={{ width: 100, height: 100, y: useTransform(scrollYProgress, [0, 1], ["0px", "60px"]) }}
-        initial={{ opacity: 0, x: -40, rotate: 20 }}
-        animate={{ opacity: 1, x: 0, rotate: -15 }}
-        transition={{ delay: 1, duration: 0.7, type: "spring" }}
-      >
-        <motion.div
-          animate={{ y: [0, -8, 0], rotate: [-15, -10, -15] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <DumbbellIcon className="w-full h-full drop-shadow-[0_0_25px_hsla(221,83%,53%,0.3)]" />
-        </motion.div>
-      </motion.div>
-
-      {/* Top-left: Swim cap */}
-      <motion.div
-        className="absolute top-[20%] left-[4%] z-[5] text-white/10 hidden lg:block"
-        style={{ width: 80, height: 80, y: useTransform(scrollYProgress, [0, 1], ["0px", "50px"]) }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.2, duration: 0.6, type: "spring", stiffness: 150 }}
-      >
-        <motion.div
-          animate={{ y: [0, -6, 0], rotate: [0, -6, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <SwimCapIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(200,100%,70%,0.25)]" />
-        </motion.div>
-      </motion.div>
-
-      {/* Bottom-right: Water wave */}
-      <motion.div
-        className="absolute bottom-[10%] right-[5%] z-[5] text-white/10 hidden lg:block"
-        style={{ width: 140, height: 80, y: useTransform(scrollYProgress, [0, 1], ["0px", "40px"]) }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
-      >
-        <motion.div
-          animate={{ x: [0, 12, 0], y: [0, -4, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <WaterWaveIcon className="w-full h-full drop-shadow-[0_0_25px_hsla(200,80%,60%,0.3)]" />
-        </motion.div>
-      </motion.div>
-
-      {/* Center-right: Kettlebell */}
-      <motion.div
-        className="absolute top-[55%] right-[3%] z-[5] text-white/8 hidden xl:block"
-        style={{ width: 70, height: 70, y: useTransform(scrollYProgress, [0, 1], ["0px", "70px"]) }}
-        initial={{ opacity: 0, scale: 0, rotate: 15 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ delay: 1.6, duration: 0.7, type: "spring" }}
-      >
-        <motion.div
-          animate={{ y: [0, -10, 0], rotate: [0, 8, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <KettlebellIcon className="w-full h-full drop-shadow-[0_0_20px_hsla(24,95%,53%,0.25)]" />
-        </motion.div>
-      </motion.div>
-
-      {/* Carousel content */}
+      {/* Content */}
       <motion.div
         className="relative z-10 container mx-auto px-4 py-32"
-        style={{ y: contentY, opacity: contentOpacity, scale: contentScale, rotateX: contentRotateX, transformOrigin: "50% 100%", perspective: "1000px" }}
+        style={{ y: contentY, opacity: contentOpacity, scale: contentScale }}
       >
         <div className="max-w-3xl">
           <AnimatePresence mode="wait">
@@ -282,7 +188,7 @@ export default function HeroSection() {
               exit="exit"
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-900 text-primary-foreground leading-tight mb-6">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-900 text-primary-foreground leading-tight mb-6 drop-shadow-[0_2px_10px_hsla(200,100%,50%,0.3)]">
                 {slide.title}
               </h1>
 
@@ -304,7 +210,7 @@ export default function HeroSection() {
                 </motion.a>
                 <motion.a
                   href="#modalidades"
-                  className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:border-primary-foreground/60 transition-colors text-center"
+                  className="rounded-full px-8 py-4 text-lg font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:border-primary-foreground/60 transition-colors text-center backdrop-blur-sm"
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -317,7 +223,6 @@ export default function HeroSection() {
           {/* Carousel controls */}
           {slideCount > 1 && (
             <div className="flex items-center gap-4 mt-10">
-              {/* Dots */}
               <div className="flex gap-2">
                 {slides.map((s, i) => (
                   <button
@@ -345,8 +250,6 @@ export default function HeroSection() {
                   </button>
                 ))}
               </div>
-
-              {/* Arrows */}
               <div className="flex gap-2 ml-auto">
                 <motion.button
                   onClick={prev}
@@ -371,6 +274,9 @@ export default function HeroSection() {
           )}
         </div>
       </motion.div>
+
+      {/* Wave overlay at bottom */}
+      <WaveOverlay />
 
       {/* Scroll indicator */}
       <motion.div

@@ -15,11 +15,10 @@ export default function Section3DTransition({
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 100%", "start 30%"],
+    offset: ["start 100%", "start 20%"],
   });
 
-  // Spring-smooth the raw scroll progress for buttery feel
-  const smooth = useSpring(scrollYProgress, { stiffness: 40, damping: 28, mass: 0.8 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 35, damping: 24, mass: 1 });
 
   const configs: Record<string, {
     rotateX: [number, number];
@@ -28,54 +27,61 @@ export default function Section3DTransition({
     y: [number, number];
     originX: number;
     originY: number;
+    blur: [number, number];
   }> = {
     foldUp: {
-      rotateX: [4, 0],
+      rotateX: [8, 0],
       rotateY: [0, 0],
-      scale: [0.97, 1],
-      y: [40, 0],
+      scale: [0.92, 1],
+      y: [80, 0],
       originX: 0.5,
-      originY: 0.8,
+      originY: 1,
+      blur: [6, 0],
     },
     foldLeft: {
       rotateX: [0, 0],
-      rotateY: [-3, 0],
-      scale: [0.97, 1],
-      y: [35, 0],
-      originX: 0.3,
+      rotateY: [-8, 0],
+      scale: [0.93, 1],
+      y: [60, 0],
+      originX: 0,
       originY: 0.5,
+      blur: [5, 0],
     },
     foldRight: {
       rotateX: [0, 0],
-      rotateY: [3, 0],
-      scale: [0.97, 1],
-      y: [35, 0],
-      originX: 0.7,
+      rotateY: [8, 0],
+      scale: [0.93, 1],
+      y: [60, 0],
+      originX: 1,
       originY: 0.5,
+      blur: [5, 0],
     },
     flipIn: {
-      rotateX: [5, 0],
+      rotateX: [12, 0],
       rotateY: [0, 0],
-      scale: [0.96, 1],
-      y: [45, 0],
+      scale: [0.88, 1],
+      y: [100, 0],
       originX: 0.5,
-      originY: 0.7,
+      originY: 0.6,
+      blur: [8, 0],
     },
     swingDoor: {
-      rotateX: [0, 0],
-      rotateY: [-4, 0],
-      scale: [0.97, 1],
-      y: [30, 0],
-      originX: 0.2,
+      rotateX: [2, 0],
+      rotateY: [-10, 0],
+      scale: [0.9, 1],
+      y: [50, 0],
+      originX: 0,
       originY: 0.5,
+      blur: [4, 0],
     },
     cubeRotate: {
-      rotateX: [3, 0],
-      rotateY: [3, 0],
-      scale: [0.96, 1],
-      y: [35, 0],
+      rotateX: [6, 0],
+      rotateY: [6, 0],
+      scale: [0.9, 1],
+      y: [70, 0],
       originX: 0.5,
       originY: 0.5,
+      blur: [6, 0],
     },
   };
 
@@ -85,13 +91,15 @@ export default function Section3DTransition({
   const rotateY = useTransform(smooth, [0, 1], c.rotateY);
   const scale = useTransform(smooth, [0, 1], c.scale);
   const y = useTransform(smooth, [0, 1], c.y);
-  const opacity = useTransform(smooth, [0, 0.25, 1], [0.4, 0.85, 1]);
+  const opacity = useTransform(smooth, [0, 0.15, 1], [0, 0.7, 1]);
+  const blur = useTransform(smooth, [0, 0.4, 1], [c.blur[0], c.blur[0] * 0.3, c.blur[1]]);
+  const filterBlur = useTransform(blur, (v) => `blur(${v}px)`);
 
   return (
     <div
       ref={ref}
       className={className}
-      style={{ perspective: "1200px", perspectiveOrigin: "50% 60%" }}
+      style={{ perspective: "1000px", perspectiveOrigin: "50% 60%" }}
     >
       <motion.div
         style={{
@@ -100,8 +108,9 @@ export default function Section3DTransition({
           scale,
           y,
           opacity,
+          filter: filterBlur,
           transformOrigin: `${c.originX * 100}% ${c.originY * 100}%`,
-          willChange: "transform, opacity",
+          willChange: "transform, opacity, filter",
         }}
       >
         {children}

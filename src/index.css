@@ -338,14 +338,14 @@
   /* Gym card – glassmorphism aquatic variant */
   .gym-card {
     position: relative;
-    background: hsla(0, 0%, 100%, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsla(185, 70%, 60%, 0.1);
+    background: hsla(190, 60%, 95%, 0.18);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsla(185, 70%, 75%, 0.25);
     border-radius: var(--radius);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 24px hsla(195, 70%, 25%, 0.06), inset 0 1px 0 hsla(0, 0%, 100%, 0.06);
+    box-shadow: 0 4px 30px hsla(195, 70%, 30%, 0.12), inset 0 1px 0 hsla(0, 0%, 100%, 0.15);
   }
 
   .gym-card::before {

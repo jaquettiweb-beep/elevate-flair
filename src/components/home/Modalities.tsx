@@ -110,7 +110,8 @@ export default function Modalities() {
               viewport={{ once: true, amount: 0.1 }}
               className="gym-card glow-border group cursor-default"
               intensity={6}
-              hoverShadow="0 20px 40px -10px hsla(200, 100%, 55%, 0.15)"
+              hoverShadow="0 20px 40px -10px hsla(185, 80%, 45%, 0.15)"
+              liquidHover
             >
               <div className="aspect-[4/3] overflow-hidden relative">
                 <motion.img

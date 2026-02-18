@@ -1,11 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Phone, ChevronDown, Waves, Droplets, Users, Trophy } from "lucide-react";
-import { useRef, useState, useEffect, lazy, Suspense } from "react";
-import OceanParallax from "@/components/ocean/OceanParallax";
-import WaveOverlay from "@/components/ocean/WaveOverlay";
+import { useRef, useState, useEffect } from "react";
 import ScrollBubbles from "@/components/ocean/ScrollBubbles";
-
-const OceanScene = lazy(() => import("@/components/ocean/OceanScene"));
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -59,24 +55,10 @@ export default function HeroSection() {
       ref={ref}
       className="relative min-h-screen flex items-center overflow-hidden"
       aria-label="Apresentação"
+      style={{
+        background: `linear-gradient(to bottom, hsl(200, 80%, 12%) 0%, hsl(195, 75%, 15%) 60%, hsl(185, 70%, 92%) 100%)`,
+      }}
     >
-      {/* Ocean parallax background layers */}
-      <OceanParallax scrollYProgress={scrollYProgress} />
-
-      {/* Gradient overlay – cinematic depth */}
-      <div className="absolute inset-0 z-[1]" style={{
-        background: `
-          radial-gradient(ellipse 80% 60% at 30% 40%, hsla(195, 80%, 15%, 0.1) 0%, transparent 70%),
-          radial-gradient(ellipse 60% 80% at 80% 60%, hsla(185, 90%, 20%, 0.15) 0%, transparent 60%),
-          linear-gradient(to bottom, hsla(200, 80%, 8%, 0.2) 0%, hsla(200, 85%, 12%, 0.5) 50%, hsla(195, 75%, 10%, 0.8) 100%)
-        `,
-      }} />
-
-      {/* Three.js ocean scene */}
-      <Suspense fallback={null}>
-        <OceanScene scrollProgress={scrollVal} />
-      </Suspense>
-
       {/* 2D scroll bubbles */}
       <ScrollBubbles scrollProgress={scrollVal} />
 
@@ -250,8 +232,7 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Wave overlay at bottom */}
-      <WaveOverlay />
+      {/* No wave overlay — clean gradient blend */}
 
       {/* Scroll indicator — water drop */}
       <motion.div

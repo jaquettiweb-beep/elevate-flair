@@ -54,25 +54,21 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 const statVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 100,
-    z: -200,
-    scale: 0.5,
-    rotateX: 20,
-    rotateZ: (i - 1.5) * 12,
+    y: 30,
+    scale: 0.95,
+    rotateX: 4,
   }),
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    z: 0,
     scale: 1,
     rotateX: 0,
-    rotateZ: 0,
     transition: {
-      duration: 0.8,
-      delay: i * 0.14,
+      duration: 0.6,
+      delay: i * 0.1,
       type: "spring" as const,
-      stiffness: 100,
-      damping: 16,
+      stiffness: 120,
+      damping: 20,
     },
   }),
 };

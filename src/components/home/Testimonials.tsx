@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { GymDecorTestimonials } from "@/components/GymDecorations";
 import FloatingParticles from "@/components/FloatingParticles";
+import TiltCard from "@/components/TiltCard";
 
 const TESTIMONIALS = [
   {
@@ -27,22 +28,20 @@ const TESTIMONIALS = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 100,
-    z: -300,
-    rotateX: 30,
-    rotateY: (i - 1) * 18,
-    scale: 0.7,
+    y: 40,
+    rotateX: 6,
+    rotateY: (i - 1) * 4,
+    scale: 0.96,
   }),
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    z: 0,
     rotateX: 0,
     rotateY: 0,
     scale: 1,
     transition: {
-      duration: 0.9,
-      delay: i * 0.18,
+      duration: 0.7,
+      delay: i * 0.12,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
@@ -87,24 +86,15 @@ export default function Testimonials() {
 
         <div className="grid md:grid-cols-3 gap-6" style={{ perspective: "1200px" }}>
           {TESTIMONIALS.map((t, i) => (
-            <motion.div
+            <TiltCard
               key={t.name}
               custom={i}
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              whileHover={{
-                y: -16,
-                z: 60,
-                rotateY: 8,
-                rotateX: -5,
-                scale: 1.06,
-                boxShadow: "0 35px 70px -15px hsla(221, 83%, 53%, 0.3)",
-                transition: { duration: 0.4 },
-              }}
               className="gym-card glow-border shimmer p-8 cursor-default"
-              style={{ transformStyle: "preserve-3d" }}
+              intensity={8}
             >
               <Quote size={24} className="text-primary/20 mb-3" />
 
@@ -136,7 +126,7 @@ export default function Testimonials() {
                   <p className="text-xs text-primary">{t.modality}</p>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           ))}
         </div>
       </div>

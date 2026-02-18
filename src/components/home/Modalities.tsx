@@ -21,10 +21,10 @@ const MODALITIES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    z: -200,
-    rotateY: (i % 3 - 1) * 20,
-    rotateX: 15,
-    scale: 0.7,
+    z: -400,
+    rotateY: (i % 3 - 1) * 30,
+    rotateX: 20,
+    scale: 0.6,
   }),
   visible: (i: number) => ({
     opacity: 1,
@@ -33,8 +33,8 @@ const cardVariants = {
     rotateX: 0,
     scale: 1,
     transition: {
-      duration: 0.9,
-      delay: i * 0.1,
+      duration: 1,
+      delay: i * 0.12,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
@@ -106,11 +106,13 @@ export default function Modalities() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               whileHover={{
-                y: -12,
-                rotateY: 6,
-                rotateX: -4,
-                scale: 1.03,
-                transition: { duration: 0.35, ease: "easeOut" },
+                y: -18,
+                z: 80,
+                rotateY: 10,
+                rotateX: -6,
+                scale: 1.05,
+                boxShadow: "0 40px 80px -20px hsla(200, 100%, 55%, 0.25)",
+                transition: { duration: 0.4, ease: "easeOut" },
               }}
               className="gym-card glow-border group cursor-default"
               style={{ transformStyle: "preserve-3d" }}

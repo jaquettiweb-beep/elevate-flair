@@ -43,11 +43,14 @@ export default function HeroSection() {
     offset: ["start start", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+  const imageRotateX = useTransform(scrollYProgress, [0, 1], [0, 6]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0.85, 1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+  const contentRotateX = useTransform(scrollYProgress, [0, 1], [0, -8]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
   const { data: banners } = useQuery<Banner[]>({
@@ -139,7 +142,7 @@ export default function HeroSection() {
       aria-label="Apresentação"
     >
       {/* Parallax carousel background */}
-      <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale }}>
+      <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale, rotateX: imageRotateX, transformOrigin: "50% 100%" }}>
         <AnimatePresence custom={direction} mode="popLayout">
           <motion.img
             key={slide.id}
@@ -267,7 +270,7 @@ export default function HeroSection() {
       {/* Carousel content */}
       <motion.div
         className="relative z-10 container mx-auto px-4 py-32"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={{ y: contentY, opacity: contentOpacity, scale: contentScale, rotateX: contentRotateX, transformOrigin: "50% 100%", perspective: "1000px" }}
       >
         <div className="max-w-3xl">
           <AnimatePresence mode="wait">

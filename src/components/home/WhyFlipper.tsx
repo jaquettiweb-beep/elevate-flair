@@ -29,20 +29,22 @@ const FEATURES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    y: 60,
-    rotateX: 15,
-    rotateY: i === 0 ? -10 : i === 2 ? 10 : 0,
-    scale: 0.9,
+    y: 100,
+    z: -300,
+    rotateX: 25,
+    rotateY: i === 0 ? -15 : i === 2 ? 15 : 0,
+    scale: 0.75,
   }),
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
+    z: 0,
     rotateX: 0,
     rotateY: 0,
     scale: 1,
     transition: {
-      duration: 0.7,
-      delay: i * 0.15,
+      duration: 0.9,
+      delay: i * 0.18,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
@@ -118,11 +120,13 @@ export default function WhyFlipper() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               whileHover={{
-                y: -12,
-                rotateY: 6,
-                rotateX: -4,
-                scale: 1.04,
-                transition: { duration: 0.3 },
+                y: -16,
+                z: 60,
+                rotateY: 8,
+                rotateX: -6,
+                scale: 1.06,
+                boxShadow: "0 35px 70px -20px hsla(221, 83%, 53%, 0.3)",
+                transition: { duration: 0.4, ease: "easeOut" },
               }}
               className="gym-card glow-border shimmer p-8 cursor-default"
               style={{ transformStyle: "preserve-3d" }}

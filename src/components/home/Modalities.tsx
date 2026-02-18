@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { GymDecorModalities } from "@/components/GymDecorations";
 import FloatingParticles from "@/components/FloatingParticles";
 import SectionWave from "@/components/SectionWave";
+import TiltCard from "@/components/TiltCard";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -21,20 +22,20 @@ const MODALITIES = [
 const cardVariants = {
   hidden: (i: number) => ({
     opacity: 0,
-    z: -400,
-    rotateY: (i % 3 - 1) * 30,
-    rotateX: 20,
-    scale: 0.6,
+    y: 30,
+    rotateY: (i % 3 - 1) * 5,
+    rotateX: 5,
+    scale: 0.96,
   }),
   visible: (i: number) => ({
     opacity: 1,
-    z: 0,
+    y: 0,
     rotateY: 0,
     rotateX: 0,
     scale: 1,
     transition: {
-      duration: 1,
-      delay: i * 0.12,
+      duration: 0.7,
+      delay: i * 0.08,
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
@@ -98,24 +99,16 @@ export default function Modalities() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1500px" }}>
           {MODALITIES.map((m, i) => (
-            <motion.div
+            <TiltCard
               key={m.name}
               custom={i}
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              whileHover={{
-                y: -18,
-                z: 80,
-                rotateY: 10,
-                rotateX: -6,
-                scale: 1.05,
-                boxShadow: "0 40px 80px -20px hsla(200, 100%, 55%, 0.25)",
-                transition: { duration: 0.4, ease: "easeOut" },
-              }}
               className="gym-card glow-border group cursor-default"
-              style={{ transformStyle: "preserve-3d" }}
+              intensity={6}
+              hoverShadow="0 20px 40px -10px hsla(200, 100%, 55%, 0.15)"
             >
               <div className="aspect-[4/3] overflow-hidden relative">
                 <motion.img
@@ -125,28 +118,22 @@ export default function Modalities() {
                   loading="lazy"
                   width={768}
                   height={512}
-                  whileHover={{ scale: 1.15 }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                 />
-                {/* Depth overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Name badge floating */}
                 <motion.div
                   className="absolute bottom-3 left-3 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 depth-shadow"
-                  style={{ translateZ: 40 }}
                 >
                   {m.name}
                 </motion.div>
-
-                {/* Corner glow on hover */}
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
               <div className="p-6">
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">{m.name}</h3>
                 <p className="text-muted-foreground text-sm">{m.desc}</p>
               </div>
-            </motion.div>
+            </TiltCard>
           ))}
         </div>
       </div>

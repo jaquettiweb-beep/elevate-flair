@@ -97,6 +97,7 @@ export default function Testimonials() {
               viewport={{ once: true, amount: 0.1 }}
               className="gym-card glow-border shimmer p-8 cursor-default"
               intensity={8}
+              liquidHover
             >
               <Quote size={24} className="text-primary/20 mb-3" />
 

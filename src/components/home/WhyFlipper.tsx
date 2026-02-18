@@ -122,6 +122,7 @@ export default function WhyFlipper() {
               viewport={{ once: true, amount: 0.1 }}
               className="gym-card glow-border shimmer p-8 cursor-default"
               intensity={8}
+              liquidHover
             >
               <motion.div
                 className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5 depth-shadow`}

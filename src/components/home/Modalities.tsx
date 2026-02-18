@@ -141,7 +141,7 @@ export default function Modalities() {
         </div>
       </div>
 
-      <SectionWave position="bottom" color="hsl(var(--background))" />
+      <SectionWave position="bottom" color="hsl(205, 70%, 78%)" />
     </section>
   );
 }

@@ -61,7 +61,7 @@ export default function WhyFlipper() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(185 70% 92%), hsl(195 65% 88%))" }}>
+    <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden -mt-1" style={{ background: "linear-gradient(180deg, hsl(185 70% 92%), hsl(195 65% 88%))" }}>
       <GymDecorWhyFlipper />
       <FloatingParticles count={8} color="hsla(221,83%,53%,0.15)" />
 
@@ -149,7 +149,7 @@ export default function WhyFlipper() {
         </div>
       </div>
 
-      <SectionWave position="bottom" color="hsl(var(--muted))" />
+      <SectionWave position="bottom" color="hsl(195, 65%, 88%)" />
     </section>
   );
 }

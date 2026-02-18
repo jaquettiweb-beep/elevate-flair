@@ -7,33 +7,21 @@ import Modalities from "@/components/home/Modalities";
 import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import Section3DTransition from "@/components/Section3DTransition";
 
 const Index = () => {
   return (
     <Layout>
+      <SEOHead
+        title="Academia Flipper - Natação, Musculação e Mais em São Paulo"
+        description="A melhor academia de São Paulo com natação, musculação, yoga, pilates e artes marciais. Infraestrutura completa e professores qualificados."
+      />
       <PageTransition>
-        <SEOHead
-          title="Academia Flipper - Natação, Musculação e Fitness em São Paulo | Agende sua Aula"
-          description="A melhor academia de São Paulo! Natação, musculação, pilates, artes marciais e mais de 15 modalidades. Infraestrutura completa e professores qualificados. Agende sua aula experimental grátis!"
-          path="/"
-        />
         <HeroSection />
-        <Section3DTransition effect="foldUp">
-          <WhyFlipper />
-        </Section3DTransition>
-        <Section3DTransition effect="swingDoor">
-          <Modalities />
-        </Section3DTransition>
-        <Section3DTransition effect="flipIn">
-          <Stats />
-        </Section3DTransition>
-        <Section3DTransition effect="foldRight">
-          <Testimonials />
-        </Section3DTransition>
-        <Section3DTransition effect="cubeRotate">
-          <CTASection />
-        </Section3DTransition>
+        <WhyFlipper />
+        <Modalities />
+        <Stats />
+        <Testimonials />
+        <CTASection />
       </PageTransition>
     </Layout>
   );

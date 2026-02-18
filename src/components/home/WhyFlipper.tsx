@@ -1,117 +1,63 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Dumbbell, Award, Clock } from "lucide-react";
-import { useRef } from "react";
-import { GymDecorWhyFlipper } from "@/components/GymDecorations";
-import FloatingParticles from "@/components/FloatingParticles";
-import SectionWave from "@/components/SectionWave";
 import TiltCard from "@/components/TiltCard";
 
 const FEATURES = [
   {
     icon: Dumbbell,
     title: "Infraestrutura Completa",
-    desc: "Equipamentos modernos de última geração, piscina semiolímpica aquecida, salas climatizadas e vestiários completos para seu conforto.",
+    desc: "Equipamentos modernos, piscina semiolímpica aquecida, salas climatizadas e vestiários completos.",
     accent: "from-primary to-primary-glow",
   },
   {
     icon: Award,
     title: "Professores Qualificados",
-    desc: "Equipe de profissionais certificados e experientes, prontos para orientar seu treino com segurança e eficiência.",
+    desc: "Profissionais certificados e experientes, prontos para orientar seu treino com segurança.",
     accent: "from-secondary to-[hsl(15,90%,50%)]",
   },
   {
     icon: Clock,
     title: "Horários Flexíveis",
-    desc: "Aulas de segunda a sábado das 6h às 22h. Encontre o melhor horário para encaixar o treino na sua rotina.",
+    desc: "Segunda a sábado das 6h às 22h. Encaixe o treino na sua rotina com facilidade.",
     accent: "from-[hsl(var(--neon-blue))] to-primary",
   },
 ];
 
 const cardVariants = {
-  hidden: (i: number) => ({
-    opacity: 0,
-    y: 50,
-    rotateX: 6,
-    rotateY: i === 0 ? -4 : i === 2 ? 4 : 0,
-    scale: 0.95,
-  }),
+  hidden: { opacity: 0, y: 40, scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    rotateX: 0,
-    rotateY: 0,
     scale: 1,
     transition: {
       type: "spring" as const,
       stiffness: 60,
-      damping: 14,
-      mass: 0.8,
+      damping: 16,
       delay: i * 0.12,
     },
   }),
 };
 
 export default function WhyFlipper() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-
   return (
-    <section ref={ref} className="py-20 lg:py-28 relative overflow-hidden -mt-1" style={{ background: "linear-gradient(180deg, hsl(185 70% 92%), hsl(195 65% 88%))" }}>
-      <GymDecorWhyFlipper />
-      <FloatingParticles count={8} color="hsla(221,83%,53%,0.15)" />
-
-      {/* Parallax grid */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          y: bgY,
-          backgroundImage: `
-            linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Radial glow */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, hsla(221,83%,53%,0.06) 0%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-
+    <section className="py-24 lg:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 40 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 60, damping: 14 }}
+          transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <motion.div
-            className="energy-line w-16 mx-auto mb-6"
-            initial={{ width: 0 }}
-            whileInView={{ width: 64 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
             Por que escolher a <span className="gradient-text">Flipper</span>?
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Há mais de 15 anos transformando vidas através do esporte e bem-estar em São Paulo.
+          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+            Mais de 15 anos transformando vidas através do esporte em São Paulo.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8" style={{ perspective: "1200px" }}>
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {FEATURES.map((f, i) => (
             <TiltCard
               key={f.title}
@@ -120,36 +66,24 @@ export default function WhyFlipper() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              className="gym-card glow-border shimmer p-8 cursor-default"
-              intensity={8}
+              className="gym-card p-8 cursor-default"
+              intensity={6}
               liquidHover
             >
               <motion.div
-                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5 depth-shadow`}
-                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.15 }}
+                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5`}
+                style={{ boxShadow: "0 4px 14px hsla(185,80%,45%,0.2)" }}
+                whileHover={{ rotate: [0, -8, 8, 0], scale: 1.1 }}
                 transition={{ duration: 0.5 }}
               >
-                <f.icon size={28} className="text-primary-foreground" />
+                <f.icon size={24} className="text-primary-foreground" />
               </motion.div>
               <h3 className="font-display text-xl font-bold text-foreground mb-3">{f.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-1 rounded-b-lg"
-                style={{
-                  background: `linear-gradient(90deg, transparent, hsl(var(--primary)), transparent)`,
-                }}
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4 + i * 0.15 }}
-              />
             </TiltCard>
           ))}
         </div>
       </div>
-
-      <SectionWave position="bottom" color="hsl(195, 65%, 88%)" />
     </section>
   );
 }

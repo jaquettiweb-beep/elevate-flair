@@ -1,8 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { GymDecorModalities } from "@/components/GymDecorations";
-import FloatingParticles from "@/components/FloatingParticles";
-import SectionWave from "@/components/SectionWave";
+import { motion } from "framer-motion";
 import TiltCard from "@/components/TiltCard";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
@@ -20,86 +16,40 @@ const MODALITIES = [
 ];
 
 const cardVariants = {
-  hidden: (i: number) => ({
-    opacity: 0,
-    y: 40,
-    rotateY: (i % 3 - 1) * 5,
-    rotateX: 5,
-    scale: 0.96,
-  }),
+  hidden: { opacity: 0, y: 40, scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    rotateY: 0,
-    rotateX: 0,
     scale: 1,
     transition: {
       type: "spring" as const,
       stiffness: 60,
-      damping: 14,
-      mass: 0.8,
-      delay: i * 0.08,
+      damping: 16,
+      delay: i * 0.07,
     },
   }),
 };
 
 export default function Modalities() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const sectionY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
-
   return (
-    <section id="modalidades" className="py-20 lg:py-28 relative overflow-hidden" ref={ref} style={{ background: "linear-gradient(180deg, hsl(195 65% 88%), hsl(205 70% 78%))" }}>
-      <GymDecorModalities />
-      <FloatingParticles count={10} color="hsla(200,100%,55%,0.12)" />
-
-      {/* Diagonal gym stripes bg */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          y: sectionY,
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            hsl(var(--foreground)),
-            hsl(var(--foreground)) 2px,
-            transparent 2px,
-            transparent 40px
-          )`,
-        }}
-      />
-
-      {/* Dual radial glows */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, hsla(200,100%,55%,0.05) 0%, transparent 70%)" }} />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, hsla(24,95%,53%,0.05) 0%, transparent 70%)" }} />
-
+    <section id="modalidades" className="py-24 lg:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 50, rotateX: 10 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 60, damping: 14 }}
+          transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <motion.div
-            className="energy-line w-16 mx-auto mb-6"
-            initial={{ width: 0 }}
-            whileInView={{ width: 64 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
             Nossas <span className="gradient-text">Modalidades</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Mais de 15 modalidades para você encontrar a atividade perfeita para seus objetivos.
+          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+            Mais de 15 modalidades para encontrar a atividade perfeita para você.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1500px" }}>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {MODALITIES.map((m, i) => (
             <TiltCard
               key={m.name}
@@ -108,9 +58,8 @@ export default function Modalities() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              className="gym-card glow-border group cursor-default"
-              intensity={6}
-              hoverShadow="0 20px 40px -10px hsla(185, 80%, 45%, 0.15)"
+              className="gym-card group cursor-default"
+              intensity={5}
               liquidHover
             >
               <div className="aspect-[4/3] overflow-hidden relative">
@@ -121,27 +70,22 @@ export default function Modalities() {
                   loading="lazy"
                   width={768}
                   height={512}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.08 }}
                   transition={{ duration: 0.6 }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <motion.div
-                  className="absolute bottom-3 left-3 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 depth-shadow"
-                >
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                <span className="absolute bottom-3 left-3 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {m.name}
-                </motion.div>
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </span>
               </div>
-              <div className="p-6">
-                <h3 className="font-display text-lg font-bold text-foreground mb-2">{m.name}</h3>
+              <div className="p-5">
+                <h3 className="font-display text-lg font-bold text-foreground mb-1.5">{m.name}</h3>
                 <p className="text-muted-foreground text-sm">{m.desc}</p>
               </div>
             </TiltCard>
           ))}
         </div>
       </div>
-
-      <SectionWave position="bottom" color="hsl(205, 70%, 78%)" />
     </section>
   );
 }

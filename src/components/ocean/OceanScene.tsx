@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import ProceduralDolphin from "./ProceduralDolphin";
 import OceanWater from "./OceanWater";
 import BubbleParticles from "./BubbleParticles";
 
@@ -45,7 +44,7 @@ export default function OceanScene({ scrollProgress }: OceanSceneProps) {
       >
         <Suspense fallback={null}>
           <Lights />
-          <ProceduralDolphin scrollProgress={scrollProgress} />
+          <OceanWater />
           <OceanWater />
           <BubbleParticles scrollProgress={scrollProgress} />
           <Environment preset="sunset" />

@@ -1,6 +1,7 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import heroGym from "@/assets/hero-gym.jpg";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -11,23 +12,98 @@ const STATS = [
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 
-export default function HeroSection() {
+/* ─── Letter-by-letter blur-stagger ─── */
+function MergulheWord() {
+  const word = "Mergulhe";
+  return (
+    <motion.span
+      className="block"
+      style={{ paddingBottom: "0.35em" }} // prevents "g" descender clipping
+      variants={{
+        hidden: { opacity: 0 },
+        show: {
+          opacity: 1,
+          transition: { staggerChildren: 0.055, delayChildren: 0.15 },
+        },
+      }}
+      initial="hidden"
+      animate="show"
+    >
+      {word.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          style={{
+            display: "inline-block",
+            background:
+              "linear-gradient(135deg, hsl(185,80%,68%), hsl(195,90%,73%), hsl(170,70%,58%))",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+          variants={{
+            hidden: { opacity: 0, filter: "blur(14px)", y: 10 },
+            show: {
+              opacity: 1,
+              filter: "blur(0px)",
+              y: 0,
+              transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+            },
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+interface HeroSectionProps {
+  introComplete?: boolean;
+}
+
+export default function HeroSection({ introComplete = true }: HeroSectionProps) {
   const ref = useRef<HTMLElement>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const [scrollVal, setScrollVal] = useState(0);
+  /* spring-smooth scroll value */
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 80,
+    damping: 22,
+    restDelta: 0.001,
+  });
+
+  /* ─── Content: shifts left on scroll ─── */
+  const contentX = useTransform(smoothProgress, [0, 0.55], ["0%", "-30%"]);
+  const contentY = useTransform(smoothProgress, [0, 0.6], ["0%", "12%"]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.5], [1, 0]);
+  const contentScale = useTransform(smoothProgress, [0, 0.5], [1, 0.94]);
+
+  /* ─── Facade image: slides in from right ─── */
+  const imageX = useTransform(smoothProgress, [0.08, 0.55], ["100%", "0%"]);
+  const imageOpacity = useTransform(smoothProgress, [0.08, 0.4], [0, 1]);
+  const imageScale = useTransform(smoothProgress, [0.08, 0.55], [1.08, 1]);
+
+  /* ─── Scroll indicator ─── */
+  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+
+  /* track if user has started scrolling to show header */
   useEffect(() => {
-    const unsub = scrollYProgress.on("change", (v) => setScrollVal(v));
+    const unsub = scrollYProgress.on("change", (v) => {
+      if (v > 0.05) setHasScrolled(true);
+    });
     return unsub;
   }, [scrollYProgress]);
 
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  /* expose scroll state for layout via custom event */
+  useEffect(() => {
+    const event = new CustomEvent("hero-scroll-state", { detail: { scrolled: hasScrolled } });
+    window.dispatchEvent(event);
+  }, [hasScrolled]);
 
   return (
     <section
@@ -38,7 +114,7 @@ export default function HeroSection() {
         background: `linear-gradient(to bottom, hsl(210, 85%, 8%) 0%, hsl(200, 80%, 12%) 50%, hsl(185, 70%, 92%) 100%)`,
       }}
     >
-      {/* Subtle radial glow */}
+      {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -47,17 +123,48 @@ export default function HeroSection() {
         }}
       />
 
-      {/* ===== MAIN CONTENT ===== */}
+      {/* ─── FACADE IMAGE (right side, appears on scroll) ─── */}
+      <motion.div
+        className="absolute top-0 right-0 h-full w-1/2 pointer-events-none z-[5]"
+        style={{ x: imageX, opacity: imageOpacity }}
+      >
+        <motion.div className="relative h-full w-full" style={{ scale: imageScale }}>
+          <img
+            src={heroGym}
+            alt="Fachada da Academia Flipper"
+            className="w-full h-full object-cover"
+            style={{
+              maskImage: "linear-gradient(to right, transparent 0%, black 30%, black 100%)",
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 30%, black 100%)",
+            }}
+          />
+          {/* overlay to blend with page bg */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, hsl(210,85%,8%) 0%, transparent 35%), linear-gradient(to top, hsl(185,70%,92%) 0%, transparent 20%)",
+            }}
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* ─── MAIN CONTENT (shifts left on scroll) ─── */}
       <motion.div
         className="relative z-10 container mx-auto px-6 py-32 flex flex-col items-center text-center"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={{
+          x: contentX,
+          y: contentY,
+          opacity: contentOpacity,
+          scale: contentScale,
+        }}
       >
         {/* Badge */}
         <motion.div
           className="flex items-center gap-2 mb-10"
           initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.1 }}
+          animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: -16 }}
+          transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.2 }}
         >
           <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/40 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
             Academia Flipper • São Paulo
@@ -65,41 +172,13 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Main heading */}
-        <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.92] mb-7 tracking-tight max-w-4xl">
-          {/* "Mergulhe" with blurred stagger per letter */}
-          <motion.span
-            className="block pb-2"
-            variants={{
-              hidden: { opacity: 0 },
-              show: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.25 } },
-            }}
-            initial="hidden"
-            animate="show"
-          >
-            {"Mergulhe".split("").map((char, i) => (
-              <motion.span
-                key={i}
-                style={{
-                  display: "inline-block",
-                  background: "linear-gradient(135deg, hsl(185,80%,70%), hsl(195,90%,75%), hsl(170,70%,60%))",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-                variants={{
-                  hidden: { opacity: 0, filter: "blur(12px)", y: 8 },
-                  show: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </motion.span>
+        <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.92] mb-7 tracking-tight max-w-4xl overflow-visible">
+          <MergulheWord />
           <motion.span
             className="block text-white"
             initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.65 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.75 }}
           >
             na sua melhor versão.
           </motion.span>
@@ -109,8 +188,8 @@ export default function HeroSection() {
         <motion.p
           className="text-lg sm:text-xl text-white/50 mb-12 max-w-xl leading-relaxed"
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.45 }}
+          animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
         >
           Natação, musculação, pilates, artes marciais e muito mais.{" "}
           <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
@@ -120,8 +199,8 @@ export default function HeroSection() {
         <motion.div
           className="flex flex-col sm:flex-row gap-4 mb-20"
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.6 }}
+          animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
         >
           <motion.a
             href={WHATSAPP_URL}
@@ -153,8 +232,8 @@ export default function HeroSection() {
         <motion.div
           className="flex flex-col sm:flex-row gap-6 sm:gap-12"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.8 }}
+          animate={introComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.9 }}
         >
           {STATS.map((stat, i) => (
             <div key={stat.label} className="flex items-center gap-3">
@@ -183,6 +262,9 @@ export default function HeroSection() {
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         style={{ opacity: indicatorOpacity }}
+        initial={{ opacity: 0 }}
+        animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
       >
         <span className="text-[10px] tracking-[0.25em] uppercase text-white/25 font-medium">
           Explore

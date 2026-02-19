@@ -14,79 +14,126 @@ const NAV_ITEMS = [
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
 
-export default function Header() {
+interface HeaderProps {
+  /** When true, header is always visible (non-home pages). When false, header appears on scroll. */
+  alwaysVisible?: boolean;
+}
+
+export default function Header({ alwaysVisible = false }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [heroScrolled, setHeroScrolled] = useState(alwaysVisible);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  /* track page scroll for glass effect */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* listen for hero scroll state emitted by HeroSection */
+  useEffect(() => {
+    if (alwaysVisible) {
+      setHeroScrolled(true);
+      return;
+    }
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { scrolled: boolean };
+      setHeroScrolled(detail.scrolled);
+    };
+    window.addEventListener("hero-scroll-state", handler);
+    return () => window.removeEventListener("hero-scroll-state", handler);
+  }, [alwaysVisible]);
+
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  const isVisible = alwaysVisible || heroScrolled;
+
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "header-scroll py-2" : "bg-transparent py-4"
-        }`}
-      >
-        <div className="container mx-auto flex items-center justify-between px-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5">
-            <img
-              src={flipperLogo}
-              alt="Academia Flipper"
-              className="w-12 h-12 rounded-lg object-cover shadow-md"
-            />
-            <span className={`font-display text-2xl font-900 tracking-wider ${scrolled ? "text-primary" : "text-primary-foreground"}`}>
-              FLIPPER
-            </span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Navegação principal">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
-                  location.pathname === item.path
-                    ? `font-bold ${scrolled ? "text-primary" : "text-primary-foreground"} after:scale-x-100`
-                    : `${scrolled ? "text-foreground/70 hover:text-foreground" : "text-primary-foreground/80 hover:text-primary-foreground"} after:scale-x-0 hover:after:scale-x-100`
-                }`}
-              >
-                {item.label}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.header
+            key="header"
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -80, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+              scrolled ? "header-scroll py-2" : "bg-transparent py-4"
+            }`}
+          >
+            <div className="container mx-auto flex items-center justify-between px-4">
+              {/* Logo */}
+              <Link to="/" className="flex items-center gap-2.5">
+                <img
+                  src={flipperLogo}
+                  alt="Academia Flipper"
+                  className="w-12 h-12 rounded-lg object-cover shadow-md"
+                />
+                <span
+                  className={`font-display text-2xl font-900 tracking-wider ${
+                    scrolled ? "text-primary" : "text-primary-foreground"
+                  }`}
+                >
+                  FLIPPER
+                </span>
               </Link>
-            ))}
-          </nav>
 
-          {/* CTA Desktop */}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 btn-cta rounded-full px-5 py-2.5 text-sm font-semibold animate-pulse-glow"
-          >
-            <Phone size={16} />
-            Agende sua Aula
-          </a>
+              {/* Desktop Nav */}
+              <nav
+                className="hidden md:flex items-center gap-8"
+                aria-label="Navegação principal"
+              >
+                {NAV_ITEMS.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
+                      location.pathname === item.path
+                        ? `font-bold ${
+                            scrolled ? "text-primary" : "text-primary-foreground"
+                          } after:scale-x-100`
+                        : `${
+                            scrolled
+                              ? "text-foreground/70 hover:text-foreground"
+                              : "text-primary-foreground/80 hover:text-primary-foreground"
+                          } after:scale-x-0 hover:after:scale-x-100`
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`}
-            aria-label="Abrir menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </header>
+              {/* CTA Desktop */}
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center gap-2 btn-cta rounded-full px-5 py-2.5 text-sm font-semibold animate-pulse-glow"
+              >
+                <Phone size={16} />
+                Agende sua Aula
+              </a>
+
+              {/* Mobile Toggle */}
+              <button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className={`md:hidden p-2 rounded-lg transition-colors ${
+                  scrolled ? "text-foreground" : "text-primary-foreground"
+                }`}
+                aria-label="Abrir menu"
+              >
+                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </motion.header>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -108,7 +155,9 @@ export default function Header() {
                 <Link
                   to={item.path}
                   className={`text-2xl font-display font-bold transition-colors ${
-                    location.pathname === item.path ? "text-primary" : "text-foreground/70"
+                    location.pathname === item.path
+                      ? "text-primary"
+                      : "text-foreground/70"
                   }`}
                 >
                   {item.label}

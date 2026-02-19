@@ -69,12 +69,6 @@ export default function HeroSection() {
           {/* "Mergulhe" with blurred stagger per letter */}
           <motion.span
             className="block pb-2"
-            style={{
-              background: "linear-gradient(135deg, hsl(185,80%,70%), hsl(195,90%,75%), hsl(170,70%,60%))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
             variants={{
               hidden: { opacity: 0 },
               show: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.25 } },
@@ -85,7 +79,13 @@ export default function HeroSection() {
             {"Mergulhe".split("").map((char, i) => (
               <motion.span
                 key={i}
-                style={{ display: "inline-block" }}
+                style={{
+                  display: "inline-block",
+                  background: "linear-gradient(135deg, hsl(185,80%,70%), hsl(195,90%,75%), hsl(170,70%,60%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
                 variants={{
                   hidden: { opacity: 0, filter: "blur(12px)", y: 8 },
                   show: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.5, ease: "easeOut" } },

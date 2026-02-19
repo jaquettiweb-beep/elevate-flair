@@ -72,7 +72,7 @@ export default function HeroSection() {
           transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.25 }}
         >
           <span
-            className="block"
+            className="block pb-2"
             style={{
               background: "linear-gradient(135deg, hsl(185,80%,70%), hsl(195,90%,75%), hsl(170,70%,60%))",
               WebkitBackgroundClip: "text",

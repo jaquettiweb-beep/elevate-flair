@@ -65,13 +65,9 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Main heading */}
-        <motion.h1
-          className="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.92] mb-7 tracking-tight max-w-4xl"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.25 }}
-        >
-          <span
+        <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.92] mb-7 tracking-tight max-w-4xl">
+          {/* "Mergulhe" with blurred stagger per letter */}
+          <motion.span
             className="block pb-2"
             style={{
               background: "linear-gradient(135deg, hsl(185,80%,70%), hsl(195,90%,75%), hsl(170,70%,60%))",
@@ -79,11 +75,35 @@ export default function HeroSection() {
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.25 } },
+            }}
+            initial="hidden"
+            animate="show"
           >
-            Mergulhe
-          </span>
-          <span className="block text-white">na sua melhor versão.</span>
-        </motion.h1>
+            {"Mergulhe".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                style={{ display: "inline-block" }}
+                variants={{
+                  hidden: { opacity: 0, filter: "blur(12px)", y: 8 },
+                  show: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.span>
+          <motion.span
+            className="block text-white"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.65 }}
+          >
+            na sua melhor versão.
+          </motion.span>
+        </h1>
 
         {/* Subtitle */}
         <motion.p

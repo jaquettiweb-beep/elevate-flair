@@ -12,24 +12,21 @@ const STATS = [
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 
-/* ─── Letter-by-letter blur-stagger ─── */
+/* ─── Letter-by-letter blur-stagger for "Mergulhe" ─── */
 function MergulheWord() {
   const word = "Mergulhe";
   return (
     <motion.span
       className="block"
       style={{
-        /* Extra vertical room so descenders (g) are never clipped */
-        paddingBottom: "0.25em",
         lineHeight: 1.05,
         overflow: "visible",
+        /* Extra space so the "g" descender is never clipped */
+        paddingBottom: "0.25em",
       }}
       variants={{
         hidden: { opacity: 0 },
-        show: {
-          opacity: 1,
-          transition: { staggerChildren: 0.055, delayChildren: 0.15 },
-        },
+        show: { opacity: 1, transition: { staggerChildren: 0.055, delayChildren: 0.15 } },
       }}
       initial="hidden"
       animate="show"
@@ -39,9 +36,9 @@ function MergulheWord() {
           key={i}
           style={{
             display: "inline-block",
-            /* A wider paint area prevents bg-clip from eating the descender */
-            paddingBottom: "0.15em",
-            marginBottom: "-0.15em",
+            /* The pb/mb trick gives the background-clip enough paint area */
+            paddingBottom: "0.2em",
+            marginBottom: "-0.2em",
             background:
               "linear-gradient(135deg, hsl(185,80%,68%), hsl(195,90%,73%), hsl(170,70%,58%))",
             WebkitBackgroundClip: "text",
@@ -50,12 +47,7 @@ function MergulheWord() {
           }}
           variants={{
             hidden: { opacity: 0, filter: "blur(14px)", y: 10 },
-            show: {
-              opacity: 1,
-              filter: "blur(0px)",
-              y: 0,
-              transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
-            },
+            show: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
           }}
         >
           {char}
@@ -70,7 +62,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ introComplete = true }: HeroSectionProps) {
-  /* ── Tall scroll wrapper: page is "locked" inside this height ── */
+  /* ── Tall wrapper for scroll-locked animation ── */
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -78,27 +70,25 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
     offset: ["start start", "end start"],
   });
 
-  /* Smooth spring driving all transforms */
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /* ── Content shifts left ── */
-  const contentX     = useTransform(smooth, [0, 0.6], ["0%", "-28%"]);
-  const contentY     = useTransform(smooth, [0, 0.6], ["0%", "8%"]);
-  const contentScale = useTransform(smooth, [0, 0.6], [1, 0.93]);
-  const contentOpacity = useTransform(smooth, [0, 0.55], [1, 0]);
+  /* ─────────────────────────────────────────────────────────
+     Content: slides LEFT and stays fully visible (no fade)
+  ───────────────────────────────────────────────────────── */
+  const contentX = useTransform(smooth, [0, 0.65], ["0%", "-24%"]);
 
-  /* ── Image slides in from right ── */
-  // Starts entering at 15% scroll, fully visible by 75%
+  /* ─────────────────────────────────────────────────────────
+     Image: slides in from RIGHT
+  ───────────────────────────────────────────────────────── */
   const imageX       = useTransform(smooth, [0.1, 0.72], ["105%", "0%"]);
   const imageOpacity = useTransform(smooth, [0.1, 0.45], [0, 1]);
   const imageScale   = useTransform(smooth, [0.1, 0.72], [1.06, 1]);
-  // subtle inner parallax on the photo itself
   const imageInnerY  = useTransform(smooth, [0, 1], ["-6%", "6%"]);
 
-  /* ── Scroll indicator ── */
+  /* Scroll indicator */
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
-  /* Emit hero-scroll-state for the Header */
+  /* Header visibility */
   useEffect(() => {
     const unsub = scrollYProgress.on("change", (v) => {
       window.dispatchEvent(
@@ -110,8 +100,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   return (
     /*
-     * Tall wrapper (300vh) — the sticky section inside is only 100vh.
-     * The extra height gives scroll "travel" to drive all the animations
+     * 300vh wrapper — the sticky inner section is 100vh.
+     * Extra height provides scroll "travel" to drive animations
      * before the page continues past the hero.
      */
     <div ref={wrapperRef} style={{ height: "300vh" }}>
@@ -132,59 +122,43 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           }}
         />
 
-        {/* ════════════════════════════════════════
-            FACADE IMAGE — right half, appears on scroll
-        ════════════════════════════════════════ */}
+        {/* ════════════════ FACADE IMAGE ════════════════ */}
         <motion.div
           className="absolute top-0 right-0 h-full pointer-events-none z-[5]"
-          style={{
-            x: imageX,
-            opacity: imageOpacity,
-            width: "52%",
-          }}
+          style={{ x: imageX, opacity: imageOpacity, width: "52%" }}
         >
-          {/* Photo with inner parallax */}
-          <motion.div
-            className="relative w-full h-full overflow-hidden"
-            style={{ scale: imageScale }}
-          >
+          <motion.div className="relative w-full h-full overflow-hidden" style={{ scale: imageScale }}>
             <motion.img
               src={heroGym}
               alt="Fachada da Academia Flipper"
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY }}
             />
-
-            {/* Left-edge fade so photo blends into hero text */}
+            {/* Left blend */}
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to right, hsl(210,85%,8%) 0%, hsla(210,85%,8%,0.55) 18%, transparent 45%)",
+                  "linear-gradient(to right, hsl(210,85%,8%) 0%, hsla(210,85%,8%,0.5) 18%, transparent 44%)",
               }}
             />
-
-            {/* Bottom fade to match section gradient */}
+            {/* Bottom blend */}
             <div
               className="absolute inset-0"
               style={{
-                background:
-                  "linear-gradient(to top, hsl(185,70%,92%) 0%, transparent 22%)",
+                background: "linear-gradient(to top, hsl(185,70%,92%) 0%, transparent 22%)",
               }}
             />
-
-            {/* Top fade */}
+            {/* Top blend */}
             <div
               className="absolute inset-0"
               style={{
-                background:
-                  "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 18%)",
+                background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 18%)",
               }}
             />
-
-            {/* Academy name badge over image */}
+            {/* Badge */}
             <motion.div
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+              className="absolute bottom-10 left-1/2 -translate-x-1/2"
               style={{ opacity: imageOpacity }}
             >
               <span
@@ -200,17 +174,10 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           </motion.div>
         </motion.div>
 
-        {/* ════════════════════════════════════════
-            MAIN CONTENT — shifts left on scroll
-        ════════════════════════════════════════ */}
+        {/* ════════════════ MAIN CONTENT ════════════════ */}
         <motion.div
           className="relative z-10 w-full max-w-5xl mx-auto px-6 py-32 flex flex-col items-center text-center"
-          style={{
-            x: contentX,
-            y: contentY,
-            scale: contentScale,
-            opacity: contentOpacity,
-          }}
+          style={{ x: contentX }}
         >
           {/* Badge */}
           <motion.div
@@ -296,8 +263,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{
-                    background:
-                      "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
+                    background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
                     boxShadow: "0 4px 12px hsla(185,80%,45%,0.25)",
                   }}
                 >

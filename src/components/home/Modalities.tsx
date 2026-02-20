@@ -10,9 +10,19 @@ const MODALITIES = [
   { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg },
   { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg },
   { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg },
-  { name: "Pilates", desc: "Studio e solo. Fortalecimento e flexibilidade para todos.", img: pilatesImg },
-  { name: "Artes Marciais", desc: "Muay Thai, Krav Maga, Aikidô, Kung Fu, Jiu Jitsu e Judô.", img: martialImg },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto. Ideal para 60+.", img: swimmingImg },
+  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg },
+  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg },
+  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg },
+  { name: "Muay Thai", desc: "Arte marcial tailandesa que combina força, técnica e condicionamento.", img: martialImg },
+  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg },
+  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg },
+  { name: "Kung Fu", desc: "Arte marcial chinesa milenar com foco em equilíbrio e técnica.", img: martialImg },
+  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg },
+  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e redirecionamento de força.", img: martialImg },
+  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg },
+  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg },
+  { name: "Hidroterapia", desc: "Reabilitação e bem-estar através de exercícios aquáticos terapêuticos.", img: swimmingImg },
+  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente desenvolvidas para a melhor idade.", img: swimmingImg },
 ];
 
 const cardVariants = {
@@ -45,7 +55,7 @@ export default function Modalities() {
             Nossas <span className="gradient-text">Modalidades</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Mais de 15 modalidades para encontrar a atividade perfeita para você.
+            16 modalidades para encontrar a atividade perfeita para você.
           </p>
         </motion.div>
 

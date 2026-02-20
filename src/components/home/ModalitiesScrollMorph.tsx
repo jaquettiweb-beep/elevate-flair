@@ -36,12 +36,9 @@ const MODALITIES: Modality[] = [
 ];
 
 const TOTAL = MODALITIES.length;
-// Virtual scroll budget — maps to the full arc sweep
-// Full loop: enough scroll budget so all 16 cards pass through center once
 const MAX_VIRTUAL = 5400;
-// Card dimensions (larger spacing)
-const IMG_W = 140;
-const IMG_H = 188;
+const IMG_W = 120;
+const IMG_H = 162;
 
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
@@ -139,11 +136,16 @@ export default function ModalitiesScrollMorph() {
   const [morphVal, setMorphVal] = useState(0);
   const [rotateVal, setRotateVal] = useState(0);
   const [parallaxVal, setParallaxVal] = useState(0);
+  const [loopComplete, setLoopComplete] = useState(false);
+  const [spinAngle, setSpinAngle] = useState(0);
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef(0);
-  const isLockedRef = useRef(true); // start locked until user scrolls to fill
+  const isLockedRef = useRef(true);
+  const hasCompletedOnce = useRef(false); // never re-lock after first pass
+  const spinAngleRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   // MotionValues
   const virtualScroll = useMotionValue(0);
@@ -177,8 +179,23 @@ export default function ModalitiesScrollMorph() {
     return () => obs.disconnect();
   }, []);
 
-  // Wheel handler — locked until virtual scroll is saturated, then allows page scroll
+  // Auto-spin when loop complete
+  useEffect(() => {
+    if (!loopComplete) return;
+    const animate = () => {
+      spinAngleRef.current += 0.25;
+      setSpinAngle(spinAngleRef.current);
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [loopComplete]);
+
+  // Wheel handler
   const handleWheel = useCallback((e: WheelEvent) => {
+    if (loopComplete) return; // after loop, don't interfere
     const current = scrollRef.current;
     const next = clamp(current + e.deltaY, 0, MAX_VIRTUAL);
 
@@ -188,21 +205,21 @@ export default function ModalitiesScrollMorph() {
       scrollRef.current = next;
       virtualScroll.set(next);
 
-      // Unlock only after the full loop is complete (all 16 cards seen)
       if (next >= MAX_VIRTUAL && e.deltaY > 0) {
         isLockedRef.current = false;
+        hasCompletedOnce.current = true;
+        setLoopComplete(true);
       }
     }
-  }, [virtualScroll]);
+  }, [virtualScroll, loopComplete]);
 
-  // Re-lock when section comes back into view
+  // Re-lock only if first pass hasn't happened yet
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !hasCompletedOnce.current) {
           isLockedRef.current = true;
         }
       },
@@ -212,7 +229,7 @@ export default function ModalitiesScrollMorph() {
     return () => observer.disconnect();
   }, []);
 
-  // Attach wheel listener to canvas
+  // Attach wheel + touch + mouse listeners
   useEffect(() => {
     const el = canvasRef.current;
     if (!el) return;
@@ -220,12 +237,17 @@ export default function ModalitiesScrollMorph() {
     let touchY = 0;
     const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
     const onTouchMove = (e: TouchEvent) => {
+      if (loopComplete) return;
       const delta = touchY - e.touches[0].clientY;
       touchY = e.touches[0].clientY;
       const next = clamp(scrollRef.current + delta * 1.5, 0, MAX_VIRTUAL);
       scrollRef.current = next;
       virtualScroll.set(next);
       if (next < MAX_VIRTUAL && next > 0) e.preventDefault();
+      if (next >= MAX_VIRTUAL) {
+        hasCompletedOnce.current = true;
+        setLoopComplete(true);
+      }
     };
     const onMouseMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
@@ -243,7 +265,7 @@ export default function ModalitiesScrollMorph() {
       el.removeEventListener("touchmove", onTouchMove);
       el.removeEventListener("mousemove", onMouseMove);
     };
-  }, [handleWheel, mouseX, virtualScroll]);
+  }, [handleWheel, mouseX, virtualScroll, loopComplete]);
 
   // Intro sequence
   useEffect(() => {
@@ -262,60 +284,65 @@ export default function ModalitiesScrollMorph() {
       opacity: 0,
     })), []);
 
-  // Derived display values
   const scrollProg = clamp(virtualVal / MAX_VIRTUAL, 0, 1);
   const contentVisible = morphVal > 0.6;
+  // Text inside circle visible only before morph starts
+  const circleTextVisible = introPhase === "circle" && morphVal < 0.15;
 
   // Card target positions
   function getTarget(i: number) {
     if (introPhase === "scatter") return scatter[i];
 
     if (introPhase === "line") {
-      const spacing = 100; // wider spacing in line phase
+      const spacing = 100;
       const totalW = TOTAL * spacing;
       return { x: i * spacing - totalW / 2, y: 0, rotation: 0, scale: 0.75, opacity: 1 };
     }
 
-    // --- Full 360° wheel: cards evenly spaced, NO gaps ---
     const { width: W, height: H } = containerSize;
-    const isMobile = W < 768;
 
-    // Initial circle (morph source)
+    // --- After loop: return to spinning circle ---
+    if (loopComplete) {
+      const minDim = Math.min(W, H);
+      const circleR = Math.min(minDim * 0.33, 260);
+      const angle = (i / TOTAL) * 360 + spinAngle;
+      const rad = (angle * Math.PI) / 180;
+      return {
+        x: Math.cos(rad) * circleR,
+        y: Math.sin(rad) * circleR,
+        rotation: 0, // vertical cards
+        scale: 0.72,
+        opacity: 1,
+      };
+    }
+
+    // --- Circle source position (smaller, fits viewport) ---
     const minDim = Math.min(W, H);
-    const circleR = Math.min(minDim * 0.46, 420);
+    const circleR = Math.min(minDim * 0.33, 260);
     const cAngle = (i / TOTAL) * 360;
     const cRad = (cAngle * Math.PI) / 180;
     const circlePos = {
       x: Math.cos(cRad) * circleR,
       y: Math.sin(cRad) * circleR,
-      rotation: cAngle + 90,
+      rotation: 0, // cards always vertical in circle
     };
 
-    // Continuous wheel: 360° / 16 = 22.5° per card — no gaps
-    const angleStep = 360 / TOTAL; // 22.5°
+    // --- Arc / wheel target ---
+    const isMobile = W < 768;
+    const angleStep = 360 / TOTAL;
     const baseAngle = i * angleStep;
-
-    // Scroll drives a full 360° rotation (one complete loop)
     const scrollP = clamp(rotateVal / 360, 0, 1);
     const rotationOffset = scrollP * 360;
-
-    // Raw angle of this card on the wheel (0° = pointing up)
     const rawAngle = (baseAngle + rotationOffset) % 360;
-    // -180 to +180 for easy "distance from top" math
     const signedAngle = rawAngle > 180 ? rawAngle - 360 : rawAngle;
     const absFromTop = Math.abs(signedAngle);
 
-    // Wheel geometry: large radius so the top portion forms a gentle arc
     const arcR = isMobile ? H * 1.1 : Math.min(W * 0.9, H * 1.05);
-    // Wheel center sits below the viewport so only the top arc is visible
     const arcCenterY = H * 0.52 + arcR * 0.78;
-
-    // Card position on the wheel (rawAngle 0 = top, so offset by -90°)
     const wheelRad = ((rawAngle - 90) * Math.PI) / 180;
     const arcX = Math.cos(wheelRad) * arcR + parallaxVal - W / 2;
     const arcY = Math.sin(wheelRad) * arcR + arcCenterY - H / 2;
 
-    // Visibility: fully visible within ±65° of top, fades out toward ±85°
     const fadeStart = 55;
     const fadeEnd = 80;
     let opacity = 1;
@@ -329,7 +356,6 @@ export default function ModalitiesScrollMorph() {
       opacity = 1 - t;
       extraScale = lerp(isMobile ? 0.95 : 1.35, 0.6, t);
     } else {
-      // Boost scale for the card closest to the top center
       const centerness = 1 - absFromTop / fadeStart;
       extraScale = lerp(isMobile ? 0.95 : 1.35, isMobile ? 1.15 : 1.52, centerness * 0.55);
     }
@@ -337,7 +363,7 @@ export default function ModalitiesScrollMorph() {
     const arcPos = {
       x: arcX,
       y: arcY,
-      rotation: rawAngle + 90, // card face follows the wheel tangent
+      rotation: rawAngle + 90, // tangent follow during arc
       scale: extraScale,
       opacity,
     };
@@ -345,27 +371,25 @@ export default function ModalitiesScrollMorph() {
     return {
       x: lerp(circlePos.x, arcPos.x, morphVal),
       y: lerp(circlePos.y, arcPos.y, morphVal),
-      rotation: lerp(circlePos.rotation, arcPos.rotation, morphVal),
-      scale: lerp(0.85, arcPos.scale, morphVal),
+      rotation: lerp(0, arcPos.rotation, morphVal), // from vertical to tangent
+      scale: lerp(0.72, arcPos.scale, morphVal),
       opacity: lerp(1, arcPos.opacity, morphVal),
     };
   }
 
   return (
-    /* Outer section: 200vh tall so the page has "room" to scroll through */
     <section
       ref={sectionRef}
       id="modalidades"
       style={{ height: "200vh" }}
       className="relative"
     >
-      {/* Sticky viewport — stays fixed while the user scrolls through the 200vh */}
       <div className="sticky top-0 h-screen overflow-hidden">
 
-        {/* Section header — fades in as arc forms */}
+        {/* Section header — visible only when arc is open (contentVisible) */}
         <motion.div
           className="absolute top-8 left-0 right-0 z-30 text-center pointer-events-none px-4"
-          animate={{ opacity: contentVisible ? 1 : 0, y: contentVisible ? 0 : 20 }}
+          animate={{ opacity: contentVisible && !loopComplete ? 1 : 0, y: contentVisible ? 0 : 20 }}
           transition={{ duration: 0.5 }}
         >
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-1">
@@ -376,7 +400,7 @@ export default function ModalitiesScrollMorph() {
           </p>
         </motion.div>
 
-        {/* Bottom HUD: scroll hint + progress */}
+        {/* Bottom HUD */}
         <motion.div
           className="absolute bottom-7 left-0 right-0 z-30 flex flex-col items-center gap-2.5 pointer-events-none"
           animate={{ opacity: scrollProg >= 1 ? 0 : 1 }}
@@ -390,17 +414,16 @@ export default function ModalitiesScrollMorph() {
               : "Explorando modalidades"}
           </p>
           <ProgressBar value={scrollProg} />
-          {/* Mouse wheel icon */}
           <motion.div
             className="w-5 h-8 rounded-full border-2 border-primary/40 flex items-start justify-center pt-1.5"
-            animate={introPhase === "circle" ? { opacity: [0.8, 0.2, 0.8] } : { opacity: 0 }}
+            animate={introPhase === "circle" && !loopComplete ? { opacity: [0.8, 0.2, 0.8] } : { opacity: 0 }}
             transition={{ repeat: Infinity, duration: 1.6 }}
           >
             <div className="w-1 h-2 rounded-full bg-primary" />
           </motion.div>
         </motion.div>
 
-        {/* "Continue scrolling" cue when arc fully explored */}
+        {/* "Continue scrolling" cue */}
         <motion.div
           className="absolute bottom-7 left-0 right-0 z-30 flex flex-col items-center gap-1 pointer-events-none"
           animate={{ opacity: scrollProg >= 0.98 ? 1 : 0, y: scrollProg >= 0.98 ? 0 : 10 }}
@@ -424,7 +447,21 @@ export default function ModalitiesScrollMorph() {
           className="w-full h-full relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
           style={{ touchAction: "none" }}
         >
-          {/* Center anchor */}
+          {/* Text inside the circle — visible before morph */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center pointer-events-none"
+            animate={{ opacity: circleTextVisible ? 1 : 0, scale: circleTextVisible ? 1 : 0.85 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="font-display text-2xl lg:text-4xl font-bold text-foreground mb-1">
+              Nossas <span className="gradient-text">Modalidades</span>
+            </h2>
+            <p className="text-muted-foreground text-sm lg:text-base">
+              16 atividades — passe o mouse sobre a carta para conhecer
+            </p>
+          </motion.div>
+
+          {/* Center anchor for cards */}
           <div style={{ position: "absolute", left: "50%", top: "50%", width: 0, height: 0 }}>
             {MODALITIES.map((mod, i) => (
               <FlipCard key={mod.name} modality={mod} target={getTarget(i)} />

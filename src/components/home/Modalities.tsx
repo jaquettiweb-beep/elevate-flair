@@ -31,9 +31,17 @@ const MODALITIES = [
 const TOTAL = MODALITIES.length; // 16
 const CARD_W = 80;
 const CARD_H = 112;
-// One full 360° of virtual scroll to show all cards
-const SCROLL_TO_COMPLETE = 2400;
 
+// Virtual scroll budget:
+// Phase 1 — morph circle → arc:  0  → 700  px
+// Phase 2 — arc loops 360°:      700 → 4300 px  (3600 = full spin to show all 16)
+const MORPH_START = 0;
+const MORPH_END   = 700;
+const LOOP_START  = MORPH_END;
+const LOOP_END    = MORPH_END + 3600; // full 360° loop
+const MAX_SCROLL  = LOOP_END;
+
+const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 type Phase = "scatter" | "line" | "circle";
 
 // ─── FlipCard ──────────────────────────────────────────────────────
@@ -93,11 +101,18 @@ function FlipCard({ src, name, desc, target }: {
 export default function Modalities() {
   const [phase, setPhase] = useState<Phase>("scatter");
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const [scrollDone, setScrollDone] = useState(false);
+  // "done" = all 16 shown, arc collapsed back to circle, auto-spinning
+  const [done, setDone] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
 
-  // Auto-rotation angle (degrees), starts after scroll is done
+  // Virtual scroll raw value
+  const virtualScroll = useMotionValue(0);
+  const scrollRef = useRef(0);
+  // Smooth spring on top of virtual scroll
+  const smoothScroll = useSpring(virtualScroll, { stiffness: 42, damping: 20 });
+  const [scrollV, setScrollV] = useState(0);
+
+  // Auto-rotation (after done)
   const autoAngle = useRef(0);
   const [autoRotateDeg, setAutoRotateDeg] = useState(0);
   const rafRef = useRef<number>(0);
@@ -105,7 +120,9 @@ export default function Modalities() {
   // Container size
   useEffect(() => {
     if (!containerRef.current) return;
-    const ro = new ResizeObserver(([e]) => setSize({ w: e.contentRect.width, h: e.contentRect.height }));
+    const ro = new ResizeObserver(([e]) =>
+      setSize({ w: e.contentRect.width, h: e.contentRect.height })
+    );
     ro.observe(containerRef.current);
     setSize({ w: containerRef.current.offsetWidth, h: containerRef.current.offsetHeight });
     return () => ro.disconnect();
@@ -118,28 +135,21 @@ export default function Modalities() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
-  // Virtual scroll offset (0 → SCROLL_TO_COMPLETE)
-  const virtualScroll = useMotionValue(0);
-  const scrollRef = useRef(0);
-  const smoothScroll = useSpring(virtualScroll, { stiffness: 40, damping: 18 });
-  const [scrollV, setScrollV] = useState(0);
-
+  // Subscribe to smooth scroll
   useEffect(() => {
     const u = smoothScroll.on("change", setScrollV);
     return u;
   }, [smoothScroll]);
 
-  // Wheel / touch handler — only active while scroll NOT done
+  // Wheel / touch — locked while not done
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
-    if (scrollDone) return;
-    const next = Math.min(scrollRef.current + e.deltaY, SCROLL_TO_COMPLETE);
-    scrollRef.current = Math.max(next, 0);
-    virtualScroll.set(scrollRef.current);
-    if (scrollRef.current >= SCROLL_TO_COMPLETE) {
-      setScrollDone(true);
-    }
-  }, [scrollDone, virtualScroll]);
+    if (done) return;
+    const next = Math.min(Math.max(scrollRef.current + e.deltaY, 0), MAX_SCROLL);
+    scrollRef.current = next;
+    virtualScroll.set(next);
+    if (next >= MAX_SCROLL) setDone(true);
+  }, [done, virtualScroll]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -147,13 +157,13 @@ export default function Modalities() {
     let ty = 0;
     const onTouchStart = (e: TouchEvent) => { ty = e.touches[0].clientY; };
     const onTouchMove = (e: TouchEvent) => {
-      if (scrollDone) return;
+      if (done) return;
       const dy = ty - e.touches[0].clientY;
       ty = e.touches[0].clientY;
-      const next = Math.min(scrollRef.current + dy, SCROLL_TO_COMPLETE);
-      scrollRef.current = Math.max(next, 0);
-      virtualScroll.set(scrollRef.current);
-      if (scrollRef.current >= SCROLL_TO_COMPLETE) setScrollDone(true);
+      const next = Math.min(Math.max(scrollRef.current + dy, 0), MAX_SCROLL);
+      scrollRef.current = next;
+      virtualScroll.set(next);
+      if (next >= MAX_SCROLL) setDone(true);
     };
     el.addEventListener("wheel", handleWheel, { passive: false });
     el.addEventListener("touchstart", onTouchStart, { passive: false });
@@ -163,26 +173,21 @@ export default function Modalities() {
       el.removeEventListener("touchstart", onTouchStart);
       el.removeEventListener("touchmove", onTouchMove);
     };
-  }, [handleWheel, scrollDone, virtualScroll]);
+  }, [handleWheel, done, virtualScroll]);
 
-  // Auto-rotation RAF — starts when scroll is done
+  // Auto-rotation RAF — starts when done
   useEffect(() => {
-    if (!scrollDone) return;
+    if (!done) return;
     const tick = () => {
-      autoAngle.current += 0.4; // degrees per frame
+      autoAngle.current += 0.35;
       setAutoRotateDeg(autoAngle.current);
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [scrollDone]);
+  }, [done]);
 
-  // Circle radius
-  const circleR = size.w > 0
-    ? Math.min(Math.min(size.w, size.h) * 0.32, 240)
-    : 200;
-
-  // Scatter positions
+  // Stable scatter positions
   const scatter = useMemo(() => MODALITIES.map(() => ({
     x: (Math.random() - 0.5) * 1400,
     y: (Math.random() - 0.5) * 900,
@@ -191,12 +196,57 @@ export default function Modalities() {
     opacity: 0,
   })), []);
 
-  // Scroll progress: 0 → 1 over SCROLL_TO_COMPLETE (full 360°)
-  const scrollProgress = Math.min(scrollV / SCROLL_TO_COMPLETE, 1);
-  // Circle rotates 360° total as user scrolls
-  const circleDegFromScroll = scrollProgress * 360;
+  // ── Geometry helpers ──────────────────────────────────────────────
+  const isMobile = size.w < 768;
 
-  // Per-card targets
+  // Circle (resting state)
+  const circleR = Math.min(Math.min(size.w, size.h) * 0.32, 260);
+
+  // Arc (fan shape, same as original)
+  const baseR   = Math.min(size.w, size.h * 1.5);
+  const arcR    = baseR * (isMobile ? 1.35 : 1.05);
+  const apexY   = size.h * (isMobile ? 0.3 : 0.22);
+  const arcCenterY = apexY + arcR;
+  const spread  = isMobile ? 95 : 125;          // visible fan angle
+  const startAngle = -90 - spread / 2;
+  const step    = spread / (TOTAL - 1);          // degrees between cards on arc
+
+  // ── Progress values ───────────────────────────────────────────────
+  // morphV: 0 = circle, 1 = arc fully open
+  const morphRaw = Math.min(Math.max((scrollV - MORPH_START) / (MORPH_END - MORPH_START), 0), 1);
+
+  // After done, morph collapses back to circle (0)
+  const morphV = done ? 0 : morphRaw;
+
+  // loopRot: 0 → 360° during LOOP_START → LOOP_END
+  const loopRaw = Math.min(Math.max((scrollV - LOOP_START) / (LOOP_END - LOOP_START), 0), 1);
+  // Convert to degrees: rotate the entire arc so all 16 cards pass the apex (-90°)
+  // Cards are spread over `spread` degrees. To cycle all 16 through center, rotate 360°.
+  const loopDeg = loopRaw * 360;
+
+  // Overall loop progress (0 → 1) for the progress ring
+  const loopProgress = loopRaw;
+
+  // Mouse parallax
+  const mouseX = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 28, damping: 18 });
+  const [parallaxV, setParallaxV] = useState(0);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      mouseX.set(((e.clientX - r.left) / r.width * 2 - 1) * 60);
+    };
+    el.addEventListener("mousemove", onMove);
+    return () => el.removeEventListener("mousemove", onMove);
+  }, [mouseX]);
+  useEffect(() => {
+    const u = smoothMouseX.on("change", setParallaxV);
+    return u;
+  }, [smoothMouseX]);
+
+  // ── Per-card targets ──────────────────────────────────────────────
   const targets: CardTarget[] = MODALITIES.map((_, i) => {
     if (phase === "scatter") return scatter[i];
 
@@ -206,55 +256,70 @@ export default function Modalities() {
       return { x: i * spacing - total / 2 + spacing / 2, y: 0, rotation: 0, scale: 1, opacity: 1 };
     }
 
-    // Circle: each card at its natural angle + the global rotation
-    const baseAngle = (i / TOTAL) * 360;
-    // Use auto-rotation after done, scroll-driven rotation while scrolling
-    const globalRot = scrollDone ? autoAngle.current : circleDegFromScroll;
-    const angle = baseAngle + globalRot;
-    const rad = (angle * Math.PI) / 180;
-    const scale = scrollDone ? 1.1 : 1.0;
+    // ── Circle position (resting) ──
+    const cAngle = (i / TOTAL) * 360 + (done ? autoRotateDeg : 0);
+    const cRad = (cAngle * Math.PI) / 180;
+    const circlePos = {
+      x: Math.cos(cRad) * circleR,
+      y: Math.sin(cRad) * circleR,
+      rotation: cAngle + 90,
+      scale: done ? 1.1 : 1.0,
+    };
 
+    // ── Arc position (fan open) ──
+    // Each card is equally spaced on the fan, then the whole fan rotates by loopDeg
+    const cardAngle = startAngle + i * step + loopDeg;
+    const aRad = (cardAngle * Math.PI) / 180;
+    const arcPos = {
+      x: Math.cos(aRad) * arcR + parallaxV,
+      y: Math.sin(aRad) * arcR + arcCenterY,
+      rotation: cardAngle + 90,
+      scale: isMobile ? 1.35 : 1.7,
+    };
+
+    // ── Lerp circle → arc via morphV ──
     return {
-      x: Math.cos(rad) * circleR,
-      y: Math.sin(rad) * circleR,
-      rotation: angle + 90,
-      scale,
+      x:        lerp(circlePos.x,        arcPos.x,        morphV),
+      y:        lerp(circlePos.y,        arcPos.y,        morphV),
+      rotation: lerp(circlePos.rotation, arcPos.rotation, morphV),
+      scale:    lerp(circlePos.scale,    arcPos.scale,    morphV),
       opacity: 1,
     };
   });
 
-  // Hint: show scroll prompt when circle is visible and not done
-  const showHint = phase === "circle" && !scrollDone && scrollV < 40;
-  // Show "done" label briefly when scroll completes
-  const showDoneLabel = scrollDone;
+  // UI helpers
+  const arcOpen     = morphV > 0.5;
+  const showHint    = phase === "circle" && !done && scrollV < 40;
+  const inLoop      = phase === "circle" && morphRaw >= 0.9 && !done;
 
   return (
     <section
-      ref={sectionRef}
       id="modalidades"
       className="relative overflow-hidden"
       style={{
         height: "100svh",
         minHeight: 600,
-        touchAction: scrollDone ? "auto" : "none",
-        // Lock page scroll while the animation isn't done
-        overflowY: scrollDone ? "visible" : "hidden",
+        touchAction: done ? "auto" : "none",
       }}
     >
-      {/* Section header */}
+      {/* Header */}
       <motion.div
         className="absolute top-8 left-0 right-0 z-10 text-center px-4 pointer-events-none"
-        animate={{ opacity: showDoneLabel ? 0.5 : 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        animate={{ opacity: 1, y: 0 }}
       >
         <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-2">
           Nossas <span className="gradient-text">Modalidades</span>
         </h2>
-        <p className="text-muted-foreground text-base lg:text-lg">
-          {scrollDone
+        <motion.p
+          className="text-muted-foreground text-base lg:text-lg"
+          animate={{ opacity: 1 }}
+        >
+          {done
             ? "Passe o mouse sobre os cards para ver detalhes"
-            : `${Math.round(scrollProgress * 100)}% — role para ver todas`}
-        </p>
+            : inLoop
+            ? `${Math.round(loopProgress * 100)}% — continue rolando`
+            : "16 modalidades — role para explorar"}
+        </motion.p>
       </motion.div>
 
       {/* Scroll hint */}
@@ -263,7 +328,7 @@ export default function Modalities() {
           className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none"
           initial={{ opacity: 0 }} animate={{ opacity: 0.8 }} transition={{ delay: 1 }}
         >
-          <span className="text-muted-foreground text-xs tracking-widest uppercase">Role para girar</span>
+          <span className="text-muted-foreground text-xs tracking-widest uppercase">Role para abrir</span>
           <motion.div
             className="w-4 h-7 border-2 rounded-full flex justify-center pt-1"
             style={{ borderColor: "hsl(var(--muted-foreground))" }}
@@ -278,22 +343,31 @@ export default function Modalities() {
         </motion.div>
       )}
 
-      {/* Progress ring */}
-      {phase === "circle" && !scrollDone && (
+      {/* Progress ring — visible while looping */}
+      {inLoop && (
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-          <svg width={48} height={48} viewBox="0 0 48 48">
-            <circle cx={24} cy={24} r={20} fill="none" stroke="hsl(var(--muted-foreground) / 0.2)" strokeWidth={3} />
+          <svg width={52} height={52} viewBox="0 0 52 52">
+            <circle cx={26} cy={26} r={22} fill="none" stroke="hsl(var(--muted-foreground) / 0.15)" strokeWidth={3} />
             <circle
-              cx={24} cy={24} r={20}
+              cx={26} cy={26} r={22}
               fill="none"
               stroke="hsl(var(--primary))"
               strokeWidth={3}
-              strokeDasharray={`${2 * Math.PI * 20}`}
-              strokeDashoffset={`${2 * Math.PI * 20 * (1 - scrollProgress)}`}
+              strokeDasharray={`${2 * Math.PI * 22}`}
+              strokeDashoffset={`${2 * Math.PI * 22 * (1 - loopProgress)}`}
               strokeLinecap="round"
-              transform="rotate(-90 24 24)"
-              style={{ transition: "stroke-dashoffset 0.1s linear" }}
+              transform="rotate(-90 26 26)"
+              style={{ transition: "stroke-dashoffset 0.08s linear" }}
             />
+            <text
+              x={26} y={30}
+              textAnchor="middle"
+              fontSize={9}
+              fill="hsl(var(--primary))"
+              fontWeight={700}
+            >
+              {Math.round(loopProgress * 16)}/16
+            </text>
           </svg>
         </div>
       )}

@@ -1,6 +1,6 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, animate, useMotionValue } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import heroGym from "@/assets/hero-gym.jpg";
 
 const WHATSAPP_URL =
@@ -12,7 +12,106 @@ const STATS = [
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 
-/* ─── Letter-by-letter blur-stagger ─── */
+/* ─────────────────────────────────────────────────────
+   Water Divider — animated liquid edge between columns
+───────────────────────────────────────────────────── */
+const WAVE_A =
+  "M 50 0 C 30 80 70 160 45 240 C 20 320 65 400 40 480 C 15 560 60 640 42 720 C 24 800 58 880 50 960 L 50 1000 L 100 1000 L 100 0 Z";
+const WAVE_B =
+  "M 50 0 C 68 80 32 160 55 240 C 78 320 35 400 58 480 C 81 560 38 640 60 720 C 82 800 42 880 50 960 L 50 1000 L 100 1000 L 100 0 Z";
+
+const WAVE_LINE_A =
+  "M 50 0 C 30 80 70 160 45 240 C 20 320 65 400 40 480 C 15 560 60 640 42 720 C 24 800 58 880 50 960 L 50 1000";
+const WAVE_LINE_B =
+  "M 50 0 C 68 80 32 160 55 240 C 78 320 35 400 58 480 C 81 560 38 640 60 720 C 82 800 42 880 50 960 L 50 1000";
+
+function WaterDivider({ opacity }: { opacity: ReturnType<typeof useTransform> }) {
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => setToggle((t) => !t), 2800);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fillPath = toggle ? WAVE_B : WAVE_A;
+  const linePath = toggle ? WAVE_LINE_B : WAVE_LINE_A;
+
+  return (
+    <motion.div
+      className="absolute top-0 z-30 h-full pointer-events-none"
+      style={{
+        left: "calc(50% - 60px)",
+        width: "120px",
+        opacity,
+      }}
+    >
+      <svg
+        viewBox="0 0 100 1000"
+        preserveAspectRatio="none"
+        className="w-full h-full"
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          {/* Glow filter for the wave edge */}
+          <filter id="waterGlow" x="-50%" y="-10%" width="200%" height="120%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+
+          {/* Shimmer gradient along the wave */}
+          <linearGradient id="waveShimmer" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="hsl(185,90%,70%)" stopOpacity="0.0" />
+            <stop offset="20%"  stopColor="hsl(190,85%,75%)" stopOpacity="0.7" />
+            <stop offset="45%"  stopColor="hsl(185,90%,80%)" stopOpacity="0.9" />
+            <stop offset="70%"  stopColor="hsl(195,80%,70%)" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="hsl(185,90%,70%)" stopOpacity="0.0" />
+          </linearGradient>
+
+          {/* Fill gradient — translucent water body */}
+          <linearGradient id="waveFill" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"  stopColor="hsl(200,80%,30%)" stopOpacity="0.0" />
+            <stop offset="60%" stopColor="hsl(185,85%,50%)" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="hsl(185,85%,50%)" stopOpacity="0.0" />
+          </linearGradient>
+        </defs>
+
+        {/* Translucent water body fill */}
+        <motion.path
+          d={fillPath}
+          fill="url(#waveFill)"
+          animate={{ d: fillPath }}
+          transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
+        />
+
+        {/* Glowing wave edge line */}
+        <motion.path
+          d={linePath}
+          fill="none"
+          stroke="url(#waveShimmer)"
+          strokeWidth="1.8"
+          filter="url(#waterGlow)"
+          animate={{ d: linePath }}
+          transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
+        />
+
+        {/* Secondary thinner shimmer line — offset for depth */}
+        <motion.path
+          d={toggle ? WAVE_A : WAVE_B}
+          fill="none"
+          stroke="hsl(185,90%,80%)"
+          strokeWidth="0.6"
+          strokeOpacity="0.25"
+          animate={{ d: toggle ? WAVE_A : WAVE_B }}
+          transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
+        />
+      </svg>
+    </motion.div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────
+   Letter-by-letter blur-stagger for "Mergulhe"
+───────────────────────────────────────────────────── */
 function MergulheWord() {
   return (
     <motion.span
@@ -50,6 +149,9 @@ function MergulheWord() {
   );
 }
 
+/* ─────────────────────────────────────────────────────
+   Main HeroSection
+───────────────────────────────────────────────────── */
 interface HeroSectionProps {
   introComplete?: boolean;
 }
@@ -64,24 +166,18 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /*
-   * Content column: fills 100% → shrinks to left 50%
-   * by animating the `right` edge from "0%" → "50%"
-   */
+  /* Content column — right boundary shrinks to give space to image */
   const contentRight = useTransform(smooth, [0.08, 0.70], ["0%", "50%"]);
 
-  /* Text alignment: content goes from centered → left-aligned */
-  const contentPaddingLeft = useTransform(smooth, [0.08, 0.70], ["0%", "8%"]);
-
-  /* Image: slides in from right */
+  /* Image */
   const imageX       = useTransform(smooth, [0.08, 0.70], ["100%", "0%"]);
-  const imageOpacity = useTransform(smooth, [0.08, 0.42], [0, 1]);
+  const imageOpacity = useTransform(smooth, [0.08, 0.40], [0, 1]);
   const imageScale   = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
   const imageInnerY  = useTransform(smooth, [0, 1], ["-5%", "5%"]);
 
-  /* Overlay cards on image fade in a bit after image */
-  const overlayOpacity = useTransform(smooth, [0.40, 0.72], [0, 1]);
-  const overlayY       = useTransform(smooth, [0.40, 0.72], ["20px", "0px"]);
+  /* Info cards on image */
+  const overlayOpacity = useTransform(smooth, [0.42, 0.75], [0, 1]);
+  const overlayY       = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
 
   /* Scroll indicator */
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
@@ -102,18 +198,20 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
         className="sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
         style={{
-          background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
+          background:
+            "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
         }}
       >
         {/* Radial glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 80% 60% at 50% 40%, hsla(185,80%,50%,0.08) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 40%, hsla(185,80%,50%,0.08) 0%, transparent 70%)",
           }}
         />
 
-        {/* ════════ IMAGE COLUMN — right 50%, slides in ════════ */}
+        {/* ══════════════ IMAGE COLUMN ══════════════ */}
         <motion.div
           className="absolute top-0 right-0 h-full z-[5] pointer-events-none"
           style={{ width: "50%", x: imageX, opacity: imageOpacity }}
@@ -122,7 +220,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             className="relative w-full h-full overflow-hidden"
             style={{ scale: imageScale }}
           >
-            {/* Photo with subtle vertical parallax */}
             <motion.img
               src={heroGym}
               alt="Academia Flipper"
@@ -130,43 +227,27 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               style={{ y: imageInnerY, scale: 1.06 }}
             />
 
-            {/* Left gradient blend — seamless join with text column */}
-            <div
-              className="absolute inset-0 z-10"
-              style={{
-                background:
-                  "linear-gradient(to right, hsl(210,85%,8%) 0%, hsla(210,85%,8%,0.6) 16%, hsla(210,85%,8%,0.15) 38%, transparent 56%)",
-              }}
-            />
-
             {/* Top vignette */}
             <div
               className="absolute inset-0 z-10"
-              style={{
-                background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 22%)",
-              }}
+              style={{ background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 20%)" }}
             />
-
             {/* Bottom vignette */}
             <div
               className="absolute inset-0 z-10"
-              style={{
-                background: "linear-gradient(to top, hsl(185,70%,88%) 0%, transparent 28%)",
-              }}
+              style={{ background: "linear-gradient(to top, hsl(185,70%,88%) 0%, transparent 28%)" }}
             />
-
-            {/* Subtle colour tint for cinematic feel */}
+            {/* Subtle tint */}
             <div
               className="absolute inset-0 z-10"
-              style={{ background: "hsla(200,80%,15%,0.25)", mixBlendMode: "multiply" }}
+              style={{ background: "hsla(200,80%,12%,0.22)", mixBlendMode: "multiply" }}
             />
 
-            {/* ── Info cards over image ── */}
+            {/* Info overlay */}
             <motion.div
               className="absolute inset-0 z-20 flex flex-col justify-between p-8 pointer-events-none"
               style={{ opacity: overlayOpacity, y: overlayY }}
             >
-              {/* Top tag */}
               <div className="flex justify-end">
                 <span
                   className="text-white/70 text-[10px] tracking-[0.4em] uppercase font-semibold px-3 py-1 rounded-full"
@@ -180,63 +261,46 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 </span>
               </div>
 
-              {/* Bottom info row */}
               <div className="flex flex-col gap-3">
-                {/* Address card */}
-                <div
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
-                  style={{
-                    background: "hsla(200,80%,12%,0.6)",
-                    border: "1px solid hsla(185,80%,70%,0.12)",
-                    backdropFilter: "blur(12px)",
-                  }}
-                >
+                {[
+                  { icon: MapPin, title: "Tatuapé, São Paulo", sub: "R. Domingos Cassetari, 176" },
+                  { icon: Clock, title: "Seg – Sex: 6h às 22h", sub: "Sáb: 7h às 16h" },
+                ].map(({ icon: Icon, title, sub }) => (
                   <div
-                    className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
+                    key={title}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
+                    style={{
+                      background: "hsla(200,80%,12%,0.6)",
+                      border: "1px solid hsla(185,80%,70%,0.12)",
+                      backdropFilter: "blur(12px)",
+                    }}
                   >
-                    <MapPin size={13} className="text-white" />
+                    <div
+                      className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
+                    >
+                      <Icon size={13} className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-white/90 text-xs font-semibold leading-tight">{title}</p>
+                      <p className="text-white/40 text-[10px] tracking-wide">{sub}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-white/90 text-xs font-semibold leading-tight">Tatuapé, São Paulo</p>
-                    <p className="text-white/40 text-[10px] tracking-wide">R. Domingos Cassetari, 176</p>
-                  </div>
-                </div>
-
-                {/* Hours card */}
-                <div
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
-                  style={{
-                    background: "hsla(200,80%,12%,0.6)",
-                    border: "1px solid hsla(185,80%,70%,0.12)",
-                    backdropFilter: "blur(12px)",
-                  }}
-                >
-                  <div
-                    className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
-                  >
-                    <Clock size={13} className="text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white/90 text-xs font-semibold leading-tight">Seg – Sex: 6h às 22h</p>
-                    <p className="text-white/40 text-[10px] tracking-wide">Sáb: 7h às 16h</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* ════════ CONTENT COLUMN — left side, never overlaps image ════════ */}
+        {/* ══════════════ WATER DIVIDER ══════════════ */}
+        <WaterDivider opacity={imageOpacity} />
+
+        {/* ══════════════ CONTENT COLUMN ══════════════ */}
         <motion.div
           className="absolute top-0 left-0 h-full z-10 flex items-center justify-center"
           style={{ right: contentRight }}
         >
-          <motion.div
-            className="flex flex-col items-center text-center px-6 max-w-2xl w-full"
-            style={{ paddingLeft: contentPaddingLeft }}
-          >
+          <div className="flex flex-col items-center text-center px-6 max-w-2xl w-full">
             {/* Badge */}
             <motion.div
               className="flex items-center gap-2 mb-10"
@@ -336,7 +400,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 </div>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Scroll indicator */}

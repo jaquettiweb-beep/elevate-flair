@@ -177,7 +177,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   const overlayY       = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
 
   /* Inner content width: wide when centered, narrows as image appears */
-  const innerMaxWidth = useTransform(smooth, [0.08, 0.70], ["740px", "520px"]);
+  const innerMaxWidth = useTransform(smooth, [0.08, 0.70], ["960px", "520px"]);
 
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 

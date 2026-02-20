@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Phone, ChevronDown, Waves, Users, Trophy } from "lucide-react";
+import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
 import { useRef, useEffect } from "react";
 import heroGym from "@/assets/hero-gym.jpg";
 
@@ -12,18 +12,12 @@ const STATS = [
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 
-/* ─── Letter-by-letter blur-stagger for "Mergulhe" ─── */
+/* ─── Letter-by-letter blur-stagger ─── */
 function MergulheWord() {
-  const word = "Mergulhe";
   return (
     <motion.span
       className="block"
-      style={{
-        lineHeight: 1.05,
-        overflow: "visible",
-        /* Extra space so the "g" descender is never clipped */
-        paddingBottom: "0.25em",
-      }}
+      style={{ lineHeight: 1.05, overflow: "visible", paddingBottom: "0.22em" }}
       variants={{
         hidden: { opacity: 0 },
         show: { opacity: 1, transition: { staggerChildren: 0.055, delayChildren: 0.15 } },
@@ -31,12 +25,11 @@ function MergulheWord() {
       initial="hidden"
       animate="show"
     >
-      {word.split("").map((char, i) => (
+      {"Mergulhe".split("").map((char, i) => (
         <motion.span
           key={i}
           style={{
             display: "inline-block",
-            /* The pb/mb trick gives the background-clip enough paint area */
             paddingBottom: "0.2em",
             marginBottom: "-0.2em",
             background:
@@ -62,7 +55,6 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ introComplete = true }: HeroSectionProps) {
-  /* ── Tall wrapper for scroll-locked animation ── */
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -72,23 +64,29 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /* ─────────────────────────────────────────────────────────
-     Content: slides LEFT and stays fully visible (no fade)
-  ───────────────────────────────────────────────────────── */
-  const contentX = useTransform(smooth, [0, 0.65], ["0%", "-24%"]);
+  /*
+   * Content column: fills 100% → shrinks to left 50%
+   * by animating the `right` edge from "0%" → "50%"
+   */
+  const contentRight = useTransform(smooth, [0.08, 0.70], ["0%", "50%"]);
 
-  /* ─────────────────────────────────────────────────────────
-     Image: slides in from RIGHT
-  ───────────────────────────────────────────────────────── */
-  const imageX       = useTransform(smooth, [0.1, 0.72], ["105%", "0%"]);
-  const imageOpacity = useTransform(smooth, [0.1, 0.45], [0, 1]);
-  const imageScale   = useTransform(smooth, [0.1, 0.72], [1.06, 1]);
-  const imageInnerY  = useTransform(smooth, [0, 1], ["-6%", "6%"]);
+  /* Text alignment: content goes from centered → left-aligned */
+  const contentPaddingLeft = useTransform(smooth, [0.08, 0.70], ["0%", "8%"]);
+
+  /* Image: slides in from right */
+  const imageX       = useTransform(smooth, [0.08, 0.70], ["100%", "0%"]);
+  const imageOpacity = useTransform(smooth, [0.08, 0.42], [0, 1]);
+  const imageScale   = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
+  const imageInnerY  = useTransform(smooth, [0, 1], ["-5%", "5%"]);
+
+  /* Overlay cards on image fade in a bit after image */
+  const overlayOpacity = useTransform(smooth, [0.40, 0.72], [0, 1]);
+  const overlayY       = useTransform(smooth, [0.40, 0.72], ["20px", "0px"]);
 
   /* Scroll indicator */
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
-  /* Header visibility */
+  /* Header */
   useEffect(() => {
     const unsub = scrollYProgress.on("change", (v) => {
       window.dispatchEvent(
@@ -99,189 +97,245 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   }, [scrollYProgress]);
 
   return (
-    /*
-     * 300vh wrapper — the sticky inner section is 100vh.
-     * Extra height provides scroll "travel" to drive animations
-     * before the page continues past the hero.
-     */
     <div ref={wrapperRef} style={{ height: "300vh" }}>
       <section
-        className="sticky top-0 h-screen flex items-center justify-center overflow-hidden"
+        className="sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
         style={{
-          background:
-            "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
+          background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
         }}
       >
         {/* Radial glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 40%, hsla(185,80%,50%,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse 80% 60% at 50% 40%, hsla(185,80%,50%,0.08) 0%, transparent 70%)",
           }}
         />
 
-        {/* ════════════════ FACADE IMAGE ════════════════ */}
+        {/* ════════ IMAGE COLUMN — right 50%, slides in ════════ */}
         <motion.div
-          className="absolute top-0 right-0 h-full pointer-events-none z-[5]"
-          style={{ x: imageX, opacity: imageOpacity, width: "52%" }}
+          className="absolute top-0 right-0 h-full z-[5] pointer-events-none"
+          style={{ width: "50%", x: imageX, opacity: imageOpacity }}
         >
-          <motion.div className="relative w-full h-full overflow-hidden" style={{ scale: imageScale }}>
+          <motion.div
+            className="relative w-full h-full overflow-hidden"
+            style={{ scale: imageScale }}
+          >
+            {/* Photo with subtle vertical parallax */}
             <motion.img
               src={heroGym}
-              alt="Fachada da Academia Flipper"
+              alt="Academia Flipper"
               className="absolute inset-0 w-full h-full object-cover object-center"
-              style={{ y: imageInnerY }}
+              style={{ y: imageInnerY, scale: 1.06 }}
             />
-            {/* Left blend */}
+
+            {/* Left gradient blend — seamless join with text column */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 z-10"
               style={{
                 background:
-                  "linear-gradient(to right, hsl(210,85%,8%) 0%, hsla(210,85%,8%,0.5) 18%, transparent 44%)",
+                  "linear-gradient(to right, hsl(210,85%,8%) 0%, hsla(210,85%,8%,0.6) 16%, hsla(210,85%,8%,0.15) 38%, transparent 56%)",
               }}
             />
-            {/* Bottom blend */}
+
+            {/* Top vignette */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 z-10"
               style={{
-                background: "linear-gradient(to top, hsl(185,70%,92%) 0%, transparent 22%)",
+                background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 22%)",
               }}
             />
-            {/* Top blend */}
+
+            {/* Bottom vignette */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 z-10"
               style={{
-                background: "linear-gradient(to bottom, hsl(210,85%,8%) 0%, transparent 18%)",
+                background: "linear-gradient(to top, hsl(185,70%,88%) 0%, transparent 28%)",
               }}
             />
-            {/* Badge */}
+
+            {/* Subtle colour tint for cinematic feel */}
+            <div
+              className="absolute inset-0 z-10"
+              style={{ background: "hsla(200,80%,15%,0.25)", mixBlendMode: "multiply" }}
+            />
+
+            {/* ── Info cards over image ── */}
             <motion.div
-              className="absolute bottom-10 left-1/2 -translate-x-1/2"
-              style={{ opacity: imageOpacity }}
+              className="absolute inset-0 z-20 flex flex-col justify-between p-8 pointer-events-none"
+              style={{ opacity: overlayOpacity, y: overlayY }}
             >
-              <span
-                className="text-white/80 text-xs tracking-[0.35em] uppercase font-semibold backdrop-blur-sm px-4 py-1.5 rounded-full"
-                style={{
-                  background: "hsla(200,80%,20%,0.55)",
-                  border: "1px solid hsla(185,80%,70%,0.2)",
-                }}
-              >
-                Nossa Estrutura
-              </span>
+              {/* Top tag */}
+              <div className="flex justify-end">
+                <span
+                  className="text-white/70 text-[10px] tracking-[0.4em] uppercase font-semibold px-3 py-1 rounded-full"
+                  style={{
+                    background: "hsla(200,80%,20%,0.5)",
+                    border: "1px solid hsla(185,80%,70%,0.18)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  Academia Flipper
+                </span>
+              </div>
+
+              {/* Bottom info row */}
+              <div className="flex flex-col gap-3">
+                {/* Address card */}
+                <div
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
+                  style={{
+                    background: "hsla(200,80%,12%,0.6)",
+                    border: "1px solid hsla(185,80%,70%,0.12)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <div
+                    className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
+                  >
+                    <MapPin size={13} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white/90 text-xs font-semibold leading-tight">Tatuapé, São Paulo</p>
+                    <p className="text-white/40 text-[10px] tracking-wide">R. Domingos Cassetari, 176</p>
+                  </div>
+                </div>
+
+                {/* Hours card */}
+                <div
+                  className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
+                  style={{
+                    background: "hsla(200,80%,12%,0.6)",
+                    border: "1px solid hsla(185,80%,70%,0.12)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <div
+                    className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
+                  >
+                    <Clock size={13} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white/90 text-xs font-semibold leading-tight">Seg – Sex: 6h às 22h</p>
+                    <p className="text-white/40 text-[10px] tracking-wide">Sáb: 7h às 16h</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* ════════════════ MAIN CONTENT ════════════════ */}
+        {/* ════════ CONTENT COLUMN — left side, never overlaps image ════════ */}
         <motion.div
-          className="relative z-10 w-full max-w-5xl mx-auto px-6 py-32 flex flex-col items-center text-center"
-          style={{ x: contentX }}
+          className="absolute top-0 left-0 h-full z-10 flex items-center justify-center"
+          style={{ right: contentRight }}
         >
-          {/* Badge */}
           <motion.div
-            className="flex items-center gap-2 mb-10"
-            initial={{ opacity: 0, y: -16 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.2 }}
+            className="flex flex-col items-center text-center px-6 max-w-2xl w-full"
+            style={{ paddingLeft: contentPaddingLeft }}
           >
-            <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/40 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-              Academia Flipper • São Paulo
-            </span>
-          </motion.div>
+            {/* Badge */}
+            <motion.div
+              className="flex items-center gap-2 mb-10"
+              initial={{ opacity: 0, y: -16 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : {}}
+              transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.2 }}
+            >
+              <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/40 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
+                Academia Flipper • São Paulo
+              </span>
+            </motion.div>
 
-          {/* Heading */}
-          <h1
-            className="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-[1] mb-7 tracking-tight max-w-4xl"
-            style={{ overflow: "visible" }}
-          >
-            <MergulheWord />
-            <motion.span
-              className="block text-white mt-1"
+            {/* Heading */}
+            <h1
+              className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1] mb-7 tracking-tight w-full"
+              style={{ overflow: "visible" }}
+            >
+              <MergulheWord />
+              <motion.span
+                className="block text-white mt-1"
+                initial={{ opacity: 0, y: 24 }}
+                animate={introComplete ? { opacity: 1, y: 0 } : {}}
+                transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.75 }}
+              >
+                na sua melhor versão.
+              </motion.span>
+            </h1>
+
+            {/* Subtitle */}
+            <motion.p
+              className="text-base sm:text-lg text-white/50 mb-10 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 24 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.75 }}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
             >
-              na sua melhor versão.
-            </motion.span>
-          </h1>
+              Natação, musculação, pilates, artes marciais e muito mais.{" "}
+              <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
+            </motion.p>
 
-          {/* Subtitle */}
-          <motion.p
-            className="text-lg sm:text-xl text-white/50 mb-12 max-w-xl leading-relaxed"
-            initial={{ opacity: 0, y: 24 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
-          >
-            Natação, musculação, pilates, artes marciais e muito mais.{" "}
-            <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 mb-20"
-            initial={{ opacity: 0, y: 24 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
-          >
-            <motion.a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative rounded-full px-8 py-4 text-base font-bold flex items-center justify-center gap-3 text-white overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
-                boxShadow: "0 8px 30px hsla(185,80%,45%,0.3)",
-              }}
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
+            {/* CTAs */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-3 mb-14"
+              initial={{ opacity: 0, y: 24 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : {}}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
             >
-              <Phone size={18} />
-              <span>Aula Experimental Grátis</span>
-            </motion.a>
+              <motion.a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-7 py-3.5 text-sm font-bold flex items-center justify-center gap-2.5 text-white"
+                style={{
+                  background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
+                  boxShadow: "0 8px 30px hsla(185,80%,45%,0.3)",
+                }}
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Phone size={16} />
+                Aula Experimental Grátis
+              </motion.a>
+              <motion.a
+                href="#modalidades"
+                className="rounded-full px-7 py-3.5 text-sm font-semibold text-white/70 border border-white/12 hover:border-white/25 hover:bg-white/[0.05] transition-all text-center backdrop-blur-sm"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                Ver Modalidades
+              </motion.a>
+            </motion.div>
 
-            <motion.a
-              href="#modalidades"
-              className="rounded-full px-8 py-4 text-base font-semibold text-white/70 border border-white/12 hover:border-white/25 hover:bg-white/[0.05] transition-all text-center backdrop-blur-sm"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
+            {/* Stats */}
+            <motion.div
+              className="flex flex-row gap-6 sm:gap-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : {}}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.9 }}
             >
-              Conheça as Modalidades
-            </motion.a>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-6 sm:gap-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={introComplete ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.9 }}
-          >
-            {STATS.map((stat, i) => (
-              <div key={stat.label} className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
-                    boxShadow: "0 4px 12px hsla(185,80%,45%,0.25)",
-                  }}
-                >
-                  <stat.icon size={16} className="text-white" />
+              {STATS.map((stat, i) => (
+                <div key={stat.label} className="flex items-center gap-2.5">
+                  <div
+                    className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{
+                      background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
+                      boxShadow: "0 4px 12px hsla(185,80%,45%,0.25)",
+                    }}
+                  >
+                    <stat.icon size={14} className="text-white" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-lg font-display font-black text-white leading-none">{stat.value}</p>
+                    <p className="text-[10px] text-white/40 font-medium tracking-widest uppercase">{stat.label}</p>
+                  </div>
+                  {i < STATS.length - 1 && (
+                    <div className="hidden sm:block w-px h-7 bg-white/10 ml-2" />
+                  )}
                 </div>
-                <div className="text-left">
-                  <p className="text-xl font-display font-black text-white leading-none">
-                    {stat.value}
-                  </p>
-                  <p className="text-xs text-white/40 font-medium tracking-widest uppercase">
-                    {stat.label}
-                  </p>
-                </div>
-                {i < STATS.length - 1 && (
-                  <div className="hidden sm:block w-px h-8 bg-white/10 ml-4" />
-                )}
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -293,9 +347,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           animate={introComplete ? { opacity: 1 } : { opacity: 0 }}
           transition={{ delay: 1.2, duration: 0.6 }}
         >
-          <span className="text-[10px] tracking-[0.25em] uppercase text-white/25 font-medium">
-            Explore
-          </span>
+          <span className="text-[10px] tracking-[0.25em] uppercase text-white/25 font-medium">Explore</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}

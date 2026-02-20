@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { motion, useTransform, useSpring, useMotionValue, animate } from "framer-motion";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
-// ─── Data ───────────────────────────────────────────────────────────────────
+// ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
   { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊" },
   { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪" },
@@ -28,21 +28,33 @@ const MODALITIES = [
 
 const TOTAL = MODALITIES.length;
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
-
-// ─── Card sizes ──────────────────────────────────────────────────────────────
 const CARD_W = 90;
 const CARD_H = 124;
+
+// ─── Phase type ──────────────────────────────────────────────────────────────
+type Phase = "scatter" | "line" | "circle" | "loop" | "settle" | "spin" | "unlocked";
+
+// Phase timing (ms):
+// 0       scatter  – cards scattered, invisible
+// 600     line     – cards align horizontally
+// 2200    circle   – cards form the ring
+// 3600    loop     – wheel auto-rotates 360° (takes ~2.6s)
+// 6200    settle   – wheel back to rest, brief pause
+// 6700    spin     – each card flips on its own axis (stagger ~1.5s total)
+// 8200    unlocked – user scroll enabled, morph begins
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
 interface FlipCardProps {
   mod: (typeof MODALITIES)[number];
+  index: number;
   target: { x: number; y: number; rotation: number; scale: number; opacity: number };
-  phase: string;
+  phase: Phase;
+  spinning: boolean;
 }
 
-function FlipCard({ mod, target, phase }: FlipCardProps) {
+function FlipCard({ mod, index, target, phase, spinning }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
-  const isInteractive = phase === "circle" || phase === "arc";
+  const isInteractive = phase === "unlocked";
 
   return (
     <motion.div
@@ -54,8 +66,7 @@ function FlipCard({ mod, target, phase }: FlipCardProps) {
         top: "50%",
         marginLeft: -CARD_W / 2,
         marginTop: -CARD_H / 2,
-        transformStyle: "preserve-3d",
-        perspective: 800,
+        perspective: 900,
       }}
       animate={{
         x: target.x,
@@ -66,14 +77,27 @@ function FlipCard({ mod, target, phase }: FlipCardProps) {
       }}
       transition={{ type: "spring", stiffness: 55, damping: 18 }}
       onHoverStart={() => isInteractive && setFlipped(true)}
-      onHoverEnd={() => setFlipped(false)}
+      onHoverEnd={() => isInteractive && setFlipped(false)}
       onClick={() => isInteractive && setFlipped((f) => !f)}
     >
-      {/* Inner flipper */}
+      {/* Inner flipper – handles both hover-flip and self-spin */}
       <motion.div
         style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+        animate={
+          spinning
+            ? { rotateY: [0, 360] }
+            : { rotateY: flipped ? 180 : 0 }
+        }
+        transition={
+          spinning
+            ? {
+                duration: 0.7,
+                delay: index * 0.05,
+                ease: [0.23, 1, 0.32, 1],
+                times: [0, 1],
+              }
+            : { duration: 0.5, ease: [0.23, 1, 0.32, 1] }
+        }
       >
         {/* Front */}
         <div
@@ -110,13 +134,17 @@ function FlipCard({ mod, target, phase }: FlipCardProps) {
   );
 }
 
-// ─── Main Modalities Component ────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Modalities() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const [introPhase, setIntroPhase] = useState<"scatter" | "line" | "circle">("scatter");
+  const [phase, setPhase] = useState<Phase>("scatter");
 
-  // Observe container size
+  // loopOffset: 0→360 during loop phase, stays at 360 (=0) after
+  const loopMV = useMotionValue(0);
+  const [loopOffset, setLoopOffset] = useState(0);
+
+  // Container size observer
   useEffect(() => {
     if (!containerRef.current) return;
     const obs = new ResizeObserver((entries) => {
@@ -131,36 +159,55 @@ export default function Modalities() {
     return () => obs.disconnect();
   }, []);
 
-  // Intro sequence: scatter → line → circle
+  // Phase sequence with loop animation
   useEffect(() => {
-    const t1 = setTimeout(() => setIntroPhase("line"), 600);
-    const t2 = setTimeout(() => setIntroPhase("circle"), 2200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    timers.push(setTimeout(() => setPhase("line"), 600));
+    timers.push(setTimeout(() => setPhase("circle"), 2200));
+    timers.push(setTimeout(() => {
+      setPhase("loop");
+      // Drive loop rotation: 0 → 360 over 2.5s
+      const ctrl = animate(loopMV, 360, {
+        duration: 2.5,
+        ease: [0.4, 0, 0.2, 1],
+      });
+      return () => ctrl.stop();
+    }, 3600));
+    timers.push(setTimeout(() => setPhase("settle"), 6200));
+    timers.push(setTimeout(() => setPhase("spin"),   6700));
+    timers.push(setTimeout(() => setPhase("unlocked"), 8300));
+
+    return () => timers.forEach(clearTimeout);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Virtual scroll (wheel captures inside this section)
+  useEffect(() => loopMV.on("change", setLoopOffset), [loopMV]);
+
+  // Virtual scroll – only active when unlocked
   const virtualScroll = useMotionValue(0);
   const scrollRef = useRef(0);
+  const phaseRef = useRef<Phase>("scatter");
   const MAX_SCROLL = 2800;
+
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
-      // Only capture if we're in "circle" phase
-      if (introPhase !== "circle") return;
+      if (phaseRef.current !== "unlocked") return;
       const next = Math.min(Math.max(scrollRef.current + e.deltaY, 0), MAX_SCROLL);
       scrollRef.current = next;
       virtualScroll.set(next);
-      // Prevent page scroll while exploring the wheel
       if (next > 0 && next < MAX_SCROLL) e.preventDefault();
     };
 
     let touchY = 0;
     const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
     const onTouchMove = (e: TouchEvent) => {
-      if (introPhase !== "circle") return;
+      if (phaseRef.current !== "unlocked") return;
       const delta = touchY - e.touches[0].clientY;
       touchY = e.touches[0].clientY;
       const next = Math.min(Math.max(scrollRef.current + delta, 0), MAX_SCROLL);
@@ -177,20 +224,17 @@ export default function Modalities() {
       el.removeEventListener("touchstart", onTouchStart);
       el.removeEventListener("touchmove", onTouchMove);
     };
-  }, [introPhase, virtualScroll]);
+  }, [virtualScroll]);
 
-  // Morph: 0 = full circle, 1 = arc
+  // Morph: circle → arc
   const morphRaw = useTransform(virtualScroll, [0, 700], [0, 1]);
   const morph = useSpring(morphRaw, { stiffness: 40, damping: 20 });
-
-  // Rotation for arc scroll
   const rotateRaw = useTransform(virtualScroll, [700, MAX_SCROLL], [0, 360]);
   const rotate = useSpring(rotateRaw, { stiffness: 40, damping: 20 });
 
   // Mouse parallax
   const mouseX = useMotionValue(0);
   const smoothMouseX = useSpring(mouseX, { stiffness: 30, damping: 20 });
-
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -202,11 +246,10 @@ export default function Modalities() {
     return () => el.removeEventListener("mousemove", onMove);
   }, [mouseX]);
 
-  // Rendered values
+  // Rendered motion values
   const [morphVal, setMorphVal] = useState(0);
   const [rotateVal, setRotateVal] = useState(0);
   const [parallax, setParallax] = useState(0);
-
   useEffect(() => {
     const u1 = morph.on("change", setMorphVal);
     const u2 = rotate.on("change", setRotateVal);
@@ -214,7 +257,7 @@ export default function Modalities() {
     return () => { u1(); u2(); u3(); };
   }, [morph, rotate, smoothMouseX]);
 
-  // Random scatter
+  // Random scatter positions (stable across renders)
   const scatter = useMemo(() =>
     MODALITIES.map(() => ({
       x: (Math.random() - 0.5) * 1400,
@@ -224,7 +267,7 @@ export default function Modalities() {
       opacity: 0,
     })), []);
 
-  // Arc content fade-in
+  // Arc content opacity
   const arcContentOpacity = useTransform(morph, [0.75, 1], [0, 1]);
   const arcContentY = useTransform(morph, [0.75, 1], [20, 0]);
   const [arcOpacity, setArcOpacity] = useState(0);
@@ -235,21 +278,35 @@ export default function Modalities() {
     return () => { u1(); u2(); };
   }, [arcContentOpacity, arcContentY]);
 
-  // Scroll hint opacity
+  // Scroll hint fades once morph starts
   const hintOpacity = useTransform(morph, [0, 0.1], [1, 0]);
   const [hintOp, setHintOp] = useState(1);
   useEffect(() => hintOpacity.on("change", setHintOp), [hintOpacity]);
+
+  // ── Circle geometry helper ────────────────────────────────────────────────
+  function circleTarget(i: number, offsetDeg: number) {
+    const isMobile = containerSize.width < 768;
+    const minDim = Math.min(containerSize.width, containerSize.height);
+    const circleR = Math.min(minDim * 0.32, 280);
+    const cAngle = (i / TOTAL) * 360 + offsetDeg;
+    const cRad = (cAngle * Math.PI) / 180;
+    return {
+      x: Math.cos(cRad) * circleR,
+      y: Math.sin(cRad) * circleR,
+      rotation: cAngle + 90,
+      scale: 1,
+      opacity: 1,
+      isMobile,
+    };
+  }
 
   return (
     <section
       id="modalidades"
       className="relative overflow-hidden"
-      style={{
-        height: "100svh",
-        minHeight: 600,
-      }}
+      style={{ height: "100svh", minHeight: 600 }}
     >
-      {/* Deep ocean BG */}
+      {/* Deep ocean background */}
       <div
         className="absolute inset-0"
         style={{
@@ -266,7 +323,7 @@ export default function Modalities() {
             left: `${10 + i * 18}%`,
             width: 2,
             height: "55%",
-            background: `linear-gradient(to bottom, hsla(185,80%,80%,0.07) 0%, transparent 100%)`,
+            background: "linear-gradient(to bottom, hsla(185,80%,80%,0.07) 0%, transparent 100%)",
             transform: `rotate(${-6 + i * 3}deg)`,
             transformOrigin: "top center",
             filter: "blur(5px)",
@@ -276,22 +333,50 @@ export default function Modalities() {
         />
       ))}
 
-      {/* Section title — fades out as arc forms */}
+      {/* Section title – fades out when arc forms */}
       <motion.div
         className="absolute top-8 left-0 right-0 text-center z-10 pointer-events-none"
         style={{ opacity: 1 - morphVal }}
       >
-        <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-2">
-          Nossas <span className="text-primary-glow" style={{ color: "hsl(var(--primary-glow))" }}>Modalidades</span>
-        </h2>
-        <p className="text-white/50 text-sm">16 atividades para encontrar a sua favorita</p>
+        <motion.h2
+          className="font-display text-3xl lg:text-5xl font-bold text-white mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={phase !== "scatter" ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Nossas{" "}
+          <span style={{ color: "hsl(var(--primary-glow))" }}>Modalidades</span>
+        </motion.h2>
+        <motion.p
+          className="text-white/50 text-sm"
+          initial={{ opacity: 0 }}
+          animate={phase !== "scatter" ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          16 atividades para encontrar a sua favorita
+        </motion.p>
       </motion.div>
 
-      {/* Scroll hint — visible at circle phase before scroll */}
-      {introPhase === "circle" && (
+      {/* Loop phase label */}
+      <motion.div
+        className="absolute top-8 left-0 right-0 text-center z-20 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === "loop" || phase === "settle" ? 0.6 : 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <p className="text-white/50 text-[10px] tracking-[0.4em] uppercase font-medium mt-24 lg:mt-32">
+          todas as modalidades
+        </p>
+      </motion.div>
+
+      {/* Scroll hint – visible only when unlocked and morph not started */}
+      {phase === "unlocked" && (
         <motion.div
           className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-1 z-10 pointer-events-none"
           style={{ opacity: hintOp }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
           <motion.div
             className="w-px h-8 rounded-full"
@@ -311,7 +396,8 @@ export default function Modalities() {
         style={{ opacity: arcOpacity, transform: `translateY(${arcY}px)` }}
       >
         <h2 className="font-display text-2xl lg:text-4xl font-bold text-white mb-1">
-          Escolha sua <span style={{ color: "hsl(var(--primary-glow))" }}>modalidade</span>
+          Escolha sua{" "}
+          <span style={{ color: "hsl(var(--primary-glow))" }}>modalidade</span>
         </h2>
         <p className="text-white/40 text-xs tracking-widest uppercase">
           passe o mouse sobre os cards para ver detalhes
@@ -321,76 +407,84 @@ export default function Modalities() {
       {/* Card stage */}
       <div
         ref={containerRef}
-        className="absolute inset-0 cursor-grab active:cursor-grabbing"
-        style={{ touchAction: "none" }}
+        className="absolute inset-0"
+        style={{
+          touchAction: "none",
+          cursor: phase === "unlocked" ? "grab" : "default",
+        }}
       >
-        {containerSize.width > 0 && MODALITIES.map((mod, i) => {
-          let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
-
-          if (introPhase === "scatter") {
-            target = scatter[i];
-          } else if (introPhase === "line") {
-            const spacing = 68;
-            const totalW = TOTAL * spacing;
-            target = {
-              x: i * spacing - totalW / 2,
-              y: 0,
-              rotation: 0,
-              scale: 1,
-              opacity: 1,
-            };
-          } else {
-            // Circle phase + morph to arc
+        {containerSize.width > 0 &&
+          MODALITIES.map((mod, i) => {
             const isMobile = containerSize.width < 768;
-            const minDim = Math.min(containerSize.width, containerSize.height);
+            let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
-            // Circle
-            const circleR = Math.min(minDim * 0.32, 280);
-            const cAngle = (i / TOTAL) * 360;
-            const cRad = (cAngle * Math.PI) / 180;
-            const circlePos = {
-              x: Math.cos(cRad) * circleR,
-              y: Math.sin(cRad) * circleR,
-              rotation: cAngle + 90,
-            };
+            if (phase === "scatter") {
+              target = scatter[i];
 
-            // Arc (rainbow / convex-up)
-            const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
-            const arcR = baseR * (isMobile ? 1.5 : 1.15);
-            const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
-            const arcCenterY = apexY + arcR;
-            const spread = isMobile ? 95 : 120;
-            const startAng = -90 - spread / 2;
-            const step = spread / (TOTAL - 1);
-            const scrollProg = Math.min(Math.max(rotateVal / 360, 0), 1);
-            const boundedRot = -scrollProg * spread * 0.85;
-            const curAng = startAng + i * step + boundedRot;
-            const curRad = (curAng * Math.PI) / 180;
-            const arcPos = {
-              x: Math.cos(curRad) * arcR + parallax,
-              y: Math.sin(curRad) * arcR + arcCenterY,
-              rotation: curAng + 90,
-              scale: isMobile ? 1.5 : 1.9,
-            };
+            } else if (phase === "line") {
+              const spacing = 68;
+              const totalW = TOTAL * spacing;
+              target = {
+                x: i * spacing - totalW / 2,
+                y: 0,
+                rotation: 0,
+                scale: 1,
+                opacity: 1,
+              };
 
-            target = {
-              x: lerp(circlePos.x, arcPos.x, morphVal),
-              y: lerp(circlePos.y, arcPos.y, morphVal),
-              rotation: lerp(circlePos.rotation, arcPos.rotation, morphVal),
-              scale: lerp(1, arcPos.scale, morphVal),
-              opacity: 1,
-            };
-          }
+            } else if (phase === "circle" || phase === "spin") {
+              // Static circle – no loop offset
+              const ct = circleTarget(i, 0);
+              target = { x: ct.x, y: ct.y, rotation: ct.rotation, scale: 1, opacity: 1 };
 
-          return (
-            <FlipCard
-              key={mod.name}
-              mod={mod}
-              target={target}
-              phase={introPhase === "circle" ? (morphVal > 0.5 ? "arc" : "circle") : introPhase}
-            />
-          );
-        })}
+            } else if (phase === "loop" || phase === "settle") {
+              // Spinning circle – add loopOffset to each card's angle
+              const ct = circleTarget(i, loopOffset);
+              target = { x: ct.x, y: ct.y, rotation: ct.rotation, scale: 1, opacity: 1 };
+
+            } else {
+              // "unlocked" – morph circle → arc
+              const ct = circleTarget(i, 0);
+              const circlePos = { x: ct.x, y: ct.y, rotation: ct.rotation };
+
+              const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
+              const arcR = baseR * (isMobile ? 1.5 : 1.15);
+              const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
+              const arcCenterY = apexY + arcR;
+              const spread = isMobile ? 95 : 120;
+              const startAng = -90 - spread / 2;
+              const step = spread / (TOTAL - 1);
+              const scrollProg = Math.min(Math.max(rotateVal / 360, 0), 1);
+              const boundedRot = -scrollProg * spread * 0.85;
+              const curAng = startAng + i * step + boundedRot;
+              const curRad = (curAng * Math.PI) / 180;
+              const arcPos = {
+                x: Math.cos(curRad) * arcR + parallax,
+                y: Math.sin(curRad) * arcR + arcCenterY,
+                rotation: curAng + 90,
+                scale: isMobile ? 1.5 : 1.9,
+              };
+
+              target = {
+                x: lerp(circlePos.x, arcPos.x, morphVal),
+                y: lerp(circlePos.y, arcPos.y, morphVal),
+                rotation: lerp(circlePos.rotation, arcPos.rotation, morphVal),
+                scale: lerp(1, arcPos.scale, morphVal),
+                opacity: 1,
+              };
+            }
+
+            return (
+              <FlipCard
+                key={mod.name}
+                mod={mod}
+                index={i}
+                target={target}
+                phase={phase}
+                spinning={phase === "spin"}
+              />
+            );
+          })}
       </div>
     </section>
   );

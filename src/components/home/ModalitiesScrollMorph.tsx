@@ -281,7 +281,7 @@ export default function ModalitiesScrollMorph() {
     // Circle
     const { width: W, height: H } = containerSize;
     const minDim = Math.min(W, H);
-    const circleR = Math.min(minDim * 0.3, 260);
+    const circleR = Math.min(minDim * 0.46, 420);
     const cAngle = (i / TOTAL) * 360;
     const cRad = (cAngle * Math.PI) / 180;
     const circlePos = {

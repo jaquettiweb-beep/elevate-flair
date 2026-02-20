@@ -238,8 +238,6 @@ export default function ModalitiesScrollMorph() {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         setPhase("auto-rotate");
-        // Mark as seen so scroll never locks again
-        localStorage.setItem(LS_KEY, "1");
       }
     };
     rafRef.current = requestAnimationFrame(tick);
@@ -329,11 +327,9 @@ export default function ModalitiesScrollMorph() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const alreadySeen = localStorage.getItem(LS_KEY) === "1";
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !alreadySeen && phase === "circle") {
+        if (entry.isIntersecting && phase === "circle") {
           isLockedRef.current = true;
         }
       },

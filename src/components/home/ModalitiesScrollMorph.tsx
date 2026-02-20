@@ -37,7 +37,8 @@ const MODALITIES: Modality[] = [
 
 const TOTAL = MODALITIES.length;
 // Virtual scroll budget — maps to the full arc sweep
-const MAX_VIRTUAL = 3600;
+// Full loop: enough scroll budget so all 16 cards pass through center once
+const MAX_VIRTUAL = 5400;
 // Card dimensions (larger spacing)
 const IMG_W = 140;
 const IMG_H = 188;
@@ -187,11 +188,8 @@ export default function ModalitiesScrollMorph() {
       scrollRef.current = next;
       virtualScroll.set(next);
 
-      // Unlock page scroll once user has fully consumed the virtual range
+      // Unlock only after the full loop is complete (all 16 cards seen)
       if (next >= MAX_VIRTUAL && e.deltaY > 0) {
-        isLockedRef.current = false;
-      }
-      if (next <= 0 && e.deltaY < 0) {
         isLockedRef.current = false;
       }
     }
@@ -300,8 +298,9 @@ export default function ModalitiesScrollMorph() {
     const startAngle = -90 - spread / 2;
     const step = spread / (TOTAL - 1);
 
+    // Full 360° rotation so every card cycles through the top/center once
     const scrollP = clamp(rotateVal / 360, 0, 1);
-    const maxRot = spread * 0.72;
+    const maxRot = 360;
     const boundedRot = -scrollP * maxRot;
 
     const arcAngle = startAngle + i * step + boundedRot;

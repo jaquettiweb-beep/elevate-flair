@@ -136,9 +136,13 @@ function FlipCard({ mod, index, target, phase, spinning }: FlipCardProps) {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Modalities() {
+  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [phase, setPhase] = useState<Phase>("scatter");
+
+  // Whether the section has been centred and the sequence triggered (once only)
+  const sequenceStarted = useRef(false);
 
   // loopOffset: 0→360 during loop phase, stays at 360 (=0) after
   const loopMV = useMotionValue(0);
@@ -159,28 +163,49 @@ export default function Modalities() {
     return () => obs.disconnect();
   }, []);
 
-  // Phase sequence with loop animation
-  useEffect(() => {
-    const timers: ReturnType<typeof setTimeout>[] = [];
+  // Lock body scroll while the section owns the interaction
+  const lockScroll = () => { document.body.style.overflow = "hidden"; };
+  const unlockScroll = () => { document.body.style.overflow = ""; };
 
-    timers.push(setTimeout(() => setPhase("line"), 600));
-    timers.push(setTimeout(() => setPhase("circle"), 2200));
+  // Start the full phase sequence and lock scroll – called once when centred
+  const startSequence = () => {
+    if (sequenceStarted.current) return;
+    sequenceStarted.current = true;
+    lockScroll();
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    timers.push(setTimeout(() => setPhase("line"),     600));
+    timers.push(setTimeout(() => setPhase("circle"),   2200));
     timers.push(setTimeout(() => {
       setPhase("loop");
-      // Drive loop rotation: 0 → 360 over 2.5s
-      const ctrl = animate(loopMV, 360, {
-        duration: 2.5,
-        ease: [0.4, 0, 0.2, 1],
-      });
-      return () => ctrl.stop();
+      animate(loopMV, 360, { duration: 2.5, ease: [0.4, 0, 0.2, 1] });
     }, 3600));
-    timers.push(setTimeout(() => setPhase("settle"), 6200));
-    timers.push(setTimeout(() => setPhase("spin"),   6700));
+    timers.push(setTimeout(() => setPhase("settle"),   6200));
+    timers.push(setTimeout(() => setPhase("spin"),     6700));
     timers.push(setTimeout(() => setPhase("unlocked"), 8300));
 
+    // Safety cleanup
     return () => timers.forEach(clearTimeout);
+  };
+
+  // IntersectionObserver: trigger when section is ≥ 75% visible (i.e. centred)
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.75) startSequence();
+      },
+      { threshold: 0.75 },
+    );
+    obs.observe(section);
+    return () => obs.disconnect();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Cleanup body overflow on unmount
+  useEffect(() => () => unlockScroll(), []);
 
   useEffect(() => loopMV.on("change", setLoopOffset), [loopMV]);
 
@@ -201,7 +226,12 @@ export default function Modalities() {
       const next = Math.min(Math.max(scrollRef.current + e.deltaY, 0), MAX_SCROLL);
       scrollRef.current = next;
       virtualScroll.set(next);
-      if (next > 0 && next < MAX_SCROLL) e.preventDefault();
+      if (next >= MAX_SCROLL) {
+        // User scrolled all the way through — release page scroll
+        unlockScroll();
+        return;
+      }
+      if (next > 0) e.preventDefault();
     };
 
     let touchY = 0;
@@ -213,7 +243,8 @@ export default function Modalities() {
       const next = Math.min(Math.max(scrollRef.current + delta, 0), MAX_SCROLL);
       scrollRef.current = next;
       virtualScroll.set(next);
-      if (next > 0 && next < MAX_SCROLL) e.preventDefault();
+      if (next >= MAX_SCROLL) { unlockScroll(); return; }
+      if (next > 0) e.preventDefault();
     };
 
     el.addEventListener("wheel", onWheel, { passive: false });
@@ -302,6 +333,7 @@ export default function Modalities() {
 
   return (
     <section
+      ref={sectionRef}
       id="modalidades"
       className="relative overflow-hidden"
       style={{ height: "100svh", minHeight: 600 }}

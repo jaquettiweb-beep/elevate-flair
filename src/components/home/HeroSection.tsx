@@ -176,6 +176,9 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   const overlayOpacity = useTransform(smooth, [0.42, 0.75], [0, 1]);
   const overlayY       = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
 
+  /* Inner content width: wide when centered, narrows as image appears */
+  const innerMaxWidth = useTransform(smooth, [0.08, 0.70], ["740px", "520px"]);
+
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   useEffect(() => {
@@ -295,7 +298,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           className="absolute top-0 left-0 h-full z-10 flex items-center justify-center"
           style={{ right: contentRight }}
         >
-          <div className="flex flex-col items-center text-center px-6 max-w-2xl w-full">
+          <motion.div className="flex flex-col items-center text-center px-6 w-full" style={{ maxWidth: innerMaxWidth }}>
             {/* Badge */}
             <motion.div
               className="flex items-center gap-2 mb-10"
@@ -391,7 +394,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 </div>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Scroll indicator */}

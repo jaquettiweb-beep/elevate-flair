@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring, animate, useMotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import heroGym from "@/assets/hero-gym.jpg";
@@ -13,37 +13,39 @@ const STATS = [
 ];
 
 /* ─────────────────────────────────────────────────────
-   Water Divider — animated liquid edge between columns
+   Wave paths (normalized to viewBox 0 0 100 1000)
+   The wave oscillates between A and B states
 ───────────────────────────────────────────────────── */
-const WAVE_A =
-  "M 50 0 C 30 80 70 160 45 240 C 20 320 65 400 40 480 C 15 560 60 640 42 720 C 24 800 58 880 50 960 L 50 1000 L 100 1000 L 100 0 Z";
-const WAVE_B =
-  "M 50 0 C 68 80 32 160 55 240 C 78 320 35 400 58 480 C 81 560 38 640 60 720 C 82 800 42 880 50 960 L 50 1000 L 100 1000 L 100 0 Z";
+const FILL_A =
+  "M 50 0 C 30 100 70 200 45 300 C 20 400 65 500 40 600 C 15 700 60 800 42 900 L 42 1000 L 100 1000 L 100 0 Z";
+const FILL_B =
+  "M 50 0 C 68 100 32 200 55 300 C 78 400 35 500 58 600 C 81 700 38 800 60 900 L 60 1000 L 100 1000 L 100 0 Z";
+const LINE_A =
+  "M 50 0 C 30 100 70 200 45 300 C 20 400 65 500 40 600 C 15 700 60 800 42 900 L 42 1000";
+const LINE_B =
+  "M 50 0 C 68 100 32 200 55 300 C 78 400 35 500 58 600 C 81 700 38 800 60 900 L 60 1000";
 
-const WAVE_LINE_A =
-  "M 50 0 C 30 80 70 160 45 240 C 20 320 65 400 40 480 C 15 560 60 640 42 720 C 24 800 58 880 50 960 L 50 1000";
-const WAVE_LINE_B =
-  "M 50 0 C 68 80 32 160 55 240 C 78 320 35 400 58 480 C 81 560 38 640 60 720 C 82 800 42 880 50 960 L 50 1000";
-
-function WaterDivider({ opacity }: { opacity: ReturnType<typeof useTransform> }) {
+/* ─────────────────────────────────────────────────────
+   WaterDivider — lives INSIDE the image container
+   so it slides in perfectly with the image
+───────────────────────────────────────────────────── */
+function WaterDivider() {
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => setToggle((t) => !t), 2800);
-    return () => clearInterval(interval);
+    const id = setInterval(() => setToggle((t) => !t), 2800);
+    return () => clearInterval(id);
   }, []);
 
-  const fillPath = toggle ? WAVE_B : WAVE_A;
-  const linePath = toggle ? WAVE_LINE_B : WAVE_LINE_A;
+  const fillPath = toggle ? FILL_B : FILL_A;
+  const linePath = toggle ? LINE_B : LINE_A;
+  const linePath2 = toggle ? LINE_A : LINE_B;
 
   return (
-    <motion.div
-      className="absolute top-0 z-30 h-full pointer-events-none"
-      style={{
-        left: "calc(50% - 60px)",
-        width: "120px",
-        opacity,
-      }}
+    /* Straddles the left edge of the image: 60px left & 60px right of the boundary */
+    <div
+      className="absolute top-0 left-0 h-full z-30 pointer-events-none"
+      style={{ width: "120px", marginLeft: "-60px" }}
     >
       <svg
         viewBox="0 0 100 1000"
@@ -52,30 +54,25 @@ function WaterDivider({ opacity }: { opacity: ReturnType<typeof useTransform> })
         style={{ overflow: "visible" }}
       >
         <defs>
-          {/* Glow filter for the wave edge */}
-          <filter id="waterGlow" x="-50%" y="-10%" width="200%" height="120%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <filter id="waterGlow" x="-80%" y="-5%" width="260%" height="110%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
-
-          {/* Shimmer gradient along the wave */}
           <linearGradient id="waveShimmer" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="hsl(185,90%,70%)" stopOpacity="0.0" />
-            <stop offset="20%"  stopColor="hsl(190,85%,75%)" stopOpacity="0.7" />
-            <stop offset="45%"  stopColor="hsl(185,90%,80%)" stopOpacity="0.9" />
-            <stop offset="70%"  stopColor="hsl(195,80%,70%)" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="hsl(185,90%,70%)" stopOpacity="0.0" />
+            <stop offset="0%"   stopColor="hsl(185,90%,70%)" stopOpacity="0" />
+            <stop offset="25%"  stopColor="hsl(190,85%,78%)" stopOpacity="0.8" />
+            <stop offset="55%"  stopColor="hsl(185,90%,82%)" stopOpacity="1" />
+            <stop offset="80%"  stopColor="hsl(195,80%,72%)" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="hsl(185,90%,70%)" stopOpacity="0" />
           </linearGradient>
-
-          {/* Fill gradient — translucent water body */}
           <linearGradient id="waveFill" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"  stopColor="hsl(200,80%,30%)" stopOpacity="0.0" />
-            <stop offset="60%" stopColor="hsl(185,85%,50%)" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="hsl(185,85%,50%)" stopOpacity="0.0" />
+            <stop offset="0%"  stopColor="hsl(195,90%,55%)" stopOpacity="0" />
+            <stop offset="50%" stopColor="hsl(185,85%,60%)" stopOpacity="0.1" />
+            <stop offset="100%" stopColor="hsl(185,85%,55%)" stopOpacity="0.04" />
           </linearGradient>
         </defs>
 
-        {/* Translucent water body fill */}
+        {/* Translucent water body */}
         <motion.path
           d={fillPath}
           fill="url(#waveFill)"
@@ -83,29 +80,29 @@ function WaterDivider({ opacity }: { opacity: ReturnType<typeof useTransform> })
           transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
         />
 
-        {/* Glowing wave edge line */}
+        {/* Primary glowing edge line */}
         <motion.path
           d={linePath}
           fill="none"
           stroke="url(#waveShimmer)"
-          strokeWidth="1.8"
+          strokeWidth="2"
           filter="url(#waterGlow)"
           animate={{ d: linePath }}
           transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
         />
 
-        {/* Secondary thinner shimmer line — offset for depth */}
+        {/* Secondary shimmer — offset phase for depth */}
         <motion.path
-          d={toggle ? WAVE_A : WAVE_B}
+          d={linePath2}
           fill="none"
-          stroke="hsl(185,90%,80%)"
-          strokeWidth="0.6"
-          strokeOpacity="0.25"
-          animate={{ d: toggle ? WAVE_A : WAVE_B }}
+          stroke="hsl(185,90%,85%)"
+          strokeWidth="0.7"
+          strokeOpacity="0.22"
+          animate={{ d: linePath2 }}
           transition={{ duration: 2.8, ease: [0.45, 0, 0.55, 1] }}
         />
       </svg>
-    </motion.div>
+    </div>
   );
 }
 
@@ -166,23 +163,21 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /* Content column — right boundary shrinks to give space to image */
+  /* Content column right edge shrinks → gives space to image */
   const contentRight = useTransform(smooth, [0.08, 0.70], ["0%", "50%"]);
 
-  /* Image */
+  /* Image + wave divider — same container, same transforms */
   const imageX       = useTransform(smooth, [0.08, 0.70], ["100%", "0%"]);
   const imageOpacity = useTransform(smooth, [0.08, 0.40], [0, 1]);
   const imageScale   = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
   const imageInnerY  = useTransform(smooth, [0, 1], ["-5%", "5%"]);
 
-  /* Info cards on image */
+  /* Info cards appear after image arrives */
   const overlayOpacity = useTransform(smooth, [0.42, 0.75], [0, 1]);
   const overlayY       = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
 
-  /* Scroll indicator */
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
-  /* Header */
   useEffect(() => {
     const unsub = scrollYProgress.on("change", (v) => {
       window.dispatchEvent(
@@ -211,11 +206,15 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           }}
         />
 
-        {/* ══════════════ IMAGE COLUMN ══════════════ */}
+        {/* ════ IMAGE COLUMN — wave divider lives here, slides in together ════ */}
         <motion.div
           className="absolute top-0 right-0 h-full z-[5] pointer-events-none"
           style={{ width: "50%", x: imageX, opacity: imageOpacity }}
         >
+          {/* Water divider at the LEFT edge of image column */}
+          <WaterDivider />
+
+          {/* Photo */}
           <motion.div
             className="relative w-full h-full overflow-hidden"
             style={{ scale: imageScale }}
@@ -226,7 +225,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY, scale: 1.06 }}
             />
-
             {/* Top vignette */}
             <div
               className="absolute inset-0 z-10"
@@ -237,7 +235,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               className="absolute inset-0 z-10"
               style={{ background: "linear-gradient(to top, hsl(185,70%,88%) 0%, transparent 28%)" }}
             />
-            {/* Subtle tint */}
+            {/* Cinematic tint */}
             <div
               className="absolute inset-0 z-10"
               style={{ background: "hsla(200,80%,12%,0.22)", mixBlendMode: "multiply" }}
@@ -292,10 +290,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           </motion.div>
         </motion.div>
 
-        {/* ══════════════ WATER DIVIDER ══════════════ */}
-        <WaterDivider opacity={imageOpacity} />
-
-        {/* ══════════════ CONTENT COLUMN ══════════════ */}
+        {/* ════ CONTENT COLUMN ════ */}
         <motion.div
           className="absolute top-0 left-0 h-full z-10 flex items-center justify-center"
           style={{ right: contentRight }}
@@ -313,7 +308,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               </span>
             </motion.div>
 
-            {/* Heading */}
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1] mb-7 tracking-tight w-full"
               style={{ overflow: "visible" }}
@@ -329,7 +323,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               </motion.span>
             </h1>
 
-            {/* Subtitle */}
             <motion.p
               className="text-base sm:text-lg text-white/50 mb-10 max-w-md leading-relaxed"
               initial={{ opacity: 0, y: 24 }}
@@ -340,7 +333,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               className="flex flex-col sm:flex-row gap-3 mb-14"
               initial={{ opacity: 0, y: 24 }}
@@ -372,7 +364,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               </motion.a>
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               className="flex flex-row gap-6 sm:gap-10"
               initial={{ opacity: 0, y: 20 }}

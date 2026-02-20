@@ -276,8 +276,11 @@ export default function ModalitiesScrollMorph() {
       return { x: i * spacing - totalW / 2, y: 0, rotation: 0, scale: 0.75, opacity: 1 };
     }
 
-    // Circle
+    // --- Full 360° wheel: cards evenly spaced, NO gaps ---
     const { width: W, height: H } = containerSize;
+    const isMobile = W < 768;
+
+    // Initial circle (morph source)
     const minDim = Math.min(W, H);
     const circleR = Math.min(minDim * 0.46, 420);
     const cAngle = (i / TOTAL) * 360;
@@ -288,28 +291,55 @@ export default function ModalitiesScrollMorph() {
       rotation: cAngle + 90,
     };
 
-    // Arc
-    const isMobile = W < 768;
-    const baseR = Math.min(W, H * 1.6);
-    const arcR = baseR * (isMobile ? 1.6 : 1.2);      // larger radius = more spread
-    const apexY = H * (isMobile ? 0.38 : 0.20);
-    const arcCenterY = apexY + arcR;
-    const spread = isMobile ? 85 : 140;               // wider spread angle
-    const startAngle = -90 - spread / 2;
-    const step = spread / (TOTAL - 1);
+    // Continuous wheel: 360° / 16 = 22.5° per card — no gaps
+    const angleStep = 360 / TOTAL; // 22.5°
+    const baseAngle = i * angleStep;
 
-    // Full 360° rotation so every card cycles through the top/center once
+    // Scroll drives a full 360° rotation (one complete loop)
     const scrollP = clamp(rotateVal / 360, 0, 1);
-    const maxRot = 360;
-    const boundedRot = -scrollP * maxRot;
+    const rotationOffset = scrollP * 360;
 
-    const arcAngle = startAngle + i * step + boundedRot;
-    const arcRad = (arcAngle * Math.PI) / 180;
+    // Raw angle of this card on the wheel (0° = pointing up)
+    const rawAngle = (baseAngle + rotationOffset) % 360;
+    // -180 to +180 for easy "distance from top" math
+    const signedAngle = rawAngle > 180 ? rawAngle - 360 : rawAngle;
+    const absFromTop = Math.abs(signedAngle);
+
+    // Wheel geometry: large radius so the top portion forms a gentle arc
+    const arcR = isMobile ? H * 1.1 : Math.min(W * 0.9, H * 1.05);
+    // Wheel center sits below the viewport so only the top arc is visible
+    const arcCenterY = H * 0.52 + arcR * 0.78;
+
+    // Card position on the wheel (rawAngle 0 = top, so offset by -90°)
+    const wheelRad = ((rawAngle - 90) * Math.PI) / 180;
+    const arcX = Math.cos(wheelRad) * arcR + parallaxVal - W / 2;
+    const arcY = Math.sin(wheelRad) * arcR + arcCenterY - H / 2;
+
+    // Visibility: fully visible within ±65° of top, fades out toward ±85°
+    const fadeStart = 55;
+    const fadeEnd = 80;
+    let opacity = 1;
+    let extraScale = isMobile ? 0.95 : 1.35;
+
+    if (absFromTop >= fadeEnd) {
+      opacity = 0;
+      extraScale = 0.6;
+    } else if (absFromTop > fadeStart) {
+      const t = (absFromTop - fadeStart) / (fadeEnd - fadeStart);
+      opacity = 1 - t;
+      extraScale = lerp(isMobile ? 0.95 : 1.35, 0.6, t);
+    } else {
+      // Boost scale for the card closest to the top center
+      const centerness = 1 - absFromTop / fadeStart;
+      extraScale = lerp(isMobile ? 0.95 : 1.35, isMobile ? 1.15 : 1.52, centerness * 0.55);
+    }
+
     const arcPos = {
-      x: Math.cos(arcRad) * arcR + parallaxVal - W / 2,
-      y: Math.sin(arcRad) * arcR + arcCenterY - H / 2,
-      rotation: arcAngle + 90,
-      scale: isMobile ? 1.1 : 1.4,
+      x: arcX,
+      y: arcY,
+      rotation: rawAngle + 90, // card face follows the wheel tangent
+      scale: extraScale,
+      opacity,
     };
 
     return {
@@ -317,7 +347,7 @@ export default function ModalitiesScrollMorph() {
       y: lerp(circlePos.y, arcPos.y, morphVal),
       rotation: lerp(circlePos.rotation, arcPos.rotation, morphVal),
       scale: lerp(0.85, arcPos.scale, morphVal),
-      opacity: 1,
+      opacity: lerp(1, arcPos.opacity, morphVal),
     };
   }
 

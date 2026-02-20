@@ -355,7 +355,7 @@ export default function ModalitiesScrollMorph() {
 
   // Circle geometry — fits inside viewport
   const minDim  = Math.min(W, H);
-  const circleR = Math.min(minDim * 0.30, 195);
+  const circleR = Math.min(minDim * 0.38, 240);
 
   function getCirclePos(i: number, angleOffset = 0) {
     const angle = ((i / TOTAL) * 360 + angleOffset) * (Math.PI / 180);

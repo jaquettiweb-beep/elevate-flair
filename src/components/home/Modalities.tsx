@@ -167,37 +167,41 @@ export default function Modalities() {
   const lockScroll = () => { document.body.style.overflow = "hidden"; };
   const unlockScroll = () => { document.body.style.overflow = ""; };
 
-  // Start the full phase sequence and lock scroll – called once when centred
+  // Start the full phase sequence – called once when section is centred
   const startSequence = () => {
     if (sequenceStarted.current) return;
     sequenceStarted.current = true;
-    lockScroll();
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    timers.push(setTimeout(() => setPhase("line"),     500));
-    timers.push(setTimeout(() => setPhase("circle"),   2500));
-    timers.push(setTimeout(() => {
-      setPhase("loop");
-      animate(loopMV, 360, { duration: 2, ease: [0.4, 0, 0.2, 1] });
-    }, 3200));
-    timers.push(setTimeout(() => setPhase("settle"),   5200));
-    timers.push(setTimeout(() => setPhase("spin"),     5500));
-    timers.push(setTimeout(() => setPhase("unlocked"), 6800));
+    // Smoothly scroll the section into perfect center, then lock
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
 
-    // Safety cleanup
-    return () => timers.forEach(clearTimeout);
+    // Wait for scrollIntoView to finish (~400ms), then lock and animate
+    setTimeout(() => {
+      lockScroll();
+
+      const timers: ReturnType<typeof setTimeout>[] = [];
+      timers.push(setTimeout(() => setPhase("line"),     500));
+      timers.push(setTimeout(() => setPhase("circle"),   2500));
+      timers.push(setTimeout(() => {
+        setPhase("loop");
+        animate(loopMV, 360, { duration: 2, ease: [0.4, 0, 0.2, 1] });
+      }, 3200));
+      timers.push(setTimeout(() => setPhase("settle"),   5200));
+      timers.push(setTimeout(() => setPhase("spin"),     5500));
+      timers.push(setTimeout(() => setPhase("unlocked"), 6800));
+    }, 450);
   };
 
-  // IntersectionObserver: trigger when section is ≥ 75% visible (i.e. centred)
+  // IntersectionObserver: trigger when section is ≥ 80% visible (centred)
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio >= 0.75) startSequence();
+        if (entry.intersectionRatio >= 0.8) startSequence();
       },
-      { threshold: 0.75 },
+      { threshold: 0.8 },
     );
     obs.observe(section);
     return () => obs.disconnect();

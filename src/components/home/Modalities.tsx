@@ -36,12 +36,12 @@ type Phase = "scatter" | "line" | "circle" | "loop" | "settle" | "spin" | "unloc
 
 // Phase timing (ms):
 // 0       scatter  – cards scattered, invisible
-// 600     line     – cards align horizontally
-// 2200    circle   – cards form the ring
-// 3600    loop     – wheel auto-rotates 360° (takes ~2.6s)
-// 6200    settle   – wheel back to rest, brief pause
-// 6700    spin     – each card flips on its own axis (stagger ~1.5s total)
-// 8200    unlocked – user scroll enabled, morph begins
+// 500     line     – cards align horizontally
+// 2500    circle   – cards form the ring
+// 3200    loop     – wheel auto-rotates 360°
+// 5200    settle   – wheel back to rest, brief pause
+// 5500    spin     – each card flips on its own axis
+// 6800    unlocked – user scroll enabled, morph begins
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
 interface FlipCardProps {
@@ -174,15 +174,15 @@ export default function Modalities() {
     lockScroll();
 
     const timers: ReturnType<typeof setTimeout>[] = [];
-    timers.push(setTimeout(() => setPhase("line"),     600));
-    timers.push(setTimeout(() => setPhase("circle"),   2200));
+    timers.push(setTimeout(() => setPhase("line"),     500));
+    timers.push(setTimeout(() => setPhase("circle"),   2500));
     timers.push(setTimeout(() => {
       setPhase("loop");
-      animate(loopMV, 360, { duration: 2.5, ease: [0.4, 0, 0.2, 1] });
-    }, 3600));
-    timers.push(setTimeout(() => setPhase("settle"),   6200));
-    timers.push(setTimeout(() => setPhase("spin"),     6700));
-    timers.push(setTimeout(() => setPhase("unlocked"), 8300));
+      animate(loopMV, 360, { duration: 2, ease: [0.4, 0, 0.2, 1] });
+    }, 3200));
+    timers.push(setTimeout(() => setPhase("settle"),   5200));
+    timers.push(setTimeout(() => setPhase("spin"),     5500));
+    timers.push(setTimeout(() => setPhase("unlocked"), 6800));
 
     // Safety cleanup
     return () => timers.forEach(clearTimeout);
@@ -213,7 +213,7 @@ export default function Modalities() {
   const virtualScroll = useMotionValue(0);
   const scrollRef = useRef(0);
   const phaseRef = useRef<Phase>("scatter");
-  const MAX_SCROLL = 4500;
+  const MAX_SCROLL = 2800;
 
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
@@ -487,8 +487,16 @@ export default function Modalities() {
               const startAng = -90 - spread / 2;
               const step = spread / (TOTAL - 1);
               const scrollProg = Math.min(Math.max(rotateVal / 360, 0), 1);
-              const boundedRot = -scrollProg * spread * 1.4;
-              const curAng = startAng + i * step + boundedRot;
+              // Rotate enough to cycle through all cards (full spread + extra)
+              const totalRotation = spread + step * (TOTAL - 1);
+              const boundedRot = -scrollProg * totalRotation;
+              // Wrap angle so cards loop around continuously
+              let curAng = startAng + i * step + boundedRot;
+              // Normalize into visible arc range with wrapping
+              const arcSpan = TOTAL * step;
+              const arcMin = startAng - step;
+              while (curAng < arcMin) curAng += arcSpan;
+              while (curAng > arcMin + arcSpan) curAng -= arcSpan;
               const curRad = (curAng * Math.PI) / 180;
               const arcPos = {
                 x: Math.cos(curRad) * arcR + parallax,

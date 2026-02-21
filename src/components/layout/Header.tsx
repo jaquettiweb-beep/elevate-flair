@@ -63,7 +63,9 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
             exit={{ y: -80, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-              scrolled ? "header-scroll py-2" : "bg-transparent py-4"
+              scrolled
+                ? "bg-background/60 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/5 py-2"
+                : "bg-transparent py-4"
             }`}
           >
             <div className="container mx-auto flex items-center justify-between px-4">

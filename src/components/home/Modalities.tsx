@@ -213,7 +213,7 @@ export default function Modalities() {
   const virtualScroll = useMotionValue(0);
   const scrollRef = useRef(0);
   const phaseRef = useRef<Phase>("scatter");
-  const MAX_SCROLL = 2800;
+  const MAX_SCROLL = 4500;
 
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
@@ -487,7 +487,7 @@ export default function Modalities() {
               const startAng = -90 - spread / 2;
               const step = spread / (TOTAL - 1);
               const scrollProg = Math.min(Math.max(rotateVal / 360, 0), 1);
-              const boundedRot = -scrollProg * spread * 0.85;
+              const boundedRot = -scrollProg * spread * 1.4;
               const curAng = startAng + i * step + boundedRot;
               const curRad = (curAng * Math.PI) / 180;
               const arcPos = {

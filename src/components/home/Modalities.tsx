@@ -213,7 +213,7 @@ export default function Modalities() {
   const virtualScroll = useMotionValue(0);
   const scrollRef = useRef(0);
   const phaseRef = useRef<Phase>("scatter");
-  const MAX_SCROLL = 2800;
+  const MAX_SCROLL = 3800; // 0-700 morph in, 700-2800 rotate, 2800-3500 morph out, 3500-3800 buffer
 
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
@@ -257,10 +257,10 @@ export default function Modalities() {
     };
   }, [virtualScroll]);
 
-  // Morph: circle → arc
-  const morphRaw = useTransform(virtualScroll, [0, 700], [0, 1]);
+  // Morph: circle → arc (0-700), then arc → circle (2800-3500)
+  const morphRaw = useTransform(virtualScroll, [0, 700, 2800, 3500], [0, 1, 1, 0]);
   const morph = useSpring(morphRaw, { stiffness: 40, damping: 20 });
-  const rotateRaw = useTransform(virtualScroll, [700, MAX_SCROLL], [0, 360]);
+  const rotateRaw = useTransform(virtualScroll, [700, 2800], [0, 360]);
   const rotate = useSpring(rotateRaw, { stiffness: 40, damping: 20 });
 
   // Mouse parallax

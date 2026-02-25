@@ -167,7 +167,8 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
             <motion.img
               src={flipperLogo}
               alt="Academia Flipper"
-              className="w-[90vw] sm:w-[36rem] max-w-[40rem] h-auto object-contain drop-shadow-[0_0_60px_hsla(185,100%,60%,0.5)]"
+              className="w-[92vw] sm:w-[42rem] max-w-[48rem] h-auto object-contain drop-shadow-[0_0_80px_hsla(185,100%,60%,0.5)]"
+              style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" }}
               initial={{ rotateY: -15 }}
               animate={{ rotateY: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}

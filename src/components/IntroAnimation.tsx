@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
-import flipperLogo from "@/assets/flipper-logo-hd.jpg";
+import flipperLogo from "@/assets/flipper-logo-transparent.png";
 
 /* ─── Phase timeline ─── */
 type Phase =
@@ -167,20 +167,15 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
             <motion.img
               src={flipperLogo}
               alt="Academia Flipper"
-              className="w-48 h-48 sm:w-64 sm:h-64 object-cover"
-              style={{
-                borderRadius: "28px",
-                boxShadow:
-                  "0 0 60px hsla(185,100%,60%,0.3), 0 0 120px hsla(200,100%,50%,0.12), 0 24px 48px hsla(0,0%,0%,0.5)",
-              }}
+              className="w-64 sm:w-80 h-auto object-contain drop-shadow-[0_0_40px_hsla(185,100%,60%,0.4)]"
               initial={{ rotateY: -15 }}
               animate={{ rotateY: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
 
-            {/* Academy name */}
-            <motion.div
-              className="mt-6 text-center"
+            {/* Tagline */}
+            <motion.p
+              className="mt-6 text-white/35 text-xs tracking-[0.4em] uppercase font-medium"
               initial={{ opacity: 0, y: 12 }}
               animate={
                 phase === "logo-reveal" || phase === "logo-hold"
@@ -189,13 +184,8 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
               }
               transition={{ duration: 0.6, delay: phase === "logo-reveal" ? 0.8 : 0, ease: "easeOut" }}
             >
-              <p className="text-white/90 font-display text-2xl sm:text-3xl font-black tracking-[0.25em] uppercase">
-                Academia Flipper
-              </p>
-              <p className="text-white/35 text-xs tracking-[0.4em] uppercase mt-1 font-medium">
-                Natação & Esportes
-              </p>
-            </motion.div>
+              Natação & Esportes
+            </motion.p>
 
             {/* Loading bar */}
             <motion.div

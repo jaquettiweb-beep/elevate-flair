@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -8,26 +9,25 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
-  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊" },
-  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪" },
-  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘" },
-  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸" },
-  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸" },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊" },
-  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊" },
-  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋" },
-  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋" },
-  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋" },
-  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️" },
-  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️" },
-  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰" },
-  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾" },
-  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧" },
-  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️" },
+  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental" },
+  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço" },
+  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula" },
+  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga" },
+  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar" },
+  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais" },
+  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis" },
+  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora" },
+  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho" },
+  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino" },
+  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente" },
+  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte" },
+  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se" },
+  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar" },
+  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão" },
+  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais" },
 ];
 
 const TOTAL = MODALITIES.length;
-const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 const CARD_W = 90;
 const CARD_H = 124;
 
@@ -37,10 +37,24 @@ interface FlipCardProps {
   index: number;
   target: { x: number; y: number; rotation: number; scale: number; opacity: number };
   interactive: boolean;
+  onHoverMod: (mod: (typeof MODALITIES)[number] | null) => void;
+  isMobile: boolean;
 }
 
-function FlipCard({ mod, index, target, interactive }: FlipCardProps) {
+function FlipCard({ mod, index, target, interactive, onHoverMod, isMobile }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
+
+  const handleInteractionStart = useCallback(() => {
+    if (!interactive) return;
+    setFlipped(true);
+    onHoverMod(mod);
+  }, [interactive, mod, onHoverMod]);
+
+  const handleInteractionEnd = useCallback(() => {
+    if (!interactive) return;
+    setFlipped(false);
+    onHoverMod(null);
+  }, [interactive, onHoverMod]);
 
   return (
     <motion.div
@@ -53,6 +67,7 @@ function FlipCard({ mod, index, target, interactive }: FlipCardProps) {
         marginLeft: -CARD_W / 2,
         marginTop: -CARD_H / 2,
         perspective: 900,
+        zIndex: flipped ? 20 : 1,
       }}
       animate={{
         x: target.x,
@@ -62,9 +77,10 @@ function FlipCard({ mod, index, target, interactive }: FlipCardProps) {
         opacity: target.opacity,
       }}
       transition={{ type: "spring", stiffness: 55, damping: 18 }}
-      onHoverStart={() => interactive && setFlipped(true)}
-      onHoverEnd={() => interactive && setFlipped(false)}
-      onClick={() => interactive && setFlipped((f) => !f)}
+      onHoverStart={!isMobile ? handleInteractionStart : undefined}
+      onHoverEnd={!isMobile ? handleInteractionEnd : undefined}
+      onTouchStart={isMobile ? handleInteractionStart : undefined}
+      onTouchEnd={isMobile ? handleInteractionEnd : undefined}
     >
       <motion.div
         style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
@@ -101,25 +117,71 @@ function FlipCard({ mod, index, target, interactive }: FlipCardProps) {
   );
 }
 
+// ─── Background Overlay ──────────────────────────────────────────────────────
+function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[number] | null }) {
+  return (
+    <AnimatePresence>
+      {hoveredMod && (
+        <motion.div
+          key={hoveredMod.name}
+          className="absolute inset-0 z-[2]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          <img
+            src={hoveredMod.img}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+          {/* Info overlay */}
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+          >
+            <span className="text-5xl md:text-6xl mb-3">{hoveredMod.emoji}</span>
+            <h3 className="font-display text-2xl md:text-4xl font-bold text-white mb-2">
+              {hoveredMod.name}
+            </h3>
+            <p className="text-white/80 text-sm md:text-base max-w-md mb-4">
+              {hoveredMod.desc}
+            </p>
+            <motion.a
+              href="#contato"
+              className="inline-block px-6 py-2.5 rounded-full text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {hoveredMod.cta}
+            </motion.a>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Modalities() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-
-  // Scroll progress through the tall section
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 25 });
-  const [progress, setProgress] = useState(0);
-  useMotionValueEvent(smoothProgress, "change", setProgress);
+  const [animating, setAnimating] = useState(false);
+  const [phase, setPhase] = useState(0); // 0=circle, 1+=rotating
+  const [wheelAngle, setWheelAngle] = useState(0);
+  const [hoveredMod, setHoveredMod] = useState<(typeof MODALITIES)[number] | null>(null);
+  const animFrameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
+  const isMobile = containerSize.width > 0 && containerSize.width < 768;
 
   // Container size observer
   useEffect(() => {
-    const el = stickyRef.current;
+    const el = containerRef.current;
     if (!el) return;
     const obs = new ResizeObserver((entries) => {
       const e = entries[0];
@@ -133,25 +195,58 @@ export default function Modalities() {
   // Random scatter positions (stable)
   const scatter = useMemo(() =>
     MODALITIES.map(() => ({
-      x: (Math.random() - 0.5) * 1400,
-      y: (Math.random() - 0.5) * 800,
+      x: (Math.random() - 0.5) * 1000,
+      y: (Math.random() - 0.5) * 600,
       rotation: (Math.random() - 0.5) * 160,
       scale: 0.5,
       opacity: 0,
     })), []);
 
-  // ── Scroll-driven phases ──────────────────────────────────────────────────
-  // 0.00 - 0.05: scatter (invisible)
-  // 0.05 - 0.15: line formation
-  // 0.15 - 0.30: circle formation
-  // 0.30 - 0.50: wheel auto-rotation (360°)
-  // 0.50 - 0.75: morph circle → arc + rotate arc
-  // 0.75 - 1.00: morph arc → circle + fade
+  // Animation loop
+  useEffect(() => {
+    if (!animating) {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      return;
+    }
 
+    lastTimeRef.current = performance.now();
+
+    const tick = (now: number) => {
+      const dt = (now - lastTimeRef.current) / 1000;
+      lastTimeRef.current = now;
+
+      setWheelAngle((prev) => prev + dt * 30); // 30 deg/sec
+      setPhase((prev) => {
+        if (prev < 1) return Math.min(prev + dt * 1.2, 1); // transition to circle in ~0.8s
+        return prev;
+      });
+
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    animFrameRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [animating]);
+
+  const handleStart = useCallback(() => {
+    setAnimating(true);
+    setPhase(0.01);
+    setWheelAngle(0);
+  }, []);
+
+  const handleStop = useCallback(() => {
+    setAnimating(false);
+    setPhase(0);
+    setWheelAngle(0);
+    setHoveredMod(null);
+  }, []);
+
+  // Circle target helper
   function circleTarget(i: number, offsetDeg: number) {
-    const isMobile = containerSize.width < 768;
     const minDim = Math.min(containerSize.width, containerSize.height);
-    const circleR = Math.min(minDim * 0.32, 280);
+    const circleR = Math.min(minDim * 0.32, isMobile ? 130 : 220);
     const cAngle = (i / TOTAL) * 360 + offsetDeg;
     const cRad = (cAngle * Math.PI) / 180;
     return {
@@ -160,76 +255,55 @@ export default function Modalities() {
       rotation: cAngle + 90,
       scale: 1,
       opacity: 1,
-      isMobile,
     };
   }
 
-  // Derived values from progress
-  const titleOpacity = progress < 0.05 ? 0 : progress < 0.12 ? (progress - 0.05) / 0.07 : progress > 0.70 ? Math.max(0, 1 - (progress - 0.70) / 0.10) : 1;
-
-  // Wheel rotation during 0.30-0.50
-  const wheelRotation = progress < 0.30 ? 0 : progress > 0.50 ? 360 : ((progress - 0.30) / 0.20) * 360;
-
-  // Morph progress (circle → arc) during 0.50-0.65
-  const morphVal = progress < 0.50 ? 0 : progress > 0.65 ? 1 : (progress - 0.50) / 0.15;
-
-  // Arc rotation during 0.55-0.80
-  const arcRotation = progress < 0.55 ? 0 : progress > 0.80 ? 360 : ((progress - 0.55) / 0.25) * 360;
-
-  // Morph back (arc → circle) during 0.80-0.92
-  const morphBack = progress < 0.80 ? 0 : progress > 0.92 ? 1 : (progress - 0.80) / 0.12;
-
-  const effectiveMorph = morphVal * (1 - morphBack);
-
-  // Arc overlay text opacity
-  const arcTextOpacity = effectiveMorph > 0.7 ? 1 : effectiveMorph > 0.5 ? (effectiveMorph - 0.5) / 0.2 : 0;
-
-  const isInteractive = effectiveMorph > 0.5;
+  const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 
   return (
-    <section
-      ref={sectionRef}
-      id="modalidades"
-      className="relative"
-      style={{ height: "400vh" }}
-    >
-      {/* Sticky viewport */}
+    <section id="modalidades" className="relative">
       <div
-        ref={stickyRef}
-        className="sticky top-0 h-screen overflow-hidden"
-        style={{ minHeight: 600 }}
+        ref={containerRef}
+        className="relative w-full overflow-hidden"
+        style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500 }}
       >
         {/* Deep ocean background */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-[1]"
           style={{
             background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)",
           }}
         />
 
+        {/* Hovered modality background */}
+        <BackgroundOverlay hoveredMod={hoveredMod} />
+
         {/* Caustic light streaks */}
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute top-0 pointer-events-none"
-            style={{
-              left: `${10 + i * 18}%`,
-              width: 2,
-              height: "55%",
-              background: "linear-gradient(to bottom, hsla(185,80%,80%,0.07) 0%, transparent 100%)",
-              transform: `rotate(${-6 + i * 3}deg)`,
-              transformOrigin: "top center",
-              filter: "blur(5px)",
-            }}
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-          />
-        ))}
+        <div className="absolute inset-0 z-[3] pointer-events-none">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute top-0"
+              style={{
+                left: `${10 + i * 18}%`,
+                width: 2,
+                height: "55%",
+                background: "linear-gradient(to bottom, hsla(185,80%,80%,0.07) 0%, transparent 100%)",
+                transform: `rotate(${-6 + i * 3}deg)`,
+                transformOrigin: "top center",
+                filter: "blur(5px)",
+              }}
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+            />
+          ))}
+        </div>
 
         {/* Section title */}
-        <div
+        <motion.div
           className="absolute top-8 left-0 right-0 text-center z-10 pointer-events-none"
-          style={{ opacity: titleOpacity * (1 - arcTextOpacity) }}
+          animate={{ opacity: hoveredMod ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
         >
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-2">
             Nossas{" "}
@@ -238,108 +312,34 @@ export default function Modalities() {
           <p className="text-white/50 text-sm">
             16 atividades para encontrar a sua favorita
           </p>
-        </div>
-
-        {/* Arc overlay text */}
-        <div
-          className="absolute top-8 left-0 right-0 text-center z-10 pointer-events-none"
-          style={{ opacity: arcTextOpacity, transform: `translateY(${(1 - arcTextOpacity) * 20}px)` }}
-        >
-          <h2 className="font-display text-2xl lg:text-4xl font-bold text-white mb-1">
-            Escolha sua{" "}
-            <span style={{ color: "hsl(var(--primary-glow))" }}>modalidade</span>
-          </h2>
-          <p className="text-white/40 text-xs tracking-widest uppercase">
-            passe o mouse sobre os cards para ver detalhes
-          </p>
-        </div>
+        </motion.div>
 
         {/* Card stage */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-[5]">
           {containerSize.width > 0 &&
             MODALITIES.map((mod, i) => {
-              const isMobile = containerSize.width < 768;
               let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
-              if (progress < 0.05) {
-                // Scatter
-                target = scatter[i];
-
-              } else if (progress < 0.15) {
-                // Line formation
-                const t = (progress - 0.05) / 0.10;
-                const spacing = 68;
-                const totalW = TOTAL * spacing;
-                const lineTarget = {
-                  x: i * spacing - totalW / 2,
-                  y: 0,
-                  rotation: 0,
-                  scale: 1,
-                  opacity: 1,
-                };
-                target = {
-                  x: lerp(scatter[i].x, lineTarget.x, t),
-                  y: lerp(scatter[i].y, lineTarget.y, t),
-                  rotation: lerp(scatter[i].rotation, 0, t),
-                  scale: lerp(0.5, 1, t),
-                  opacity: t,
-                };
-
-              } else if (progress < 0.30) {
-                // Circle formation (no wheel rotation yet)
-                const t = Math.min((progress - 0.15) / 0.10, 1);
-                const spacing = 68;
-                const totalW = TOTAL * spacing;
-                const lineX = i * spacing - totalW / 2;
-                const ct = circleTarget(i, 0);
-                target = {
-                  x: lerp(lineX, ct.x, t),
-                  y: lerp(0, ct.y, t),
-                  rotation: lerp(0, ct.rotation, t),
-                  scale: 1,
-                  opacity: 1,
-                };
-
-              } else if (progress < 0.50) {
-                // Wheel auto-rotation
-                const ct = circleTarget(i, wheelRotation);
-                target = { x: ct.x, y: ct.y, rotation: ct.rotation, scale: 1, opacity: 1 };
-
+              if (!animating) {
+                // Static circle formation
+                target = circleTarget(i, 0);
               } else {
-                // Morph circle ↔ arc
-                const ct = circleTarget(i, 0);
-                const circlePos = { x: ct.x, y: ct.y, rotation: ct.rotation };
+                // Animated: lerp from scatter to circle, then rotate
+                const t = Math.min(phase, 1);
+                const ct = circleTarget(i, wheelAngle);
 
-                const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
-                const arcR = baseR * (isMobile ? 1.5 : 1.15);
-                const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
-                const arcCenterY = apexY + arcR;
-                const spread = isMobile ? 95 : 120;
-                const startAng = -90 - spread / 2;
-                const step = spread / (TOTAL - 1);
-                const scrollProg = Math.min(Math.max(arcRotation / 360, 0), 1);
-                const totalRot = spread + step * (TOTAL - 1);
-                const boundedRot = -scrollProg * totalRot;
-                let curAng = startAng + i * step + boundedRot;
-                const arcSpan = TOTAL * step;
-                const arcMin = startAng - step;
-                while (curAng < arcMin) curAng += arcSpan;
-                while (curAng > arcMin + arcSpan) curAng -= arcSpan;
-                const curRad = (curAng * Math.PI) / 180;
-                const arcPos = {
-                  x: Math.cos(curRad) * arcR,
-                  y: Math.sin(curRad) * arcR + arcCenterY,
-                  rotation: curAng + 90,
-                  scale: isMobile ? 1.5 : 1.9,
-                };
-
-                target = {
-                  x: lerp(circlePos.x, arcPos.x, effectiveMorph),
-                  y: lerp(circlePos.y, arcPos.y, effectiveMorph),
-                  rotation: lerp(circlePos.rotation, arcPos.rotation, effectiveMorph),
-                  scale: lerp(1, arcPos.scale, effectiveMorph),
-                  opacity: 1,
-                };
+                if (t < 1) {
+                  // Transition in
+                  target = {
+                    x: lerp(scatter[i].x, ct.x, t),
+                    y: lerp(scatter[i].y, ct.y, t),
+                    rotation: lerp(scatter[i].rotation, ct.rotation, t),
+                    scale: lerp(0.5, 1, t),
+                    opacity: t,
+                  };
+                } else {
+                  target = ct;
+                }
               }
 
               return (
@@ -348,10 +348,42 @@ export default function Modalities() {
                   mod={mod}
                   index={i}
                   target={target}
-                  interactive={isInteractive}
+                  interactive={animating && phase >= 1}
+                  onHoverMod={setHoveredMod}
+                  isMobile={isMobile}
                 />
               );
             })}
+        </div>
+
+        {/* Center button */}
+        <div className="absolute inset-0 z-[6] flex items-center justify-center pointer-events-none">
+          <motion.div
+            className="pointer-events-auto"
+            animate={{ opacity: hoveredMod ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.button
+              onClick={animating ? handleStop : handleStart}
+              className="relative px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md shadow-lg shadow-black/20 hover:bg-white/20 transition-colors"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              layout
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={animating ? "stop" : "start"}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.2 }}
+                  className="block"
+                >
+                  {animating ? "Continuar Navegando" : "Ver Modalidades"}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
+          </motion.div>
         </div>
       </div>
     </section>

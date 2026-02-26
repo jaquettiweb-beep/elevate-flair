@@ -47,6 +47,7 @@ const Index = () => {
             <WhyFlipper />
             <Modalities />
             <Stats />
+
             <Testimonials />
             <CTASection />
           </div>

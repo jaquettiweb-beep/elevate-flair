@@ -203,6 +203,14 @@ export default function Modalities() {
       opacity: 0,
     })), []);
 
+  // Lock page scroll during arc/entering/exiting phases
+  useEffect(() => {
+    if (phase === "arc" || phase === "entering" || phase === "exiting") {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [phase]);
+
   // Entry animation
   useEffect(() => {
     if (phase !== "entering") {

@@ -138,18 +138,19 @@ function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[num
           <img src={hoveredMod.img} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6"
+            className="absolute top-0 left-0 right-0 flex flex-col items-center justify-start text-center z-10 px-6 pt-16 md:pt-20"
+            style={{ height: "45%" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
-            <span className="text-5xl md:text-6xl mb-3">{hoveredMod.emoji}</span>
-            <h3 className="font-display text-2xl md:text-4xl font-bold text-white mb-2">{hoveredMod.name}</h3>
-            <p className="text-white/80 text-sm md:text-base max-w-md mb-4">{hoveredMod.desc}</p>
+            <span className="text-4xl md:text-5xl mb-2">{hoveredMod.emoji}</span>
+            <h3 className="font-display text-xl md:text-3xl font-bold text-white mb-1">{hoveredMod.name}</h3>
+            <p className="text-white/80 text-xs md:text-sm max-w-md mb-3">{hoveredMod.desc}</p>
             <motion.a
               href="#contato"
-              className="inline-block px-6 py-2.5 rounded-full text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
+              className="inline-block px-5 py-2 rounded-full text-xs md:text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -259,40 +260,60 @@ export default function Modalities() {
     return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
   }, [phase]);
 
-  // Manual scroll/drag for arc rotation
+  // Snap-to-card scroll: each scroll/swipe moves exactly one card
+  const currentCardRef = useRef(0); // index of card currently at top of arc
+  const isSnappingRef = useRef(false);
+
   useEffect(() => {
     if (phase !== "arc") return;
     const el = containerRef.current;
     if (!el) return;
 
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      setManualRotation((prev) => prev + e.deltaY * 0.15);
+    const spread = isMobile ? 95 : 120;
+    const step = spread / (TOTAL - 1);
+    let wheelAccum = 0;
+
+    const snapTo = (index: number) => {
+      const clamped = Math.max(0, Math.min(TOTAL - 1, index));
+      currentCardRef.current = clamped;
+      setManualRotation(clamped * step);
     };
 
-    // Touch drag
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (isSnappingRef.current) return;
+      wheelAccum += e.deltaY;
+      if (Math.abs(wheelAccum) > 40) {
+        isSnappingRef.current = true;
+        const dir = wheelAccum > 0 ? 1 : -1;
+        snapTo(currentCardRef.current + dir);
+        wheelAccum = 0;
+        setTimeout(() => { isSnappingRef.current = false; }, 300);
+      }
+    };
+
+    // Touch drag — snap after release
     let touchStartX = 0;
-    let rotAtStart = 0;
     const handleTouchStart = (e: TouchEvent) => {
       touchStartX = e.touches[0].clientX;
-      rotAtStart = 0; // we'll use a ref
     };
-    const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      const dx = e.touches[0].clientX - touchStartX;
-      setManualRotation((prev) => prev - dx * 0.3);
-      touchStartX = e.touches[0].clientX;
+    const handleTouchEnd = (e: TouchEvent) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 30) {
+        const dir = dx < 0 ? 1 : -1;
+        snapTo(currentCardRef.current + dir);
+      }
     };
 
     el.addEventListener("wheel", handleWheel, { passive: false });
     el.addEventListener("touchstart", handleTouchStart, { passive: true });
-    el.addEventListener("touchmove", handleTouchMove, { passive: false });
+    el.addEventListener("touchend", handleTouchEnd, { passive: true });
     return () => {
       el.removeEventListener("wheel", handleWheel);
       el.removeEventListener("touchstart", handleTouchStart);
-      el.removeEventListener("touchmove", handleTouchMove);
+      el.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [phase]);
+  }, [phase, isMobile]);
 
   const handleStart = useCallback(() => {
     setPhase("entering");

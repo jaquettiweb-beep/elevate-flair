@@ -31,14 +31,12 @@ const CARD_W = 90;
 const CARD_H = 124;
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 
-// Phase durations in seconds
-const PHASE_LINE = 1.2;       // 0→line
-const PHASE_CIRCLE = 1.0;     // line→circle
-const PHASE_WHEEL = 3.0;      // wheel 360°
-const PHASE_MORPH_ARC = 1.5;  // circle→arc
-const PHASE_ARC_ROTATE = 4.0; // arc carousel rotation
-const PHASE_MORPH_BACK = 1.2; // arc→circle
-const TOTAL_DURATION = PHASE_LINE + PHASE_CIRCLE + PHASE_WHEEL + PHASE_MORPH_ARC + PHASE_ARC_ROTATE + PHASE_MORPH_BACK;
+// Entry animation durations
+const PHASE_LINE = 1.2;
+const PHASE_CIRCLE = 1.0;
+const PHASE_WHEEL = 3.0;
+const PHASE_MORPH_ARC = 1.5;
+const ENTRY_DURATION = PHASE_LINE + PHASE_CIRCLE + PHASE_WHEEL + PHASE_MORPH_ARC;
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
 interface FlipCardProps {
@@ -165,15 +163,24 @@ function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[num
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
+type Phase = "idle" | "entering" | "arc" | "exiting";
+
 export default function Modalities() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const [animating, setAnimating] = useState(false);
-  const [progress, setProgress] = useState(0); // 0 → TOTAL_DURATION, loops
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [entryProgress, setEntryProgress] = useState(0);
+  const [manualRotation, setManualRotation] = useState(0); // degrees, user-controlled
   const [hoveredMod, setHoveredMod] = useState<(typeof MODALITIES)[number] | null>(null);
   const animFrameRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
+  const dragStartRef = useRef<number>(0);
+  const dragRotStartRef = useRef<number>(0);
   const isMobile = containerSize.width > 0 && containerSize.width < 768;
+
+  // Exit animation progress
+  const [exitProgress, setExitProgress] = useState(0);
+  const EXIT_DURATION = 1.2;
 
   useEffect(() => {
     const el = containerRef.current;
@@ -196,9 +203,9 @@ export default function Modalities() {
       opacity: 0,
     })), []);
 
-  // Animation loop
+  // Entry animation
   useEffect(() => {
-    if (!animating) {
+    if (phase !== "entering") {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       return;
     }
@@ -206,24 +213,88 @@ export default function Modalities() {
     const tick = (now: number) => {
       const dt = (now - lastTimeRef.current) / 1000;
       lastTimeRef.current = now;
-      setProgress((prev) => {
+      setEntryProgress((prev) => {
         const next = prev + dt;
-        return next >= TOTAL_DURATION ? next - TOTAL_DURATION : next; // loop
+        if (next >= ENTRY_DURATION) {
+          setPhase("arc");
+          return ENTRY_DURATION;
+        }
+        return next;
       });
       animFrameRef.current = requestAnimationFrame(tick);
     };
     animFrameRef.current = requestAnimationFrame(tick);
     return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
-  }, [animating]);
+  }, [phase]);
+
+  // Exit animation
+  useEffect(() => {
+    if (phase !== "exiting") return;
+    lastTimeRef.current = performance.now();
+    const tick = (now: number) => {
+      const dt = (now - lastTimeRef.current) / 1000;
+      lastTimeRef.current = now;
+      setExitProgress((prev) => {
+        const next = prev + dt;
+        if (next >= EXIT_DURATION) {
+          setPhase("idle");
+          setEntryProgress(0);
+          setExitProgress(0);
+          setManualRotation(0);
+          return 0;
+        }
+        return next;
+      });
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+    animFrameRef.current = requestAnimationFrame(tick);
+    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
+  }, [phase]);
+
+  // Manual scroll/drag for arc rotation
+  useEffect(() => {
+    if (phase !== "arc") return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      setManualRotation((prev) => prev + e.deltaY * 0.15);
+    };
+
+    // Touch drag
+    let touchStartX = 0;
+    let rotAtStart = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      rotAtStart = 0; // we'll use a ref
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - touchStartX;
+      setManualRotation((prev) => prev - dx * 0.3);
+      touchStartX = e.touches[0].clientX;
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    el.addEventListener("touchstart", handleTouchStart, { passive: true });
+    el.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+      el.removeEventListener("touchstart", handleTouchStart);
+      el.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [phase]);
 
   const handleStart = useCallback(() => {
-    setAnimating(true);
-    setProgress(0);
+    setPhase("entering");
+    setEntryProgress(0);
+    setManualRotation(0);
   }, []);
 
   const handleStop = useCallback(() => {
-    setAnimating(false);
-    setProgress(0);
+    setPhase("exiting");
+    setExitProgress(0);
     setHoveredMod(null);
   }, []);
 
@@ -236,30 +307,49 @@ export default function Modalities() {
     return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR, rotation: cAngle + 90, scale: 1, opacity: 1 };
   }
 
-  // Compute phase boundaries
+  // Arc position helper
+  function arcTarget(i: number, rotationOffset: number) {
+    const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
+    const arcR = baseR * (isMobile ? 1.5 : 1.15);
+    const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
+    const arcCenterY = apexY + arcR;
+    const spread = isMobile ? 95 : 120;
+    const startAng = -90 - spread / 2;
+    const step = spread / (TOTAL - 1);
+
+    const curAng = startAng + i * step + rotationOffset;
+    const curRad = (curAng * Math.PI) / 180;
+    return {
+      x: Math.cos(curRad) * arcR,
+      y: Math.sin(curRad) * arcR + arcCenterY,
+      rotation: curAng + 90,
+      scale: isMobile ? 1.5 : 1.9,
+      opacity: 1,
+    };
+  }
+
+  // Phase boundaries for entry
   const T1 = PHASE_LINE;
   const T2 = T1 + PHASE_CIRCLE;
   const T3 = T2 + PHASE_WHEEL;
-  const T4 = T3 + PHASE_MORPH_ARC;
-  const T5 = T4 + PHASE_ARC_ROTATE;
-  // T6 = TOTAL_DURATION
+  // T4 = ENTRY_DURATION (morph complete)
 
-  // Determine if we're in the arc interactive phase
-  const isInArcPhase = animating && progress >= T4 && progress < T5;
+  const isInteractive = phase === "arc";
 
-  // Determine arc text opacity
-  const arcTextOpacity = !animating ? 0
-    : progress < T3 ? 0
-    : progress < T4 ? Math.min((progress - T3) / (PHASE_MORPH_ARC * 0.6), 1)
-    : progress < T5 ? 1
-    : 1 - Math.min((progress - T5) / (PHASE_MORPH_BACK * 0.5), 1);
+  // Arc text visibility
+  const arcTextOpacity =
+    phase === "entering" && entryProgress >= T3
+      ? Math.min((entryProgress - T3) / (PHASE_MORPH_ARC * 0.6), 1)
+      : phase === "arc" ? 1
+      : phase === "exiting" ? 1 - Math.min(exitProgress / (EXIT_DURATION * 0.4), 1)
+      : 0;
 
   return (
     <section id="modalidades" className="relative">
       <div
         ref={containerRef}
         className="relative w-full overflow-hidden"
-        style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500 }}
+        style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500, cursor: phase === "arc" ? "grab" : "default" }}
       >
         {/* Deep ocean bg */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
@@ -306,7 +396,7 @@ export default function Modalities() {
             Escolha sua <span style={{ color: "hsl(var(--primary-glow))" }}>modalidade</span>
           </h2>
           <p className="text-white/40 text-xs tracking-widest uppercase">
-            {isMobile ? "toque nos cards para ver detalhes" : "passe o mouse sobre os cards para ver detalhes"}
+            {isMobile ? "deslize para navegar • toque para ver detalhes" : "scroll para navegar • passe o mouse para ver detalhes"}
           </p>
         </motion.div>
 
@@ -316,82 +406,66 @@ export default function Modalities() {
             MODALITIES.map((mod, i) => {
               let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
-              if (!animating) {
-                // Static circle
+              if (phase === "idle") {
                 target = circleTarget(i, 0);
-              } else if (progress < T1) {
-                // Scatter → Line
-                const t = progress / T1;
-                const spacing = 68;
-                const totalW = TOTAL * spacing;
-                const lineX = i * spacing - totalW / 2;
-                target = {
-                  x: lerp(scatter[i].x, lineX, t),
-                  y: lerp(scatter[i].y, 0, t),
-                  rotation: lerp(scatter[i].rotation, 0, t),
-                  scale: lerp(0.5, 1, t),
-                  opacity: t,
-                };
-              } else if (progress < T2) {
-                // Line → Circle
-                const t = (progress - T1) / PHASE_CIRCLE;
-                const spacing = 68;
-                const totalW = TOTAL * spacing;
-                const lineX = i * spacing - totalW / 2;
+              } else if (phase === "entering") {
+                if (entryProgress < T1) {
+                  // Scatter → Line
+                  const t = entryProgress / T1;
+                  const spacing = 68;
+                  const totalW = TOTAL * spacing;
+                  const lineX = i * spacing - totalW / 2;
+                  target = {
+                    x: lerp(scatter[i].x, lineX, t),
+                    y: lerp(scatter[i].y, 0, t),
+                    rotation: lerp(scatter[i].rotation, 0, t),
+                    scale: lerp(0.5, 1, t),
+                    opacity: t,
+                  };
+                } else if (entryProgress < T2) {
+                  // Line → Circle
+                  const t = (entryProgress - T1) / PHASE_CIRCLE;
+                  const spacing = 68;
+                  const totalW = TOTAL * spacing;
+                  const lineX = i * spacing - totalW / 2;
+                  const ct = circleTarget(i, 0);
+                  target = {
+                    x: lerp(lineX, ct.x, t),
+                    y: lerp(0, ct.y, t),
+                    rotation: lerp(0, ct.rotation, t),
+                    scale: 1,
+                    opacity: 1,
+                  };
+                } else if (entryProgress < T3) {
+                  // Wheel rotation 360°
+                  const wheelAngle = ((entryProgress - T2) / PHASE_WHEEL) * 360;
+                  target = circleTarget(i, wheelAngle);
+                } else {
+                  // Morph circle → arc
+                  const t = Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1);
+                  const ct = circleTarget(i, 0);
+                  const at = arcTarget(i, 0);
+                  target = {
+                    x: lerp(ct.x, at.x, t),
+                    y: lerp(ct.y, at.y, t),
+                    rotation: lerp(ct.rotation, at.rotation, t),
+                    scale: lerp(1, at.scale, t),
+                    opacity: 1,
+                  };
+                }
+              } else if (phase === "arc") {
+                // Static arc with manual rotation
+                target = arcTarget(i, manualRotation);
+              } else if (phase === "exiting") {
+                // Arc → circle
+                const t = Math.min(exitProgress / EXIT_DURATION, 1);
+                const at = arcTarget(i, manualRotation * (1 - t));
                 const ct = circleTarget(i, 0);
                 target = {
-                  x: lerp(lineX, ct.x, t),
-                  y: lerp(0, ct.y, t),
-                  rotation: lerp(0, ct.rotation, t),
-                  scale: 1,
-                  opacity: 1,
-                };
-              } else if (progress < T3) {
-                // Wheel rotation 360°
-                const wheelAngle = ((progress - T2) / PHASE_WHEEL) * 360;
-                target = circleTarget(i, wheelAngle);
-              } else {
-                // Morph circle ↔ arc
-                const morphToArc = progress < T4
-                  ? (progress - T3) / PHASE_MORPH_ARC
-                  : progress < T5 ? 1
-                  : 1 - (progress - T5) / PHASE_MORPH_BACK;
-                const effectiveMorph = Math.max(0, Math.min(1, morphToArc));
-
-                const ct = circleTarget(i, 0);
-                const circlePos = { x: ct.x, y: ct.y, rotation: ct.rotation };
-
-                // Arc params
-                const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
-                const arcR = baseR * (isMobile ? 1.5 : 1.15);
-                const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
-                const arcCenterY = apexY + arcR;
-                const spread = isMobile ? 95 : 120;
-                const startAng = -90 - spread / 2;
-                const step = spread / (TOTAL - 1);
-
-                // Arc scroll rotation during T4→T5
-                const arcScrollProg = progress < T4 ? 0 : progress < T5 ? (progress - T4) / PHASE_ARC_ROTATE : 1;
-                const totalRot = spread + step * (TOTAL - 1);
-                const boundedRot = -arcScrollProg * totalRot;
-                let curAng = startAng + i * step + boundedRot;
-                const arcSpan = TOTAL * step;
-                const arcMin = startAng - step;
-                while (curAng < arcMin) curAng += arcSpan;
-                while (curAng > arcMin + arcSpan) curAng -= arcSpan;
-                const curRad = (curAng * Math.PI) / 180;
-                const arcPos = {
-                  x: Math.cos(curRad) * arcR,
-                  y: Math.sin(curRad) * arcR + arcCenterY,
-                  rotation: curAng + 90,
-                  scale: isMobile ? 1.5 : 1.9,
-                };
-
-                target = {
-                  x: lerp(circlePos.x, arcPos.x, effectiveMorph),
-                  y: lerp(circlePos.y, arcPos.y, effectiveMorph),
-                  rotation: lerp(circlePos.rotation, arcPos.rotation, effectiveMorph),
-                  scale: lerp(1, arcPos.scale, effectiveMorph),
+                  x: lerp(at.x, ct.x, t),
+                  y: lerp(at.y, ct.y, t),
+                  rotation: lerp(at.rotation, ct.rotation, t),
+                  scale: lerp(at.scale, 1, t),
                   opacity: 1,
                 };
               }
@@ -401,7 +475,7 @@ export default function Modalities() {
                   key={mod.name}
                   mod={mod}
                   target={target}
-                  interactive={isInArcPhase}
+                  interactive={isInteractive}
                   onHoverMod={setHoveredMod}
                   isMobile={isMobile}
                 />
@@ -417,7 +491,7 @@ export default function Modalities() {
             transition={{ duration: 0.3 }}
           >
             <motion.button
-              onClick={animating ? handleStop : handleStart}
+              onClick={phase === "idle" ? handleStart : phase === "arc" ? handleStop : undefined}
               className="relative px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md shadow-lg shadow-black/20 hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
@@ -425,14 +499,14 @@ export default function Modalities() {
             >
               <AnimatePresence mode="wait">
                 <motion.span
-                  key={animating ? "stop" : "start"}
+                  key={phase === "arc" ? "stop" : "start"}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
                   className="block"
                 >
-                  {animating ? "Continuar Navegando" : "Ver Modalidades"}
+                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "..." : "Ver Modalidades"}
                 </motion.span>
               </AnimatePresence>
             </motion.button>

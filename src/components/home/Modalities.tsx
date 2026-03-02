@@ -274,10 +274,8 @@ export default function Modalities() {
     let wheelAccum = 0;
 
     const snapTo = (index: number) => {
-      // Wrap around for infinite loop
-      const wrapped = ((index % TOTAL) + TOTAL) % TOTAL;
-      currentCardRef.current = wrapped;
-      setManualRotation(wrapped * step);
+      currentCardRef.current = index;
+      setManualRotation(index * step);
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -344,17 +342,29 @@ export default function Modalities() {
     const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
     const arcCenterY = apexY + arcR;
     const spread = isMobile ? 95 : 120;
-    const startAng = -90 - spread / 2;
     const step = spread / (TOTAL - 1);
+    const totalSpan = TOTAL * step;
 
-    const curAng = startAng + i * step + rotationOffset;
+    // Infinite carousel: wrap each card's relative position
+    let rel = i * step - rotationOffset;
+    rel = ((rel % totalSpan) + totalSpan * 1.5) % totalSpan - totalSpan / 2;
+
+    const curAng = -90 + rel;
     const curRad = (curAng * Math.PI) / 180;
+
+    // Fade cards far from center for clean edges
+    const distFromCenter = Math.abs(rel);
+    const fadeStart = spread / 2;
+    const opacity = distFromCenter > fadeStart
+      ? Math.max(0, 1 - (distFromCenter - fadeStart) / (step * 2))
+      : 1;
+
     return {
       x: Math.cos(curRad) * arcR,
       y: Math.sin(curRad) * arcR + arcCenterY,
       rotation: curAng + 90,
       scale: isMobile ? 1.5 : 1.9,
-      opacity: 1,
+      opacity,
     };
   }
 

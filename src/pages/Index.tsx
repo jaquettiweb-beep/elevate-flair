@@ -9,6 +9,7 @@ import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
+import SectionDivider from "@/components/home/SectionDivider";
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
@@ -19,7 +20,6 @@ const Index = () => {
 
   return (
     <>
-      {/* Intro overlay — rendered outside Layout so it sits above everything */}
       <IntroAnimation onComplete={handleIntroComplete} />
 
       <Layout>
@@ -29,7 +29,6 @@ const Index = () => {
         />
         <PageTransition>
           <HeroSection introComplete={introComplete} />
-          {/* Continuous gradient background for all content sections */}
           <div
             style={{
               background: `linear-gradient(
@@ -45,10 +44,13 @@ const Index = () => {
             }}
           >
             <WhyFlipper />
+            <SectionDivider variant="wave" />
             <Modalities />
+            <SectionDivider variant="curved" />
             <Stats />
-
+            <SectionDivider variant="wave" flip />
             <Testimonials />
+            <SectionDivider variant="curved" flip />
             <CTASection />
           </div>
         </PageTransition>

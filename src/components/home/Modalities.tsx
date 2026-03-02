@@ -32,10 +32,10 @@ const CARD_H = 124;
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 
 // Entry animation durations
-const PHASE_LINE = 1.2;
-const PHASE_CIRCLE = 1.0;
-const PHASE_WHEEL = 3.0;
-const PHASE_MORPH_ARC = 1.5;
+const PHASE_LINE = 0.6;
+const PHASE_CIRCLE = 0.5;
+const PHASE_WHEEL = 1.2;
+const PHASE_MORPH_ARC = 0.7;
 const ENTRY_DURATION = PHASE_LINE + PHASE_CIRCLE + PHASE_WHEEL + PHASE_MORPH_ARC;
 
 // ─── FlipCard ────────────────────────────────────────────────────────────────
@@ -274,9 +274,10 @@ export default function Modalities() {
     let wheelAccum = 0;
 
     const snapTo = (index: number) => {
-      const clamped = Math.max(0, Math.min(TOTAL - 1, index));
-      currentCardRef.current = clamped;
-      setManualRotation(clamped * step);
+      // Wrap around for infinite loop
+      const wrapped = ((index % TOTAL) + TOTAL) % TOTAL;
+      currentCardRef.current = wrapped;
+      setManualRotation(wrapped * step);
     };
 
     const handleWheel = (e: WheelEvent) => {

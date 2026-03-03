@@ -3,14 +3,7 @@ import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import {
-  ContainerScroll,
-  ContainerSticky,
-  GalleryContainer,
-  GalleryCol,
-  ContainerStagger,
-  ContainerAnimated,
-} from "@/components/ui/animated-gallery";
+import ThumbnailCarousel from "@/components/ui/carousel-thumbnails";
 
 import heroImg from "@/assets/hero-gym.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
@@ -19,9 +12,14 @@ import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
-const IMAGES_1 = [heroImg, swimmingImg, yogaImg, musculacaoImg];
-const IMAGES_2 = [pilatesImg, martialImg, heroImg, swimmingImg];
-const IMAGES_3 = [yogaImg, musculacaoImg, pilatesImg, martialImg];
+const GALLERY_IMAGES = [
+  { full: heroImg, thumb: heroImg, alt: "Sala de musculação moderna da Academia Flipper" },
+  { full: swimmingImg, thumb: swimmingImg, alt: "Piscina semiolímpica aquecida" },
+  { full: yogaImg, thumb: yogaImg, alt: "Aula de Yoga na Academia Flipper" },
+  { full: martialImg, thumb: martialImg, alt: "Treino de artes marciais" },
+  { full: pilatesImg, thumb: pilatesImg, alt: "Studio de Pilates" },
+  { full: musculacaoImg, thumb: musculacaoImg, alt: "Treino de musculação" },
+];
 
 export default function Gallery() {
   return (
@@ -29,7 +27,7 @@ export default function Gallery() {
       <PageTransition>
         <SEOHead
           title="Galeria de Fotos - Conheça a Infraestrutura da Academia Flipper"
-          description="Veja fotos da nossa academia: equipamentos modernos, piscina aquecida, espaços amplos e climatizados. Estrutura completa para seu treino em São Paulo."
+          description="Veja fotos da nossa academia: equipamentos modernos, piscina aquecida, espaços amplos e climatizados."
           path="/galeria"
         />
 
@@ -41,64 +39,21 @@ export default function Gallery() {
               <ChevronRight size={14} />
               <span className="text-primary-foreground">Galeria</span>
             </nav>
-
-            <ContainerStagger className="space-y-4">
-              <ContainerAnimated>
-                <h1 className="font-display text-3xl lg:text-5xl font-bold text-primary-foreground">
-                  Nossa Infraestrutura
-                </h1>
-              </ContainerAnimated>
-              <ContainerAnimated>
-                <p className="text-primary-foreground/70 max-w-lg">
-                  Conheça nossos espaços, equipamentos e o ambiente que faz da Flipper a academia mais completa de São Paulo.
-                </p>
-              </ContainerAnimated>
-            </ContainerStagger>
+            <h1 className="font-display text-3xl lg:text-5xl font-bold text-primary-foreground">
+              Nossa Infraestrutura
+            </h1>
+            <p className="text-primary-foreground/70 mt-3 max-w-lg">
+              Conheça nossos espaços, equipamentos e o ambiente que faz da Flipper a academia mais completa de São Paulo.
+            </p>
           </div>
         </section>
 
-        {/* Animated Gallery */}
-        <div className="bg-background">
-          <ContainerScroll>
-            <ContainerSticky>
-              <GalleryContainer className="px-4 max-w-7xl mx-auto">
-                <GalleryCol yRange={["0%", "-10%"]}>
-                  {IMAGES_1.map((src, i) => (
-                    <img
-                      key={i}
-                      className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow"
-                      src={src}
-                      alt="Academia Flipper"
-                      loading="lazy"
-                    />
-                  ))}
-                </GalleryCol>
-                <GalleryCol className="mt-[-50%]" yRange={["15%", "5%"]}>
-                  {IMAGES_2.map((src, i) => (
-                    <img
-                      key={i}
-                      className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow"
-                      src={src}
-                      alt="Academia Flipper"
-                      loading="lazy"
-                    />
-                  ))}
-                </GalleryCol>
-                <GalleryCol yRange={["-10%", "2%"]} className="-mt-2">
-                  {IMAGES_3.map((src, i) => (
-                    <img
-                      key={i}
-                      className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow"
-                      src={src}
-                      alt="Academia Flipper"
-                      loading="lazy"
-                    />
-                  ))}
-                </GalleryCol>
-              </GalleryContainer>
-            </ContainerSticky>
-          </ContainerScroll>
-        </div>
+        {/* Carousel Gallery */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <ThumbnailCarousel images={GALLERY_IMAGES} />
+          </div>
+        </section>
       </PageTransition>
     </Layout>
   );

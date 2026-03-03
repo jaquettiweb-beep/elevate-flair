@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, X, ChevronLeft, ChevronRightIcon } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform, MotionValue } from "framer-motion";
 
 import heroImg from "@/assets/hero-gym.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
@@ -20,13 +21,72 @@ const IMAGES = [
   { src: martialImg, alt: "Treino de artes marciais na Academia Flipper", category: "Aulas" },
   { src: pilatesImg, alt: "Studio de Pilates na Academia Flipper", category: "Espaços" },
   { src: musculacaoImg, alt: "Treino de musculação na Academia Flipper", category: "Equipamentos" },
+  // Duplicate for more visual density
+  { src: swimmingImg, alt: "Vista da piscina aquecida", category: "Espaços" },
+  { src: heroImg, alt: "Área de treino funcional", category: "Equipamentos" },
+  { src: yogaImg, alt: "Espaço de meditação e relaxamento", category: "Aulas" },
+  { src: martialImg, alt: "Sala de lutas e defesa pessoal", category: "Aulas" },
+  { src: pilatesImg, alt: "Equipamentos de Pilates Reformer", category: "Espaços" },
+  { src: musculacaoImg, alt: "Halteres e pesos livres", category: "Equipamentos" },
 ];
 
 const CATEGORIES = ["Todas", "Equipamentos", "Espaços", "Aulas"];
 
+const KineticGridItem = ({
+  image,
+  scrollVelocity,
+  index,
+  onClick,
+}: {
+  image: typeof IMAGES[0];
+  scrollVelocity: MotionValue<number>;
+  index: number;
+  onClick: () => void;
+}) => {
+  const smoothedVelocity = useSpring(scrollVelocity, {
+    mass: 0.1,
+    stiffness: 80,
+    damping: 40,
+  });
+
+  const skew = useTransform(smoothedVelocity, [-1500, 0, 1500], [-12, 0, 12]);
+
+  return (
+    <motion.div
+      className="overflow-hidden rounded-xl cursor-pointer group"
+      style={{ skewY: skew }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
+    >
+      <button onClick={onClick} className="relative w-full aspect-[4/3] block">
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-300 flex items-center justify-center">
+          <span className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity font-semibold text-sm tracking-wide">
+            Ampliar
+          </span>
+        </div>
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-foreground/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <p className="text-primary-foreground text-xs truncate">{image.alt}</p>
+          <span className="text-primary-foreground/70 text-[10px]">{image.category}</span>
+        </div>
+      </button>
+    </motion.div>
+  );
+};
+
 export default function Gallery() {
   const [filter, setFilter] = useState("Todas");
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const { scrollYProgress } = useScroll();
+
+  const scrollYVelocity = useTransform(scrollYProgress, [0, 1], [0, 1000], { clamp: false });
 
   const filtered = filter === "Todas" ? IMAGES : IMAGES.filter((img) => img.category === filter);
 
@@ -38,101 +98,99 @@ export default function Gallery() {
   return (
     <Layout>
       <PageTransition>
-      <SEOHead
-        title="Galeria de Fotos - Conheça a Infraestrutura da Academia Flipper"
-        description="Veja fotos da nossa academia: equipamentos modernos, piscina aquecida, espaços amplos e climatizados. Estrutura completa para seu treino em São Paulo."
-        path="/galeria"
-      />
+        <SEOHead
+          title="Galeria de Fotos - Conheça a Infraestrutura da Academia Flipper"
+          description="Veja fotos da nossa academia: equipamentos modernos, piscina aquecida, espaços amplos e climatizados. Estrutura completa para seu treino em São Paulo."
+          path="/galeria"
+        />
 
-      {/* Hero */}
-      <section className="pt-28 pb-12 bg-primary">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center gap-2 text-primary-foreground/60 text-sm mb-6" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-primary-foreground transition-colors">Home</Link>
-            <ChevronRight size={14} />
-            <span className="text-primary-foreground">Galeria</span>
-          </nav>
-          <h1 className="font-display text-3xl lg:text-5xl font-bold text-primary-foreground">
-            Nossa Infraestrutura
-          </h1>
-          <p className="text-primary-foreground/70 mt-3 max-w-lg">
-            Conheça nossos espaços, equipamentos e o ambiente que faz da Flipper a academia mais completa de São Paulo.
-          </p>
-        </div>
-      </section>
+        {/* Hero */}
+        <section className="pt-28 pb-12 bg-primary">
+          <div className="container mx-auto px-4">
+            <nav className="flex items-center gap-2 text-primary-foreground/60 text-sm mb-6" aria-label="Breadcrumb">
+              <Link to="/" className="hover:text-primary-foreground transition-colors">Home</Link>
+              <ChevronRight size={14} />
+              <span className="text-primary-foreground">Galeria</span>
+            </nav>
+            <h1 className="font-display text-3xl lg:text-5xl font-bold text-primary-foreground">
+              Nossa Infraestrutura
+            </h1>
+            <p className="text-primary-foreground/70 mt-3 max-w-lg">
+              Conheça nossos espaços, equipamentos e o ambiente que faz da Flipper a academia mais completa de São Paulo.
+            </p>
+            <p className="text-primary-foreground/40 text-sm mt-4 italic">
+              Scroll rápido para ver o efeito cinético nas imagens ✨
+            </p>
+          </div>
+        </section>
 
-      {/* Gallery */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          {/* Filters */}
-          <ScrollReveal direction="up">
-            <div className="flex flex-wrap gap-3 justify-center mb-10">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                    filter === cat
-                      ? "bg-primary text-primary-foreground shadow-lg"
-                      : "bg-muted text-muted-foreground hover:bg-accent"
-                  }`}
-                >
-                  {cat}
-                </button>
+        {/* Gallery */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            {/* Filters */}
+            <ScrollReveal direction="up">
+              <div className="flex flex-wrap gap-3 justify-center mb-10">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setFilter(cat)}
+                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                      filter === cat
+                        ? "bg-primary text-primary-foreground shadow-lg"
+                        : "bg-muted text-muted-foreground hover:bg-accent"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            {/* Kinetic Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filtered.map((img, i) => (
+                <KineticGridItem
+                  key={img.alt + i}
+                  image={img}
+                  scrollVelocity={scrollYVelocity}
+                  index={i}
+                  onClick={() => openLightbox(i)}
+                />
               ))}
             </div>
-          </ScrollReveal>
-
-          {/* Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((img, i) => (
-              <ScrollReveal
-                key={img.alt + i}
-                direction={i % 3 === 0 ? "left" : i % 3 === 1 ? "zoom" : "right"}
-                intensity="high"
-              >
-                <button
-                  onClick={() => openLightbox(i)}
-                  className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer w-full"
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-center justify-center">
-                    <span className="text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity font-semibold text-sm">
-                      Ampliar
-                    </span>
-                  </div>
-                </button>
-              </ScrollReveal>
-            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Lightbox */}
-      {lightbox !== null && (
-        <div className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4" onClick={closeLightbox}>
-          <button onClick={closeLightbox} className="absolute top-4 right-4 text-primary-foreground p-2" aria-label="Fechar">
-            <X size={28} />
-          </button>
-          <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 text-primary-foreground p-2" aria-label="Anterior">
-            <ChevronLeft size={32} />
-          </button>
-          <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 text-primary-foreground p-2" aria-label="Próxima">
-            <ChevronRightIcon size={32} />
-          </button>
-          <img
-            src={filtered[lightbox].src}
-            alt={filtered[lightbox].alt}
-            className="max-w-full max-h-[85vh] rounded-xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+        {/* Lightbox */}
+        {lightbox !== null && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
+            onClick={closeLightbox}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button onClick={closeLightbox} className="absolute top-4 right-4 text-primary-foreground p-2" aria-label="Fechar">
+              <X size={28} />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 text-primary-foreground p-2" aria-label="Anterior">
+              <ChevronLeft size={32} />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 text-primary-foreground p-2" aria-label="Próxima">
+              <ChevronRightIcon size={32} />
+            </button>
+            <motion.img
+              key={lightbox}
+              src={filtered[lightbox].src}
+              alt={filtered[lightbox].alt}
+              className="max-w-full max-h-[85vh] rounded-xl object-contain"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+        )}
       </PageTransition>
     </Layout>
   );

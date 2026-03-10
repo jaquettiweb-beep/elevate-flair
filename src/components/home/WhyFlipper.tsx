@@ -50,7 +50,7 @@ export default function WhyFlipper() {
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
-            Por que escolher a <span className="gradient-text">Flipper</span>?
+            Por que escolher a <span className="text-secondary font-extrabold">Flipper</span>?
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
             Mais de 15 anos transformando vidas através do esporte em São Paulo.

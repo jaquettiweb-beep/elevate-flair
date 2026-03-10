@@ -39,23 +39,33 @@ export default function WhyFlipper() {
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 60, damping: 16 }}
-        >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
-            Por que escolher a <span className="text-secondary font-extrabold">Flipper</span>?
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Mais de 15 anos transformando vidas através do esporte em São Paulo.
-          </p>
-        </motion.div>
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          {/* Text */}
+          <motion.div
+            className="flex-1 text-center lg:text-left"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ type: "spring", stiffness: 60, damping: 16 }}
+          >
+            <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
+              Por que escolher a <span className="text-secondary font-extrabold">Flipper</span>?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto lg:mx-0 text-lg">
+              Mais de 15 anos transformando vidas através do esporte em São Paulo.
+            </p>
+          </motion.div>
 
-        <div className="flex justify-center">
-          <DisplayCards cards={cards} />
+          {/* Cards */}
+          <motion.div
+            className="flex-1 flex justify-center min-h-[320px]"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ type: "spring", stiffness: 50, damping: 18, delay: 0.15 }}
+          >
+            <DisplayCards cards={cards} />
+          </motion.div>
         </div>
       </div>
     </section>

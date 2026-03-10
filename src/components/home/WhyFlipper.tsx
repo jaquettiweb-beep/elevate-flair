@@ -11,7 +11,7 @@ const cards = [
     iconClassName: "text-primary",
     titleClassName: "text-primary",
     className:
-      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+      "[grid-area:stack] hover:-translate-y-6 before:absolute before:w-full before:outline-1 before:rounded-xl before:outline-border before:h-full before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
   },
   {
     icon: <Award className="size-4" />,
@@ -21,7 +21,7 @@ const cards = [
     iconClassName: "text-secondary",
     titleClassName: "text-secondary",
     className:
-      "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+      "[grid-area:stack] translate-x-8 translate-y-6 hover:-translate-y-1 before:absolute before:w-full before:outline-1 before:rounded-xl before:outline-border before:h-full before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
   },
   {
     icon: <Clock className="size-4" />,
@@ -31,15 +31,15 @@ const cards = [
     iconClassName: "text-primary",
     titleClassName: "text-primary",
     className:
-      "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+      "[grid-area:stack] translate-x-16 translate-y-12 hover:translate-y-4",
   },
 ];
 
 export default function WhyFlipper() {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section className="py-20 lg:py-28 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Text */}
           <motion.div
             className="flex-1 text-center lg:text-left"
@@ -58,7 +58,7 @@ export default function WhyFlipper() {
 
           {/* Cards */}
           <motion.div
-            className="flex-1 flex justify-center min-h-[320px]"
+            className="flex-1 flex justify-center py-8"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.1 }}

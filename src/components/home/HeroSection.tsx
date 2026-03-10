@@ -223,7 +223,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             style={{ scale: imageScale }}
           >
             <motion.img
-              src={heroGym}
+              src={fachadaFlipper}
               alt="Academia Flipper"
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY, scale: 1.06 }}

@@ -18,7 +18,7 @@ const FEATURES = [
   {
     icon: Clock,
     title: "Horários Flexíveis",
-    desc: "Segunda a sábado das 6h às 22h. Encaixe o treino na sua rotina com facilidade.",
+    desc: "Segunda a sexta das 6h às 22h, sábado das 6h às 13h. Encaixe o treino na sua rotina com facilidade.",
     accent: "from-[hsl(var(--neon-blue))] to-primary",
   },
 ];

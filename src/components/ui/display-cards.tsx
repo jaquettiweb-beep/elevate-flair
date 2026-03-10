@@ -25,7 +25,7 @@ function DisplayCard({
   return (
     <div
       className={cn(
-        "relative flex h-36 w-[22rem] -skew-y-[2deg] select-none flex-col justify-between rounded-xl border border-border bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 ease-out [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+        "relative flex h-32 w-[18rem] -skew-y-[2deg] select-none flex-col justify-between rounded-xl border border-border bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 ease-out [&>*]:flex [&>*]:items-center [&>*]:gap-2",
         className
       )}
     >

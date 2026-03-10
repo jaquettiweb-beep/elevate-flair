@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
-import heroGym from "@/assets/hero-gym.jpg";
+import fachadaFlipper from "@/assets/fachada-flipper.jpg";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -223,7 +223,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             style={{ scale: imageScale }}
           >
             <motion.img
-              src={heroGym}
+              src={fachadaFlipper}
               alt="Academia Flipper"
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY, scale: 1.06 }}

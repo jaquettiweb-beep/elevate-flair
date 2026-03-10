@@ -1,42 +1,39 @@
 import { motion } from "framer-motion";
 import { Dumbbell, Award, Clock } from "lucide-react";
-import TiltCard from "@/components/TiltCard";
+import DisplayCards from "@/components/ui/display-cards";
 
-const FEATURES = [
+const cards = [
   {
-    icon: Dumbbell,
+    icon: <Dumbbell className="size-4" />,
     title: "Infraestrutura Completa",
-    desc: "Equipamentos modernos, piscina semiolímpica aquecida, salas climatizadas e vestiários completos.",
-    accent: "from-primary to-primary-glow",
+    description: "Equipamentos modernos e piscina aquecida",
+    date: "+15 anos de experiência",
+    iconClassName: "text-primary",
+    titleClassName: "text-primary",
+    className:
+      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
   },
   {
-    icon: Award,
+    icon: <Award className="size-4" />,
     title: "Professores Qualificados",
-    desc: "Profissionais certificados e experientes, prontos para orientar seu treino com segurança.",
-    accent: "from-secondary to-[hsl(15,90%,50%)]",
+    description: "Profissionais certificados e experientes",
+    date: "Acompanhamento personalizado",
+    iconClassName: "text-secondary",
+    titleClassName: "text-secondary",
+    className:
+      "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
   },
   {
-    icon: Clock,
+    icon: <Clock className="size-4" />,
     title: "Horários Flexíveis",
-    desc: "Segunda a sexta das 6h às 22h, sábado das 6h às 13h. Encaixe o treino na sua rotina com facilidade.",
-    accent: "from-[hsl(var(--neon-blue))] to-primary",
+    description: "Seg–Sex 6h às 22h · Sáb 6h às 13h",
+    date: "Encaixe na sua rotina",
+    iconClassName: "text-primary",
+    titleClassName: "text-primary",
+    className:
+      "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
   },
 ];
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.96 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring" as const,
-      stiffness: 60,
-      damping: 16,
-      delay: i * 0.12,
-    },
-  }),
-};
 
 export default function WhyFlipper() {
   return (
@@ -57,31 +54,8 @@ export default function WhyFlipper() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {FEATURES.map((f, i) => (
-            <TiltCard
-              key={f.title}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-              className="gym-card p-8 cursor-default"
-              intensity={6}
-              liquidHover
-            >
-              <motion.div
-                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5`}
-                style={{ boxShadow: "0 4px 14px hsla(185,80%,45%,0.2)" }}
-                whileHover={{ rotate: [0, -8, 8, 0], scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <f.icon size={24} className="text-primary-foreground" />
-              </motion.div>
-              <h3 className="font-display text-xl font-bold text-foreground mb-3">{f.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-            </TiltCard>
-          ))}
+        <div className="flex justify-center">
+          <DisplayCards cards={cards} />
         </div>
       </div>
     </section>

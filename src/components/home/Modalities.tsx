@@ -9,22 +9,22 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
-  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental" },
-  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço" },
-  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula" },
-  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga" },
-  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar" },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais" },
-  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis" },
-  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora" },
-  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho" },
-  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino" },
-  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente" },
-  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte" },
-  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se" },
-  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar" },
-  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão" },
-  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais" },
+  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental", link: "/natacao" },
+  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço", link: "/musculacao" },
+  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula", link: "/modalidade/yoga" },
+  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga", link: "/modalidade/pilates-studio" },
+  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar", link: "/modalidade/pilates-solo" },
+  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais", link: "/modalidade/hidroginastica" },
+  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis", link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora", link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho", link: "/modalidade/judo-infantil" },
+  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino", link: "/modalidade/kung-fu" },
+  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente", link: "/modalidade/krav-maga" },
+  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte", link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se", link: "/modalidade/ballet-infantil" },
+  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar", link: "/modalidade/ginastica" },
+  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão", link: "/modalidade/hidroterapia" },
+  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais", link: "/modalidade/programa-60-saude" },
 ];
 
 const TOTAL = MODALITIES.length;

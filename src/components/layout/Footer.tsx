@@ -96,7 +96,7 @@ export default function Footer() {
                 <Clock size={16} className="mt-0.5 shrink-0 text-secondary" />
                 <div>
                   <p>Seg–Sex: 6h – 22h</p>
-                  <p>Sáb: 8h – 18h</p>
+                  <p>Sáb: 6h – 13h</p>
                 </div>
               </li>
             </ul>

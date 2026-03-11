@@ -63,9 +63,9 @@ export default function RadialOrbitalTimeline({
         const baseAngle = (i / total) * 360 - 90;
         const angle = baseAngle + angleRef.current;
         const radian = (angle * Math.PI) / 180;
-        const x = RADIUS * Math.cos(radian);
-        const y = RADIUS * Math.sin(radian);
-        el.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+        const x = Math.round(RADIUS * Math.cos(radian) * 10) / 10;
+        const y = Math.round(RADIUS * Math.sin(radian) * 10) / 10;
+        el.style.transform = `translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0)`;
       }
 
       rafRef.current = requestAnimationFrame(animate);

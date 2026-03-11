@@ -81,6 +81,10 @@ const Index = () => {
             </motion.div>
             <SectionDivider variant="curved" flip />
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <FlipperProducts />
+            </motion.div>
+            <SectionDivider variant="wave" />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <CTASection />
             </motion.div>
           </div>

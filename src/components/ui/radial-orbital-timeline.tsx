@@ -16,6 +16,7 @@ interface TimelineItem {
   relatedIds: number[];
   status: "completed" | "in-progress" | "pending";
   energy: number;
+  link?: string;
 }
 
 interface RadialOrbitalTimelineProps {

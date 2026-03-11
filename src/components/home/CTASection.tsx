@@ -43,7 +43,7 @@ export default function CTASection() {
             <motion.div whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
                 to="/contato"
-                className="rounded-full px-8 py-4 text-lg font-semibold text-white/80 border border-white/15 hover:border-white/30 hover:bg-white/[0.05] transition-all flex items-center justify-center gap-2"
+                className="rounded-full px-8 py-4 text-lg font-semibold text-foreground/80 border border-foreground/15 hover:border-foreground/30 hover:bg-foreground/[0.05] transition-all flex items-center justify-center gap-2"
               >
                 Entrar em Contato
                 <ArrowRight size={18} />

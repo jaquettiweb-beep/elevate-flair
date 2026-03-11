@@ -105,7 +105,7 @@ export default function Testimonials() {
         </motion.div>
 
         <motion.p
-          className="text-center text-white/30 text-xs mt-8 tracking-widest uppercase"
+          className="text-center text-foreground/30 text-xs mt-8 tracking-widest uppercase"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

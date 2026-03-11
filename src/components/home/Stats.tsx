@@ -64,7 +64,7 @@ export default function Stats() {
             >
               <s.icon size={28} className="mx-auto mb-3 text-secondary" />
               <Counter target={s.value} suffix={s.suffix} />
-              <p className="text-white/50 text-sm mt-2">{s.label}</p>
+              <p className="text-foreground/50 text-sm mt-2">{s.label}</p>
             </motion.div>
           ))}
         </div>

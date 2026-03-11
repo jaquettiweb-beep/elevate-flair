@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
@@ -95,16 +95,6 @@ const allImages = timelineData.map((t) => t.image).filter(Boolean);
 
 export default function FlipperTimeline() {
   const [activeImage, setActiveImage] = useState<string | null>(null);
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
-
-  // Preload images eagerly
-  useEffect(() => {
-    allImages.forEach((src) => {
-      const img = new Image();
-      img.onload = () => setLoadedImages((prev) => new Set(prev).add(src));
-      img.src = src;
-    });
-  }, []);
 
   const handleActiveChange = (id: number | null) => {
     if (id === null) {
@@ -115,20 +105,25 @@ export default function FlipperTimeline() {
     }
   };
 
-  const isImageLoaded = activeImage ? loadedImages.has(activeImage) : false;
-
   return (
     <section className="py-20 lg:py-28 relative overflow-hidden">
+      {/* Hidden preload images for instant display */}
+      <div className="hidden" aria-hidden="true">
+        {allImages.map((src) => (
+          <img key={src} src={src} alt="" />
+        ))}
+      </div>
+
       {/* Translucent background image */}
       <AnimatePresence mode="wait">
-        {activeImage && isImageLoaded && (
+        {activeImage && (
           <motion.div
             key={activeImage}
             className="absolute inset-0 z-0"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <img
               src={activeImage}

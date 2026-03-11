@@ -162,14 +162,14 @@ export default function Footer() {
             name: "Academia Flipper",
             description: "Academia completa em São Paulo com natação, musculação, pilates, artes marciais e muito mais",
             url: "https://www.academiaflipper.com.br",
-            telephone: "+5511944440557",
+            telephone: "+551138762340",
             priceRange: "$$",
             address: {
               "@type": "PostalAddress",
-              streetAddress: "R. Alcântara, 261 – Vila Mariana",
+              streetAddress: "Av. Vereador José Diniz, 2583 – Brooklin",
               addressLocality: "São Paulo",
               addressRegion: "SP",
-              postalCode: "04120-000",
+              postalCode: "04604-007",
               addressCountry: "BR",
             },
             geo: {

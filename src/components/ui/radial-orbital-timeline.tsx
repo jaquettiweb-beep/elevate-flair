@@ -50,6 +50,7 @@ export default function RadialOrbitalTimeline({
       setActiveNodeId(null);
       setPulseEffect({});
       setAutoRotate(true);
+      onActiveChange?.(null);
     }
   };
 

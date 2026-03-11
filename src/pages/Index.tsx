@@ -15,7 +15,7 @@ import SectionDivider from "@/components/home/SectionDivider";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50, damping: 18, mass: 1 } },
+  visible: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 50, damping: 18, mass: 1 } },
 };
 
 const Index = () => {

@@ -8,7 +8,7 @@ const WHATSAPP_URL =
 
 const STATS = [
   { icon: Users, value: "5.000+", label: "Alunos" },
-  { icon: Trophy, value: "15+", label: "Anos" },
+  { icon: Trophy, value: "50+", label: "Anos" },
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 

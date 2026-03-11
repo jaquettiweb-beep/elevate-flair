@@ -4,7 +4,7 @@ import { Users, Trophy, Layers, ThumbsUp } from "lucide-react";
 
 const STATS = [
   { icon: Users, value: 5000, suffix: "+", label: "Alunos Ativos" },
-  { icon: Trophy, value: 15, suffix: "+", label: "Anos de Experiência" },
+  { icon: Trophy, value: 50, suffix: "+", label: "Anos de Experiência" },
   { icon: Layers, value: 15, suffix: "+", label: "Modalidades" },
   { icon: ThumbsUp, value: 98, suffix: "%", label: "Satisfação" },
 ];

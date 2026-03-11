@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";

@@ -45,6 +45,7 @@ interface FlipCardProps {
   target: { x: number; y: number; rotation: number; scale: number; opacity: number };
   interactive: boolean;
   onHoverMod: (mod: (typeof MODALITIES)[number] | null) => void;
+  onClickMod: (mod: (typeof MODALITIES)[number]) => void;
   isMobile: boolean;
 }
 

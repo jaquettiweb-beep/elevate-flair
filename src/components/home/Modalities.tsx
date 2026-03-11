@@ -124,7 +124,7 @@ function FlipCard({ mod, target, interactive, onHoverMod, isMobile }: FlipCardPr
 }
 
 // ─── Background Overlay ──────────────────────────────────────────────────────
-function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[number] | null }) {
+function BackgroundOverlay({ hoveredMod, onNavigate }: { hoveredMod: (typeof MODALITIES)[number] | null; onNavigate: (link: string) => void }) {
   return (
     <AnimatePresence>
       {hoveredMod && (
@@ -149,14 +149,14 @@ function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[num
             <span className="text-4xl md:text-5xl mb-2">{hoveredMod.emoji}</span>
             <h3 className="font-display text-xl md:text-3xl font-bold text-white mb-1">{hoveredMod.name}</h3>
             <p className="text-white/80 text-xs md:text-sm max-w-md mb-3">{hoveredMod.desc}</p>
-            <motion.a
-              href="#contato"
+            <motion.button
+              onClick={() => onNavigate(hoveredMod.link)}
               className="inline-block px-5 py-2 rounded-full text-xs md:text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
-              {hoveredMod.cta}
-            </motion.a>
+              Saiba mais →
+            </motion.button>
           </motion.div>
         </motion.div>
       )}

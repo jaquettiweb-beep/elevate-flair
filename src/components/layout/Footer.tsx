@@ -41,7 +41,7 @@ export default function Footer() {
             <h3 className="font-display text-2xl font-bold text-primary-foreground mb-4">FLIPPER</h3>
             <p className="text-footer-foreground text-sm leading-relaxed">
               Academia completa em São Paulo, oferecendo as melhores modalidades esportivas e aquáticas.
-              Transformando vidas através do esporte desde 2010.
+              Transformando vidas através do esporte há mais de 50 anos.
             </p>
           </motion.div>
 

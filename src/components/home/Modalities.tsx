@@ -45,10 +45,11 @@ interface FlipCardProps {
   target: { x: number; y: number; rotation: number; scale: number; opacity: number };
   interactive: boolean;
   onHoverMod: (mod: (typeof MODALITIES)[number] | null) => void;
+  onClickMod: (mod: (typeof MODALITIES)[number]) => void;
   isMobile: boolean;
 }
 
-function FlipCard({ mod, target, interactive, onHoverMod, isMobile }: FlipCardProps) {
+function FlipCard({ mod, target, interactive, onHoverMod, onClickMod, isMobile }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
 
   const handleStart = useCallback(() => {
@@ -63,9 +64,15 @@ function FlipCard({ mod, target, interactive, onHoverMod, isMobile }: FlipCardPr
     onHoverMod(null);
   }, [interactive, onHoverMod]);
 
+  const handleClick = useCallback(() => {
+    if (!interactive) return;
+    document.body.style.overflow = "";
+    onClickMod(mod);
+  }, [interactive, mod, onClickMod]);
+
   return (
     <motion.div
-      className="absolute"
+      className="absolute cursor-pointer"
       style={{
         width: CARD_W,
         height: CARD_H,
@@ -88,6 +95,7 @@ function FlipCard({ mod, target, interactive, onHoverMod, isMobile }: FlipCardPr
       onHoverEnd={!isMobile ? handleEnd : undefined}
       onTouchStart={isMobile ? handleStart : undefined}
       onTouchEnd={isMobile ? handleEnd : undefined}
+      onClick={handleClick}
     >
       <motion.div
         style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
@@ -519,6 +527,7 @@ export default function Modalities() {
                   target={target}
                   interactive={isInteractive}
                   onHoverMod={setHoveredMod}
+                  onClickMod={(m) => navigate(m.link)}
                   isMobile={isMobile}
                 />
               );

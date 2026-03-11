@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ChevronRight, Clock, MapPin, Users, Star } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -199,6 +200,7 @@ const Modalidade = () => {
             <div className="container mx-auto px-4">
               {/* Breadcrumb */}
               <ScrollReveal>
+                <BackToModalities />
                 <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
                   <Link to="/" className="hover:text-secondary transition-colors">Início</Link>
                   <ChevronRight className="w-4 h-4" />

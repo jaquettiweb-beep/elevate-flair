@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
@@ -13,10 +14,21 @@ import SectionDivider from "@/components/home/SectionDivider";
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
+  const location = useLocation();
 
   const handleIntroComplete = useCallback(() => {
     setIntroComplete(true);
   }, []);
+
+  // Scroll to hash on navigation (e.g. /#modalidades)
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  }, [location.hash]);
 
   return (
     <>

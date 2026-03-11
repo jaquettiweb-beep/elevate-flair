@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import swimmingImg from "@/assets/swimming.jpg";
 
 const Natacao = () => {
@@ -23,6 +24,7 @@ const Natacao = () => {
           />
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
+              <BackToModalities />
               <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
                 <Link to="/" className="hover:text-secondary transition-colors">Início</Link>
                 <ChevronRight className="w-4 h-4" />

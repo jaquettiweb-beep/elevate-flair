@@ -16,6 +16,7 @@ const Historia = lazy(() => import("./pages/Historia"));
 const Natacao = lazy(() => import("./pages/Natacao"));
 const Musculacao = lazy(() => import("./pages/Musculacao"));
 const BemEstar = lazy(() => import("./pages/BemEstar"));
+const Modalidade = lazy(() => import("./pages/Modalidade"));
 
 // Admin pages
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
@@ -49,6 +50,7 @@ function AnimatedRoutes() {
         <Route path="/natacao" element={<Natacao />} />
         <Route path="/musculacao" element={<Musculacao />} />
         <Route path="/bem-estar" element={<BemEstar />} />
+        <Route path="/modalidade/:slug" element={<Modalidade />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
@@ -8,22 +9,22 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
-  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental" },
-  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço" },
-  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula" },
-  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga" },
-  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar" },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais" },
-  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis" },
-  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora" },
-  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho" },
-  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino" },
-  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente" },
-  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte" },
-  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se" },
-  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar" },
-  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão" },
-  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais" },
+  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental", link: "/natacao" },
+  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço", link: "/musculacao" },
+  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula", link: "/modalidade/yoga" },
+  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga", link: "/modalidade/pilates-studio" },
+  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar", link: "/modalidade/pilates-solo" },
+  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais", link: "/modalidade/hidroginastica" },
+  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis", link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora", link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho", link: "/modalidade/judo-infantil" },
+  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino", link: "/modalidade/kung-fu" },
+  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente", link: "/modalidade/krav-maga" },
+  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte", link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se", link: "/modalidade/ballet-infantil" },
+  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar", link: "/modalidade/ginastica" },
+  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão", link: "/modalidade/hidroterapia" },
+  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais", link: "/modalidade/programa-60-saude" },
 ];
 
 const TOTAL = MODALITIES.length;
@@ -123,7 +124,7 @@ function FlipCard({ mod, target, interactive, onHoverMod, isMobile }: FlipCardPr
 }
 
 // ─── Background Overlay ──────────────────────────────────────────────────────
-function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[number] | null }) {
+function BackgroundOverlay({ hoveredMod, onNavigate }: { hoveredMod: (typeof MODALITIES)[number] | null; onNavigate: (link: string) => void }) {
   return (
     <AnimatePresence>
       {hoveredMod && (
@@ -148,14 +149,14 @@ function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[num
             <span className="text-4xl md:text-5xl mb-2">{hoveredMod.emoji}</span>
             <h3 className="font-display text-xl md:text-3xl font-bold text-white mb-1">{hoveredMod.name}</h3>
             <p className="text-white/80 text-xs md:text-sm max-w-md mb-3">{hoveredMod.desc}</p>
-            <motion.a
-              href="#contato"
+            <motion.button
+              onClick={() => onNavigate(hoveredMod.link)}
               className="inline-block px-5 py-2 rounded-full text-xs md:text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >
-              {hoveredMod.cta}
-            </motion.a>
+              Saiba mais →
+            </motion.button>
           </motion.div>
         </motion.div>
       )}
@@ -167,6 +168,7 @@ function BackgroundOverlay({ hoveredMod }: { hoveredMod: (typeof MODALITIES)[num
 type Phase = "idle" | "entering" | "arc" | "exiting";
 
 export default function Modalities() {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [phase, setPhase] = useState<Phase>("idle");
@@ -395,7 +397,7 @@ export default function Modalities() {
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
 
         {/* Hovered bg */}
-        <BackgroundOverlay hoveredMod={hoveredMod} />
+        <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />
 
         {/* Caustics */}
         <div className="absolute inset-0 z-[3] pointer-events-none">

@@ -5,9 +5,15 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
+import { useGalleryImages } from "@/hooks/useGalleryImages";
 import swimmingImg from "@/assets/swimming.jpg";
 
 const Natacao = () => {
+  const { data: images } = useGalleryImages("Natação");
+
+  const heroImage = images?.[0]?.image_url || swimmingImg;
+  const extraImages = images?.slice(1) || [];
+
   return (
     <Layout>
       <SEOHead
@@ -43,9 +49,25 @@ const Natacao = () => {
 
             <ScrollReveal>
               <div className="rounded-2xl overflow-hidden mb-16 shadow-2xl">
-                <img src={swimmingImg} alt="Piscina da Academia Flipper" className="w-full h-[400px] object-cover" />
+                <img src={heroImage} alt="Piscina da Academia Flipper" className="w-full h-[400px] object-cover" />
               </div>
             </ScrollReveal>
+
+            {extraImages.length > 0 && (
+              <ScrollReveal>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
+                  {extraImages.map((img) => (
+                    <div key={img.id} className="rounded-xl overflow-hidden shadow-lg">
+                      <img
+                        src={img.image_url}
+                        alt={img.alt_text}
+                        className="w-full h-[200px] object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </ScrollReveal>
+            )}
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[

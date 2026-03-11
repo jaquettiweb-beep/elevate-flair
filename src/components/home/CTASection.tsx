@@ -16,10 +16,10 @@ export default function CTASection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-6">
             Pronto para Começar sua Transformação?
           </h2>
-          <p className="text-white/60 text-lg mb-10 leading-relaxed">
+          <p className="text-foreground/60 text-lg mb-10 leading-relaxed">
             Venha conhecer a Academia Flipper e descubra por que somos referência em São Paulo.
             Sua primeira aula experimental é por nossa conta!
           </p>
@@ -43,7 +43,7 @@ export default function CTASection() {
             <motion.div whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
                 to="/contato"
-                className="rounded-full px-8 py-4 text-lg font-semibold text-white/80 border border-white/15 hover:border-white/30 hover:bg-white/[0.05] transition-all flex items-center justify-center gap-2"
+                className="rounded-full px-8 py-4 text-lg font-semibold text-foreground/80 border border-foreground/15 hover:border-foreground/30 hover:bg-foreground/[0.05] transition-all flex items-center justify-center gap-2"
               >
                 Entrar em Contato
                 <ArrowRight size={18} />

@@ -402,7 +402,7 @@ export default function Modalities() {
         style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500, cursor: phase === "arc" ? "grab" : "default" }}
       >
         {/* Deep ocean bg */}
-        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
+        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(25,60%,35%) 0%, hsl(20,55%,25%) 60%, hsl(18,50%,18%) 100%)" }} />
 
         {/* Hovered bg */}
         <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />

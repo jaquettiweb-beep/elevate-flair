@@ -24,12 +24,12 @@ const timelineData = [
         </p>
         <div className="grid grid-cols-2 gap-4">
           <img
-            src={fachadaImg}
-            alt="Fachada da Academia Flipper"
+            src={fachadaAntigaImg}
+            alt="Fachada da Academia Flipper nos anos 70"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
           <img
-            src={swimmingImg}
+            src={piscinaAntigaImg}
             alt="Piscina da Flipper nos primeiros anos"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />

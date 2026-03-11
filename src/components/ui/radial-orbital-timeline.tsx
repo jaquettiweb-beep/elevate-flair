@@ -207,7 +207,7 @@ export default function RadialOrbitalTimeline({
 
               {/* Node circle */}
               <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-lg ${
+                className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-lg ${
                   isExpanded
                     ? "bg-secondary border-secondary scale-125 shadow-lg shadow-secondary/40"
                     : isRelated
@@ -215,7 +215,7 @@ export default function RadialOrbitalTimeline({
                     : "bg-card/80 border-border hover:border-primary hover:scale-110"
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isExpanded ? "text-secondary-foreground" : "text-foreground"}`} />
+                <Icon className={`w-7 h-7 ${isExpanded ? "text-secondary-foreground" : "text-foreground"}`} />
               </div>
 
               {/* Label */}

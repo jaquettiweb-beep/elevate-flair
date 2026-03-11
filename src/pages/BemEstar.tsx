@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Heart, Flower2, Wind, Sun } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 

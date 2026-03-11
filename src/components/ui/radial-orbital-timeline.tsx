@@ -170,8 +170,8 @@ export default function RadialOrbitalTimeline({
 
         {/* Center element */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
-            <Zap className="w-7 h-7 text-secondary-foreground" />
+          <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
+            <Zap className="w-9 h-9 text-secondary-foreground" />
           </div>
         </div>
 

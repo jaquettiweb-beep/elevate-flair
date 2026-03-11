@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
@@ -11,6 +12,11 @@ import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
 import SectionDivider from "@/components/home/SectionDivider";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 50, damping: 18, mass: 1 } },
+};
 
 const Index = () => {
   const hasSeenIntro = sessionStorage.getItem("flipper-intro-seen") === "true";
@@ -57,15 +63,25 @@ const Index = () => {
               )`,
             }}
           >
-            <FlipperTimeline />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <FlipperTimeline />
+            </motion.div>
             <SectionDivider variant="wave" />
-            <Modalities />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Modalities />
+            </motion.div>
             <SectionDivider variant="curved" />
-            <Stats />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Stats />
+            </motion.div>
             <SectionDivider variant="wave" flip />
-            <Testimonials />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Testimonials />
+            </motion.div>
             <SectionDivider variant="curved" flip />
-            <CTASection />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <CTASection />
+            </motion.div>
           </div>
         </PageTransition>
       </Layout>

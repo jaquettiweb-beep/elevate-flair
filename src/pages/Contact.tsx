@@ -170,10 +170,11 @@ export default function Contact() {
             <ScrollReveal direction="right" intensity="high">
               <div className="space-y-6">
                 {[
-                  { icon: MapPin, title: "Endereço", content: "R. Alcântara, 261 – Vila Mariana, São Paulo – SP", link: "https://www.google.com/maps/dir//Academia+Flipper/@-23.6147526,-46.6866098,13z/" },
-                  { icon: Phone, title: "WhatsApp / Telefone", content: "(11) 94444-0557", link: WHATSAPP_URL },
+                  { icon: MapPin, title: "Endereço", content: "Av. Vereador José Diniz, 2583 – Brooklin, São Paulo – SP", link: "https://www.google.com/maps/dir//Academia+Flipper/@-23.6147526,-46.6866098,13z/" },
+                  { icon: Phone, title: "Telefone", content: "(11) 3876-2340", link: "tel:+551138762340" },
+                  { icon: Phone, title: "WhatsApp", content: "(11) 94444-0557", link: WHATSAPP_URL },
                   { icon: Mail, title: "Email", content: "contato@academiaflipper.com.br", link: "mailto:contato@academiaflipper.com.br" },
-                  { icon: Clock, title: "Horários", content: "Seg–Sex: 6h – 22h | Sáb: 8h – 18h" },
+                  { icon: Clock, title: "Horários", content: "Seg–Sex: 6h – 22h | Sáb: 6h – 13h" },
                 ].map((item) => (
                   <div key={item.title} className="card-3d bg-card border border-border rounded-xl p-6 flex items-start gap-4">
                     <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0">

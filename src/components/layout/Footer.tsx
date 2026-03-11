@@ -41,7 +41,7 @@ export default function Footer() {
             <h3 className="font-display text-2xl font-bold text-primary-foreground mb-4">FLIPPER</h3>
             <p className="text-footer-foreground text-sm leading-relaxed">
               Academia completa em São Paulo, oferecendo as melhores modalidades esportivas e aquáticas.
-              Transformando vidas através do esporte desde 2010.
+              Transformando vidas através do esporte há mais de 50 anos.
             </p>
           </motion.div>
 
@@ -72,12 +72,18 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-footer-foreground">
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-secondary" />
-                <span>R. Alcântara, 261 – Vila Mariana, São Paulo – SP</span>
+                <span>Av. Vereador José Diniz, 2583 – Brooklin, São Paulo – SP</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone size={16} className="shrink-0 text-secondary" />
+                <a href="tel:+551138762340" className="hover:text-primary-foreground transition-colors">
+                  (11) 3876-2340
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="shrink-0 text-secondary" />
                 <a href="tel:+5511944440557" className="hover:text-primary-foreground transition-colors">
-                  (11) 94444-0557
+                  (11) 94444-0557 (WhatsApp)
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -90,7 +96,7 @@ export default function Footer() {
                 <Clock size={16} className="mt-0.5 shrink-0 text-secondary" />
                 <div>
                   <p>Seg–Sex: 6h – 22h</p>
-                  <p>Sáb: 8h – 18h</p>
+                  <p>Sáb: 6h – 13h</p>
                 </div>
               </li>
             </ul>
@@ -156,14 +162,14 @@ export default function Footer() {
             name: "Academia Flipper",
             description: "Academia completa em São Paulo com natação, musculação, pilates, artes marciais e muito mais",
             url: "https://www.academiaflipper.com.br",
-            telephone: "+5511944440557",
+            telephone: "+551138762340",
             priceRange: "$$",
             address: {
               "@type": "PostalAddress",
-              streetAddress: "R. Alcântara, 261 – Vila Mariana",
+              streetAddress: "Av. Vereador José Diniz, 2583 – Brooklin",
               addressLocality: "São Paulo",
               addressRegion: "SP",
-              postalCode: "04120-000",
+              postalCode: "04604-007",
               addressCountry: "BR",
             },
             geo: {
@@ -181,8 +187,8 @@ export default function Footer() {
               {
                 "@type": "OpeningHoursSpecification",
                 dayOfWeek: "Saturday",
-                opens: "08:00",
-                closes: "18:00",
+                opens: "06:00",
+                closes: "13:00",
               },
             ],
             sameAs: [

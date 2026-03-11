@@ -26,6 +26,7 @@ interface RadialOrbitalTimelineProps {
 export default function RadialOrbitalTimeline({
   timelineData,
 }: RadialOrbitalTimelineProps) {
+  const navigate = useNavigate();
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );

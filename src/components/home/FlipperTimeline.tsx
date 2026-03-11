@@ -13,6 +13,7 @@ const timelineData = [
     relatedIds: [2],
     status: "completed" as const,
     energy: 100,
+    link: "/historia",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const timelineData = [
     relatedIds: [1, 3],
     status: "completed" as const,
     energy: 95,
+    link: "/natacao",
   },
   {
     id: 3,
@@ -35,6 +37,7 @@ const timelineData = [
     relatedIds: [2, 4],
     status: "completed" as const,
     energy: 90,
+    link: "/musculacao",
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ const timelineData = [
     relatedIds: [3, 5],
     status: "in-progress" as const,
     energy: 85,
+    link: "/bem-estar",
   },
   {
     id: 5,
@@ -68,6 +72,7 @@ const timelineData = [
     relatedIds: [5, 1],
     status: "completed" as const,
     energy: 100,
+    link: "/horarios",
   },
 ];
 

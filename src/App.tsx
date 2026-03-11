@@ -45,6 +45,10 @@ function AnimatedRoutes() {
         {/* Public */}
         <Route path="/" element={<Index />} />
         <Route path="/horarios" element={<Schedule />} />
+        <Route path="/historia" element={<Historia />} />
+        <Route path="/natacao" element={<Natacao />} />
+        <Route path="/musculacao" element={<Musculacao />} />
+        <Route path="/bem-estar" element={<BemEstar />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
 

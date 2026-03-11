@@ -272,6 +272,21 @@ export default function RadialOrbitalTimeline({
                         />
                       </div>
 
+                      {item.link && (
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="w-full mb-4 text-sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(item.link!);
+                          }}
+                        >
+                          Saiba mais
+                          <ExternalLink className="w-3 h-3 ml-2" />
+                        </Button>
+                      )}
+
                       {item.relatedIds.length > 0 && (
                         <div className="border-t border-border pt-3">
                           <div className="flex items-center gap-1 mb-2">

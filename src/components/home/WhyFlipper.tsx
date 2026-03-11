@@ -1,49 +1,71 @@
 import { motion } from "framer-motion";
-import { Dumbbell, Award, Clock } from "lucide-react";
-import TiltCard from "@/components/TiltCard";
+import { Dumbbell, Award, Clock, Waves, Heart } from "lucide-react";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
-const FEATURES = [
+const timelineData = [
   {
+    id: 1,
+    title: "Infraestrutura",
+    date: "Desde 2009",
+    content: "Equipamentos modernos, piscina semiolímpica aquecida, salas climatizadas e vestiários completos.",
+    category: "Estrutura",
     icon: Dumbbell,
-    title: "Infraestrutura Completa",
-    desc: "Equipamentos modernos, piscina semiolímpica aquecida, salas climatizadas e vestiários completos.",
-    accent: "from-primary to-primary-glow",
+    relatedIds: [2, 5],
+    status: "completed" as const,
+    energy: 100,
   },
   {
+    id: 2,
+    title: "Professores",
+    date: "+15 anos",
+    content: "Profissionais certificados e experientes, prontos para orientar seu treino com segurança.",
+    category: "Equipe",
     icon: Award,
-    title: "Professores Qualificados",
-    desc: "Profissionais certificados e experientes, prontos para orientar seu treino com segurança.",
-    accent: "from-secondary to-[hsl(15,90%,50%)]",
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 95,
   },
   {
+    id: 3,
+    title: "Horários",
+    date: "Seg–Sáb",
+    content: "Segunda a sexta das 6h às 22h, sábado das 6h às 13h. Encaixe o treino na sua rotina.",
+    category: "Flexibilidade",
     icon: Clock,
-    title: "Horários Flexíveis",
-    desc: "Segunda a sexta das 6h às 22h, sábado das 6h às 13h. Encaixe o treino na sua rotina com facilidade.",
-    accent: "from-[hsl(var(--neon-blue))] to-primary",
+    relatedIds: [2, 4],
+    status: "completed" as const,
+    energy: 90,
+  },
+  {
+    id: 4,
+    title: "Natação",
+    date: "Todas as idades",
+    content: "Piscina semiolímpica aquecida com aulas para bebês, crianças e adultos.",
+    category: "Modalidade",
+    icon: Waves,
+    relatedIds: [3, 5],
+    status: "completed" as const,
+    energy: 100,
+  },
+  {
+    id: 5,
+    title: "Bem-estar",
+    date: "Corpo & Mente",
+    content: "Yoga, pilates e acompanhamento personalizado para seu equilíbrio físico e mental.",
+    category: "Saúde",
+    icon: Heart,
+    relatedIds: [4, 1],
+    status: "in-progress" as const,
+    energy: 85,
   },
 ];
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.96 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring" as const,
-      stiffness: 60,
-      damping: 16,
-      delay: i * 0.12,
-    },
-  }),
-};
 
 export default function WhyFlipper() {
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -57,32 +79,14 @@ export default function WhyFlipper() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {FEATURES.map((f, i) => (
-            <TiltCard
-              key={f.title}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-              className="gym-card p-8 cursor-default"
-              intensity={6}
-              liquidHover
-            >
-              <motion.div
-                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.accent} flex items-center justify-center mb-5`}
-                style={{ boxShadow: "0 4px 14px hsla(185,80%,45%,0.2)" }}
-                whileHover={{ rotate: [0, -8, 8, 0], scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <f.icon size={24} className="text-primary-foreground" />
-              </motion.div>
-              <h3 className="font-display text-xl font-bold text-foreground mb-3">{f.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-            </TiltCard>
-          ))}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ type: "spring", stiffness: 40, damping: 16, delay: 0.2 }}
+        >
+          <RadialOrbitalTimeline timelineData={timelineData} />
+        </motion.div>
       </div>
     </section>
   );

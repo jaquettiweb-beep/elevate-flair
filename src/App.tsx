@@ -16,6 +16,7 @@ const Historia = lazy(() => import("./pages/Historia"));
 const Natacao = lazy(() => import("./pages/Natacao"));
 const Musculacao = lazy(() => import("./pages/Musculacao"));
 const BemEstar = lazy(() => import("./pages/BemEstar"));
+const Produtos = lazy(() => import("./pages/Produtos"));
 const Modalidade = lazy(() => import("./pages/Modalidade"));
 
 // Admin pages

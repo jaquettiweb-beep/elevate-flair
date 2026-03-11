@@ -6,6 +6,8 @@ import { ChevronRight } from "lucide-react";
 import { Timeline } from "@/components/ui/timeline";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
+import fachadaAntigaImg from "@/assets/flipper-antiga-fachada.png";
+import piscinaAntigaImg from "@/assets/flipper-piscina-antiga.jpeg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
@@ -22,12 +24,12 @@ const timelineData = [
         </p>
         <div className="grid grid-cols-2 gap-4">
           <img
-            src={fachadaImg}
-            alt="Fachada da Academia Flipper"
+            src={fachadaAntigaImg}
+            alt="Fachada da Academia Flipper nos anos 70"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
           <img
-            src={swimmingImg}
+            src={piscinaAntigaImg}
             alt="Piscina da Flipper nos primeiros anos"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />

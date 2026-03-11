@@ -183,11 +183,11 @@ export default function RadialOrbitalTimeline({
           const isPulsing = pulseEffect[item.id];
           const Icon = item.icon;
 
-          const nodeStyle = {
-            transform: `translate(${position.x}px, ${position.y}px)`,
-            zIndex: isExpanded ? 200 : position.zIndex,
-            opacity: isExpanded ? 1 : position.opacity,
-          };
+            const nodeStyle = {
+              transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
+              zIndex: isExpanded ? 200 : position.zIndex,
+              opacity: isExpanded ? 1 : position.opacity,
+            };
 
           return (
             <div

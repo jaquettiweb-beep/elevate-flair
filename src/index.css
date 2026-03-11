@@ -300,7 +300,7 @@
 
   /* Counter gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background: linear-gradient(135deg, hsl(24 95% 53%), hsl(15 90% 45%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

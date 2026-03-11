@@ -159,7 +159,7 @@ export default function RadialOrbitalTimeline({
       <div
         ref={orbitRef}
         className="relative"
-        style={{ width: "500px", height: "500px" }}
+        style={{ width: "700px", height: "700px" }}
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">

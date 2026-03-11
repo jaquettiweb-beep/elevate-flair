@@ -107,16 +107,23 @@ export default function FlipperTimeline() {
 
   return (
     <section className="py-20 lg:py-28 relative overflow-hidden">
+      {/* Hidden preload images for instant display */}
+      <div className="hidden" aria-hidden="true">
+        {allImages.map((src) => (
+          <img key={src} src={src} alt="" />
+        ))}
+      </div>
+
       {/* Translucent background image */}
       <AnimatePresence mode="wait">
-        {activeImage && isImageLoaded && (
+        {activeImage && (
           <motion.div
             key={activeImage}
             className="absolute inset-0 z-0"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <img
               src={activeImage}

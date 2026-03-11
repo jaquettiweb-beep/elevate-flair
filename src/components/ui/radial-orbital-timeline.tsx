@@ -153,7 +153,7 @@ export default function RadialOrbitalTimeline({
     <div
       ref={containerRef}
       className="relative w-full flex items-center justify-center overflow-hidden"
-      style={{ minHeight: "580px" }}
+      style={{ minHeight: "750px" }}
       onClick={handleContainerClick}
     >
       <div

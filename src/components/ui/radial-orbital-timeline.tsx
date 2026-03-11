@@ -21,6 +21,7 @@ interface TimelineItem {
 
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
+  onActiveChange?: (id: number | null) => void;
 }
 
 export default function RadialOrbitalTimeline({

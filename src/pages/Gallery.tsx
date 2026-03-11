@@ -14,7 +14,7 @@ import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
-import fachadaImg from "@/assets/fachada-flipper.jpg";
+import fachadaImg from "@/assets/fachada-flipper.webp";
 
 const LOCAL_ASSET_MAP: Record<string, string> = {
   "/src/assets/hero-gym.jpg": heroImg,

@@ -53,7 +53,7 @@ export default function WhyFlipper() {
             Por que escolher a <span className="text-secondary font-extrabold">Flipper</span>?
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Mais de 15 anos transformando vidas através do esporte em São Paulo.
+            Mais de 50 anos transformando vidas através do esporte em São Paulo.
           </p>
         </motion.div>
 

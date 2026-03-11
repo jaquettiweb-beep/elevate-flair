@@ -220,7 +220,7 @@ export default function RadialOrbitalTimeline({
                     ? "bg-secondary border-secondary scale-125 shadow-lg shadow-secondary/40"
                     : isRelated
                     ? "bg-primary/80 border-primary scale-110"
-                    : "bg-card/80 border-border hover:border-primary hover:scale-110"
+                    : "bg-card border-border hover:border-primary hover:scale-110"
                 }`}
               >
                 <Icon className={`w-7 h-7 ${isExpanded ? "text-secondary-foreground" : "text-foreground"}`} />

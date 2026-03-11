@@ -1,6 +1,14 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+
+import swimmingImg from "@/assets/swimming.jpg";
+import musculacaoImg from "@/assets/musculacao.jpg";
+import yogaImg from "@/assets/yoga.jpg";
+import heroImg from "@/assets/hero-gym.jpg";
+import fachadaImg from "@/assets/fachada-flipper.jpg";
+import martialImg from "@/assets/martial-arts.jpg";
 
 const timelineData = [
   {
@@ -14,6 +22,7 @@ const timelineData = [
     status: "completed" as const,
     energy: 100,
     link: "/historia",
+    image: fachadaImg,
   },
   {
     id: 2,
@@ -26,6 +35,7 @@ const timelineData = [
     status: "completed" as const,
     energy: 95,
     link: "/natacao",
+    image: swimmingImg,
   },
   {
     id: 3,
@@ -38,6 +48,7 @@ const timelineData = [
     status: "completed" as const,
     energy: 90,
     link: "/musculacao",
+    image: musculacaoImg,
   },
   {
     id: 4,
@@ -50,6 +61,7 @@ const timelineData = [
     status: "in-progress" as const,
     energy: 85,
     link: "/bem-estar",
+    image: yogaImg,
   },
   {
     id: 5,
@@ -61,6 +73,7 @@ const timelineData = [
     relatedIds: [4, 6],
     status: "in-progress" as const,
     energy: 80,
+    image: heroImg,
   },
   {
     id: 6,
@@ -73,12 +86,46 @@ const timelineData = [
     status: "completed" as const,
     energy: 100,
     link: "/horarios",
+    image: fachadaImg,
   },
 ];
 
 export default function FlipperTimeline() {
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  const handleActiveChange = (id: number | null) => {
+    if (id === null) {
+      setActiveImage(null);
+    } else {
+      const item = timelineData.find((t) => t.id === id);
+      setActiveImage(item?.image || null);
+    }
+  };
+
   return (
     <section className="py-20 lg:py-28 relative overflow-hidden">
+      {/* Translucent background image */}
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            key={activeImage}
+            className="absolute inset-0 z-0"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <img
+              src={activeImage}
+              alt=""
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.15 }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-8"
@@ -95,7 +142,7 @@ export default function FlipperTimeline() {
           </p>
         </motion.div>
 
-        <RadialOrbitalTimeline timelineData={timelineData} />
+        <RadialOrbitalTimeline timelineData={timelineData} onActiveChange={handleActiveChange} />
       </div>
     </section>
   );

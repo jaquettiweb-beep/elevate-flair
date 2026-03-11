@@ -95,16 +95,6 @@ const allImages = timelineData.map((t) => t.image).filter(Boolean);
 
 export default function FlipperTimeline() {
   const [activeImage, setActiveImage] = useState<string | null>(null);
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
-
-  // Preload images eagerly
-  useEffect(() => {
-    allImages.forEach((src) => {
-      const img = new Image();
-      img.onload = () => setLoadedImages((prev) => new Set(prev).add(src));
-      img.src = src;
-    });
-  }, []);
 
   const handleActiveChange = (id: number | null) => {
     if (id === null) {
@@ -114,8 +104,6 @@ export default function FlipperTimeline() {
       setActiveImage(item?.image || null);
     }
   };
-
-  const isImageLoaded = activeImage ? loadedImages.has(activeImage) : false;
 
   return (
     <section className="py-20 lg:py-28 relative overflow-hidden">

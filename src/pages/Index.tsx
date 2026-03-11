@@ -63,15 +63,25 @@ const Index = () => {
               )`,
             }}
           >
-            <FlipperTimeline />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <FlipperTimeline />
+            </motion.div>
             <SectionDivider variant="wave" />
-            <Modalities />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Modalities />
+            </motion.div>
             <SectionDivider variant="curved" />
-            <Stats />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Stats />
+            </motion.div>
             <SectionDivider variant="wave" flip />
-            <Testimonials />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Testimonials />
+            </motion.div>
             <SectionDivider variant="curved" flip />
-            <CTASection />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <CTASection />
+            </motion.div>
           </div>
         </PageTransition>
       </Layout>

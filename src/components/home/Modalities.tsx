@@ -527,6 +527,7 @@ export default function Modalities() {
                   target={target}
                   interactive={isInteractive}
                   onHoverMod={setHoveredMod}
+                  onClickMod={(m) => navigate(m.link)}
                   isMobile={isMobile}
                 />
               );

@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Dumbbell, Target, TrendingUp, Shield } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
 const Musculacao = () => {

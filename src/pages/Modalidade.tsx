@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ChevronRight, Clock, MapPin, Users, Star } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";

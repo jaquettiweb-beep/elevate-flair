@@ -220,7 +220,7 @@ export default function RadialOrbitalTimeline({
 
               {/* Label */}
               <div
-                className={`absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium transition-all duration-300 ${
+                className={`absolute top-18 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm font-medium transition-all duration-300 ${
                   isExpanded ? "text-secondary font-bold" : "text-muted-foreground"
                 }`}
               >

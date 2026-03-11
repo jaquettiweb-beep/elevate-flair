@@ -21,10 +21,12 @@ interface TimelineItem {
 
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
+  onActiveChange?: (id: number | null) => void;
 }
 
 export default function RadialOrbitalTimeline({
   timelineData,
+  onActiveChange,
 }: RadialOrbitalTimelineProps) {
   const navigate = useNavigate();
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
@@ -48,6 +50,7 @@ export default function RadialOrbitalTimeline({
       setActiveNodeId(null);
       setPulseEffect({});
       setAutoRotate(true);
+      onActiveChange?.(null);
     }
   };
 
@@ -65,6 +68,7 @@ export default function RadialOrbitalTimeline({
       if (!prev[id]) {
         setActiveNodeId(id);
         setAutoRotate(false);
+        onActiveChange?.(id);
 
         const relatedItems = getRelatedItems(id);
         const newPulseEffect: Record<number, boolean> = {};
@@ -78,6 +82,7 @@ export default function RadialOrbitalTimeline({
         setActiveNodeId(null);
         setAutoRotate(true);
         setPulseEffect({});
+        onActiveChange?.(null);
       }
 
       return newState;

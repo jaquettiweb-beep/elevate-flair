@@ -86,10 +86,10 @@ export default function Testimonials() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
             O que nossos <span className="text-secondary">alunos</span> dizem
           </h2>
-          <p className="text-white/50 max-w-xl mx-auto text-lg">
+          <p className="text-foreground/50 max-w-xl mx-auto text-lg">
             Milhares de alunos confiam na Flipper para alcançar seus objetivos.
           </p>
         </motion.div>

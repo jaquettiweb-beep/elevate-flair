@@ -12,6 +12,7 @@ import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
 import SectionDivider from "@/components/home/SectionDivider";
+import FlipperProducts from "@/components/home/FlipperProducts";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },

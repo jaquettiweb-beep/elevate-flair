@@ -12,6 +12,7 @@ import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
 import SectionDivider from "@/components/home/SectionDivider";
+import FlipperProducts from "@/components/home/FlipperProducts";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -79,6 +80,10 @@ const Index = () => {
               <Testimonials />
             </motion.div>
             <SectionDivider variant="curved" flip />
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <FlipperProducts />
+            </motion.div>
+            <SectionDivider variant="wave" />
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <CTASection />
             </motion.div>

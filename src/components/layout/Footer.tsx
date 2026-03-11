@@ -72,7 +72,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-footer-foreground">
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-secondary" />
-                <span>R. Alcântara, 261 – Vila Mariana, São Paulo – SP</span>
+                <span>Av. Vereador José Diniz, 2583 – Brooklin, São Paulo – SP</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="shrink-0 text-secondary" />

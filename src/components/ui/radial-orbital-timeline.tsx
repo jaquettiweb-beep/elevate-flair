@@ -275,7 +275,7 @@ export default function RadialOrbitalTimeline({
                       {item.relatedIds.length > 0 && (
                         <div className="border-t border-border pt-3">
                           <div className="flex items-center gap-1 mb-2">
-                            <Link className="w-3 h-3 text-muted-foreground" />
+                            <LinkIcon className="w-3 h-3 text-muted-foreground" />
                             <span className="text-xs text-muted-foreground">
                               Conexões
                             </span>

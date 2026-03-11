@@ -110,7 +110,7 @@ export default function RadialOrbitalTimeline({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
+    const radius = 300;
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
@@ -153,25 +153,25 @@ export default function RadialOrbitalTimeline({
     <div
       ref={containerRef}
       className="relative w-full flex items-center justify-center overflow-hidden"
-      style={{ minHeight: "580px" }}
+      style={{ minHeight: "750px" }}
       onClick={handleContainerClick}
     >
       <div
         ref={orbitRef}
         className="relative"
-        style={{ width: "500px", height: "500px" }}
+        style={{ width: "700px", height: "700px" }}
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[420px] h-[420px] rounded-full border border-white/10 transition-all duration-1000" />
-          <div className="absolute w-[340px] h-[340px] rounded-full border border-white/5" />
-          <div className="absolute w-[260px] h-[260px] rounded-full border border-white/5" />
+          <div className="absolute w-[620px] h-[620px] rounded-full border border-white/10 transition-all duration-1000" />
+          <div className="absolute w-[500px] h-[500px] rounded-full border border-white/5" />
+          <div className="absolute w-[380px] h-[380px] rounded-full border border-white/5" />
         </div>
 
         {/* Center element */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
-            <Zap className="w-7 h-7 text-secondary-foreground" />
+          <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
+            <Zap className="w-9 h-9 text-secondary-foreground" />
           </div>
         </div>
 
@@ -207,7 +207,7 @@ export default function RadialOrbitalTimeline({
 
               {/* Node circle */}
               <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-lg ${
+                className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-lg ${
                   isExpanded
                     ? "bg-secondary border-secondary scale-125 shadow-lg shadow-secondary/40"
                     : isRelated
@@ -215,12 +215,12 @@ export default function RadialOrbitalTimeline({
                     : "bg-card/80 border-border hover:border-primary hover:scale-110"
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isExpanded ? "text-secondary-foreground" : "text-foreground"}`} />
+                <Icon className={`w-7 h-7 ${isExpanded ? "text-secondary-foreground" : "text-foreground"}`} />
               </div>
 
               {/* Label */}
               <div
-                className={`absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium transition-all duration-300 ${
+                className={`absolute top-18 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm font-medium transition-all duration-300 ${
                   isExpanded ? "text-secondary font-bold" : "text-muted-foreground"
                 }`}
               >

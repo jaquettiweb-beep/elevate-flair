@@ -397,7 +397,7 @@ export default function Modalities() {
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
 
         {/* Hovered bg */}
-        <BackgroundOverlay hoveredMod={hoveredMod} />
+        <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />
 
         {/* Caustics */}
         <div className="absolute inset-0 z-[3] pointer-events-none">

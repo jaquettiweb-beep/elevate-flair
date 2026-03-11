@@ -43,7 +43,7 @@ const Index = () => {
               )`,
             }}
           >
-            <WhyFlipper />
+            <FlipperTimeline />
             <SectionDivider variant="wave" />
             <Modalities />
             <SectionDivider variant="curved" />

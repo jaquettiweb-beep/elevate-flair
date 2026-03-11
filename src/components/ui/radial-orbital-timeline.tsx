@@ -171,9 +171,9 @@ export default function RadialOrbitalTimeline({
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[620px] h-[620px] rounded-full border border-white/10 transition-all duration-1000" />
-          <div className="absolute w-[500px] h-[500px] rounded-full border border-white/5" />
-          <div className="absolute w-[380px] h-[380px] rounded-full border border-white/5" />
+          <div className="absolute w-[620px] h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
+          <div className="absolute w-[500px] h-[500px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[380px] h-[380px] rounded-full border border-secondary/15" />
         </div>
 
         {/* Center element */}

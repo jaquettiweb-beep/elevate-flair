@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
+import BackToModalities from "@/components/BackToModalities";
 import swimmingImg from "@/assets/swimming.jpg";
 
 const Natacao = () => {

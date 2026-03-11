@@ -227,6 +227,9 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               alt="Academia Flipper"
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY, scale: 1.06 }}
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
             />
             {/* Top vignette */}
             <div

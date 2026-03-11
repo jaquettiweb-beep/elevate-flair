@@ -6,6 +6,8 @@ import { ChevronRight } from "lucide-react";
 import { Timeline } from "@/components/ui/timeline";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
+import fachadaAntigaImg from "@/assets/flipper-antiga-fachada.png";
+import piscinaAntigaImg from "@/assets/flipper-piscina-antiga.jpeg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";

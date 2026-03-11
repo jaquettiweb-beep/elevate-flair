@@ -187,8 +187,8 @@ export default function Footer() {
               {
                 "@type": "OpeningHoursSpecification",
                 dayOfWeek: "Saturday",
-                opens: "08:00",
-                closes: "18:00",
+                opens: "06:00",
+                closes: "13:00",
               },
             ],
             sameAs: [

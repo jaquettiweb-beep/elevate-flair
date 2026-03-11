@@ -34,7 +34,7 @@ const Index = () => {
 
   return (
     <>
-      <IntroAnimation onComplete={handleIntroComplete} />
+      {!hasSeenIntro && <IntroAnimation onComplete={handleIntroComplete} />}
 
       <Layout>
         <SEOHead

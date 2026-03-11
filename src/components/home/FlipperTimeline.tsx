@@ -88,7 +88,7 @@ export default function FlipperTimeline() {
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
-            +50 Anos de <span className="text-secondary font-extrabold">História</span>
+            Conheça a <span className="text-secondary font-extrabold">Flipper</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-lg">
             Explore a trajetória da Flipper — clique nos pontos para descobrir mais.

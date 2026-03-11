@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap } from "lucide-react";
+import { ArrowRight, Link as LinkIcon, Zap, ExternalLink } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +16,7 @@ interface TimelineItem {
   relatedIds: number[];
   status: "completed" | "in-progress" | "pending";
   energy: number;
+  link?: string;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -24,6 +26,7 @@ interface RadialOrbitalTimelineProps {
 export default function RadialOrbitalTimeline({
   timelineData,
 }: RadialOrbitalTimelineProps) {
+  const navigate = useNavigate();
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
@@ -269,10 +272,25 @@ export default function RadialOrbitalTimeline({
                         />
                       </div>
 
+                      {item.link && (
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="w-full mb-4 text-sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(item.link!);
+                          }}
+                        >
+                          Saiba mais
+                          <ExternalLink className="w-3 h-3 ml-2" />
+                        </Button>
+                      )}
+
                       {item.relatedIds.length > 0 && (
                         <div className="border-t border-border pt-3">
                           <div className="flex items-center gap-1 mb-2">
-                            <Link className="w-3 h-3 text-muted-foreground" />
+                            <LinkIcon className="w-3 h-3 text-muted-foreground" />
                             <span className="text-xs text-muted-foreground">
                               Conexões
                             </span>

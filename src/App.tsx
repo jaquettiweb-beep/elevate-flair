@@ -12,6 +12,10 @@ import NotFound from "./pages/NotFound";
 const Schedule = lazy(() => import("./pages/Schedule"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Historia = lazy(() => import("./pages/Historia"));
+const Natacao = lazy(() => import("./pages/Natacao"));
+const Musculacao = lazy(() => import("./pages/Musculacao"));
+const BemEstar = lazy(() => import("./pages/BemEstar"));
 
 // Admin pages
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
@@ -41,6 +45,10 @@ function AnimatedRoutes() {
         {/* Public */}
         <Route path="/" element={<Index />} />
         <Route path="/horarios" element={<Schedule />} />
+        <Route path="/historia" element={<Historia />} />
+        <Route path="/natacao" element={<Natacao />} />
+        <Route path="/musculacao" element={<Musculacao />} />
+        <Route path="/bem-estar" element={<BemEstar />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
 

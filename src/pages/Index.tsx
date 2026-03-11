@@ -13,10 +13,12 @@ import IntroAnimation from "@/components/IntroAnimation";
 import SectionDivider from "@/components/home/SectionDivider";
 
 const Index = () => {
-  const [introComplete, setIntroComplete] = useState(false);
+  const hasSeenIntro = sessionStorage.getItem("flipper-intro-seen") === "true";
+  const [introComplete, setIntroComplete] = useState(hasSeenIntro);
   const location = useLocation();
 
   const handleIntroComplete = useCallback(() => {
+    sessionStorage.setItem("flipper-intro-seen", "true");
     setIntroComplete(true);
   }, []);
 

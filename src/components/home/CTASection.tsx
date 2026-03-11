@@ -16,10 +16,10 @@ export default function CTASection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-6">
             Pronto para Começar sua Transformação?
           </h2>
-          <p className="text-white/60 text-lg mb-10 leading-relaxed">
+          <p className="text-foreground/60 text-lg mb-10 leading-relaxed">
             Venha conhecer a Academia Flipper e descubra por que somos referência em São Paulo.
             Sua primeira aula experimental é por nossa conta!
           </p>

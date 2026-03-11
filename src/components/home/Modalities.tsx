@@ -168,6 +168,7 @@ function BackgroundOverlay({ hoveredMod, onNavigate }: { hoveredMod: (typeof MOD
 type Phase = "idle" | "entering" | "arc" | "exiting";
 
 export default function Modalities() {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [phase, setPhase] = useState<Phase>("idle");

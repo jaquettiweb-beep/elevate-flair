@@ -51,6 +51,7 @@ function AnimatedRoutes() {
         <Route path="/natacao" element={<Natacao />} />
         <Route path="/musculacao" element={<Musculacao />} />
         <Route path="/bem-estar" element={<BemEstar />} />
+        <Route path="/produtos" element={<Produtos />} />
         <Route path="/modalidade/:slug" element={<Modalidade />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />

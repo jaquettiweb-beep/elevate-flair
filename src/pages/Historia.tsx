@@ -4,7 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { Timeline } from "@/components/ui/timeline";
-import fachadaImg from "@/assets/fachada-flipper.webp";
+import fachadaImg from "@/assets/fachada-flipper.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 import yogaImg from "@/assets/yoga.jpg";

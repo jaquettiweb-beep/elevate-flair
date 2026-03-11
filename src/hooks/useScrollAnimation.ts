@@ -31,39 +31,16 @@ export function useScrollAnimation(options?: IntersectionObserverInit) {
 
 export function useScrollProgress() {
   useEffect(() => {
-    let rafId = 0;
-    let cachedDocHeight = 0;
-    let lastWidth = "";
-
-    const recalcHeight = () => {
-      cachedDocHeight = document.documentElement.scrollHeight - window.innerHeight;
-    };
-
-    // Cache doc height on resize instead of every scroll
-    recalcHeight();
-    const ro = new ResizeObserver(recalcHeight);
-    ro.observe(document.documentElement);
-
     const handleScroll = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = 0;
-        const bar = document.getElementById("scroll-progress");
-        if (!bar) return;
-        const percent = cachedDocHeight > 0 ? (window.scrollY / cachedDocHeight) * 100 : 0;
-        const w = `${percent}%`;
-        if (w !== lastWidth) {
-          bar.style.width = w;
-          lastWidth = w;
-        }
-      });
+      const bar = document.getElementById("scroll-progress");
+      if (!bar) return;
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${percent}%`;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      ro.disconnect();
-      if (rafId) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 }

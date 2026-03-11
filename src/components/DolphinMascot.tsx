@@ -57,7 +57,7 @@ export default function DolphinMascot() {
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img src={dolphinImg} alt="Flipper" width={72} height={72} loading="lazy" decoding="async" className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)] object-contain" />
+          <img src={dolphinImg} alt="Flipper" className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)] object-contain" />
         </motion.div>
       </motion.div>
 

@@ -3,7 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import HeroSection from "@/components/home/HeroSection";
-import WhyFlipper from "@/components/home/WhyFlipper";
+import FlipperTimeline from "@/components/home/FlipperTimeline";
 import Modalities from "@/components/home/Modalities";
 import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";

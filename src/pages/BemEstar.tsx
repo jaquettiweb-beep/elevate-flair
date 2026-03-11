@@ -25,6 +25,7 @@ const BemEstar = () => {
           />
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
+              <BackToModalities />
               <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
                 <Link to="/" className="hover:text-secondary transition-colors">Início</Link>
                 <ChevronRight className="w-4 h-4" />

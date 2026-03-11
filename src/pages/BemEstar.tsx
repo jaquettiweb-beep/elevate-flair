@@ -5,10 +5,17 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Heart, Flower2, Wind, Sun } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
+import { useGalleryImages } from "@/hooks/useGalleryImages";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 
 const BemEstar = () => {
+  const { data: images } = useGalleryImages("Bem-Estar");
+
+  const firstImage = images?.[0]?.image_url || yogaImg;
+  const secondImage = images?.[1]?.image_url || pilatesImg;
+  const extraImages = images?.slice(2) || [];
+
   return (
     <Layout>
       <SEOHead
@@ -45,15 +52,31 @@ const BemEstar = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img src={yogaImg} alt="Aula de Yoga na Flipper" className="w-full h-[300px] object-cover" />
+                  <img src={firstImage} alt="Aula de Yoga na Flipper" className="w-full h-[300px] object-cover" />
                 </div>
               </ScrollReveal>
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img src={pilatesImg} alt="Aula de Pilates na Flipper" className="w-full h-[300px] object-cover" />
+                  <img src={secondImage} alt="Aula de Pilates na Flipper" className="w-full h-[300px] object-cover" />
                 </div>
               </ScrollReveal>
             </div>
+
+            {extraImages.length > 0 && (
+              <ScrollReveal>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
+                  {extraImages.map((img) => (
+                    <div key={img.id} className="rounded-xl overflow-hidden shadow-lg">
+                      <img
+                        src={img.image_url}
+                        alt={img.alt_text}
+                        className="w-full h-[200px] object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </ScrollReveal>
+            )}
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[

@@ -10,8 +10,8 @@ import fachadaAntigaImg from "@/assets/flipper-antiga-fachada.png";
 import piscinaAntigaImg from "@/assets/flipper-piscina-antiga.jpeg";
 import musculacaoAntigaImg from "@/assets/flipper-musculacao-antiga.jpeg";
 import taekwondoAntigaImg from "@/assets/flipper-taekwondo-antiga.jpeg";
-import yogaImg from "@/assets/yoga.jpg";
-import pilatesImg from "@/assets/pilates.jpg";
+import ginasticaAntigaImg from "@/assets/flipper-ginastica-antiga.jpeg";
+import alongamentoAntigaImg from "@/assets/flipper-alongamento-antiga.jpeg";
 
 
 const timelineData = [
@@ -73,13 +73,13 @@ const timelineData = [
         </p>
         <div className="grid grid-cols-2 gap-4">
           <img
-            src={yogaImg}
-            alt="Aula de yoga"
+            src={ginasticaAntigaImg}
+            alt="Aula de ginástica na Flipper"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
           <img
-            src={pilatesImg}
-            alt="Aula de pilates"
+            src={alongamentoAntigaImg}
+            alt="Aula de alongamento na Flipper"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
         </div>

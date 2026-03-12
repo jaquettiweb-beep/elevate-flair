@@ -12,7 +12,7 @@ import musculacaoAntigaImg from "@/assets/flipper-musculacao-antiga.jpeg";
 import taekwondoAntigaImg from "@/assets/flipper-taekwondo-antiga.jpeg";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
-import martialArtsImg from "@/assets/martial-arts.jpg";
+
 
 const timelineData = [
   {

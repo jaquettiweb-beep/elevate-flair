@@ -73,13 +73,13 @@ const timelineData = [
         </p>
         <div className="grid grid-cols-2 gap-4">
           <img
-            src={yogaImg}
-            alt="Aula de yoga"
+            src={ginasticaAntigaImg}
+            alt="Aula de ginástica na Flipper"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
           <img
-            src={pilatesImg}
-            alt="Aula de pilates"
+            src={alongamentoAntigaImg}
+            alt="Aula de alongamento na Flipper"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
         </div>

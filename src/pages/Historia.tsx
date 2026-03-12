@@ -4,8 +4,8 @@ import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { Timeline } from "@/components/ui/timeline";
-import fachadaImg from "@/assets/fachada-flipper.jpg";
-import swimmingImg from "@/assets/swimming.jpg";
+import equipeAntigaImg from "@/assets/flipper-equipe-antiga.jpeg";
+import comunidadeHojeImg from "@/assets/flipper-comunidade-hoje.jpeg";
 import fachadaAntigaImg from "@/assets/flipper-antiga-fachada.png";
 import piscinaAntigaImg from "@/assets/flipper-piscina-antiga.jpeg";
 import musculacaoAntigaImg from "@/assets/flipper-musculacao-antiga.jpeg";
@@ -106,13 +106,13 @@ const timelineData = [
         </div>
         <div className="grid grid-cols-2 gap-4">
           <img
-            src={fachadaImg}
-            alt="Flipper hoje"
+            src={equipeAntigaImg}
+            alt="Equipe Flipper reunida"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
           <img
-            src={swimmingImg}
-            alt="Piscina moderna da Flipper"
+            src={comunidadeHojeImg}
+            alt="Comunidade Flipper hoje"
             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
           />
         </div>

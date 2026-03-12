@@ -8,10 +8,11 @@ import fachadaImg from "@/assets/fachada-flipper.jpg";
 import swimmingImg from "@/assets/swimming.jpg";
 import fachadaAntigaImg from "@/assets/flipper-antiga-fachada.png";
 import piscinaAntigaImg from "@/assets/flipper-piscina-antiga.jpeg";
-import musculacaoImg from "@/assets/musculacao.jpg";
+import musculacaoAntigaImg from "@/assets/flipper-musculacao-antiga.jpeg";
+import taekwondoAntigaImg from "@/assets/flipper-taekwondo-antiga.jpeg";
 import yogaImg from "@/assets/yoga.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
-import martialArtsImg from "@/assets/martial-arts.jpg";
+
 
 const timelineData = [
   {
@@ -46,17 +47,17 @@ const timelineData = [
           incluindo <strong className="text-secondary">musculação</strong>, <strong className="text-secondary">artes marciais</strong> e ginástica. 
           A academia se consolidou como um espaço completo para a prática esportiva.
         </p>
-        <div className="grid grid-cols-2 gap-4">
-          <img
-            src={musculacaoImg}
-            alt="Sala de musculação"
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
-          />
-          <img
-            src={martialArtsImg}
-            alt="Artes marciais na Flipper"
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
-          />
+         <div className="grid grid-cols-2 gap-4">
+           <img
+             src={musculacaoAntigaImg}
+             alt="Sala de musculação antiga da Flipper"
+             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+           />
+           <img
+             src={taekwondoAntigaImg}
+             alt="Turma de Taekwondo na Flipper"
+             className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+           />
         </div>
       </div>
     ),

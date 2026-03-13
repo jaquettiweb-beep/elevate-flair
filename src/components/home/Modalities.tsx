@@ -6,7 +6,6 @@ import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
-import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [

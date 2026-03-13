@@ -18,6 +18,7 @@ const Musculacao = lazy(() => import("./pages/Musculacao"));
 const BemEstar = lazy(() => import("./pages/BemEstar"));
 const Produtos = lazy(() => import("./pages/Produtos"));
 const Modalidade = lazy(() => import("./pages/Modalidade"));
+const Imprensa = lazy(() => import("./pages/Imprensa"));
 
 // Admin pages
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));

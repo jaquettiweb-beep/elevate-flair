@@ -90,7 +90,7 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
+                    className={`text-xs xl:text-sm font-medium transition-colors whitespace-nowrap relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
                       location.pathname === item.path
                         ? `font-bold ${
                             scrolled ? "text-primary" : "text-primary-foreground"

@@ -9,6 +9,7 @@ export interface Testimonial {
   tags: { text: string; type: 'featured' | 'default' }[];
   stats: { icon: React.ComponentType<Record<string, unknown>>; text: string }[];
   avatarGradient: string;
+  avatarUrl?: string;
 }
 
 export interface TestimonialStackProps {

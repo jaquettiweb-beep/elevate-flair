@@ -18,6 +18,7 @@ const Musculacao = lazy(() => import("./pages/Musculacao"));
 const BemEstar = lazy(() => import("./pages/BemEstar"));
 const Produtos = lazy(() => import("./pages/Produtos"));
 const Modalidade = lazy(() => import("./pages/Modalidade"));
+const Imprensa = lazy(() => import("./pages/Imprensa"));
 
 // Admin pages
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
@@ -53,6 +54,7 @@ function AnimatedRoutes() {
         <Route path="/bem-estar" element={<BemEstar />} />
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/modalidade/:slug" element={<Modalidade />} />
+        <Route path="/imprensa" element={<Imprensa />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
 

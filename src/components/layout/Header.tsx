@@ -83,14 +83,14 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
 
               {/* Desktop Nav */}
               <nav
-                className="hidden md:flex items-center gap-8"
+                className="hidden lg:flex items-center gap-5 xl:gap-7"
                 aria-label="Navegação principal"
               >
                 {NAV_ITEMS.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
+                    className={`text-xs xl:text-sm font-medium transition-colors whitespace-nowrap relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:origin-left after:transition-transform after:duration-300 ${
                       location.pathname === item.path
                         ? `font-bold ${
                             scrolled ? "text-primary" : "text-primary-foreground"
@@ -112,16 +112,16 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex items-center gap-2 btn-cta rounded-full px-5 py-2.5 text-sm font-semibold animate-pulse-glow"
+                className="hidden lg:flex items-center gap-2 btn-cta rounded-full px-4 xl:px-5 py-2 xl:py-2.5 text-xs xl:text-sm font-semibold animate-pulse-glow whitespace-nowrap"
               >
-                <Phone size={16} />
+                <Phone size={14} />
                 Agende sua Aula
               </a>
 
               {/* Mobile Toggle */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`md:hidden p-2 rounded-lg transition-colors ${
+                className={`lg:hidden p-2 rounded-lg transition-colors ${
                   scrolled ? "text-foreground" : "text-primary-foreground"
                 }`}
                 aria-label="Abrir menu"
@@ -141,7 +141,7 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 250 }}
-            className="fixed inset-0 z-40 glass-card bg-background/95 flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-40 glass-card bg-background/95 flex flex-col items-center justify-center gap-8 lg:hidden"
           >
             {NAV_ITEMS.map((item, i) => (
               <motion.div

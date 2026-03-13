@@ -103,8 +103,9 @@ const timelineData = [
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
           A Flipper incorporou{" "}
           <strong className="text-secondary font-semibold">yoga</strong>,{" "}
-          <strong className="text-secondary font-semibold">pilates</strong> e programas voltados à terceira idade,
-          ampliando sua missão para o bem-estar integral.
+          <strong className="text-secondary font-semibold">pilates</strong>,{" "}
+          <strong className="text-secondary font-semibold">hidroginástica</strong> e{" "}
+          <strong className="text-secondary font-semibold">aikido</strong>, ampliando sua missão de proporcionar o melhor em esporte e atividade física.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">

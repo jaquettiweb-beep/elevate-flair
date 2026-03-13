@@ -6,6 +6,7 @@ import yogaImg from "@/assets/yoga.jpg";
 import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
+import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
@@ -339,10 +340,10 @@ export default function Modalities() {
   // Circle helper
   function circleTarget(i: number, offsetDeg: number) {
     const minDim = Math.min(containerSize.width, containerSize.height);
-    const circleR = Math.min(minDim * 0.32, isMobile ? 130 : 220);
+    const circleR = Math.min(minDim * 0.35, isMobile ? 150 : 260);
     const cAngle = (i / TOTAL) * 360 + offsetDeg;
     const cRad = (cAngle * Math.PI) / 180;
-    return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR, rotation: cAngle + 90, scale: 1, opacity: 1 };
+    return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR + 30, rotation: cAngle + 90, scale: 1, opacity: 1 };
   }
 
   // Arc position helper
@@ -399,10 +400,22 @@ export default function Modalities() {
       <div
         ref={containerRef}
         className="relative w-full overflow-hidden"
-        style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500, cursor: phase === "arc" ? "grab" : "default" }}
+        style={{ height: isMobile ? "100vh" : "110vh", minHeight: 650, cursor: phase === "arc" ? "grab" : "default" }}
       >
-        {/* Deep ocean bg */}
-        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
+        {/* Fachada background with translucency and texture */}
+        <div className="absolute inset-0 z-[0]">
+          <img src={fachadaImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(180deg, hsla(210,75%,18%,0.82) 0%, hsla(220,80%,10%,0.88) 60%, hsla(215,80%,7%,0.92) 100%)",
+            mixBlendMode: "multiply",
+          }} />
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+
+        {/* Deep ocean bg overlay */}
+        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsla(210,75%,18%,0.5) 0%, hsla(220,80%,10%,0.6) 60%, hsla(215,80%,7%,0.7) 100%)" }} />
 
         {/* Hovered bg */}
         <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />
@@ -542,7 +555,11 @@ export default function Modalities() {
             transition={{ duration: 0.3 }}
           >
             <motion.button
-              onClick={phase === "idle" ? handleStart : phase === "arc" ? handleStop : undefined}
+              onClick={phase === "idle" ? handleStart : phase === "entering" ? () => {
+                // Skip animation — jump straight to arc
+                setEntryProgress(ENTRY_DURATION);
+                setPhase("arc");
+              } : phase === "arc" ? handleStop : undefined}
               className="relative px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md shadow-lg shadow-black/20 hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
@@ -550,14 +567,14 @@ export default function Modalities() {
             >
               <AnimatePresence mode="wait">
                 <motion.span
-                  key={phase === "arc" ? "stop" : "start"}
+                  key={phase === "arc" ? "stop" : phase === "entering" ? "skip" : "start"}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
                   className="block"
                 >
-                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "..." : "Ver Modalidades"}
+                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "Pular Animação ⏭" : "Ver Modalidades"}
                 </motion.span>
               </AnimatePresence>
             </motion.button>

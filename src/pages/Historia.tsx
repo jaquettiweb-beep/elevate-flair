@@ -29,9 +29,8 @@ const timelineData = [
     content: (
       <div>
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
-          A Academia Flipper nasceu com um sonho: oferecer{" "}
-          <strong className="text-secondary font-semibold">natação de qualidade</strong> para todas as idades em São Paulo.
-          Desde o início, a piscina semiolímpica aquecida se tornou referência na região.
+          Em <strong className="text-secondary font-semibold">1974</strong>, <strong className="text-secondary font-semibold">Nelson Guerra</strong> fundou a Escola de Natação Flipper no bairro do Brooklin, em São Paulo.
+          Desde o início, a piscina semiolímpica aquecida se tornou referência na região, contribuindo com a aprendizagem e o aperfeiçoamento de alunos de diversas partes do mundo.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">

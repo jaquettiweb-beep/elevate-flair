@@ -9,6 +9,7 @@ export interface Testimonial {
   tags: { text: string; type: 'featured' | 'default' }[];
   stats: { icon: React.ComponentType<Record<string, unknown>>; text: string }[];
   avatarGradient: string;
+  avatarUrl?: string;
 }
 
 export interface TestimonialStackProps {
@@ -108,9 +109,13 @@ export const TestimonialStack = ({ testimonials, visibleBehind = 2 }: Testimonia
                 <div className="testimonial-author">
                   <div
                     className="testimonial-avatar"
-                    style={{ background: testimonial.avatarGradient }}
+                    style={{ background: testimonial.avatarGradient, overflow: 'hidden' }}
                   >
-                    {testimonial.initials}
+                    {testimonial.avatarUrl ? (
+                      <img src={testimonial.avatarUrl} alt={testimonial.name} className="w-full h-full object-cover rounded-full" />
+                    ) : (
+                      testimonial.initials
+                    )}
                   </div>
                   <div className="testimonial-author-info">
                     <p className="testimonial-name">{testimonial.name}</p>

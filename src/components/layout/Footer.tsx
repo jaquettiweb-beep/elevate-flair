@@ -51,9 +51,11 @@ export default function Footer() {
             <nav className="flex flex-col gap-2" aria-label="Links do rodapé">
               {[
                 { label: "Home", path: "/" },
+                { label: "Planos", path: "/planos" },
                 { label: "Horários", path: "/horarios" },
                 { label: "Galeria", path: "/galeria" },
                 { label: "Contato", path: "/contato" },
+                { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
               ].map((l) => (
                 <Link
                   key={l.path}

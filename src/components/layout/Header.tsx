@@ -6,9 +6,11 @@ import flipperLogo from "@/assets/flipper-logo-header.png";
 
 const NAV_ITEMS = [
   { label: "Home", path: "/" },
+  { label: "Planos", path: "/planos" },
   { label: "Nossa Jornada", path: "/historia" },
   { label: "Produtos", path: "/produtos" },
   { label: "Imprensa", path: "/imprensa" },
+  { label: "Eventos", path: "/eventos" },
   { label: "Horários", path: "/horarios" },
   { label: "Galeria", path: "/galeria" },
   { label: "Contato", path: "/contato" },

@@ -363,7 +363,7 @@ const Historia = () => {
                   Faça parte dessa <span className="text-secondary">história</span>
                 </h3>
                 <p className="text-white/50 text-sm mb-6 leading-relaxed">
-                  Venha conhecer a Flipper e descubra por que somos referência em São Paulo há mais de 50 anos.
+                  Venha conhecer a Flipper e descubra por que somos a academia mais tradicional do Brooklin há mais de 50 anos.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <motion.a

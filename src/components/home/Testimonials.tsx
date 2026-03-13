@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Users, Calendar, ThumbsUp, ShieldCheck, Clock, Award, Heart, Waves, Dumbbell } from "lucide-react";
+import { Star, Users, Calendar, ThumbsUp, ShieldCheck, Clock, Award, Heart, Waves, Dumbbell, MessageCircle } from "lucide-react";
 import { TestimonialStack, Testimonial } from "@/components/ui/glass-testimonial-swiper";
 
 const testimonialsData: Testimonial[] = [
@@ -78,7 +78,15 @@ const testimonialsData: Testimonial[] = [
 export default function Testimonials() {
   return (
     <section className="py-24 lg:py-32 overflow-hidden relative">
-      <div className="container mx-auto px-4">
+      {/* Decorative glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full"
+          style={{ background: "radial-gradient(circle, hsla(221,83%,53%,0.05) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full"
+          style={{ background: "radial-gradient(circle, hsla(24,95%,53%,0.04) 0%, transparent 70%)", transform: "translate(-30%, 30%)" }} />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -86,6 +94,24 @@ export default function Testimonials() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
+          {/* Badge */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
+            style={{
+              background: "hsla(185,80%,45%,0.1)",
+              border: "1px solid hsla(185,80%,45%,0.2)",
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <MessageCircle size={14} style={{ color: "hsl(185,80%,45%)" }} />
+            <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "hsl(185,80%,65%)" }}>
+              Depoimentos Reais
+            </span>
+          </motion.div>
+
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-4">
             O que nossos <span className="text-secondary">alunos</span> dizem
           </h2>
@@ -104,15 +130,19 @@ export default function Testimonials() {
           <TestimonialStack testimonials={testimonialsData} visibleBehind={3} />
         </motion.div>
 
-        <motion.p
-          className="text-center text-white/30 text-xs mt-8 tracking-widest uppercase"
+        <motion.div
+          className="flex items-center justify-center gap-3 mt-10"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          Arraste para ver mais depoimentos
-        </motion.p>
+          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, transparent, hsla(185,80%,70%,0.2))" }} />
+          <p className="text-white/30 text-xs tracking-[0.2em] uppercase font-medium">
+            Arraste para ver mais depoimentos
+          </p>
+          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, hsla(185,80%,70%,0.2), transparent)" }} />
+        </motion.div>
       </div>
     </section>
   );

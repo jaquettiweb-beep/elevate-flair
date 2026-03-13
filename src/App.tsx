@@ -54,6 +54,7 @@ function AnimatedRoutes() {
         <Route path="/bem-estar" element={<BemEstar />} />
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/modalidade/:slug" element={<Modalidade />} />
+        <Route path="/imprensa" element={<Imprensa />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
 

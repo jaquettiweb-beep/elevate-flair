@@ -2,13 +2,20 @@ import { motion } from "framer-motion";
 import { ShoppingBag, Shirt } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 
+import sungaImg from "@/assets/produtos/sunga.jpeg";
+import bolsaImg from "@/assets/produtos/bolsa.jpeg";
+import maioImg from "@/assets/produtos/maio.jpeg";
+import sacochilaImg from "@/assets/produtos/sacochila.jpeg";
+import sungaBoxerImg from "@/assets/produtos/sunga-boxer.jpeg";
+import toucasImg from "@/assets/produtos/toucas.jpeg";
+
 const products = [
-  { name: "Sunga", emoji: "🩲" },
-  { name: "Bolsa", emoji: "👜" },
-  { name: "Maiô", emoji: "👙" },
-  { name: "Sacochila", emoji: "🎒" },
-  { name: "Sunga Boxer", emoji: "🩳" },
-  { name: "Toucas de Natação", emoji: "🏊" },
+  { name: "Sunga", image: sungaImg },
+  { name: "Bolsa", image: bolsaImg },
+  { name: "Maiô", image: maioImg },
+  { name: "Sacochila", image: sacochilaImg },
+  { name: "Sunga Boxer", image: sungaBoxerImg },
+  { name: "Toucas de Natação", image: toucasImg },
 ];
 
 export default function FlipperProducts() {
@@ -31,17 +38,26 @@ export default function FlipperProducts() {
         </ScrollReveal>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-10">
-          {products.map((product, i) => (
+          {products.map((product) => (
             <ScrollReveal key={product.name}>
               <motion.div
-                className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-6 text-center group hover:border-secondary/50 transition-all duration-300"
+                className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl overflow-hidden text-center group hover:border-secondary/50 transition-all duration-300"
                 whileHover={{ y: -6, scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <div className="text-4xl mb-3">{product.emoji}</div>
-                <h3 className="font-display font-bold text-foreground text-sm lg:text-base group-hover:text-secondary transition-colors">
-                  {product.name}
-                </h3>
+                <div className="aspect-[3/4] overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-3 lg:p-4">
+                  <h3 className="font-display font-bold text-foreground text-sm lg:text-base group-hover:text-secondary transition-colors">
+                    {product.name}
+                  </h3>
+                </div>
               </motion.div>
             </ScrollReveal>
           ))}

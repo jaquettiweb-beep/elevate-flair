@@ -5,13 +5,20 @@ import { Link } from "react-router-dom";
 import { ChevronRight, ShoppingBag, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
+import sungaImg from "@/assets/produtos/sunga.jpeg";
+import bolsaImg from "@/assets/produtos/bolsa.jpeg";
+import maioImg from "@/assets/produtos/maio.jpeg";
+import sacochilaImg from "@/assets/produtos/sacochila.jpeg";
+import sungaBoxerImg from "@/assets/produtos/sunga-boxer.jpeg";
+import toucasImg from "@/assets/produtos/toucas.jpeg";
+
 const products = [
-  { name: "Sunga", emoji: "🩲", desc: "Modelos adulto e infantil" },
-  { name: "Bolsa", emoji: "👜", desc: "Prática e resistente" },
-  { name: "Maiô", emoji: "👙", desc: "Conforto para suas aulas" },
-  { name: "Sacochila", emoji: "🎒", desc: "Leve e espaçosa" },
-  { name: "Sunga Boxer", emoji: "🩳", desc: "Modelo confortável" },
-  { name: "Toucas de Natação", emoji: "🏊", desc: "Silicone e lycra" },
+  { name: "Sunga", image: sungaImg, desc: "Modelos adulto e infantil" },
+  { name: "Bolsa", image: bolsaImg, desc: "Prática e resistente" },
+  { name: "Maiô", image: maioImg, desc: "Conforto para suas aulas" },
+  { name: "Sacochila", image: sacochilaImg, desc: "Leve e espaçosa" },
+  { name: "Sunga Boxer", image: sungaBoxerImg, desc: "Modelo confortável" },
+  { name: "Toucas de Natação", image: toucasImg, desc: "Silicone e lycra" },
 ];
 
 const containerVariants = {
@@ -124,7 +131,7 @@ export default function Produtos() {
                   className="group relative cursor-default"
                 >
                   <div
-                    className="relative rounded-2xl p-6 lg:p-8 text-center overflow-hidden transition-all duration-300"
+                    className="relative rounded-2xl overflow-hidden transition-all duration-300"
                     style={{
                       background: "hsla(190,60%,95%,0.06)",
                       backdropFilter: "blur(20px)",
@@ -135,27 +142,27 @@ export default function Produtos() {
                   >
                     {/* Hover glow */}
                     <div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"
                       style={{ background: "radial-gradient(circle at 50% 30%, hsla(24,95%,53%,0.08), transparent 70%)" }}
                     />
 
-                    {/* Emoji container */}
-                    <motion.div
-                      className="relative w-16 h-16 mx-auto mb-4 rounded-xl flex items-center justify-center"
-                      style={{
-                        background: "hsla(24,95%,53%,0.08)",
-                        border: "1px solid hsla(24,95%,53%,0.12)",
-                      }}
-                      whileHover={{ rotate: [0, -6, 6, 0], scale: 1.1 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <span className="text-3xl">{product.emoji}</span>
-                    </motion.div>
+                    {/* Product image */}
+                    <div className="aspect-[3/4] overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
 
-                    <h2 className="font-display font-bold text-white text-base lg:text-lg mb-1 group-hover:text-secondary transition-colors duration-300">
-                      {product.name}
-                    </h2>
-                    <p className="text-white/40 text-xs lg:text-sm">{product.desc}</p>
+                    {/* Text */}
+                    <div className="p-4 lg:p-5 text-center">
+                      <h2 className="font-display font-bold text-white text-base lg:text-lg mb-1 group-hover:text-secondary transition-colors duration-300">
+                        {product.name}
+                      </h2>
+                      <p className="text-white/40 text-xs lg:text-sm">{product.desc}</p>
+                    </div>
                   </div>
                 </motion.div>
               ))}

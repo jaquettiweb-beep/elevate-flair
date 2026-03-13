@@ -340,10 +340,10 @@ export default function Modalities() {
   // Circle helper
   function circleTarget(i: number, offsetDeg: number) {
     const minDim = Math.min(containerSize.width, containerSize.height);
-    const circleR = Math.min(minDim * 0.32, isMobile ? 130 : 220);
+    const circleR = Math.min(minDim * 0.35, isMobile ? 150 : 260);
     const cAngle = (i / TOTAL) * 360 + offsetDeg;
     const cRad = (cAngle * Math.PI) / 180;
-    return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR, rotation: cAngle + 90, scale: 1, opacity: 1 };
+    return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR + 30, rotation: cAngle + 90, scale: 1, opacity: 1 };
   }
 
   // Arc position helper

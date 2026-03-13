@@ -83,7 +83,7 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
 
               {/* Desktop Nav */}
               <nav
-                className="hidden md:flex items-center gap-8"
+                className="hidden lg:flex items-center gap-5 xl:gap-7"
                 aria-label="Navegação principal"
               >
                 {NAV_ITEMS.map((item) => (

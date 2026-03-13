@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
@@ -12,6 +12,7 @@ import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
 import SectionDivider from "@/components/home/SectionDivider";
+import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -22,13 +23,20 @@ const Index = () => {
   const hasSeenIntro = sessionStorage.getItem("flipper-intro-seen") === "true";
   const [introComplete, setIntroComplete] = useState(hasSeenIntro);
   const location = useLocation();
+  const parallaxRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   const handleIntroComplete = useCallback(() => {
     sessionStorage.setItem("flipper-intro-seen", "true");
     setIntroComplete(true);
   }, []);
 
-  // Scroll to hash on navigation (e.g. /#modalidades)
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.slice(1);
@@ -67,13 +75,39 @@ const Index = () => {
               <FlipperTimeline />
             </motion.div>
             <SectionDivider variant="wave" />
-            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
-              <Modalities />
-            </motion.div>
-            <SectionDivider variant="curved" />
-            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
-              <Stats />
-            </motion.div>
+
+            {/* Parallax wrapper: Modalities → Stats */}
+            <div ref={parallaxRef} className="relative overflow-hidden">
+              {/* Parallax fachada background */}
+              <motion.div
+                className="absolute inset-0 z-[0]"
+                style={{ y: bgY, top: "-15%", bottom: "-15%", height: "130%" }}
+              >
+                <img
+                  src={fachadaImg}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0" style={{
+                  background: "linear-gradient(180deg, hsla(210,75%,18%,0.82) 0%, hsla(220,80%,10%,0.85) 40%, hsla(215,80%,7%,0.88) 70%, hsla(210,75%,12%,0.92) 100%)",
+                  mixBlendMode: "multiply",
+                }} />
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                }} />
+              </motion.div>
+
+              <div className="relative z-[1]">
+                <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+                  <Modalities />
+                </motion.div>
+                <SectionDivider variant="curved" />
+                <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+                  <Stats />
+                </motion.div>
+              </div>
+            </div>
+
             <SectionDivider variant="wave" flip />
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <Testimonials />

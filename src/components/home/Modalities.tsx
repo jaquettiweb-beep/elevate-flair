@@ -400,10 +400,22 @@ export default function Modalities() {
       <div
         ref={containerRef}
         className="relative w-full overflow-hidden"
-        style={{ height: isMobile ? "80vh" : "90vh", minHeight: 500, cursor: phase === "arc" ? "grab" : "default" }}
+        style={{ height: isMobile ? "100vh" : "110vh", minHeight: 650, cursor: phase === "arc" ? "grab" : "default" }}
       >
-        {/* Deep ocean bg */}
-        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsl(210,75%,18%) 0%, hsl(220,80%,10%) 60%, hsl(215,80%,7%) 100%)" }} />
+        {/* Fachada background with translucency and texture */}
+        <div className="absolute inset-0 z-[0]">
+          <img src={fachadaImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(180deg, hsla(210,75%,18%,0.82) 0%, hsla(220,80%,10%,0.88) 60%, hsla(215,80%,7%,0.92) 100%)",
+            mixBlendMode: "multiply",
+          }} />
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+
+        {/* Deep ocean bg overlay */}
+        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsla(210,75%,18%,0.5) 0%, hsla(220,80%,10%,0.6) 60%, hsla(215,80%,7%,0.7) 100%)" }} />
 
         {/* Hovered bg */}
         <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />

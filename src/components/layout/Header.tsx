@@ -141,7 +141,7 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 250 }}
-            className="fixed inset-0 z-40 glass-card bg-background/95 flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-40 glass-card bg-background/95 flex flex-col items-center justify-center gap-8 lg:hidden"
           >
             {NAV_ITEMS.map((item, i) => (
               <motion.div

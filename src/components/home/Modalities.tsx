@@ -555,7 +555,11 @@ export default function Modalities() {
             transition={{ duration: 0.3 }}
           >
             <motion.button
-              onClick={phase === "idle" ? handleStart : phase === "arc" ? handleStop : undefined}
+              onClick={phase === "idle" ? handleStart : phase === "entering" ? () => {
+                // Skip animation — jump straight to arc
+                setEntryProgress(ENTRY_DURATION);
+                setPhase("arc");
+              } : phase === "arc" ? handleStop : undefined}
               className="relative px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md shadow-lg shadow-black/20 hover:bg-white/20 transition-colors"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
@@ -563,14 +567,14 @@ export default function Modalities() {
             >
               <AnimatePresence mode="wait">
                 <motion.span
-                  key={phase === "arc" ? "stop" : "start"}
+                  key={phase === "arc" ? "stop" : phase === "entering" ? "skip" : "start"}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
                   className="block"
                 >
-                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "..." : "Ver Modalidades"}
+                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "Pular Animação ⏭" : "Ver Modalidades"}
                 </motion.span>
               </AnimatePresence>
             </motion.button>

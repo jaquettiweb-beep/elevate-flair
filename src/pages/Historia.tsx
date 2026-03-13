@@ -258,7 +258,7 @@ const Historia = () => {
                 >
                   <Award size={14} style={{ color: "hsl(24,95%,53%)" }} />
                   <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "hsl(24,95%,65%)" }}>
-                    Desde 1970
+                    Desde 1974
                   </span>
                 </motion.div>
 

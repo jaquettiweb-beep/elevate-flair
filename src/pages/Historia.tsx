@@ -18,9 +18,9 @@ import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 const heroStats = [
   { icon: Clock, value: "50+", label: "Anos" },
-  { icon: Users, value: "5.000+", label: "Alunos" },
-  { icon: MapPin, value: "São Paulo", label: "Desde 1970" },
-  { icon: Award, value: "16", label: "Modalidades" },
+  { icon: Users, value: "8.000+", label: "Alunos" },
+  { icon: MapPin, value: "Brooklin", label: "Desde 1974" },
+  { icon: Award, value: "10+", label: "Modalidades" },
 ];
 
 const timelineData = [

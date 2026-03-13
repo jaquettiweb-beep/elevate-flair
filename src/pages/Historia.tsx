@@ -287,7 +287,7 @@ const Historia = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 60 }}
                 >
-                  Uma trajetória de dedicação, paixão pelo esporte e compromisso com a saúde e o bem-estar de toda a comunidade paulistana.
+                  Fundada por Nelson Guerra em 1974, a Flipper é a academia mais tradicional do Brooklin — referência em natação e com mais de 8 mil alunos que já passaram por nossas instalações.
                 </motion.p>
 
                 {/* Hero stats */}

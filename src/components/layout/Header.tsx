@@ -112,9 +112,9 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:flex items-center gap-2 btn-cta rounded-full px-5 py-2.5 text-sm font-semibold animate-pulse-glow"
+                className="hidden lg:flex items-center gap-2 btn-cta rounded-full px-4 xl:px-5 py-2 xl:py-2.5 text-xs xl:text-sm font-semibold animate-pulse-glow whitespace-nowrap"
               >
-                <Phone size={16} />
+                <Phone size={14} />
                 Agende sua Aula
               </a>
 

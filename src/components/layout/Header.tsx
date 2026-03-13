@@ -121,7 +121,7 @@ export default function Header({ alwaysVisible = false }: HeaderProps) {
               {/* Mobile Toggle */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`md:hidden p-2 rounded-lg transition-colors ${
+                className={`lg:hidden p-2 rounded-lg transition-colors ${
                   scrolled ? "text-foreground" : "text-primary-foreground"
                 }`}
                 aria-label="Abrir menu"

@@ -139,17 +139,17 @@ const timelineData = [
     content: (
       <div>
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
-          Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e uma comunidade de mais de 5 mil alunos ativos,
-          a Flipper segue firme na sua missão de transformar vidas através do esporte.
+          Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e mais de <strong className="text-secondary font-semibold">8 mil alunos</strong> que já passaram por nossas instalações,
+          a Flipper segue sob a direção de <strong className="text-secondary font-semibold">Nelson Guerra</strong>, firme na missão de proporcionar o melhor em esporte e atividade física. Somos a academia mais tradicional do Brooklin e referência em natação.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
           {[
-            "Piscina semiolímpica aquecida",
-            "Musculação moderna",
+            "Natação & Hidroginástica",
+            "Musculação",
             "Yoga & Pilates",
-            "Artes marciais",
-            "Natação bebê ao idoso",
-            "+5.000 alunos ativos",
+            "Judô, Kung Fu & Krav Maga",
+            "Ballet & Ginástica",
+            "+8.000 alunos formados",
           ].map((item) => (
             <div
               key={item}

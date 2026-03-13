@@ -66,7 +66,8 @@ const timelineData = [
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com o crescimento da demanda, a Flipper expandiu sua infraestrutura e passou a oferecer{" "}
           <strong className="text-secondary font-semibold">musculação</strong>,{" "}
-          <strong className="text-secondary font-semibold">artes marciais</strong> e ginástica.
+          <strong className="text-secondary font-semibold">judô</strong>,{" "}
+          <strong className="text-secondary font-semibold">kung fu</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">

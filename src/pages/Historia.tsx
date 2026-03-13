@@ -18,9 +18,9 @@ import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 const heroStats = [
   { icon: Clock, value: "50+", label: "Anos" },
-  { icon: Users, value: "5.000+", label: "Alunos" },
-  { icon: MapPin, value: "São Paulo", label: "Desde 1970" },
-  { icon: Award, value: "16", label: "Modalidades" },
+  { icon: Users, value: "8.000+", label: "Alunos" },
+  { icon: MapPin, value: "Brooklin", label: "Desde 1974" },
+  { icon: Award, value: "10+", label: "Modalidades" },
 ];
 
 const timelineData = [
@@ -29,9 +29,8 @@ const timelineData = [
     content: (
       <div>
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
-          A Academia Flipper nasceu com um sonho: oferecer{" "}
-          <strong className="text-secondary font-semibold">natação de qualidade</strong> para todas as idades em São Paulo.
-          Desde o início, a piscina semiolímpica aquecida se tornou referência na região.
+          Em <strong className="text-secondary font-semibold">1974</strong>, <strong className="text-secondary font-semibold">Nelson Guerra</strong> fundou a Escola de Natação Flipper no bairro do Brooklin, em São Paulo.
+          Desde o início, a piscina semiolímpica aquecida se tornou referência na região, contribuindo com a aprendizagem e o aperfeiçoamento de alunos de diversas partes do mundo.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -67,7 +66,8 @@ const timelineData = [
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com o crescimento da demanda, a Flipper expandiu sua infraestrutura e passou a oferecer{" "}
           <strong className="text-secondary font-semibold">musculação</strong>,{" "}
-          <strong className="text-secondary font-semibold">artes marciais</strong> e ginástica.
+          <strong className="text-secondary font-semibold">judô</strong>,{" "}
+          <strong className="text-secondary font-semibold">kung fu</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -103,8 +103,9 @@ const timelineData = [
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
           A Flipper incorporou{" "}
           <strong className="text-secondary font-semibold">yoga</strong>,{" "}
-          <strong className="text-secondary font-semibold">pilates</strong> e programas voltados à terceira idade,
-          ampliando sua missão para o bem-estar integral.
+          <strong className="text-secondary font-semibold">pilates</strong>,{" "}
+          <strong className="text-secondary font-semibold">hidroginástica</strong> e{" "}
+          <strong className="text-secondary font-semibold">aikido</strong>, ampliando sua missão de proporcionar o melhor em esporte e atividade física.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -138,17 +139,17 @@ const timelineData = [
     content: (
       <div>
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
-          Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e uma comunidade de mais de 5 mil alunos ativos,
-          a Flipper segue firme na sua missão de transformar vidas através do esporte.
+          Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e mais de <strong className="text-secondary font-semibold">8 mil alunos</strong> que já passaram por nossas instalações,
+          a Flipper segue sob a direção de <strong className="text-secondary font-semibold">Nelson Guerra</strong>, firme na missão de proporcionar o melhor em esporte e atividade física. Somos a academia mais tradicional do Brooklin e referência em natação.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
           {[
-            "Piscina semiolímpica aquecida",
-            "Musculação moderna",
+            "Natação & Hidroginástica",
+            "Musculação",
             "Yoga & Pilates",
-            "Artes marciais",
-            "Natação bebê ao idoso",
-            "+5.000 alunos ativos",
+            "Judô, Kung Fu & Krav Maga",
+            "Ballet & Ginástica",
+            "+8.000 alunos formados",
           ].map((item) => (
             <div
               key={item}
@@ -257,7 +258,7 @@ const Historia = () => {
                 >
                   <Award size={14} style={{ color: "hsl(24,95%,53%)" }} />
                   <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "hsl(24,95%,65%)" }}>
-                    Desde 1970
+                    Desde 1974
                   </span>
                 </motion.div>
 
@@ -286,7 +287,7 @@ const Historia = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 60 }}
                 >
-                  Uma trajetória de dedicação, paixão pelo esporte e compromisso com a saúde e o bem-estar de toda a comunidade paulistana.
+                  Fundada por Nelson Guerra em 1974, a Flipper é a academia mais tradicional do Brooklin — referência em natação e com mais de 8 mil alunos que já passaram por nossas instalações.
                 </motion.p>
 
                 {/* Hero stats */}
@@ -362,7 +363,7 @@ const Historia = () => {
                   Faça parte dessa <span className="text-secondary">história</span>
                 </h3>
                 <p className="text-white/50 text-sm mb-6 leading-relaxed">
-                  Venha conhecer a Flipper e descubra por que somos referência em São Paulo há mais de 50 anos.
+                  Venha conhecer a Flipper e descubra por que somos a academia mais tradicional do Brooklin há mais de 50 anos.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <motion.a

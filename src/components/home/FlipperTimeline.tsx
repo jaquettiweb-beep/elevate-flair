@@ -107,6 +107,62 @@ export default function FlipperTimeline() {
 
   return (
     <section className="py-20 lg:py-28 relative overflow-hidden">
+      {/* ─── Ambient ocean background ─── */}
+      {/* Radial glow center */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 50% at 50% 50%, hsla(185,80%,50%,0.10) 0%, transparent 70%)",
+        }}
+      />
+      {/* Animated caustic pattern */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
+        transition={{ duration: 30, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' seed='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='30'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%2360d9d9' stroke-width='1' filter='url(%23c)'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%2360d9d9' stroke-width='0.8' filter='url(%23c)'/%3E%3C/svg%3E")`,
+          backgroundSize: "400px 400px",
+        }}
+      />
+      {/* Floating bubbles */}
+      {[
+        { size: 6, left: "12%", delay: 0, dur: 14 },
+        { size: 4, left: "28%", delay: 3, dur: 18 },
+        { size: 8, left: "45%", delay: 1, dur: 12 },
+        { size: 3, left: "62%", delay: 5, dur: 20 },
+        { size: 5, left: "78%", delay: 2, dur: 16 },
+        { size: 7, left: "90%", delay: 4, dur: 15 },
+      ].map((b, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            width: b.size,
+            height: b.size,
+            left: b.left,
+            bottom: "-2%",
+            background: "radial-gradient(circle at 30% 30%, hsla(185,90%,80%,0.35), hsla(185,80%,60%,0.08))",
+            border: "1px solid hsla(185,80%,70%,0.15)",
+          }}
+          animate={{ y: [0, -800], opacity: [0, 0.6, 0.4, 0] }}
+          transition={{
+            duration: b.dur,
+            repeat: Infinity,
+            delay: b.delay,
+            ease: "linear",
+          }}
+        />
+      ))}
+      {/* Subtle cross-pattern texture */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}
+      />
+
       {/* Hidden preload images for instant display */}
       <div className="hidden" aria-hidden="true">
         {allImages.map((src) => (

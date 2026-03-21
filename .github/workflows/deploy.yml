@@ -25,13 +25,15 @@ jobs:
         run: bun run build
 
 
-      - name: SFTP Deploy
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          username: ${{ secrets.FTP_USERNAME }}
-          server: ${{ secrets.FTP_SERVER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 65002
-          local_path: ./dist/*
-          remote_path: ./public_html/
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy via lftp SFTP
+        run: |
+          lftp -c "
+          set sftp:auto-confirm yes;
+          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }}:65002;
+          mirror -R ./dist/ ./public_html/;
+          "
+
 

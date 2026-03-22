@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -37,9 +38,26 @@ type LinkItem = {
 	description?: string;
 };
 
-export function Header() {
+export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 	const [open, setOpen] = React.useState(false);
+	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
 	const scrolled = useScroll(10);
+
+	/* listen for hero scroll state emitted by HeroSection */
+	React.useEffect(() => {
+		if (alwaysVisible) {
+			setHeroScrolled(true);
+			return;
+		}
+		const handler = (e: Event) => {
+			const detail = (e as CustomEvent).detail as { scrolled: boolean };
+			setHeroScrolled(detail.scrolled);
+		};
+		window.addEventListener("hero-scroll-state", handler);
+		return () => window.removeEventListener("hero-scroll-state", handler);
+	}, [alwaysVisible]);
+
+	const isVisible = alwaysVisible || heroScrolled;
 
 	React.useEffect(() => {
 		if (open) {
@@ -53,12 +71,19 @@ export function Header() {
 	}, [open]);
 
 	return (
-		<header
-			className={cn('sticky top-0 z-50 w-full border-b border-transparent', {
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
-					scrolled,
-			})}
-		>
+		<AnimatePresence>
+			{isVisible && (
+				<motion.header
+					key="header-3"
+					initial={{ y: -80, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					exit={{ y: -80, opacity: 0 }}
+					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
+					className={cn('fixed top-0 left-0 right-0 z-50 w-full border-b border-transparent transition-all duration-300', {
+						'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
+							scrolled,
+					})}
+				>
 			<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
 				<div className="flex items-center gap-5">
 					<a href="#" className="hover:bg-accent rounded-md p-2">
@@ -160,7 +185,9 @@ export function Header() {
 					<Button className="w-full">Get Started</Button>
 				</div>
 			</MobileMenu>
-		</header>
+				</motion.header>
+			)}
+		</AnimatePresence>
 	);
 }
 

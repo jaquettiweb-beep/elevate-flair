@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { ReactNode } from "react";
-import Header from "./Header";
+import { Header } from "@/components/ui/header-3";
 import Footer from "./Footer";
 import SocialFloat from "../SocialFloat";
 import DolphinMascot from "../DolphinMascot";

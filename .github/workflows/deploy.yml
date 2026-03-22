@@ -33,9 +33,9 @@ jobs:
           lftp -c "
           set sftp:auto-confirm yes;
           open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }}:65002;
-          ls -R;
-          find -name teste-caminho.txt;
+          ls domains/;
           "
+
 
 
 

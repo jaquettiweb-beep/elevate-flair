@@ -1,4 +1,4 @@
-﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import fachadaFlipper from "@/assets/fachada-flipper.jpg";
@@ -12,8 +12,9 @@ const STATS = [
   { icon: Waves, value: "15+", label: "Modalidades" },
 ];
 
+/* ─────────────────────────────────────────────────────
    Letter-by-letter blur-stagger for "Mergulhe"
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────────────────── */
 function MergulheWord() {
   return (
     <motion.span

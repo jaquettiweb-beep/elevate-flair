@@ -216,8 +216,9 @@ export default function Produtos() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Os melhores acessórios para natação e academia, disponíveis na nossa recepção.
+                Os melhores acessórios para natação e treino, disponíveis na nossa recepção.
               </motion.p>
+
 
             </div>
 

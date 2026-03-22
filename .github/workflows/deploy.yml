@@ -33,8 +33,9 @@ jobs:
           lftp -c "
           set sftp:auto-confirm yes;
           open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }}:65002;
-          ls domains/;
+          mirror -R ./dist/ ./domains/midnightblue-salmon-655573.hostingersite.com/public_html/;
           "
+
 
 
 

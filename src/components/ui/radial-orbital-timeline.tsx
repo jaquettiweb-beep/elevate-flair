@@ -127,7 +127,7 @@ export default function RadialOrbitalTimeline({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = isMobile ? 150 : 300;
+    const radius = isMobile ? 210 : 300;
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
@@ -176,13 +176,13 @@ export default function RadialOrbitalTimeline({
       <div
         ref={orbitRef}
         className="relative mx-auto transition-all duration-700"
-        style={{ width: isMobile ? "320px" : "700px", height: isMobile ? "320px" : "700px" }}
+        style={{ width: isMobile ? "460px" : "700px", height: isMobile ? "460px" : "700px" }}
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[320px] md:w-[620px] h-[320px] md:h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
-          <div className="absolute w-[250px] md:w-[500px] h-[250px] md:h-[500px] rounded-full border border-secondary/15" />
-          <div className="absolute w-[180px] md:w-[380px] h-[180px] md:h-[380px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[460px] md:w-[620px] h-[460px] md:h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
+          <div className="absolute w-[360px] md:w-[500px] h-[360px] md:h-[500px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[260px] md:w-[380px] h-[260px] md:h-[380px] rounded-full border border-secondary/15" />
         </div>
 
         {/* Center element */}

@@ -44,6 +44,15 @@ export default function RadialOrbitalTimeline({
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handleContainerClick = (e: React.MouseEvent) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
       setExpandedItems({});
@@ -118,7 +127,7 @@ export default function RadialOrbitalTimeline({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 300;
+    const radius = isMobile ? 150 : 300;
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
@@ -160,20 +169,20 @@ export default function RadialOrbitalTimeline({
   return (
     <div
       ref={containerRef}
-      className="relative w-full flex items-center justify-center overflow-hidden"
-      style={{ minHeight: "750px" }}
+      className="relative w-full flex items-center justify-center overflow-hidden transition-all duration-700"
+      style={{ minHeight: isMobile ? "500px" : "750px" }}
       onClick={handleContainerClick}
     >
       <div
         ref={orbitRef}
-        className="relative scale-[0.42] sm:scale-[0.65] md:scale-90 lg:scale-100 transform origin-center transition-transform mx-auto"
-        style={{ width: "700px", height: "700px" }}
+        className="relative mx-auto transition-all duration-700"
+        style={{ width: isMobile ? "320px" : "700px", height: isMobile ? "320px" : "700px" }}
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[620px] h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
-          <div className="absolute w-[500px] h-[500px] rounded-full border border-secondary/15" />
-          <div className="absolute w-[380px] h-[380px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[320px] md:w-[620px] h-[320px] md:h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
+          <div className="absolute w-[250px] md:w-[500px] h-[250px] md:h-[500px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[180px] md:w-[380px] h-[180px] md:h-[380px] rounded-full border border-secondary/15" />
         </div>
 
         {/* Center element */}
@@ -237,8 +246,8 @@ export default function RadialOrbitalTimeline({
 
               {/* Expanded card */}
               {isExpanded && (
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-[60]">
-                  <Card className="w-72 bg-card/95 backdrop-blur-lg border-border shadow-2xl">
+                <div className={`absolute left-1/2 -translate-x-1/2 z-[60] ${isMobile ? "top-10" : "top-20"}`}>
+                  <Card className="w-[300px] sm:w-[340px] bg-card/95 backdrop-blur-lg border-border shadow-2xl">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <Badge

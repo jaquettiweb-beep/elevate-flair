@@ -127,11 +127,54 @@ export default function RadialOrbitalTimeline({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = isMobile ? 210 : 300;
     const radian = (angle * Math.PI) / 180;
+    
+    let x = 0;
+    let y = 0;
 
-    const x = radius * Math.cos(radian) + centerOffset.x;
-    const y = radius * Math.sin(radian) + centerOffset.y;
+    if (isMobile) {
+      // Track Capsule Mode (Corrente Mobile)
+      const w = 320; 
+      const h = 540; 
+      const r = w / 2; // = 160
+      const l = h - w; // = 220
+      const perimeter = 2 * l + 2 * Math.PI * r;
+      
+      const p = angle / 360;
+      const d = p * perimeter;
+      const qArc = (Math.PI * r) / 2;
+      
+      if (d < qArc) {
+         const perc = d / qArc;
+         const th = -Math.PI/2 + perc * (Math.PI/2);
+         x = r * Math.cos(th);
+         y = -l/2 + r * Math.sin(th);
+      } else if (d < qArc + l) {
+         const perc = (d - qArc) / l;
+         x = r;
+         y = -l/2 + perc * l;
+      } else if (d < qArc*3 + l) {
+         const perc = (d - (qArc + l)) / (2*qArc);
+         const th = 0 + perc * Math.PI;
+         x = r * Math.cos(th);
+         y = l/2 + r * Math.sin(th);
+      } else if (d < qArc*3 + 2*l) {
+         const perc = (d - (qArc*3 + l)) / l;
+         x = -r;
+         y = l/2 - perc * l;
+      } else {
+         const perc = (d - (qArc*3 + 2*l)) / qArc;
+         const th = Math.PI + perc * (Math.PI/2);
+         x = r * Math.cos(th);
+         y = -l/2 + r * Math.sin(th);
+      }
+    } else {
+      x = 300 * Math.cos(radian);
+      y = 300 * Math.sin(radian);
+    }
+
+    x += centerOffset.x;
+    y += centerOffset.y;
 
     const zIndex = Math.round(20 + 10 * Math.cos(radian));
     const opacity = Math.max(
@@ -176,13 +219,13 @@ export default function RadialOrbitalTimeline({
       <div
         ref={orbitRef}
         className="relative mx-auto transition-all duration-700"
-        style={{ width: isMobile ? "460px" : "700px", height: isMobile ? "460px" : "700px" }}
+        style={{ width: isMobile ? "320px" : "700px", height: isMobile ? "540px" : "700px" }}
       >
         {/* Orbit rings */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[460px] md:w-[620px] h-[460px] md:h-[620px] rounded-full border border-secondary/25 transition-all duration-1000" />
-          <div className="absolute w-[360px] md:w-[500px] h-[360px] md:h-[500px] rounded-full border border-secondary/15" />
-          <div className="absolute w-[260px] md:w-[380px] h-[260px] md:h-[380px] rounded-full border border-secondary/15" />
+          <div className="absolute w-[320px] h-[540px] md:w-[620px] md:h-[620px] rounded-[160px] md:rounded-full border border-secondary/25 transition-all duration-1000" />
+          <div className="absolute w-[240px] h-[460px] md:w-[500px] md:h-[500px] rounded-[120px] md:rounded-full border border-secondary/15" />
+          <div className="absolute w-[160px] h-[380px] md:w-[380px] md:h-[380px] rounded-[80px] md:rounded-full border border-secondary/15" />
         </div>
 
         {/* Center element */}

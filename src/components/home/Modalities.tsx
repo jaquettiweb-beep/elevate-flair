@@ -398,12 +398,27 @@ export default function Modalities() {
       : phase === "exiting" ? 1 - Math.min(exitProgress / (EXIT_DURATION * 0.4), 1)
       : 0;
 
+  // Container scale: shrink slightly when morphing into arc
+  const containerScale =
+    phase === "entering" && entryProgress >= T3
+      ? lerp(1, 0.88, Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1))
+      : phase === "arc" ? 0.88
+      : phase === "exiting" ? lerp(0.88, 1, Math.min(exitProgress / EXIT_DURATION, 1))
+      : 1;
+
   return (
     <section id="modalidades" className="relative">
       <div
         ref={containerRef}
         className="relative w-full overflow-hidden"
-        style={{ height: isMobile ? "100vh" : "100vh", minHeight: 650, cursor: phase === "arc" ? "grab" : "default" }}
+        style={{
+          height: "100vh",
+          minHeight: 650,
+          cursor: phase === "arc" ? "grab" : "default",
+          transform: `scale(${containerScale})`,
+          transformOrigin: "center center",
+          transition: phase === "idle" ? "transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)" : undefined,
+        }}
       >
         {/* Transparent overlay (background comes from parent parallax) */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsla(210,75%,18%,0.3) 0%, hsla(220,80%,10%,0.4) 60%, hsla(215,80%,7%,0.5) 100%)" }} />

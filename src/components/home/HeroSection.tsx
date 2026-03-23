@@ -71,15 +71,15 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   /* Image opacity and position â€” full screen from the start */
   const imageOpacity = useTransform(smooth, [0.08, 0.65], [0, 1]);
-  const imageScale   = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
-  const imageInnerY  = useTransform(smooth, [0, 1], ["-5%", "5%"]);
+  const imageScale = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
+  const imageInnerY = useTransform(smooth, [0, 1], ["-5%", "5%"]);
 
   /* Full screen vignette tint overlay */
-  const tintOpacity    = useTransform(smooth, [0.08, 0.65], [0.22, 0.60]);
+  const tintOpacity = useTransform(smooth, [0.08, 0.65], [0.22, 0.60]);
 
   /* Info cards appear after image arrives */
   const overlayOpacity = useTransform(smooth, [0.42, 0.75], [0, 1]);
-  const overlayY       = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
+  const overlayY = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
 
   /* Inner content width: wide when centered, narrows as image appears */
   const innerMaxWidth = useTransform(smooth, [0.08, 0.70], ["960px", "520px"]);
@@ -167,8 +167,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
               <div className="flex flex-col gap-3">
                 {[
-                  { icon: MapPin, title: "TatuapÃ©, SÃ£o Paulo", sub: "R. Domingos Cassetari, 176" },
-                  { icon: Clock, title: "Seg â€“ Sex: 6h Ã s 22h", sub: "SÃ¡b: 7h Ã s 16h" },
+                  { icon: MapPin, title: "Tatuapé, São Paulo", sub: "R. Domingos Cassetari, 176" },
+                  { icon: Clock, title: "Seg – Sex: 6h às 22h", sub: "Sáb: 7h às 16h" },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div
                     key={title}
@@ -209,7 +209,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.2 }}
             >
               <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/40 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-                Academia Flipper â€¢ SÃ£o Paulo
+                Academia Flipper • São Paulo
               </span>
             </motion.div>
 
@@ -224,7 +224,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 animate={introComplete ? { opacity: 1, y: 0 } : {}}
                 transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.75 }}
               >
-                na sua melhor versÃ£o.
+                na sua melhor versão.
               </motion.span>
             </h1>
 
@@ -234,8 +234,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
             >
-              NataÃ§Ã£o, musculaÃ§Ã£o, pilates, artes marciais e muito mais.{" "}
-              <span className="text-white/75 font-medium">Tudo em um sÃ³ lugar.</span>
+              Natação, musculação, pilates, artes marciais e muito mais.{" "}
+              <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
             </motion.p>
 
             <motion.div
@@ -257,7 +257,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 whileTap={{ scale: 0.97 }}
               >
                 <Phone size={16} />
-                Aula Experimental GrÃ¡tis
+                Aula Experimental Grátis
               </motion.a>
               <motion.a
                 href="#modalidades"

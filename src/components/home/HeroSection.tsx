@@ -221,8 +221,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               <motion.span
                 className="block text-white mt-1"
                 initial={{ opacity: 0, y: 24 }}
-                animate={introComplete ? { opacity: 1, y: 0 } : {}}
-                transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.75 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.5 }}
               >
                 na sua melhor versão.
               </motion.span>

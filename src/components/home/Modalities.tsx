@@ -441,7 +441,7 @@ export default function Modalities() {
 
         {/* Section title */}
         <motion.div
-          className="absolute top-24 left-0 right-0 text-center z-10 pointer-events-none"
+          className="absolute top-24 left-0 right-0 text-center z-[12] pointer-events-none"
           animate={{ opacity: (hoveredMod ? 0 : 1) * (1 - arcTextOpacity) }}
           transition={{ duration: 0.3 }}
         >
@@ -453,7 +453,7 @@ export default function Modalities() {
 
         {/* Arc overlay text */}
         <motion.div
-          className="absolute top-24 left-0 right-0 text-center z-10 pointer-events-none"
+          className="absolute top-24 left-0 right-0 text-center z-[12] pointer-events-none"
           animate={{ opacity: arcTextOpacity * (hoveredMod ? 0 : 1) }}
           transition={{ duration: 0.3 }}
         >

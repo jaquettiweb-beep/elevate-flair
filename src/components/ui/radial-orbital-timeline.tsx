@@ -238,9 +238,61 @@ export default function RadialOrbitalTimeline({
 
         {/* Center element */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
-            <Zap className="w-9 h-9 text-secondary-foreground" />
-          </div>
+          {isMobile && activeNodeId !== null ? (() => {
+            const activeItem = timelineData.find(t => t.id === activeNodeId);
+            if (!activeItem) return null;
+            const ActiveIcon = activeItem.icon;
+            return (
+              <Card className="w-[280px] bg-card/95 backdrop-blur-lg border-border shadow-2xl">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <Badge className={getStatusStyles(activeItem.status)} variant="outline">
+                      {activeItem.status === "completed" ? "CONCLUÍDO" : activeItem.status === "in-progress" ? "EM ANDAMENTO" : "PENDENTE"}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{activeItem.date}</span>
+                  </div>
+                  <CardTitle className="text-base text-foreground mt-2 flex items-center gap-2">
+                    <ActiveIcon className="w-5 h-5 text-secondary" />
+                    {activeItem.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">{activeItem.content}</p>
+                  {activeItem.link && (
+                    <Button variant="default" size="sm" className="w-full mb-3 text-sm"
+                      onClick={(e) => { e.stopPropagation(); navigate(activeItem.link!); }}>
+                      Saiba mais <ExternalLink className="w-3 h-3 ml-2" />
+                    </Button>
+                  )}
+                  {activeItem.relatedIds.length > 0 && (
+                    <div className="border-t border-border pt-3">
+                      <div className="flex items-center gap-1 mb-2">
+                        <LinkIcon className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-xs text-muted-foreground">Conexões</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {activeItem.relatedIds.map(relatedId => {
+                          const relatedItem = timelineData.find(i => i.id === relatedId);
+                          return (
+                            <Button key={relatedId} variant="outline" size="sm"
+                              className="text-xs h-7 bg-muted/50 border-border text-foreground hover:bg-primary hover:text-primary-foreground"
+                              onClick={(e) => { e.stopPropagation(); toggleItem(relatedId); }}>
+                              {relatedItem?.title}
+                              <ArrowRight className="w-3 h-3 ml-1" />
+                            </Button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })() : (
+            <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center shadow-lg shadow-secondary/30">
+              <Zap className="w-9 h-9 text-secondary-foreground" />
+            </div>
+          )}
         </div>
 
         {/* Nodes */}
@@ -295,9 +347,9 @@ export default function RadialOrbitalTimeline({
                 {item.title}
               </div>
 
-              {/* Expanded card */}
-              {isExpanded && (
-                <div className={`absolute left-1/2 -translate-x-1/2 z-[60] ${isMobile ? "top-10" : "top-20"}`}>
+              {/* Expanded card - only on desktop, mobile uses center */}
+              {isExpanded && !isMobile && (
+                <div className="absolute left-1/2 -translate-x-1/2 z-[60] top-20">
                   <Card className="w-[300px] sm:w-[340px] bg-card/95 backdrop-blur-lg border-border shadow-2xl">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">

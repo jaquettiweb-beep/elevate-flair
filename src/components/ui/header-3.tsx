@@ -114,8 +114,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 
                                     <NavigationMenuItem>
                                       <NavigationMenuTrigger className="bg-transparent">Academia</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background p-1 pr-1.5">
-                                        <ul className="bg-popover grid w-[420px] grid-cols-2 gap-2 rounded-md border p-2 shadow">
+                                      <NavigationMenuContent className="bg-background p-2 rounded-xl border shadow-lg">
+                                        <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
                                           {academiaLinks.map((item, i) => (
                                             <li key={i}>
                                               <ListItem {...item} />
@@ -135,9 +135,9 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 
                                     <NavigationMenuItem>
                                       <NavigationMenuTrigger className="bg-transparent">Sobre</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background p-1 pr-1.5 pb-1.5">
-                                        <div className="grid w-[460px] grid-cols-2 gap-2">
-                                          <ul className="bg-popover space-y-2 rounded-md border p-2 shadow">
+                                      <NavigationMenuContent className="bg-background p-2 rounded-xl border shadow-lg">
+                                        <div className="grid w-[460px] grid-cols-2 gap-4">
+                                          <ul className="space-y-2 p-2">
                                             {sobreLinks.map((item, i) => (
                                               <li key={i}>
                                                 <ListItem {...item} />
@@ -173,7 +173,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="btn-cta rounded-full px-5 py-2.5 text-xs font-semibold animate-pulse-glow"
+									className="btn-cta rounded-full px-5 py-2.5 text-xs font-semibold shadow-sm transition-transform hover:scale-105"
 								>
 									Agende sua Aula
 								</a>
@@ -215,7 +215,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								href={WHATSAPP_URL}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="btn-cta rounded-full px-4 py-3 text-center text-sm font-semibold animate-pulse-glow"
+								className="btn-cta rounded-full px-4 py-3 text-center text-sm font-semibold shadow-sm"
 							>
 								Agende sua Aula Exploratória
 							</a>
@@ -268,12 +268,12 @@ function ListItem({
 	...props
 }: React.ComponentProps<typeof NavigationMenuLink> & LinkItem & { onClick?: () => void }) {
 	return (
-		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-2 data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground rounded-sm p-2', className)} {...props} asChild>
-			<Link to={href} onClick={onClick}>
-				<div className="bg-background/40 flex shrink-0 aspect-square size-10 items-center justify-center rounded-md border shadow-sm">
-					<Icon className="text-foreground size-4" />
+		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-accent/50 hover:bg-accent/50 rounded-lg p-2.5 transition-colors cursor-pointer', className)} {...props} asChild>
+			<Link to={href} onClick={onClick} className="flex items-center w-full">
+				<div className="bg-muted/30 flex shrink-0 aspect-square size-10 items-center justify-center rounded-md">
+					<Icon className="text-foreground/80 size-4" />
 				</div>
-				<div className="flex flex-col items-start justify-center ml-1">
+				<div className="flex flex-col items-start justify-center ml-2">
 					<span className="font-medium text-sm">{title}</span>
 					{description && <span className="text-muted-foreground text-[10px] leading-snug">{description}</span>}
 				</div>

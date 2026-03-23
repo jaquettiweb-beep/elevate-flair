@@ -147,8 +147,7 @@ function BackgroundOverlay({ hoveredMod, onNavigate }: { hoveredMod: (typeof MOD
           <img src={hoveredMod.img} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <motion.div
-            className="absolute top-0 left-0 right-0 flex flex-col items-center justify-start text-center z-10 px-6 pt-16 md:pt-20"
-            style={{ height: "45%" }}
+            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6 -mt-[15%]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

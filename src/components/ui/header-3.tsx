@@ -88,15 +88,15 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
-					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-300', {
-						'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg': scrolled,
+					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-500', {
+						'bg-background/80 supports-[backdrop-filter]:bg-background/40 border-white/[0.06] backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.08)]': scrolled,
 					})}
 				>
-					<nav className="mx-auto flex h-24 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
+					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
 						{/* Esquerda: Logo */}
 						<div className="flex w-full md:w-1/3 items-center justify-start">
-							<Link to="/" className="hover:bg-transparent rounded-md p-1.5 flex items-center shrink-0">
-                                <img src={flipperLogo} alt="Academia Flipper" className="h-[60px] w-auto object-contain" />
+							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity">
+                                <img src={flipperLogo} alt="Academia Flipper" className="h-[50px] w-auto object-contain" />
 							</Link>
 						</div>
 
@@ -106,15 +106,15 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								<NavigationMenuList>
                                     <NavigationMenuItem>
                                       <NavigationMenuLink className="px-4" asChild>
-                                        <Link to="/" className="hover:bg-accent rounded-md p-2 text-sm font-medium">
+                                        <Link to="/" className="hover:bg-white/[0.06] rounded-md p-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
                                           Home
                                         </Link>
                                       </NavigationMenuLink>
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent">Academia</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background p-2 rounded-xl border shadow-lg">
+                                      <NavigationMenuTrigger className="bg-transparent text-foreground/70 hover:text-foreground transition-colors">Academia</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
                                         <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
                                           {academiaLinks.map((item, i) => (
                                             <li key={i}>
@@ -134,8 +134,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent">Sobre</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background p-2 rounded-xl border shadow-lg">
+                                      <NavigationMenuTrigger className="bg-transparent text-foreground/70 hover:text-foreground transition-colors">Sobre</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
                                         <div className="grid w-[460px] grid-cols-2 gap-4">
                                           <ul className="space-y-2 p-2">
                                             {sobreLinks.map((item, i) => (
@@ -173,7 +173,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="btn-cta rounded-full px-5 py-2.5 text-xs font-semibold shadow-sm transition-transform hover:scale-105"
+									className="rounded-full px-5 py-2 text-xs font-medium text-white/90 hover:text-white border border-white/15 bg-white/[0.06] hover:bg-white/[0.1] backdrop-blur-sm transition-all duration-300 hover:border-white/25"
 								>
 									Agende sua Aula
 								</a>
@@ -268,14 +268,14 @@ function ListItem({
 	...props
 }: React.ComponentProps<typeof NavigationMenuLink> & LinkItem & { onClick?: () => void }) {
 	return (
-		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-accent/50 hover:bg-accent/50 rounded-lg p-2.5 transition-colors cursor-pointer', className)} {...props} asChild>
+		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-white/[0.04] hover:bg-white/[0.04] rounded-lg p-2.5 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
 			<Link to={href} onClick={onClick} className="flex items-center w-full">
-				<div className="bg-muted/30 flex shrink-0 aspect-square size-10 items-center justify-center rounded-md">
-					<Icon className="text-foreground/80 size-4" />
+				<div className="bg-white/[0.04] flex shrink-0 aspect-square size-9 items-center justify-center rounded-lg">
+					<Icon className="text-foreground/60 size-4" />
 				</div>
 				<div className="flex flex-col items-start justify-center ml-2">
-					<span className="font-medium text-sm">{title}</span>
-					{description && <span className="text-muted-foreground text-[10px] leading-snug">{description}</span>}
+					<span className="font-medium text-sm text-foreground/80">{title}</span>
+					{description && <span className="text-muted-foreground/60 text-[10px] leading-snug">{description}</span>}
 				</div>
 			</Link>
 		</NavigationMenuLink>

@@ -398,26 +398,23 @@ export default function Modalities() {
       : phase === "exiting" ? 1 - Math.min(exitProgress / (EXIT_DURATION * 0.4), 1)
       : 0;
 
-  // Container scale: shrink slightly when morphing into arc
-  const containerScale =
+  // Container height: shrink height when morphing into arc
+  const containerHeight =
     phase === "entering" && entryProgress >= T3
-      ? lerp(1, 0.88, Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1))
-      : phase === "arc" ? 0.88
-      : phase === "exiting" ? lerp(0.88, 1, Math.min(exitProgress / EXIT_DURATION, 1))
-      : 1;
+      ? `${lerp(100, 75, Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1))}vh`
+      : phase === "arc" ? "75vh"
+      : phase === "exiting" ? `${lerp(75, 100, Math.min(exitProgress / EXIT_DURATION, 1))}vh`
+      : "100vh";
 
   return (
     <section id="modalidades" className="relative">
       <div
         ref={containerRef}
-        className="relative w-full overflow-hidden"
+        className="relative w-full overflow-hidden transition-[height] duration-700 ease-out"
         style={{
-          height: "100vh",
-          minHeight: 650,
+          height: containerHeight,
+          minHeight: 500,
           cursor: phase === "arc" ? "grab" : "default",
-          transform: `scale(${containerScale})`,
-          transformOrigin: "center center",
-          transition: phase === "idle" ? "transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)" : undefined,
         }}
       >
         {/* Transparent overlay (background comes from parent parallax) */}

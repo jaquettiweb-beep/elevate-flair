@@ -124,7 +124,7 @@ export default function RadialOrbitalTimeline({
     const x = radius * Math.cos(radian) + centerOffset.x;
     const y = radius * Math.sin(radian) + centerOffset.y;
 
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
+    const zIndex = Math.round(20 + 10 * Math.cos(radian));
     const opacity = Math.max(
       0.4,
       Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
@@ -166,7 +166,7 @@ export default function RadialOrbitalTimeline({
     >
       <div
         ref={orbitRef}
-        className="relative"
+        className="relative scale-[0.42] sm:scale-[0.65] md:scale-90 lg:scale-100 transform origin-center transition-transform mx-auto"
         style={{ width: "700px", height: "700px" }}
       >
         {/* Orbit rings */}
@@ -193,7 +193,7 @@ export default function RadialOrbitalTimeline({
 
             const nodeStyle = {
               transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
-              zIndex: isExpanded ? 200 : position.zIndex,
+              zIndex: isExpanded ? 50 : position.zIndex,
               opacity: isExpanded ? 1 : position.opacity,
             };
 
@@ -237,7 +237,7 @@ export default function RadialOrbitalTimeline({
 
               {/* Expanded card */}
               {isExpanded && (
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50">
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 z-[60]">
                   <Card className="w-72 bg-card/95 backdrop-blur-lg border-border shadow-2xl">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">

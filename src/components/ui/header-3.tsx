@@ -92,12 +92,17 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 						'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg': scrolled,
 					})}
 				>
-					<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
-						<div className="flex items-center gap-5">
-							<Link to="/" className="hover:bg-accent rounded-md p-1.5 flex items-center shrink-0">
-                                <img src={flipperLogo} alt="Academia Flipper" className="h-[22px] w-auto object-contain" />
+					<nav className="mx-auto flex h-24 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
+						{/* Esquerda: Logo */}
+						<div className="flex w-full md:w-1/3 items-center justify-start">
+							<Link to="/" className="hover:bg-transparent rounded-md p-1.5 flex items-center shrink-0">
+                                <img src={flipperLogo} alt="Academia Flipper" className="h-[60px] w-auto object-contain" />
 							</Link>
-							<NavigationMenu className="hidden md:flex">
+						</div>
+
+						{/* Centro: Links (Escondidos no mobile) */}
+						<div className="hidden md:flex w-1/3 items-center justify-center">
+							<NavigationMenu>
 								<NavigationMenuList>
                                     <NavigationMenuItem>
                                       <NavigationMenuLink className="px-4" asChild>
@@ -160,27 +165,31 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								</NavigationMenuList>
 							</NavigationMenu>
 						</div>
-						<div className="hidden items-center gap-2 md:flex">
-							<a
-								href={WHATSAPP_URL}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="btn-cta rounded-full px-4 py-2 text-xs font-semibold animate-pulse-glow"
+
+						{/* Direita: CTA / Mobile Menu Toggle */}
+						<div className="flex w-1/3 items-center justify-end gap-2">
+							<div className="hidden md:flex items-center gap-2">
+								<a
+									href={WHATSAPP_URL}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="btn-cta rounded-full px-5 py-2.5 text-xs font-semibold animate-pulse-glow"
+								>
+									Agende sua Aula
+								</a>
+							</div>
+							<Button
+								size="icon"
+								variant="outline"
+								onClick={() => setOpen(!open)}
+								className="md:hidden"
+								aria-expanded={open}
+								aria-controls="mobile-menu"
+								aria-label="Toggle menu"
 							>
-								Agende sua Aula
-							</a>
+								<MenuToggleIcon open={open} className="size-5" duration={300} />
+							</Button>
 						</div>
-						<Button
-							size="icon"
-							variant="outline"
-							onClick={() => setOpen(!open)}
-							className="md:hidden"
-							aria-expanded={open}
-							aria-controls="mobile-menu"
-							aria-label="Toggle menu"
-						>
-							<MenuToggleIcon open={open} className="size-5" duration={300} />
-						</Button>
 					</nav>
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
 						<NavigationMenu className="max-w-full">

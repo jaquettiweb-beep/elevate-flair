@@ -410,10 +410,10 @@ export default function Modalities() {
     <section id="modalidades" className="relative">
       <div
         ref={containerRef}
-        className="relative w-full overflow-hidden transition-[height] duration-700 ease-out"
+        className="relative w-full overflow-hidden"
         style={{
-          height: containerHeight,
-          minHeight: 500,
+          height: "100vh",
+          minHeight: 650,
           cursor: phase === "arc" ? "grab" : "default",
         }}
       >

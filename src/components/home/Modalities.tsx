@@ -325,9 +325,13 @@ export default function Modalities() {
   }, [phase, isMobile]);
 
   const handleStart = useCallback(() => {
-    setPhase("entering");
-    setEntryProgress(0);
-    setManualRotation(0);
+    // Auto-centralizar a seção na viewport antes de travar o scroll
+    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => {
+      setPhase("entering");
+      setEntryProgress(0);
+      setManualRotation(0);
+    }, 350);
   }, []);
 
   const handleStop = useCallback(() => {
@@ -348,7 +352,7 @@ export default function Modalities() {
   // Arc position helper
   function arcTarget(i: number, rotationOffset: number) {
     const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
-    const arcR = baseR * (isMobile ? 1.5 : 1.15);
+    const arcR = baseR * (isMobile ? 1.5 : 0.85);
     const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
     const arcCenterY = apexY + arcR;
     const spread = isMobile ? 95 : 120;
@@ -373,7 +377,7 @@ export default function Modalities() {
       x: Math.cos(curRad) * arcR,
       y: Math.sin(curRad) * arcR + arcCenterY,
       rotation: curAng + 90,
-      scale: isMobile ? 1.5 : 1.9,
+      scale: isMobile ? 1.5 : 1.3,
       opacity,
     };
   }
@@ -399,7 +403,7 @@ export default function Modalities() {
       <div
         ref={containerRef}
         className="relative w-full overflow-hidden"
-        style={{ height: isMobile ? "100vh" : "110vh", minHeight: 650, cursor: phase === "arc" ? "grab" : "default" }}
+        style={{ height: isMobile ? "100vh" : "100vh", minHeight: 650, cursor: phase === "arc" ? "grab" : "default" }}
       >
         {/* Transparent overlay (background comes from parent parallax) */}
         <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsla(210,75%,18%,0.3) 0%, hsla(220,80%,10%,0.4) 60%, hsla(215,80%,7%,0.5) 100%)" }} />

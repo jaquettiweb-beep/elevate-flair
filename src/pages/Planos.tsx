@@ -71,12 +71,12 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  hidden: { opacity: 0, y: 40, scale: 0.92 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring" as const, stiffness: 70, damping: 20 },
+    transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
 
@@ -176,7 +176,10 @@ export default function Planos() {
               {plans.map((plan) => (
                 <motion.div
                   key={plan.name}
-                  variants={cardVariants}
+                  variants={{
+                    hidden: { opacity: 0, y: 40, scale: plan.popular ? 0.88 : 0.92 },
+                    visible: cardVariants.visible
+                  }}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   className="group relative"
                 >

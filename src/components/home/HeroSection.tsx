@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import fachadaFlipper from "@/assets/fachada-flipper.jpg";
+import SectionWave from "../SectionWave";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -315,6 +316,9 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             <ChevronDown size={24} className="text-white/30" />
           </motion.div>
         </motion.div>
+
+        {/* Wave Divider to next section */}
+        <SectionWave position="bottom" color="hsl(185, 70%, 92%)" />
       </section>
     </div>
   );

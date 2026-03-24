@@ -47,9 +47,10 @@ interface FlipCardProps {
   onHoverMod: (mod: (typeof MODALITIES)[number] | null) => void;
   onClickMod: (mod: (typeof MODALITIES)[number]) => void;
   isMobile: boolean;
+  index: number;
 }
 
-function FlipCard({ mod, target, interactive, onHoverMod, onClickMod, isMobile }: FlipCardProps) {
+function FlipCard({ mod, target, interactive, onHoverMod, onClickMod, isMobile, index }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
 
   const handleStart = useCallback(() => {
@@ -99,8 +100,14 @@ function FlipCard({ mod, target, interactive, onHoverMod, onClickMod, isMobile }
     >
       <motion.div
         style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 30 }}
+        whileInView={{ opacity: 1, x: 0, y: 0 }}
+        viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
         animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+        transition={{
+          rotateY: { duration: 0.5, ease: [0.23, 1, 0.32, 1] },
+          default: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.15 }
+        }}
       >
         {/* Front */}
         <div
@@ -544,6 +551,7 @@ export default function Modalities() {
                   onHoverMod={setHoveredMod}
                   onClickMod={(m) => navigate(m.link)}
                   isMobile={isMobile}
+                  index={i}
                 />
               );
             })}

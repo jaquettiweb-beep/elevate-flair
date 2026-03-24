@@ -6,6 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
 import { z } from "zod";
+import { motion } from "framer-motion";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
@@ -62,6 +63,14 @@ export default function Contact() {
             <ChevronRight size={14} />
             <span className="text-primary-foreground">Contato</span>
           </nav>
+          <motion.div
+            className="h-1 bg-primary-foreground/30 mb-4 rounded-full origin-left"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            style={{ width: "80px" }}
+          />
           <h1 className="font-display text-3xl lg:text-5xl font-bold text-primary-foreground">
             Entre em Contato
           </h1>
@@ -76,16 +85,27 @@ export default function Contact() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Form */}
-            <ScrollReveal direction="left" intensity="high">
+            <div className="w-full">
               {submitted ? (
-                <div className="bg-[hsl(142,60%,95%)] border border-[hsl(142,60%,80%)] rounded-xl p-8 text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-[hsl(142,60%,95%)] border border border-[hsl(142,60%,80%)] rounded-xl p-8 text-center"
+                >
                   <CheckCircle size={48} className="mx-auto mb-4 text-[hsl(142,70%,40%)]" />
                   <h3 className="font-display text-xl font-bold text-foreground mb-2">Mensagem Enviada!</h3>
                   <p className="text-muted-foreground">Entraremos em contato em breve. Obrigado!</p>
-                </div>
+                </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 * 0 }}
+                  >
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">Nome *</label>
                     <input
                       id="name"
@@ -96,9 +116,15 @@ export default function Contact() {
                       placeholder="Seu nome completo"
                     />
                     {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
-                  </div>
+                  </motion.div>
 
-                  <div className="grid sm:grid-cols-2 gap-5">
+                  <motion.div
+                    className="grid sm:grid-cols-2 gap-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 * 1 }}
+                  >
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">Email *</label>
                       <input
@@ -122,9 +148,14 @@ export default function Contact() {
                         placeholder="(11) 99999-9999"
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 * 2 }}
+                  >
                     <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-1">Assunto *</label>
                     <select
                       id="subject"
@@ -139,9 +170,14 @@ export default function Contact() {
                       <option value="outro">Outro</option>
                     </select>
                     {errors.subject && <p className="text-destructive text-xs mt-1">{errors.subject}</p>}
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 * 3 }}
+                  >
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1">Mensagem *</label>
                     <textarea
                       id="message"
@@ -153,18 +189,22 @@ export default function Contact() {
                     />
                     {errors.message && <p className="text-destructive text-xs mt-1">{errors.message}</p>}
                     <p className="text-muted-foreground text-xs mt-1 text-right">{formData.message.length}/1000</p>
-                  </div>
+                  </motion.div>
 
-                  <button
+                  <motion.button
                     type="submit"
                     className="btn-cta rounded-lg px-8 py-3 font-bold flex items-center gap-2 w-full justify-center"
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 * 4 }}
                   >
                     <Send size={18} />
                     Enviar Mensagem
-                  </button>
+                  </motion.button>
                 </form>
               )}
-            </ScrollReveal>
+            </div>
 
             {/* Info */}
             <ScrollReveal direction="right" intensity="high">

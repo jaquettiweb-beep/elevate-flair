@@ -9,17 +9,33 @@ const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20hor%C3%A1rios...";
 
 const SCHEDULE_DATA = [
-  { time: "06:00", mon: "Natação", tue: "Musculação", wed: "Natação", thu: "Musculação", fri: "Natação", sat: "Hidroginástica" },
-  { time: "07:00", mon: "Hidroginástica", tue: "Yoga", wed: "Hidroginástica", thu: "Yoga", fri: "Hidroginástica", sat: "Natação" },
-  { time: "08:00", mon: "Pilates Solo", tue: "Natação", wed: "Pilates Solo", thu: "Natação", fri: "Pilates Solo", sat: "Musculação" },
-  { time: "09:00", mon: "Musculação", tue: "Pilates Studio", wed: "Musculação", thu: "Pilates Studio", fri: "Musculação", sat: "Yoga" },
-  { time: "10:00", mon: "Yoga", tue: "60+ Saúde", wed: "Yoga", thu: "60+ Saúde", fri: "Yoga", sat: "Kung Fu" },
-  { time: "14:00", mon: "Natação Infantil", tue: "Ballet Infantil", wed: "Natação Infantil", thu: "Ballet Infantil", fri: "Natação Infantil", sat: "—" },
-  { time: "15:00", mon: "Judô Infantil", tue: "Natação Infantil", wed: "Judô Infantil", thu: "Natação Infantil", fri: "Judô Infantil", sat: "—" },
-  { time: "17:00", mon: "Musculação", tue: "Krav Maga", wed: "Musculação", thu: "Krav Maga", fri: "Musculação", sat: "—" },
-  { time: "18:00", mon: "Muay Thai", tue: "Musculação", wed: "Muay Thai", thu: "Musculação", fri: "Muay Thai", sat: "—" },
-  { time: "19:00", mon: "Jiu Jitsu", tue: "Aikidô", wed: "Jiu Jitsu", thu: "Aikidô", fri: "Jiu Jitsu", sat: "—" },
-  { time: "20:00", mon: "Kung Fu", tue: "Natação", wed: "Kung Fu", thu: "Natação", fri: "Ginástica", sat: "—" },
+  { time: "06:15", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: [], sat: [] },
+  { time: "07:00", mon: ["Natação", "Pilates Studio"], tue: ["Yoga", "Krav Maga", "Natação", "Pilates Studio"], wed: ["Natação", "Pilates Studio"], thu: ["Yoga", "Krav Maga", "Natação", "Pilates Studio"], fri: ["Natação", "Pilates Studio"], sat: [] },
+  { time: "07:45", mon: ["Natação"], tue: ["Hidroginástica", "Natação"], wed: ["Natação"], thu: ["Hidroginástica", "Natação"], fri: ["Hidroginástica", "Natação"], sat: [] },
+  { time: "08:00", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
+  { time: "08:30", mon: ["Natação"], tue: [], wed: ["Natação"], thu: [], fri: ["Natação"], sat: [] },
+  { time: "09:00", mon: ["Ballet", "Pilates Studio"], tue: ["Pilates Studio"], wed: ["Ballet", "Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
+  { time: "09:30", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: ["Natação Baby"] },
+  { time: "10:00", mon: ["Pilates Studio"], tue: ["Natação Baby", "Pilates Studio"], wed: ["Pilates Studio"], thu: ["Natação Baby", "Pilates Studio"], fri: ["Pilates Studio"], sat: ["Natação Baby"] },
+  { time: "10:30", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: ["Natação Baby"] },
+  { time: "10:45", mon: ["Hidroginástica"], tue: ["Hidroginástica"], wed: ["Hidroginástica"], thu: ["Hidroginástica"], fri: [], sat: [] },
+  { time: "11:00", mon: ["Pilates Studio", "60+ Fortal."], tue: ["Pilates Studio", "60+ Fortal."], wed: ["Pilates Studio", "60+ Alongamento"], thu: ["Pilates Studio", "60+ Fortal."], fri: ["Pilates Studio", "60+ Fortal."], sat: ["Krav Maga"] },
+  { time: "11:30", mon: ["Pilates Studio", "Hidrog. (Lotação)"], tue: ["Pilates Studio", "Natação"], wed: ["Pilates Studio", "Hidrog. (Lotação)"], thu: ["Pilates Studio", "Natação"], fri: ["Pilates Studio", "Hidrog. (Lotação)"], sat: [] },
+  { time: "12:00", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio", "60+ Equilíbrio"], thu: ["Pilates Studio", "60+ Alongamento"], fri: ["Pilates Studio"], sat: [] },
+  { time: "13:00", mon: [], tue: ["Pilates Studio"], wed: [], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "14:00", mon: [], tue: ["Pilates Studio"], wed: [], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "15:00", mon: ["Ballet"], tue: ["Pilates Studio"], wed: ["Ballet"], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "16:00", mon: ["Judô", "Pilates Studio"], tue: [], wed: ["Judô"], thu: [], fri: ["Pilates Studio"], sat: [] },
+  { time: "16:30", mon: [], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "17:00", mon: [], tue: [], wed: [], thu: [], fri: ["Yoga"], sat: [] },
+  { time: "17:30", mon: ["Ginástica Funcional"], tue: ["Pilates Studio", "Natação Baby"], wed: ["Ginástica Funcional"], thu: ["Pilates Studio", "Natação Baby"], fri: [], sat: [] },
+  { time: "18:00", mon: ["Localizada", "Muay Thai"], tue: [], wed: ["Localizada", "Muay Thai"], thu: [], fri: [], sat: [] },
+  { time: "18:15", mon: ["Hidroginástica", "Natação"], tue: ["Natação"], wed: ["Hidroginástica", "Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
+  { time: "18:30", mon: ["Mat Pilates"], tue: ["Pilates Studio"], wed: ["Mat Pilates"], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "19:00", mon: ["Natação"], tue: ["Aikido / Jiu Jitsu", "Natação"], wed: ["Krav Maga", "Natação"], thu: ["Aikido / Jiu Jitsu", "Natação"], fri: ["Krav Maga", "Natação"], sat: [] },
+  { time: "19:30", mon: [], tue: ["Pilates Studio"], wed: [], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "19:45", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
+  { time: "20:30", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
 ];
 
 const DAYS = [
@@ -32,16 +48,15 @@ const DAYS = [
 ] as const;
 
 function getCellColor(val: string) {
-  if (val === "—") return "";
-  if (val.includes("Natação")) return "bg-[hsl(200,80%,92%)] text-[hsl(200,80%,30%)]";
-  if (val.includes("Musculação")) return "bg-[hsl(221,70%,92%)] text-[hsl(221,70%,30%)]";
-  if (val.includes("Yoga") || val.includes("Pilates")) return "bg-[hsl(160,60%,90%)] text-[hsl(160,60%,28%)]";
-  if (val.includes("Muay") || val.includes("Krav") || val.includes("Jiu") || val.includes("Kung") || val.includes("Aikidô") || val.includes("Judô"))
-    return "bg-[hsl(0,70%,92%)] text-[hsl(0,70%,30%)]";
-  if (val.includes("Hidro") || val.includes("60+") || val.includes("Ginástica"))
-    return "bg-[hsl(40,80%,90%)] text-[hsl(40,80%,30%)]";
-  if (val.includes("Ballet")) return "bg-[hsl(320,60%,92%)] text-[hsl(320,60%,30%)]";
-  return "bg-muted text-muted-foreground";
+  if (val.includes("Natação")) return "bg-[hsl(200,80%,92%)] text-[hsl(200,80%,30%)] border-[hsl(200,80%,85%)]";
+  if (val.includes("Musculação")) return "bg-[hsl(221,70%,92%)] text-[hsl(221,70%,30%)] border-[hsl(221,70%,85%)]";
+  if (val.includes("Yoga") || val.includes("Pilates") || val.includes("Alongamento") || val.includes("Equilíbrio")) return "bg-[hsl(160,60%,90%)] text-[hsl(160,60%,28%)] border-[hsl(160,60%,80%)]";
+  if (val.includes("Muay") || val.includes("Krav") || val.includes("Jiu") || val.includes("Kung") || val.includes("Aikido") || val.includes("Judô"))
+    return "bg-[hsl(0,70%,92%)] text-[hsl(0,70%,30%)] border-[hsl(0,70%,85%)]";
+  if (val.includes("Hidro") || val.includes("60+") || val.includes("Ginástica") || val.includes("Localizada") || val.includes("Funcional") || val.includes("Fortal"))
+    return "bg-[hsl(40,80%,90%)] text-[hsl(40,80%,30%)] border-[hsl(40,80%,80%)]";
+  if (val.includes("Ballet")) return "bg-[hsl(320,60%,92%)] text-[hsl(320,60%,30%)] border-[hsl(320,60%,85%)]";
+  return "bg-muted text-muted-foreground border-border";
 }
 
 export default function Schedule() {
@@ -88,16 +103,24 @@ export default function Schedule() {
                 <tbody>
                   {SCHEDULE_DATA.map((row) => (
                     <tr key={row.time} className="border-t border-border hover:bg-muted/50 transition-colors">
-                      <td className="px-4 py-3 font-mono font-semibold text-foreground sticky left-0 bg-background z-10">
+                      <td className="px-4 py-3 font-mono font-semibold text-foreground sticky left-0 bg-background z-10 whitespace-nowrap align-top">
                         {row.time}
                       </td>
                       {DAYS.map((d) => {
-                        const val = row[d.key];
+                        const classes = row[d.key as keyof typeof row] as string[];
                         return (
-                          <td key={d.key} className="px-3 py-2 text-center">
-                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getCellColor(val)}`}>
-                              {val}
-                            </span>
+                          <td key={d.key} className="px-3 py-2 text-center align-top min-w-[140px]">
+                            {classes.length === 0 ? (
+                              <span className="text-muted-foreground/30">—</span>
+                            ) : (
+                              <div className="flex flex-col gap-1.5 items-center">
+                                {classes.map((c, i) => (
+                                  <span key={i} className={`inline-block px-3 py-1.5 rounded-md text-xs font-medium border w-full leading-tight ${getCellColor(c)}`}>
+                                    {c}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                           </td>
                         );
                       })}
@@ -107,10 +130,21 @@ export default function Schedule() {
               </table>
             </div>
           </ScrollReveal>
-
-          <p className="text-muted-foreground text-sm mt-6 text-center">
-            * Horários sujeitos a alteração. Entre em contato para confirmar disponibilidade.
-          </p>
+          <ScrollReveal direction="up" intensity="medium">
+            <div className="bg-[hsl(221,70%,96%)] border border-[hsl(221,70%,85%)] rounded-xl p-6 mt-12 text-center max-w-2xl mx-auto shadow-sm">
+              <h3 className="font-bold text-lg mb-2 text-[hsl(221,70%,30%)]">Musculação – Horário Livre</h3>
+              <p className="text-[hsl(221,70%,40%)]">
+                A musculação não possui horários fixos de aula. O espaço fica livre para treino durante todo o horário de funcionamento da academia:
+              </p>
+              <div className="mt-3 font-medium text-[hsl(221,70%,30%)]">
+                Segunda a Sexta: 06h às 22h <br/>
+                Sábados: 08h às 13h
+              </div>
+            </div>
+            <p className="text-muted-foreground text-sm mt-6 text-center">
+              * Horários sujeitos a alteração. Entre em contato para confirmar disponibilidade.
+            </p>
+          </ScrollReveal>
 
           {/* CTA */}
           <ScrollReveal direction="zoom" intensity="high">

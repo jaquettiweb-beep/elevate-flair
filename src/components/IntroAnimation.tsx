@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
-import flipperLogo from "@/assets/flipper-logo-transparent.png";
+import flipperLogo from "@/assets/flipper-logo-hd.jpg";
 
 /* ─── Phase timeline ─── */
 type Phase =

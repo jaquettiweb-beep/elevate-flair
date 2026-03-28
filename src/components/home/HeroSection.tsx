@@ -71,19 +71,19 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
   /* Image opacity and position â€” full screen from the start */
-  const imageOpacity = useTransform(smooth, [0.08, 0.65], [0, 1]);
-  const imageScale = useTransform(smooth, [0.08, 0.70], [1.08, 1]);
+  const imageOpacity = useTransform(smooth, [0.08, 0.4], [0, 1]);
+  const imageScale = useTransform(smooth, [0.08, 0.4], [1.08, 1]);
   const imageInnerY = useTransform(smooth, [0, 1], ["-5%", "5%"]);
 
   /* Full screen vignette tint overlay */
-  const tintOpacity = useTransform(smooth, [0.08, 0.65], [0.22, 0.60]);
+  const tintOpacity = useTransform(smooth, [0.08, 0.4], [0.22, 0.60]);
 
   /* Info cards appear after image arrives */
-  const overlayOpacity = useTransform(smooth, [0.42, 0.75], [0, 1]);
-  const overlayY = useTransform(smooth, [0.42, 0.75], ["18px", "0px"]);
+  const overlayOpacity = useTransform(smooth, [0.25, 0.5], [0, 1]);
+  const overlayY = useTransform(smooth, [0.25, 0.5], ["18px", "0px"]);
 
   /* Inner content width: wide when centered, narrows smoothly but keeps text in 3 lines max */
-  const innerMaxWidth = useTransform(smooth, [0.08, 0.70], ["960px", "760px"]);
+  const innerMaxWidth = useTransform(smooth, [0.08, 0.4], ["960px", "760px"]);
 
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
@@ -97,7 +97,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   }, [scrollYProgress]);
 
   return (
-    <div ref={wrapperRef} style={{ height: "300vh" }}>
+    <div ref={wrapperRef} style={{ height: "150vh" }}>
       <section
         className="sticky top-0 h-screen overflow-hidden"
         aria-label="ApresentaÃ§Ã£o"
@@ -168,7 +168,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
               <div className="flex flex-col gap-3">
                 {[
-                  { icon: MapPin, title: "Tatuapé, São Paulo", sub: "R. Domingos Cassetari, 176" },
                   { icon: Clock, title: "Seg – Sex: 6h às 22h", sub: "Sáb: 7h às 16h" },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div

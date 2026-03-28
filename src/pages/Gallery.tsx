@@ -9,7 +9,7 @@ import { useGalleryImages } from "@/hooks/useGalleryImages";
 export default function Gallery() {
   const { data: images, isLoading } = useGalleryImages();
 
-  const carouselImages = (images ?? []).map((img) => ({
+  const carouselImages = (images ?? []).slice(1).map((img) => ({
     full: img.image_url,
     thumb: img.image_url,
     alt: img.alt_text || "Foto da Academia Flipper",

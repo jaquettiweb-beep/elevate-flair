@@ -109,10 +109,10 @@ export default function Footer() {
             <h4 className="font-display font-bold text-primary-foreground mb-4">Siga-nos</h4>
             <div className="flex flex-wrap gap-3">
               {[
-                { icon: Instagram, href: "https://www.instagram.com/academiaflipper", color: "bg-gradient-to-br from-[hsl(340,75%,55%)] to-[hsl(30,90%,55%)]" },
+                { icon: Instagram, href: "https://www.instagram.com/academia.flipper/", color: "bg-gradient-to-br from-[hsl(340,75%,55%)] to-[hsl(30,90%,55%)]" },
                 { icon: Facebook, href: "https://www.facebook.com/academiaflipper", color: "bg-[hsl(221,44%,41%)]" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/academiaflipper", color: "bg-[hsl(201,100%,35%)]" },
-                { icon: Youtube, href: "https://www.youtube.com/@academiaflipper", color: "bg-[hsl(0,100%,42%)]" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/academia-flipper/", color: "bg-[hsl(201,100%,35%)]" },
+                { icon: Youtube, href: "https://www.youtube.com/@academiaflipper9455", color: "bg-[hsl(0,100%,42%)]" },
               ].map(({ icon: Icon, href, color }) => (
                 <motion.a
                   key={href}

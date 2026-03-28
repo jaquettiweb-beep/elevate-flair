@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/swimming.jpg";
@@ -9,586 +9,93 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const MODALITIES = [
-  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", cta: "Agende uma aula experimental", link: "/natacao" },
-  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", cta: "Conheça nosso espaço", link: "/musculacao" },
-  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", cta: "Experimente uma aula", link: "/modalidade/yoga" },
-  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", cta: "Reserve sua vaga", link: "/modalidade/pilates-studio" },
-  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", cta: "Venha praticar", link: "/modalidade/pilates-solo" },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", cta: "Saiba mais", link: "/modalidade/hidroginastica" },
-  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", cta: "Faça uma aula grátis", link: "/modalidade/muay-thai" },
-  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", cta: "Comece agora", link: "/modalidade/jiu-jitsu" },
-  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", cta: "Matricule seu filho", link: "/modalidade/judo-infantil" },
-  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", cta: "Agende um treino", link: "/modalidade/kung-fu" },
-  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", cta: "Experimente", link: "/modalidade/krav-maga" },
-  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", cta: "Conheça a arte", link: "/modalidade/aikido" },
-  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", cta: "Inscreva-se", link: "/modalidade/ballet-infantil" },
-  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", cta: "Venha treinar", link: "/modalidade/ginastica" },
-  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", cta: "Agende sua sessão", link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", cta: "Saiba mais", link: "/modalidade/programa-60-saude" },
+  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", link: "/natacao" },
+  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", link: "/musculacao" },
+  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", link: "/modalidade/yoga" },
+  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", link: "/modalidade/pilates-studio" },
+  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", link: "/modalidade/pilates-solo" },
+  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", link: "/modalidade/hidroginastica" },
+  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", link: "/modalidade/judo-infantil" },
+  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", link: "/modalidade/kung-fu" },
+  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", link: "/modalidade/krav-maga" },
+  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", link: "/modalidade/ballet-infantil" },
+  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", link: "/modalidade/ginastica" },
+  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", link: "/modalidade/hidroterapia" },
+  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", link: "/modalidade/programa-60-saude" },
 ];
 
-const TOTAL = MODALITIES.length;
-const CARD_W = 90;
-const CARD_H = 124;
-const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
-
-// Entry animation durations
-const PHASE_LINE = 0.6;
-const PHASE_CIRCLE = 0.5;
-const PHASE_WHEEL = 1.2;
-const PHASE_MORPH_ARC = 0.7;
-const ENTRY_DURATION = PHASE_LINE + PHASE_CIRCLE + PHASE_WHEEL + PHASE_MORPH_ARC;
-
-// ─── FlipCard ────────────────────────────────────────────────────────────────
-interface FlipCardProps {
-  mod: (typeof MODALITIES)[number];
-  target: { x: number; y: number; rotation: number; scale: number; opacity: number };
-  interactive: boolean;
-  onHoverMod: (mod: (typeof MODALITIES)[number] | null) => void;
-  onClickMod: (mod: (typeof MODALITIES)[number]) => void;
-  isMobile: boolean;
-  index: number;
-}
-
-function FlipCard({ mod, target, interactive, onHoverMod, onClickMod, isMobile, index }: FlipCardProps) {
-  const [flipped, setFlipped] = useState(false);
-
-  const handleStart = useCallback(() => {
-    if (!interactive) return;
-    setFlipped(true);
-    onHoverMod(mod);
-  }, [interactive, mod, onHoverMod]);
-
-  const handleEnd = useCallback(() => {
-    if (!interactive) return;
-    setFlipped(false);
-    onHoverMod(null);
-  }, [interactive, onHoverMod]);
-
-  const handleClick = useCallback(() => {
-    if (!interactive) return;
-    document.body.style.overflow = "";
-    onClickMod(mod);
-  }, [interactive, mod, onClickMod]);
+function ModalityCard({ mod, index }: { mod: typeof MODALITIES[0], index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <motion.div
-      className="absolute cursor-pointer"
-      style={{
-        width: CARD_W,
-        height: CARD_H,
-        left: "50%",
-        top: "50%",
-        marginLeft: -CARD_W / 2,
-        marginTop: -CARD_H / 2,
-        perspective: 900,
-        zIndex: flipped ? 20 : 1,
-      }}
-      animate={{
-        x: target.x,
-        y: target.y,
-        rotate: target.rotation,
-        scale: target.scale,
-        opacity: target.opacity,
-      }}
-      transition={{ type: "spring", stiffness: 55, damping: 18 }}
-      onHoverStart={!isMobile ? handleStart : undefined}
-      onHoverEnd={!isMobile ? handleEnd : undefined}
-      onTouchStart={isMobile ? handleStart : undefined}
-      onTouchEnd={isMobile ? handleEnd : undefined}
-      onClick={handleClick}
+      className="group relative h-[320px] rounded-2xl overflow-hidden cursor-pointer"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      whileHover={{ y: -8 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      onClick={() => navigate(mod.link)}
     >
-      <motion.div
-        style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 30 }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, amount: 0.15, margin: "0px 0px -50px 0px" }}
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{
-          rotateY: { duration: 0.5, ease: [0.23, 1, 0.32, 1] },
-          default: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.15 }
-        }}
-      >
-        {/* Front */}
-        <div
-          style={{ backfaceVisibility: "hidden" }}
-          className="absolute inset-0 rounded-xl overflow-hidden border border-white/20 shadow-lg"
-        >
-          <img src={mod.img} alt={mod.name} className="w-full h-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-          <p className="absolute bottom-2 left-0 right-0 text-center text-white text-[9px] font-bold tracking-wide leading-tight px-1">
-            {mod.name}
-          </p>
+      <img src={mod.img} alt={mod.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      
+      <div className="absolute inset-0 p-6 flex flex-col justify-end">
+        <span className="text-3xl mb-3 block transform transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1">
+          {mod.emoji}
+        </span>
+        <h3 className="text-xl font-bold text-white mb-1">{mod.name}</h3>
+        
+        <AnimatePresence>
+          {isHovered && (
+            <motion.p
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="text-white/70 text-sm leading-relaxed mb-4 overflow-hidden"
+            >
+              {mod.desc}
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        <div className="flex items-center gap-2 text-secondary font-semibold text-sm">
+          <span>Saiba mais</span>
+          <motion.span animate={{ x: isHovered ? 4 : 0 }}>→</motion.span>
         </div>
-        {/* Back */}
-        <div
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-            background: "linear-gradient(135deg, hsl(221, 83%, 53%), hsl(250, 70%, 50%))",
-          }}
-          className="absolute inset-0 rounded-xl flex flex-col items-center justify-center gap-1 p-2 text-center"
-        >
-          <span className="text-xl">{mod.emoji}</span>
-          <p className="text-white text-[8px] font-bold leading-tight">{mod.name}</p>
-          <p className="text-white/80 text-[7px] leading-tight">{mod.desc}</p>
-        </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
 
-// ─── Background Overlay ──────────────────────────────────────────────────────
-function BackgroundOverlay({ hoveredMod, onNavigate }: { hoveredMod: (typeof MODALITIES)[number] | null; onNavigate: (link: string) => void }) {
-  return (
-    <AnimatePresence>
-      {hoveredMod && (
-        <motion.div
-          key={hoveredMod.name}
-          className="absolute inset-0 z-[2]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          <img src={hoveredMod.img} alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6 -mt-[15%]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-          >
-            <span className="text-4xl md:text-5xl mb-2">{hoveredMod.emoji}</span>
-            <h3 className="font-display text-xl md:text-3xl font-bold text-white mb-1">{hoveredMod.name}</h3>
-            <p className="text-white/80 text-xs md:text-sm max-w-md mb-3">{hoveredMod.desc}</p>
-            <motion.button
-              onClick={() => onNavigate(hoveredMod.link)}
-              className="inline-block px-5 py-2 rounded-full text-xs md:text-sm font-semibold text-white border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Saiba mais →
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
-// ─── Main ─────────────────────────────────────────────────────────────────────
-type Phase = "idle" | "entering" | "arc" | "exiting";
-
 export default function Modalities() {
-  const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const [phase, setPhase] = useState<Phase>("idle");
-  const [entryProgress, setEntryProgress] = useState(0);
-  const [manualRotation, setManualRotation] = useState(0); // degrees, user-controlled
-  const [hoveredMod, setHoveredMod] = useState<(typeof MODALITIES)[number] | null>(null);
-  const animFrameRef = useRef<number>(0);
-  const lastTimeRef = useRef<number>(0);
-  const dragStartRef = useRef<number>(0);
-  const dragRotStartRef = useRef<number>(0);
-  const isMobile = containerSize.width > 0 && containerSize.width < 768;
-
-  // Exit animation progress
-  const [exitProgress, setExitProgress] = useState(0);
-  const EXIT_DURATION = 1.2;
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new ResizeObserver((entries) => {
-      const e = entries[0];
-      setContainerSize({ width: e.contentRect.width, height: e.contentRect.height });
-    });
-    obs.observe(el);
-    setContainerSize({ width: el.offsetWidth, height: el.offsetHeight });
-    return () => obs.disconnect();
-  }, []);
-
-  const scatter = useMemo(() =>
-    MODALITIES.map(() => ({
-      x: (Math.random() - 0.5) * 1400,
-      y: (Math.random() - 0.5) * 800,
-      rotation: (Math.random() - 0.5) * 160,
-      scale: 0.5,
-      opacity: 0,
-    })), []);
-
-  // Lock page scroll during arc/entering/exiting phases
-  useEffect(() => {
-    if (phase === "arc" || phase === "entering" || phase === "exiting") {
-      document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = ""; };
-    }
-  }, [phase]);
-
-  // Entry animation
-  useEffect(() => {
-    if (phase !== "entering") {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-      return;
-    }
-    lastTimeRef.current = performance.now();
-    const tick = (now: number) => {
-      const dt = (now - lastTimeRef.current) / 1000;
-      lastTimeRef.current = now;
-      setEntryProgress((prev) => {
-        const next = prev + dt;
-        if (next >= ENTRY_DURATION) {
-          setPhase("arc");
-          return ENTRY_DURATION;
-        }
-        return next;
-      });
-      animFrameRef.current = requestAnimationFrame(tick);
-    };
-    animFrameRef.current = requestAnimationFrame(tick);
-    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
-  }, [phase]);
-
-  // Exit animation
-  useEffect(() => {
-    if (phase !== "exiting") return;
-    lastTimeRef.current = performance.now();
-    const tick = (now: number) => {
-      const dt = (now - lastTimeRef.current) / 1000;
-      lastTimeRef.current = now;
-      setExitProgress((prev) => {
-        const next = prev + dt;
-        if (next >= EXIT_DURATION) {
-          setPhase("idle");
-          setEntryProgress(0);
-          setExitProgress(0);
-          setManualRotation(0);
-          return 0;
-        }
-        return next;
-      });
-      animFrameRef.current = requestAnimationFrame(tick);
-    };
-    animFrameRef.current = requestAnimationFrame(tick);
-    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
-  }, [phase]);
-
-  // Snap-to-card scroll: each scroll/swipe moves exactly one card
-  const currentCardRef = useRef(0); // index of card currently at top of arc
-  const isSnappingRef = useRef(false);
-
-  useEffect(() => {
-    if (phase !== "arc") return;
-    const el = containerRef.current;
-    if (!el) return;
-
-    const spread = isMobile ? 95 : 120;
-    const step = spread / (TOTAL - 1);
-    let wheelAccum = 0;
-
-    const snapTo = (index: number) => {
-      currentCardRef.current = index;
-      setManualRotation(index * step);
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      if (isSnappingRef.current) return;
-      wheelAccum += e.deltaY;
-      if (Math.abs(wheelAccum) > 40) {
-        isSnappingRef.current = true;
-        const dir = wheelAccum > 0 ? 1 : -1;
-        snapTo(currentCardRef.current + dir);
-        wheelAccum = 0;
-        setTimeout(() => { isSnappingRef.current = false; }, 300);
-      }
-    };
-
-    // Touch drag — snap after release
-    let touchStartX = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.touches[0].clientX;
-    };
-    const handleTouchEnd = (e: TouchEvent) => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 30) {
-        const dir = dx < 0 ? 1 : -1;
-        snapTo(currentCardRef.current + dir);
-      }
-    };
-
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    el.addEventListener("touchstart", handleTouchStart, { passive: true });
-    el.addEventListener("touchend", handleTouchEnd, { passive: true });
-    return () => {
-      el.removeEventListener("wheel", handleWheel);
-      el.removeEventListener("touchstart", handleTouchStart);
-      el.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [phase, isMobile]);
-
-  const handleStart = useCallback(() => {
-    // Auto-centralizar a seção na viewport antes de travar o scroll
-    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setTimeout(() => {
-      setPhase("entering");
-      setEntryProgress(0);
-      setManualRotation(0);
-    }, 350);
-  }, []);
-
-  const handleStop = useCallback(() => {
-    setPhase("exiting");
-    setExitProgress(0);
-    setHoveredMod(null);
-  }, []);
-
-  // Circle helper
-  function circleTarget(i: number, offsetDeg: number) {
-    const minDim = Math.min(containerSize.width, containerSize.height);
-    const circleR = Math.min(minDim * 0.35, isMobile ? 150 : 260);
-    const cAngle = (i / TOTAL) * 360 + offsetDeg;
-    const cRad = (cAngle * Math.PI) / 180;
-    return { x: Math.cos(cRad) * circleR, y: Math.sin(cRad) * circleR + 30, rotation: cAngle + 90, scale: 1, opacity: 1 };
-  }
-
-  // Arc position helper
-  function arcTarget(i: number, rotationOffset: number) {
-    const baseR = Math.min(containerSize.width, containerSize.height * 1.5);
-    const arcR = baseR * (isMobile ? 1.5 : 0.85);
-    const apexY = containerSize.height * (isMobile ? 0.32 : 0.22);
-    const arcCenterY = apexY + arcR;
-    const spread = isMobile ? 95 : 120;
-    const step = spread / (TOTAL - 1);
-    const totalSpan = TOTAL * step;
-
-    // Infinite carousel: wrap each card's relative position
-    let rel = i * step - rotationOffset;
-    rel = ((rel % totalSpan) + totalSpan * 1.5) % totalSpan - totalSpan / 2;
-
-    const curAng = -90 + rel;
-    const curRad = (curAng * Math.PI) / 180;
-
-    // Fade cards far from center for clean edges
-    const distFromCenter = Math.abs(rel);
-    const fadeStart = spread / 2;
-    const opacity = distFromCenter > fadeStart
-      ? Math.max(0, 1 - (distFromCenter - fadeStart) / (step * 2))
-      : 1;
-
-    return {
-      x: Math.cos(curRad) * arcR,
-      y: Math.sin(curRad) * arcR + arcCenterY,
-      rotation: curAng + 90,
-      scale: isMobile ? 1.5 : 1.3,
-      opacity,
-    };
-  }
-
-  // Phase boundaries for entry
-  const T1 = PHASE_LINE;
-  const T2 = T1 + PHASE_CIRCLE;
-  const T3 = T2 + PHASE_WHEEL;
-  // T4 = ENTRY_DURATION (morph complete)
-
-  const isInteractive = phase === "arc";
-
-  // Arc text visibility
-  const arcTextOpacity =
-    phase === "entering" && entryProgress >= T3
-      ? Math.min((entryProgress - T3) / (PHASE_MORPH_ARC * 0.6), 1)
-      : phase === "arc" ? 1
-      : phase === "exiting" ? 1 - Math.min(exitProgress / (EXIT_DURATION * 0.4), 1)
-      : 0;
-
-  // Container height: shrink height when morphing into arc
-  const containerHeight =
-    phase === "entering" && entryProgress >= T3
-      ? `${lerp(100, 75, Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1))}vh`
-      : phase === "arc" ? "75vh"
-      : phase === "exiting" ? `${lerp(75, 100, Math.min(exitProgress / EXIT_DURATION, 1))}vh`
-      : "100vh";
-
   return (
-    <section id="modalidades" className="relative">
-      <div
-        ref={containerRef}
-        className="relative w-full overflow-hidden"
-        style={{
-          height: "100vh",
-          minHeight: 650,
-          cursor: phase === "arc" ? "grab" : "default",
-        }}
-      >
-        {/* Transparent overlay (background comes from parent parallax) */}
-        <div className="absolute inset-0 z-[1]" style={{ background: "linear-gradient(180deg, hsla(210,75%,18%,0.3) 0%, hsla(220,80%,10%,0.4) 60%, hsla(215,80%,7%,0.5) 100%)" }} />
-
-        {/* Hovered bg */}
-        <BackgroundOverlay hoveredMod={hoveredMod} onNavigate={(link) => { document.body.style.overflow = ""; navigate(link); }} />
-
-        {/* Caustics */}
-        <div className="absolute inset-0 z-[3] pointer-events-none">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute top-0"
-              style={{
-                left: `${10 + i * 18}%`, width: 2, height: "55%",
-                background: "linear-gradient(to bottom, hsla(185,80%,80%,0.07) 0%, transparent 100%)",
-                transform: `rotate(${-6 + i * 3}deg)`, transformOrigin: "top center", filter: "blur(5px)",
-              }}
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-            />
-          ))}
-        </div>
-
-        {/* Section title */}
-        <motion.div
-          className="absolute top-24 left-0 right-0 text-center z-[12] pointer-events-none"
-          animate={{ opacity: (hoveredMod ? 0 : 1) * (1 - arcTextOpacity) }}
-          transition={{ duration: 0.3 }}
-        >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-2">
-            Nossas <span style={{ color: "hsl(var(--primary-glow))" }}>Modalidades</span>
-          </h2>
-          <p className="text-white/50 text-sm">16 atividades para encontrar a sua favorita</p>
-        </motion.div>
-
-        {/* Arc overlay text */}
-        <motion.div
-          className="absolute top-24 left-0 right-0 text-center z-[12] pointer-events-none"
-          animate={{ opacity: arcTextOpacity * (hoveredMod ? 0 : 1) }}
-          transition={{ duration: 0.3 }}
-        >
-          <h2 className="font-display text-2xl lg:text-4xl font-bold text-white mb-1">
-            Escolha sua <span style={{ color: "hsl(var(--primary-glow))" }}>modalidade</span>
-          </h2>
-          <p className="text-white/40 text-xs tracking-widest uppercase">
-            {isMobile ? "deslize para navegar • toque para ver detalhes" : "scroll para navegar • passe o mouse para ver detalhes"}
-          </p>
-        </motion.div>
-
-        {/* Card stage */}
-        <div className="absolute inset-0 z-[5]">
-          {containerSize.width > 0 &&
-            MODALITIES.map((mod, i) => {
-              let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
-
-              if (phase === "idle") {
-                target = circleTarget(i, 0);
-              } else if (phase === "entering") {
-                if (entryProgress < T1) {
-                  // Scatter → Line
-                  const t = entryProgress / T1;
-                  const spacing = 68;
-                  const totalW = TOTAL * spacing;
-                  const lineX = i * spacing - totalW / 2;
-                  target = {
-                    x: lerp(scatter[i].x, lineX, t),
-                    y: lerp(scatter[i].y, 0, t),
-                    rotation: lerp(scatter[i].rotation, 0, t),
-                    scale: lerp(0.5, 1, t),
-                    opacity: t,
-                  };
-                } else if (entryProgress < T2) {
-                  // Line → Circle
-                  const t = (entryProgress - T1) / PHASE_CIRCLE;
-                  const spacing = 68;
-                  const totalW = TOTAL * spacing;
-                  const lineX = i * spacing - totalW / 2;
-                  const ct = circleTarget(i, 0);
-                  target = {
-                    x: lerp(lineX, ct.x, t),
-                    y: lerp(0, ct.y, t),
-                    rotation: lerp(0, ct.rotation, t),
-                    scale: 1,
-                    opacity: 1,
-                  };
-                } else if (entryProgress < T3) {
-                  // Wheel rotation 360°
-                  const wheelAngle = ((entryProgress - T2) / PHASE_WHEEL) * 360;
-                  target = circleTarget(i, wheelAngle);
-                } else {
-                  // Morph circle → arc
-                  const t = Math.min((entryProgress - T3) / PHASE_MORPH_ARC, 1);
-                  const ct = circleTarget(i, 0);
-                  const at = arcTarget(i, 0);
-                  target = {
-                    x: lerp(ct.x, at.x, t),
-                    y: lerp(ct.y, at.y, t),
-                    rotation: lerp(ct.rotation, at.rotation, t),
-                    scale: lerp(1, at.scale, t),
-                    opacity: 1,
-                  };
-                }
-              } else if (phase === "arc") {
-                // Static arc with manual rotation
-                target = arcTarget(i, manualRotation);
-              } else if (phase === "exiting") {
-                // Arc → circle
-                const t = Math.min(exitProgress / EXIT_DURATION, 1);
-                const at = arcTarget(i, manualRotation * (1 - t));
-                const ct = circleTarget(i, 0);
-                target = {
-                  x: lerp(at.x, ct.x, t),
-                  y: lerp(at.y, ct.y, t),
-                  rotation: lerp(at.rotation, ct.rotation, t),
-                  scale: lerp(at.scale, 1, t),
-                  opacity: 1,
-                };
-              }
-
-              return (
-                <FlipCard
-                  key={mod.name}
-                  mod={mod}
-                  target={target}
-                  interactive={isInteractive}
-                  onHoverMod={setHoveredMod}
-                  onClickMod={(m) => navigate(m.link)}
-                  isMobile={isMobile}
-                  index={i}
-                />
-              );
-            })}
-        </div>
-
-        {/* Center button */}
-        <div className="absolute inset-0 z-[6] flex items-center justify-center pointer-events-none">
-          <motion.div
-            className="pointer-events-auto"
-            animate={{ opacity: hoveredMod ? 0 : 1 }}
-            transition={{ duration: 0.3 }}
+    <section id="modalidades" className="py-24 relative z-10">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <motion.h2 
+            className="font-display text-4xl lg:text-6xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            <motion.button
-              onClick={phase === "idle" ? handleStart : phase === "entering" ? () => {
-                // Skip animation — jump straight to arc
-                setEntryProgress(ENTRY_DURATION);
-                setPhase("arc");
-              } : phase === "arc" ? handleStop : undefined}
-              className="relative px-6 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md shadow-lg shadow-black/20 hover:bg-white/20 transition-colors"
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              layout
-            >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={phase === "arc" ? "stop" : phase === "entering" ? "skip" : "start"}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="block"
-                >
-                  {phase === "arc" ? "Continuar Navegando" : phase === "entering" ? "Pular Animação ⏭" : "Ver Modalidades"}
-                </motion.span>
-              </AnimatePresence>
-            </motion.button>
-          </motion.div>
+            Nossas <span className="text-secondary">Modalidades</span>
+          </motion.h2>
+          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+            Mais de 15 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {MODALITIES.map((mod, i) => (
+            <ModalityCard key={mod.name} mod={mod} index={i} />
+          ))}
         </div>
       </div>
     </section>

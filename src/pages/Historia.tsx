@@ -66,8 +66,7 @@ const timelineData = [
         <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com o crescimento da demanda, a Flipper expandiu sua infraestrutura e passou a oferecer{" "}
           <strong className="text-secondary font-semibold">musculação</strong>,{" "}
-          <strong className="text-secondary font-semibold">judô</strong>,{" "}
-          <strong className="text-secondary font-semibold">kung fu</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
+          <strong className="text-secondary font-semibold">judô</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -147,7 +146,7 @@ const timelineData = [
             "Natação & Hidroginástica",
             "Musculação",
             "Yoga & Pilates",
-            "Judô, Kung Fu & Krav Maga",
+            "Judô & Krav Maga",
             "Ballet & Ginástica",
             "+8.000 alunos formados",
           ].map((item) => (
@@ -214,7 +213,7 @@ const Historia = () => {
           <div
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(180deg, hsl(210, 78%, 22%) 0%, hsl(212, 76%, 16%) 30%, hsl(215, 80%, 12%) 60%, hsl(218, 82%, 9%) 100%)`,
+              background: `linear-gradient(180deg, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 95%) 30%, hsl(0, 0%, 92%) 100%)`,
             }}
           />
 
@@ -231,7 +230,7 @@ const Historia = () => {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: "linear-gradient(180deg, hsla(210,78%,15%,0.75) 0%, hsla(215,80%,10%,0.88) 60%, hsl(215,80%,12%) 100%)",
+                  background: "linear-gradient(180deg, hsla(0,0%,98%,0.5) 0%, hsla(0,0%,95%,0.8) 60%, hsl(0,0%,98%) 100%)",
                 }}
               />
             </motion.div>

@@ -23,13 +23,7 @@ const BemEstar = () => {
         description="Yoga, Pilates e aulas de relaxamento na Academia Flipper. Equilíbrio entre corpo e mente para uma vida mais saudável."
       />
       <PageTransition>
-        <section className="pt-32 pb-16 relative overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(180deg, hsl(205, 72%, 55%) 0%, hsl(210, 75%, 30%) 50%, hsl(215, 80%, 14%) 100%)`,
-            }}
-          />
+        <section className="pt-32 pb-16 bg-white relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
               <BackToModalities />

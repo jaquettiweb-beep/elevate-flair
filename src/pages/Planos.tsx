@@ -15,7 +15,7 @@ const plans = [
     features: [
       "Musculação",
       "1 Luta 1x por semana",
-      "Ginástica",
+      "Ginástica (Pendente Confirmação)",
     ],
     description: "Ideal para quem quer começar com uma modalidade.",
   },
@@ -28,12 +28,12 @@ const plans = [
     features: [
       "Musculação",
       "Lutas",
-      "Ginástica",
+      "Ginástica (Pendente Confirmação)",
       "Pilates",
       "Yoga",
     ],
     popular: true,
-    description: "Acesso completo a todas as atividades terrestres.",
+    description: "Acesso completo a todas as atividades terrestres. Válido para 1 atividade apenas.",
   },
   {
     name: "Hidro",

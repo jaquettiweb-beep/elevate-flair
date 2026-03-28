@@ -21,13 +21,7 @@ const Natacao = () => {
         description="Aulas de natação para todas as idades na Academia Flipper. Piscina semiolímpica aquecida, do bebê ao idoso."
       />
       <PageTransition>
-        <section className="pt-32 pb-16 relative overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(180deg, hsl(205, 72%, 55%) 0%, hsl(210, 75%, 30%) 50%, hsl(215, 80%, 14%) 100%)`,
-            }}
-          />
+        <section className="pt-32 pb-16 bg-white relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
               <BackToModalities />
@@ -94,7 +88,7 @@ const Natacao = () => {
                   <Waves className="w-7 h-7 text-secondary" /> Nossa Piscina
                 </h2>
                 <ul className="space-y-3 text-muted-foreground text-lg">
-                  <li>• Piscina semiolímpica (25m) aquecida a 28°C</li>
+                  <li>• Piscina semiolímpica (25m) aquecida</li>
                   <li>• Tratamento com ozônio — menos cloro, mais conforto</li>
                   <li>• Vestiários completos com chuveiro quente</li>
                   <li>• Profissionais formados e experientes</li>

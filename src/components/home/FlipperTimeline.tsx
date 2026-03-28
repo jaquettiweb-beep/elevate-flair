@@ -113,7 +113,7 @@ export default function FlipperTimeline() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, hsla(185,80%,50%,0.10) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, hsla(24,95%,53%,0.08) 0%, transparent 70%)",
         }}
       />
       {/* Animated caustic pattern */}
@@ -122,7 +122,7 @@ export default function FlipperTimeline() {
         animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
         transition={{ duration: 30, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' seed='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='30'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%2360d9d9' stroke-width='1' filter='url(%23c)'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%2360d9d9' stroke-width='0.8' filter='url(%23c)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' seed='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='30'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%23ff6b00' stroke-width='1' filter='url(%23c)'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%23ff6b00' stroke-width='0.8' filter='url(%23c)'/%3E%3C/svg%3E")`,
           backgroundSize: "400px 400px",
         }}
       />
@@ -143,7 +143,7 @@ export default function FlipperTimeline() {
             height: b.size,
             left: b.left,
             bottom: "-2%",
-            background: "radial-gradient(circle at 30% 30%, hsla(185,90%,80%,0.35), hsla(185,80%,60%,0.08))",
+            background: "radial-gradient(circle at 30% 30%, hsla(24,95%,80%,0.25), hsla(24,95%,53%,0.04))",
             border: "1px solid hsla(185,80%,70%,0.15)",
           }}
           animate={{ y: [0, -800], opacity: [0, 0.6, 0.4, 0] }}

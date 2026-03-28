@@ -88,7 +88,10 @@ export default function Testimonials() {
       {/* Subtle decorative glow for light theme */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, hsla(221,83%,53%,0.03) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
+          style={{ 
+            background: "radial-gradient(ellipse 70% 50% at 50% 50%, hsla(24,95%,53%,0.08) 0%, transparent 70%)", 
+            transform: "translate(30%, -30%)" 
+          }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

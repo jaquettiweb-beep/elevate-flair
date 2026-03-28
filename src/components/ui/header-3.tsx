@@ -88,15 +88,15 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
 					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-300', {
-						'bg-[#111827eb] backdrop-blur-[10px] border-white/5 shadow-lg': scrolled,
+						'bg-[#111827] border-white/5 shadow-lg': scrolled,
 						'bg-transparent': !scrolled,
 					})}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
 						{/* Esquerda: Logo */}
 						<div className="flex w-full md:w-1/3 items-center justify-start">
-							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity">
-                                <img src={flipperLogo} alt="Academia Flipper" className="h-[50px] w-auto object-contain" />
+							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 transition-opacity">
+                                <img src={flipperLogo} alt="Academia Flipper" className="h-[52px] w-auto object-contain antialiased" />
 							</Link>
 						</div>
 
@@ -113,8 +113,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-white/75 hover:text-[#FF6B00] transition-colors">Academia</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+                                      <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#FF6B00] transition-colors font-medium">Academia</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-white p-2 rounded-xl border border-[#E5E7EB] shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
                                         <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
                                           {academiaLinks.map((item, i) => (
                                             <li key={i}>
@@ -122,20 +122,12 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                             </li>
                                           ))}
                                         </ul>
-                                        <div className="p-2">
-                                          <p className="text-muted-foreground text-sm">
-                                            Quer treinar conosco?{' '}
-                                            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:underline">
-                                              Agende experimental.
-                                            </a>
-                                          </p>
-                                        </div>
                                       </NavigationMenuContent>
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-white/75 hover:text-[#FF6B00] transition-colors">Sobre</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+                                      <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#FF6B00] transition-colors font-medium">Sobre</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-white p-2 rounded-xl border border-[#E5E7EB] shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
                                         <div className="grid w-[460px] grid-cols-2 gap-4">
                                           <ul className="space-y-2 p-2">
                                             {sobreLinks.map((item, i) => (
@@ -144,16 +136,16 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                               </li>
                                             ))}
                                           </ul>
-                                          <ul className="space-y-2 p-3">
+                                          <ul className="space-y-2 p-3 border-l border-[#F3F4F6]">
                                             {sobreLinks2.map((item, i) => (
                                               <li key={i}>
                                                 <NavigationMenuLink
                                                   asChild
-                                                  className="flex p-2 hover:bg-accent flex-row rounded-md items-center gap-x-2"
+                                                  className="flex p-2 hover:bg-[#F9F7F4] flex-row rounded-md items-center gap-x-2 transition-colors"
                                                 >
                                                   <Link to={item.href}>
-                                                    <item.icon className="text-foreground size-4 shrink-0" />
-                                                    <span className="font-medium text-sm">{item.title}</span>
+                                                    <item.icon className="text-[#111827]/60 size-4 shrink-0" />
+                                                    <span className="font-medium text-sm text-[#111827]">{item.title}</span>
                                                   </Link>
                                                 </NavigationMenuLink>
                                               </li>
@@ -173,9 +165,9 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-[6px] px-[18px] py-[8px] text-[13px] font-medium text-white bg-[#FF6B00] hover:bg-[#e66000] transition-all duration-300 shadow-lg shadow-orange-500/20"
+									className="rounded-[10px] px-[22px] py-[10px] text-[14px] font-bold text-white bg-[#FF6B00] hover:bg-[#e66000] transition-all duration-300 shadow-md hover:shadow-lg active:scale-95"
 								>
-									Matricule-se
+									Conheça a Flipper
 								</a>
 							</div>
 							<Button
@@ -265,8 +257,8 @@ function NavLink({ to, children, className }: { to: string; children: React.Reac
     <Link
       to={to}
       className={cn(
-        "relative py-2 text-sm font-medium transition-colors group",
-        isActive ? "text-[#FF6B00]" : "text-white/75 hover:text-[#FF6B00]",
+        "relative py-2 text-sm font-bold transition-colors group",
+        isActive ? "text-[#FF6B00]" : "text-white/80 hover:text-[#FF6B00]",
         className
       )}
     >
@@ -291,14 +283,14 @@ function ListItem({
 	...props
 }: React.ComponentProps<typeof NavigationMenuLink> & LinkItem & { onClick?: () => void }) {
 	return (
-		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-white/[0.04] hover:bg-white/[0.04] rounded-lg p-2.5 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
+		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-[#F9F7F4] hover:bg-[#F9F7F4] rounded-lg p-3 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
 			<Link to={href} onClick={onClick} className="flex items-center w-full">
-				<div className="bg-white/[0.04] flex shrink-0 aspect-square size-9 items-center justify-center rounded-lg">
-					<Icon className="text-foreground/60 size-4" />
+				<div className="bg-[#111827]/5 flex shrink-0 aspect-square size-10 items-center justify-center rounded-lg">
+					<Icon className="text-[#FF6B00] size-5" />
 				</div>
-				<div className="flex flex-col items-start justify-center ml-2">
-					<span className="font-medium text-sm text-foreground/80">{title}</span>
-					{description && <span className="text-muted-foreground/60 text-[10px] leading-snug">{description}</span>}
+				<div className="flex flex-col items-start justify-center ml-3">
+					<span className="font-bold text-sm text-[#111827]">{title}</span>
+					{description && <span className="text-[#6B7280] text-[11px] leading-snug">{description}</span>}
 				</div>
 			</Link>
 		</NavigationMenuLink>

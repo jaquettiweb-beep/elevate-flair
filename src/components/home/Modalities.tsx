@@ -81,7 +81,7 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
         >
           {mod.category}
         </span>
-        <h3 className="text-[15px] font-semibold text-[#111827] mb-1">{mod.name}</h3>
+        <h3 className="text-[17px] font-bold text-[#111827] mb-1 leading-tight">{mod.name}</h3>
         <p className="text-[13px] text-[#9CA3AF] mb-3 line-clamp-2 leading-[1.7]">
           {mod.desc}
         </p>
@@ -97,14 +97,20 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
 
 export default function Modalities() {
   return (
-    <section id="modalidades" className="py-12 lg:py-20 px-5 lg:px-10 bg-white relative z-10">
+    <section id="modalidades" className="py-12 lg:py-20 px-5 lg:px-10 bg-[#F9F7F4] relative z-10 transition-colors duration-500">
       <div className="container mx-auto">
         <div className="text-center mb-12 sm:text-left sm:mb-16">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="block text-[#FF6B00] text-[11px] font-bold tracking-[0.14em] uppercase mb-3"
+            style={{
+              background: "linear-gradient(135deg, #FF6B00 0%, #FF8533 50%, #FF6B00 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+            className="block text-[11px] font-bold tracking-[0.14em] uppercase mb-3"
           >
             Nossas Modalidades
           </motion.span>

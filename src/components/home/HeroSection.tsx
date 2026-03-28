@@ -41,7 +41,7 @@ function MergulheWord() {
             paddingBottom: "0.2em",
             marginBottom: "-0.2em",
             background:
-              "linear-gradient(135deg, hsl(185,80%,68%), hsl(195,90%,73%), hsl(170,70%,58%))",
+              "linear-gradient(135deg, #FF6B00 0%, #FF9E52 50%, #FF6B00 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -75,20 +75,20 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /* Image opacity and position — full screen from the start */
-  const imageOpacity = useTransform(smooth, [0.08, 0.4], [0, 1]);
-  const imageScale = useTransform(smooth, [0.08, 0.4], [1.08, 1]);
-  const imageInnerY = useTransform(smooth, [0, 1], ["-5%", "5%"]);
+  /* Image opacity and position — responsive to initial scroll */
+  const imageOpacity = useTransform(smooth, [0.02, 0.25], [0, 1]);
+  const imageScale = useTransform(smooth, [0.02, 0.25], [1.08, 1]);
+  const imageInnerY = useTransform(smooth, [0, 1], ["-2%", "2%"]);
 
   /* Full screen vignette tint overlay */
-  const tintOpacity = useTransform(smooth, [0.08, 0.4], [0.22, 0.60]);
+  const tintOpacity = useTransform(smooth, [0.02, 0.25], [0.22, 0.60]);
 
   /* Info cards appear after image arrives */
-  const overlayOpacity = useTransform(smooth, [0.25, 0.5], [0, 1]);
-  const overlayY = useTransform(smooth, [0.25, 0.5], ["18px", "0px"]);
+  const overlayOpacity = useTransform(smooth, [0.15, 0.35], [0, 1]);
+  const overlayY = useTransform(smooth, [0.15, 0.35], ["18px", "0px"]);
 
-  /* Inner content width: wide when centered, narrows smoothly but keeps text in 3 lines max */
-  const innerMaxWidth = useTransform(smooth, [0.08, 0.4], ["960px", "760px"]);
+  /* Inner content width: more responsive narrowing */
+  const innerMaxWidth = useTransform(smooth, [0.02, 0.25], ["960px", "760px"]);
 
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
@@ -102,7 +102,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   }, [scrollYProgress]);
 
   return (
-    <div ref={wrapperRef} style={{ height: "150vh" }}>
+    <div ref={wrapperRef} style={{ height: "125vh" }}>
       <section
         className="sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
@@ -125,10 +125,10 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           className="absolute top-0 right-0 h-full w-full z-[5] pointer-events-none"
           style={{ opacity: imageOpacity }}
         >
-          {/* New Requested Gradient Overlay */}
+          {/* New Requested Gradient Overlay - Brand Legibility */}
           <div 
             className="absolute inset-0 z-15" 
-            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)' }} 
+            style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%)' }} 
           />
 
           {/* Photo */}
@@ -224,12 +224,12 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             </motion.div>
 
             <h1
-              className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1] mb-7 tracking-tight w-full"
-              style={{ overflow: "visible" }}
+              className="font-display text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.95] mb-8 tracking-tighter w-full"
+              style={{ lg: { letterSpacing: '-0.04em' } } as any}
             >
               <MergulheWord />
               <motion.span
-                className="block text-white mt-1"
+                className="block text-white mt-2"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.5 }}
@@ -258,16 +258,12 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full px-7 py-3.5 text-sm font-bold flex items-center justify-center gap-2.5 text-white"
-                style={{
-                  background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
-                  boxShadow: "0 8px 30px hsla(185,80%,45%,0.3)",
-                }}
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
+                className="rounded-[12px] px-10 py-4 text-lg font-black flex items-center justify-center gap-3 text-white bg-[#FF6B00] shadow-xl shadow-orange-600/30"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.96 }}
               >
-                <Phone size={16} />
-                Aula Experimental Grátis
+                <Phone size={20} fill="white" />
+                Matricule-se Agora
               </motion.a>
               <motion.a
                 href="#modalidades"

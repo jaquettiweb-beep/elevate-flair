@@ -29,38 +29,36 @@ export default function Footer() {
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
       <motion.div
-        className="container mx-auto px-4 py-16 relative z-10"
+        className="container mx-auto px-6 py-20 relative z-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* About */}
-          <motion.div variants={itemVariants}>
-            <h3 className="font-display text-2xl font-bold text-primary-foreground mb-4">FLIPPER</h3>
-            <p className="text-footer-foreground text-sm leading-relaxed">
-              Academia completa em São Paulo, oferecendo as melhores modalidades esportivas e aquáticas.
-              Transformando vidas através do esporte há mais de 50 anos.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24">
+          {/* Column 1: Logo + Tagline */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-6">
+            <h3 className="font-display text-3xl font-black text-white tracking-tight">FLIPPER</h3>
+            <p className="text-white/60 text-base leading-relaxed max-w-sm">
+              Uma academia humana, feita para pessoas. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
             </p>
           </motion.div>
 
-          {/* Quick Links */}
-          <motion.div variants={itemVariants}>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Links Rápidos</h4>
-            <nav className="flex flex-col gap-2" aria-label="Links do rodapé">
+          {/* Column 2: Quick Links */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-6">
+            <h4 className="font-display font-bold text-white text-lg">Explorar</h4>
+            <nav className="flex flex-col gap-4" aria-label="Links do rodapé">
               {[
                 { label: "Home", path: "/" },
                 { label: "Planos", path: "/planos" },
                 { label: "Horários", path: "/horarios" },
-                { label: "Galeria", path: "/galeria" },
+                { label: "Nossa História", path: "/historia" },
                 { label: "Contato", path: "/contato" },
-                { label: "Trabalhe Conosco", path: "/trabalhe-conosco" },
               ].map((l) => (
                 <Link
                   key={l.path}
                   to={l.path}
-                  className="text-footer-foreground text-sm hover:text-primary-foreground hover:translate-x-1 transition-all duration-200"
+                  className="text-white/50 text-sm font-medium hover:text-[#FF6B00] hover:translate-x-1 transition-all duration-200"
                 >
                   {l.label}
                 </Link>
@@ -68,89 +66,64 @@ export default function Footer() {
             </nav>
           </motion.div>
 
-          {/* Contact */}
-          <motion.div variants={itemVariants}>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Contato</h4>
-            <ul className="space-y-3 text-sm text-footer-foreground">
-              <li className="flex items-start gap-2">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-secondary" />
-                <span>Av. Vereador José Diniz, 2583 – Brooklin, São Paulo – SP</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone size={16} className="shrink-0 text-secondary" />
-                <a href="tel:+551138762340" className="hover:text-primary-foreground transition-colors">
+          {/* Column 3: Social + Contact */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <h4 className="font-display font-bold text-white text-lg">Conecte-se</h4>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { icon: Instagram, href: "https://www.instagram.com/academia.flipper/", label: "Instagram" },
+                  { icon: Youtube, href: "https://www.youtube.com/@academiaflipper9455", label: "YouTube" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/company/academia-flipper/", label: "LinkedIn" },
+                ].map(({ icon: Icon, href, label }) => (
+                  <motion.a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 text-white/70 hover:bg-[#FF6B00] hover:text-white transition-all duration-300"
+                    aria-label={`Seguir no ${label}`}
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <Icon size={24} />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 border-t border-white/10 pt-6">
+              <div className="flex items-start gap-3 text-sm text-white/60">
+                <MapPin size={18} className="shrink-0 text-[#FF6B00] mt-0.5" />
+                <span>Av. Vereador José Diniz, 2583 – Brooklin, SP</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-white/60">
+                <Phone size={18} className="shrink-0 text-[#FF6B00]" />
+                <a href="tel:+551138762340" className="hover:text-white transition-colors">
                   (11) 3876-2340
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone size={16} className="shrink-0 text-secondary" />
-                <a href="tel:+5511944440557" className="hover:text-primary-foreground transition-colors">
-                  (11) 94444-0557 (WhatsApp)
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail size={16} className="shrink-0 text-secondary" />
-                <a href="mailto:contato@academiaflipper.com.br" className="hover:text-primary-foreground transition-colors">
-                  contato@academiaflipper.com.br
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock size={16} className="mt-0.5 shrink-0 text-secondary" />
-                <div>
-                  <p>Seg–Sex: 6h – 22h</p>
-                  <p>Sáb: 6h – 13h</p>
-                </div>
-              </li>
-            </ul>
-          </motion.div>
-
-          {/* Social */}
-          <motion.div variants={itemVariants}>
-            <h4 className="font-display font-bold text-primary-foreground mb-4">Siga-nos</h4>
-            <div className="flex flex-wrap gap-3">
-              {[
-                { icon: Instagram, href: "https://www.instagram.com/academia.flipper/", color: "bg-gradient-to-br from-[hsl(340,75%,55%)] to-[hsl(30,90%,55%)]" },
-                { icon: Facebook, href: "https://www.facebook.com/academiaflipper", color: "bg-[hsl(221,44%,41%)]" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/academia-flipper/", color: "bg-[hsl(201,100%,35%)]" },
-                { icon: Youtube, href: "https://www.youtube.com/@academiaflipper9455", color: "bg-[hsl(0,100%,42%)]" },
-              ].map(({ icon: Icon, href, color }) => (
-                <motion.a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${color} w-10 h-10 rounded-full flex items-center justify-center text-primary-foreground transition-all`}
-                  aria-label={`Seguir no ${Icon.displayName || "social"}`}
-                  whileHover={{ scale: 1.2, y: -3, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Icon size={18} />
-                </motion.a>
-              ))}
+              </div>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center justify-center gap-2 bg-[#FF6B00] text-white rounded-[10px] px-6 py-3 text-sm font-bold shadow-lg shadow-orange-600/20"
+              >
+                Atendimento via WhatsApp
+              </a>
             </div>
-            <motion.a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 bg-[hsl(142,70%,40%)] text-primary-foreground rounded-full px-5 py-2 text-sm font-semibold"
-              whileHover={{ scale: 1.08, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Phone size={16} />
-              WhatsApp
-            </motion.a>
           </motion.div>
         </div>
 
         {/* Bottom */}
         <motion.div
-          className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-footer-foreground text-xs"
+          className="mt-16 pt-8 border-t border-white/5 text-center text-white/30 text-xs"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <p>© {new Date().getFullYear()} Academia Flipper. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Academia Flipper. Todos os direitos reservados. Design com Alma.</p>
         </motion.div>
       </motion.div>
 

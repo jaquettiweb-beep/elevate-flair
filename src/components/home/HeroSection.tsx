@@ -87,8 +87,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   const overlayOpacity = useTransform(smooth, [0.15, 0.35], [0, 1]);
   const overlayY = useTransform(smooth, [0.15, 0.35], ["18px", "0px"]);
 
-  /* Inner content width: more responsive narrowing */
-  const innerMaxWidth = useTransform(smooth, [0.02, 0.25], ["960px", "760px"]);
+  /* Inner content width: prevent shrinking to avoid unexpected text line breaks */
+  const innerMaxWidth = useTransform(smooth, [0.02, 0.25], ["960px", "960px"]);
 
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
@@ -176,9 +176,10 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 </span>
               </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 {[
                   { icon: Clock, title: "Seg – Sex: 6h às 22h", sub: "Sáb: 7h às 16h" },
+                  { icon: MapPin, title: "Av. Ver. José Diniz, 2583", sub: "Brooklin, SP" },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div
                     key={title}

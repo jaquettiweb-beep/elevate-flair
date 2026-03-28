@@ -16,6 +16,11 @@ const STATS = [
 /* ─────────────────────────────────────────────────────
    Letter-by-letter blur-stagger for "Mergulhe"
 ───────────────────────────────────────────────────── */
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as any } },
+};
+
 function MergulheWord() {
   return (
     <motion.span
@@ -53,9 +58,9 @@ function MergulheWord() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────────────────
    Main HeroSection
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────────────────── */
 interface HeroSectionProps {
   introComplete?: boolean;
 }
@@ -70,7 +75,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
   const smooth = useSpring(scrollYProgress, { stiffness: 60, damping: 20, restDelta: 0.001 });
 
-  /* Image opacity and position â€” full screen from the start */
+  /* Image opacity and position — full screen from the start */
   const imageOpacity = useTransform(smooth, [0.08, 0.4], [0, 1]);
   const imageScale = useTransform(smooth, [0.08, 0.4], [1.08, 1]);
   const imageInnerY = useTransform(smooth, [0, 1], ["-5%", "5%"]);
@@ -100,7 +105,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
     <div ref={wrapperRef} style={{ height: "150vh" }}>
       <section
         className="sticky top-0 h-screen overflow-hidden"
-        aria-label="ApresentaÃ§Ã£o"
+        aria-label="Apresentação"
         style={{
           background:
             "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
@@ -115,11 +120,16 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           }}
         />
 
-        {/* â•â•â•â• IMAGE COLUMN â•â•â•â• */}
+        {/* ──── IMAGE COLUMN ──── */}
         <motion.div
           className="absolute top-0 right-0 h-full w-full z-[5] pointer-events-none"
           style={{ opacity: imageOpacity }}
         >
+          {/* New Requested Gradient Overlay */}
+          <div 
+            className="absolute inset-0 z-15" 
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)' }} 
+          />
 
           {/* Photo */}
           <motion.div

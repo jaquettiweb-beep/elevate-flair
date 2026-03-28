@@ -50,12 +50,6 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 export default function Stats() {
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style={{ background: "radial-gradient(circle, hsla(185,80%,45%,0.06) 0%, transparent 70%)" }} />
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-14"
@@ -64,11 +58,11 @@ export default function Stats() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-3">
-            Nossos <span className="text-secondary">Números</span>
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#111827] mb-3">
+            Nossos <span className="text-[#FF6B00]">Números</span>
           </h2>
-          <p className="text-white/40 text-sm max-w-md mx-auto">
-            Décadas de dedicação traduzidas em resultados
+          <p className="text-[#6B7280] text-[15px] max-w-md mx-auto">
+            Décadas de dedicação traduzidas em resultados expressivos para sua saúde.
           </p>
         </motion.div>
 
@@ -80,32 +74,21 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ type: "spring", stiffness: 70, damping: 18, delay: i * 0.12 }}
-              whileHover={{ scale: 1.06, y: -8, transition: { duration: 0.3 } }}
+              whileHover={{ scale: 1.05, y: -5, transition: { duration: 0.3 } }}
               className="relative group cursor-default"
             >
-              {/* Glass card */}
-              <div className="relative rounded-2xl p-6 lg:p-8 text-center overflow-hidden"
-                style={{
-                  background: "hsla(190,60%,95%,0.06)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                  border: "1px solid hsla(185,80%,70%,0.1)",
-                  boxShadow: "0 8px 32px hsla(0,0%,0%,0.12), inset 0 1px 0 hsla(0,0%,100%,0.05)",
-                }}
-              >
-                {/* Glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(circle at 50% 50%, ${s.color.replace('1)', '0.08)')}, transparent 70%)` }} />
+              {/* Card design matching Modalities */}
+              <div className="relative bg-white border border-[#E5E7EB] rounded-2xl p-6 lg:p-8 text-center overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-md">
+                {/* Accent bar */}
+                <div className="absolute top-0 left-0 w-full h-[3px]" style={{ background: s.color }} />
 
                 {/* Icon container */}
                 <motion.div
-                  className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center relative"
+                  className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center relative shadow-inner"
                   style={{
-                    background: `linear-gradient(135deg, ${s.color.replace('1)', '0.15)')}, ${s.color.replace('1)', '0.05)')})`,
-                    border: `1px solid ${s.color.replace('1)', '0.2)')}`,
+                    background: `linear-gradient(135deg, ${s.color.replace('1)', '0.1)')}, ${s.color.replace('1)', '0.05)')})`,
+                    border: `1px solid ${s.color.replace('1)', '0.15)')}`,
                   }}
-                  whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
                 >
                   <s.icon size={24} style={{ color: s.color }} />
                 </motion.div>
@@ -113,10 +96,10 @@ export default function Stats() {
                 <Counter target={s.value} suffix={s.suffix} />
                 
                 {/* Divider line */}
-                <div className="w-8 h-[2px] mx-auto my-3 rounded-full"
-                  style={{ background: `linear-gradient(90deg, transparent, ${s.color.replace('1)', '0.4)')}, transparent)` }} />
+                <div className="w-8 h-[2px] mx-auto my-3 rounded-full opacity-30"
+                  style={{ background: s.color }} />
                 
-                <p className="text-white/60 text-sm font-medium tracking-wide">{s.label}</p>
+                <p className="text-[#6B7280] text-sm font-medium tracking-wide">{s.label}</p>
               </div>
             </motion.div>
           ))}

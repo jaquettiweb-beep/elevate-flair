@@ -57,66 +57,31 @@ const Index = () => {
         />
         <PageTransition>
           <HeroSection introComplete={introComplete} />
-          <div
-            style={{
-              background: `linear-gradient(
-                180deg,
-                hsl(185, 70%, 92%) 0%,
-                hsl(195, 65%, 85%) 15%,
-                hsl(200, 68%, 75%) 30%,
-                hsl(205, 72%, 55%) 50%,
-                hsl(210, 75%, 30%) 70%,
-                hsl(212, 78%, 20%) 85%,
-                hsl(215, 80%, 14%) 100%
-              )`,
-            }}
-          >
+          <section id="timeline">
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <FlipperTimeline />
             </motion.div>
-            <SectionDivider variant="wave" />
+          </section>
 
-            {/* Parallax wrapper: Modalities → Stats */}
-            <div ref={parallaxRef} className="relative overflow-hidden">
-              {/* Parallax fachada background */}
-              <motion.div
-                className="absolute inset-0 z-[0]"
-                style={{ y: bgY, top: "-15%", bottom: "-15%", height: "130%" }}
-              >
-                <img
-                  src={fachadaImg}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0" style={{
-                  background: "linear-gradient(180deg, hsla(210,75%,18%,0.82) 0%, hsla(220,80%,10%,0.85) 40%, hsla(215,80%,7%,0.88) 70%, hsla(210,75%,12%,0.92) 100%)",
-                  mixBlendMode: "multiply",
-                }} />
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }} />
-              </motion.div>
+          <Modalities />
 
-              <div className="relative z-[1]">
-                <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
-                  <Modalities />
-                </motion.div>
-                <SectionDivider variant="curved" />
-                <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
-                  <Stats />
-                </motion.div>
-              </div>
-            </div>
+          <section id="stats">
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Stats />
+            </motion.div>
+          </section>
 
-            <SectionDivider variant="wave" flip />
+          <section id="testimonials">
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <Testimonials />
             </motion.div>
-            <SectionDivider variant="curved" flip />
+          </section>
+
+          <section id="ctasection">
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <CTASection />
             </motion.div>
-          </div>
+          </section>
         </PageTransition>
       </Layout>
     </>

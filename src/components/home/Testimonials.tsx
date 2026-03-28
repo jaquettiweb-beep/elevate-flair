@@ -85,12 +85,10 @@ const testimonialsData: Testimonial[] = [
 export default function Testimonials() {
   return (
     <section className="py-24 lg:py-32 overflow-hidden relative">
-      {/* Decorative glow */}
+      {/* Subtle decorative glow for light theme */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, hsla(221,83%,53%,0.05) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(circle, hsla(24,95%,53%,0.04) 0%, transparent 70%)", transform: "translate(-30%, 30%)" }} />
+          style={{ background: "radial-gradient(circle, hsla(221,83%,53%,0.03) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -105,25 +103,25 @@ export default function Testimonials() {
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
             style={{
-              background: "hsla(185,80%,45%,0.1)",
-              border: "1px solid hsla(185,80%,45%,0.2)",
+              background: "#EBF5FF",
+              border: "1px solid #BFDBFE",
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <MessageCircle size={14} style={{ color: "hsl(185,80%,45%)" }} />
-            <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "hsl(185,80%,65%)" }}>
+            <MessageCircle size={14} style={{ color: "#1E40AF" }} />
+            <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "#1E40AF" }}>
               Depoimentos Reais
             </span>
           </motion.div>
 
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-white mb-4">
-            O que nossos <span className="text-secondary">alunos</span> dizem
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#111827] mb-4">
+            O que nossos <span className="text-[#FF6B00]">alunos</span> dizem
           </h2>
-          <p className="text-white/50 max-w-xl mx-auto text-lg">
-            Milhares de alunos confiam na Flipper para alcançar seus objetivos.
+          <p className="text-[#6B7280] max-w-xl mx-auto text-lg">
+            Milhares de alunos confiam na Flipper para alcançar seus objetivos e transformar suas vidas.
           </p>
         </motion.div>
 
@@ -144,11 +142,11 @@ export default function Testimonials() {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, transparent, hsla(185,80%,70%,0.2))" }} />
-          <p className="text-white/30 text-xs tracking-[0.2em] uppercase font-medium">
+          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, transparent, #E5E7EB)" }} />
+          <p className="text-[#9CA3AF] text-xs tracking-[0.2em] uppercase font-medium">
             Arraste para ver mais depoimentos
           </p>
-          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, hsla(185,80%,70%,0.2), transparent)" }} />
+          <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, #E5E7EB, transparent)" }} />
         </motion.div>
       </div>
     </section>

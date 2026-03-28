@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/swimming.jpg";
 import yogaImg from "@/assets/yoga.jpg";
@@ -8,66 +8,87 @@ import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
+type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
+
+const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
+  "Aquático": { bg: "#EBF5FF", text: "#1E40AF" },
+  "Luta": { bg: "#FEF2F2", text: "#991B1B" },
+  "Bem-estar": { bg: "#F0FDF4", text: "#166534" },
+  "Fitness": { bg: "#FFFBEB", text: "#92400E" },
+  "Infantil": { bg: "#F5F3FF", text: "#5B21B6" },
+};
+
 const MODALITIES = [
-  { name: "Natação", desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, emoji: "🏊", link: "/natacao" },
-  { name: "Musculação", desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, emoji: "💪", link: "/musculacao" },
-  { name: "Yoga", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, emoji: "🧘", link: "/modalidade/yoga" },
-  { name: "Pilates Studio", desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, emoji: "🤸", link: "/modalidade/pilates-studio" },
-  { name: "Pilates Solo", desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, emoji: "🤸", link: "/modalidade/pilates-solo" },
-  { name: "Hidroginástica", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, emoji: "🌊", link: "/modalidade/hidroginastica" },
-  { name: "Muay Thai", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, emoji: "🥊", link: "/modalidade/muay-thai" },
-  { name: "Jiu Jitsu", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, emoji: "🥋", link: "/modalidade/jiu-jitsu" },
-  { name: "Judô (infantil)", desc: "Disciplina e coordenação motora para crianças.", img: martialImg, emoji: "🥋", link: "/modalidade/judo-infantil" },
-  { name: "Kung Fu", desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, emoji: "🥋", link: "/modalidade/kung-fu" },
-  { name: "Krav Maga", desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, emoji: "🛡️", link: "/modalidade/krav-maga" },
-  { name: "Aikidô", desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, emoji: "☯️", link: "/modalidade/aikido" },
-  { name: "Ballet (infantil)", desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, emoji: "🩰", link: "/modalidade/ballet-infantil" },
-  { name: "Ginástica", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, emoji: "🤾", link: "/modalidade/ginastica" },
-  { name: "Hidroterapia", desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, emoji: "💧", link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, emoji: "❤️", link: "/modalidade/programa-60-saude" },
+  { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, link: "/natacao" },
+  { name: "Musculação", category: "Fitness" as Category, desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, link: "/musculacao" },
+  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
+  { name: "Pilates Studio", category: "Bem-estar" as Category, desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, link: "/modalidade/pilates-studio" },
+  { name: "Pilates Solo", category: "Fitness" as Category, desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, link: "/modalidade/pilates-solo" },
+  { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, link: "/modalidade/hidroginastica" },
+  { name: "Muay Thai", category: "Luta" as Category, desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", category: "Infantil" as Category, desc: "Disciplina e coordenação motora para crianças.", img: martialImg, link: "/modalidade/judo-infantil" },
+  { name: "Kung Fu", category: "Luta" as Category, desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, link: "/modalidade/kung-fu" },
+  { name: "Krav Maga", category: "Luta" as Category, desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, link: "/modalidade/krav-maga" },
+  { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, link: "/modalidade/ballet-infantil" },
+  { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, link: "/modalidade/ginastica" },
+  { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, link: "/modalidade/hidroterapia" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, link: "/modalidade/programa-60-saude" },
 ];
 
-function ModalityCard({ mod, index }: { mod: typeof MODALITIES[0], index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+};
+
+const cardVariants: any = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.5, 
+      ease: [0.22, 1, 0.36, 1] 
+    } 
+  },
+};
+
+function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
   const navigate = useNavigate();
+  const style = CATEGORY_STYLES[mod.category];
 
   return (
     <motion.div
-      className="group relative h-[320px] rounded-2xl overflow-hidden cursor-pointer"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      whileHover={{ y: -8 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      variants={cardVariants}
+      className="group bg-white border border-[#E5E7EB] rounded-[14px] overflow-hidden transition-all duration-250 hover:-translate-y-1 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] cursor-pointer"
       onClick={() => navigate(mod.link)}
     >
-      <img src={mod.img} alt={mod.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      <div className="h-[3px] bg-[#FF6B00] w-full" />
+      <div className="h-[160px] w-full overflow-hidden">
+        <img src={mod.img} alt={mod.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+      </div>
       
-      <div className="absolute inset-0 p-6 flex flex-col justify-end">
-        <span className="text-3xl mb-3 block transform transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1">
-          {mod.emoji}
+      <div className="p-[14px_16px_18px]">
+        <span 
+          className="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium mb-2"
+          style={{ backgroundColor: style.bg, color: style.text }}
+        >
+          {mod.category}
         </span>
-        <h3 className="text-xl font-bold text-white mb-1">{mod.name}</h3>
-        
-        <AnimatePresence>
-          {isHovered && (
-            <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="text-white/70 text-sm leading-relaxed mb-4 overflow-hidden"
-            >
-              {mod.desc}
-            </motion.p>
-          )}
-        </AnimatePresence>
+        <h3 className="text-[15px] font-semibold text-[#111827] mb-1">{mod.name}</h3>
+        <p className="text-[13px] text-[#9CA3AF] mb-3 line-clamp-2 leading-[1.7]">
+          {mod.desc}
+        </p>
 
-        <div className="flex items-center gap-2 text-secondary font-semibold text-sm">
+        <div className="flex items-center text-[#FF6B00] font-medium text-[13px]">
           <span>Saiba mais</span>
-          <motion.span animate={{ x: isHovered ? 4 : 0 }}>→</motion.span>
+          <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
         </div>
       </div>
     </motion.div>
@@ -76,26 +97,60 @@ function ModalityCard({ mod, index }: { mod: typeof MODALITIES[0], index: number
 
 export default function Modalities() {
   return (
-    <section id="modalidades" className="py-24 relative z-10">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+    <section id="modalidades" className="py-12 lg:py-20 px-5 lg:px-10 bg-white relative z-10">
+      <div className="container mx-auto">
+        <div className="text-center mb-12 sm:text-left sm:mb-16">
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="block text-[#FF6B00] text-[11px] font-bold tracking-[0.14em] uppercase mb-3"
+          >
+            Nossas Modalidades
+          </motion.span>
           <motion.h2 
-            className="font-display text-4xl lg:text-6xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-[clamp(24px,4vw,32px)] font-semibold text-[#111827] mb-2"
+          >
+            Escolha sua <span className="text-[#FF6B00]">atividade</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-[#6B7280] text-[15px] leading-[1.7]"
+          >
+            Mais de 15 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
+          </motion.p>
+        </div>
+
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        >
+          {MODALITIES.map((mod) => (
+            <ModalityCard key={mod.name} mod={mod} />
+          ))}
+        </motion.div>
+
+        <div className="mt-8 pt-4 flex justify-center">
+          <motion.button
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            whileHover={{ y: -2, backgroundColor: "#FF6B00", color: "#FFFFFF" }}
+            whileTap={{ scale: 0.98 }}
+            className="border-[1.5px] border-[#FF6B00] bg-transparent text-[#FF6B00] rounded-[8px] px-8 py-3 font-semibold text-sm transition-all duration-300"
           >
-            Nossas <span className="text-secondary">Modalidades</span>
-          </motion.h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Mais de 15 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {MODALITIES.map((mod, i) => (
-            <ModalityCard key={mod.name} mod={mod} index={i} />
-          ))}
+            Ver todas as modalidades
+          </motion.button>
         </div>
       </div>
     </section>

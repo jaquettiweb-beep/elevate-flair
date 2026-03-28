@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -81,15 +81,15 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 
 	return (
 		<AnimatePresence>
-			{isVisible && (
-				<motion.header
+			<motion.header
 					key="header-3"
 					initial={{ y: -80, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
-					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-500', {
-						'bg-background/80 supports-[backdrop-filter]:bg-background/40 border-white/[0.06] backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.08)]': scrolled,
+					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-300', {
+						'bg-[#111827eb] backdrop-blur-[10px] border-white/5 shadow-lg': scrolled,
+						'bg-transparent': !scrolled,
 					})}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
@@ -106,14 +106,14 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								<NavigationMenuList>
                                     <NavigationMenuItem>
                                       <NavigationMenuLink className="px-4" asChild>
-                                        <Link to="/" className="hover:bg-white/[0.06] rounded-md p-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+                                        <NavLink to="/">
                                           Home
-                                        </Link>
+                                        </NavLink>
                                       </NavigationMenuLink>
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-foreground/70 hover:text-foreground transition-colors">Academia</NavigationMenuTrigger>
+                                      <NavigationMenuTrigger className="bg-transparent text-white/75 hover:text-[#FF6B00] transition-colors">Academia</NavigationMenuTrigger>
                                       <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
                                         <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
                                           {academiaLinks.map((item, i) => (
@@ -134,7 +134,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-foreground/70 hover:text-foreground transition-colors">Sobre</NavigationMenuTrigger>
+                                      <NavigationMenuTrigger className="bg-transparent text-white/75 hover:text-[#FF6B00] transition-colors">Sobre</NavigationMenuTrigger>
                                       <NavigationMenuContent className="bg-background/95 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl p-2 rounded-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
                                         <div className="grid w-[460px] grid-cols-2 gap-4">
                                           <ul className="space-y-2 p-2">
@@ -173,9 +173,9 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-full px-5 py-2 text-xs font-medium text-white/90 hover:text-white border border-white/15 bg-white/[0.06] hover:bg-white/[0.1] backdrop-blur-sm transition-all duration-300 hover:border-white/25"
+									className="rounded-[6px] px-[18px] py-[8px] text-[13px] font-medium text-white bg-[#FF6B00] hover:bg-[#e66000] transition-all duration-300 shadow-lg shadow-orange-500/20"
 								>
-									Agende sua Aula
+									Matricule-se
 								</a>
 							</div>
 							<Button
@@ -222,7 +222,6 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 						</div>
 					</MobileMenu>
 				</motion.header>
-			)}
 		</AnimatePresence>
 	);
 }
@@ -256,6 +255,30 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 		</div>,
 		document.body,
 	);
+}
+
+function NavLink({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
+  return (
+    <Link
+      to={to}
+      className={cn(
+        "relative py-2 text-sm font-medium transition-colors group",
+        isActive ? "text-[#FF6B00]" : "text-white/75 hover:text-[#FF6B00]",
+        className
+      )}
+    >
+      {children}
+      <span 
+        className={cn(
+          "absolute bottom-0 left-0 h-[2px] bg-[#FF6B00] transition-all duration-250",
+          isActive ? "w-full" : "w-0 group-hover:w-full"
+        )} 
+      />
+    </Link>
+  );
 }
 
 function ListItem({

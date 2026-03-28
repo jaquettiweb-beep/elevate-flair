@@ -36,6 +36,14 @@
 
     --radius: 0.75rem;
 
+    /* Premium Dark Theme Core Colors */
+    --color-dark: #111828;
+    --color-orange: #EE6200;
+    --color-dark-2: #1A2335;
+    --color-dark-3: #222D42;
+    --color-text: #F0EDE8;
+    --color-muted: #8A95A8;
+
     /* Custom tokens */
     --primary-dark: 221 83% 40%;
     --primary-glow: 221 90% 65%;
@@ -91,12 +99,18 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: var(--color-dark);
+    color: var(--color-text);
+    @apply antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
@@ -615,8 +629,8 @@
   min-height: 100vh;
   font-size: 16px;
   line-height: 1.75;
-  background-color: #ffffff;
-  color: #111827;
+  background-color: var(--color-dark);
+  color: var(--color-text);
 }
 
 /* Characterful Headers for Flipper Brand */
@@ -626,19 +640,19 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* Alternating background sections - Warm Flipper Aesthetic */
+/* Alternating background sections - Premium Dark Theme */
 section:nth-of-type(even) {
-  background-color: #F9F7F4 !important; /* Warm off-white, not clinical */
+  background-color: var(--color-dark-2) !important; /* Elevated Dark */
 }
 
 section:nth-of-type(odd) {
-  background-color: #ffffff !important;
+  background-color: var(--color-dark) !important; /* Core Dark */
 }
 
-/* Global Section Padding */
+/* Global Section Padding - Reduced Spacing */
 section {
-  padding-top: clamp(60px, 8vw, 100px) !important;
-  padding-bottom: clamp(60px, 8vw, 100px) !important;
+  padding-top: clamp(48px, 6vw, 80px) !important;
+  padding-bottom: clamp(48px, 6vw, 80px) !important;
 }
 
 .testimonial-stat {

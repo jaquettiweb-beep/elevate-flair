@@ -21,7 +21,7 @@ const Musculacao = () => {
         description="Musculação com equipamentos modernos e profissionais qualificados na Academia Flipper. Treinos personalizados para todos os níveis."
       />
       <PageTransition>
-        <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+        <section className="relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
               <BackToModalities />

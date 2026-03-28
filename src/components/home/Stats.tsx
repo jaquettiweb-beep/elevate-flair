@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Users, Trophy, Layers, ThumbsUp } from "lucide-react";
 
 const STATS = [
-  { icon: Users, value: 5000, suffix: "+", label: "Alunos Ativos", color: "hsla(185,80%,45%,1)" },
-  { icon: Trophy, value: 50, suffix: "+", label: "Anos de Experiência", color: "hsla(24,95%,53%,1)" },
-  { icon: Layers, value: 15, suffix: "+", label: "Modalidades", color: "hsla(221,83%,53%,1)" },
-  { icon: ThumbsUp, value: 98, suffix: "%", label: "Satisfação", color: "hsla(150,60%,45%,1)" },
+  { icon: Users, value: 5000, suffix: "+", label: "Alunos Ativos", color: "#EE6200" },
+  { icon: Trophy, value: 50, suffix: "+", label: "Anos de Experiência", color: "#EE6200" },
+  { icon: Layers, value: 15, suffix: "+", label: "Modalidades", color: "#EE6200" },
+  { icon: ThumbsUp, value: 98, suffix: "%", label: "Satisfação", color: "#EE6200" },
 ];
 
 function Counter({ target, suffix }: { target: number; suffix: string }) {
@@ -49,7 +49,7 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 
 export default function Stats() {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-14"
@@ -58,10 +58,10 @@ export default function Stats() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#111827] mb-3">
-            Nossos <span className="text-[#FF6B00]">Números</span>
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#F0EDE8] mb-3">
+            Nossos <span className="text-[#EE6200]">Números</span>
           </h2>
-          <p className="text-[#6B7280] text-[15px] max-w-md mx-auto">
+          <p className="text-[#8A95A8] text-[15px] max-w-md mx-auto">
             Décadas de dedicação traduzidas em resultados expressivos para sua saúde.
           </p>
         </motion.div>
@@ -78,7 +78,7 @@ export default function Stats() {
               className="relative group cursor-default"
             >
               {/* Card design matching Modalities */}
-              <div className="relative bg-white border border-[#E5E7EB] rounded-2xl p-6 lg:p-8 text-center overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-md">
+              <div className="relative bg-[#1A2335] border border-[#222D42] rounded-2xl p-6 lg:p-8 text-center overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-[0_8px_32px_rgba(238,98,0,0.15)] group-hover:border-[#EE6200]">
                 {/* Accent bar */}
                 <div className="absolute top-0 left-0 w-full h-[3px]" style={{ background: s.color }} />
 
@@ -86,8 +86,8 @@ export default function Stats() {
                 <motion.div
                   className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center relative shadow-inner"
                   style={{
-                    background: `linear-gradient(135deg, ${s.color.replace('1)', '0.1)')}, ${s.color.replace('1)', '0.05)')})`,
-                    border: `1px solid ${s.color.replace('1)', '0.15)')}`,
+                    background: "rgba(238,98,0,0.15)",
+                    border: "1px solid rgba(238,98,0,0.25)",
                   }}
                 >
                   <s.icon size={24} style={{ color: s.color }} />
@@ -99,7 +99,7 @@ export default function Stats() {
                 <div className="w-8 h-[2px] mx-auto my-3 rounded-full opacity-30"
                   style={{ background: s.color }} />
                 
-                <p className="text-[#6B7280] text-sm font-medium tracking-wide">{s.label}</p>
+                <p className="text-[#8A95A8] text-sm font-medium tracking-wide">{s.label}</p>
               </div>
             </motion.div>
           ))}

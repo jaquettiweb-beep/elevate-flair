@@ -21,7 +21,7 @@ const Natacao = () => {
         description="Aulas de natação para todas as idades na Academia Flipper. Piscina semiolímpica aquecida, do bebê ao idoso."
       />
       <PageTransition>
-        <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+        <section className="relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal>
               <BackToModalities />

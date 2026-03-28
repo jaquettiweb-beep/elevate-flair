@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
-import flipperLogo from "@/assets/flipper-logo-new.png";
+import flipperLogo from "@/assets/logo-flipper-animated.png";
 
 /* ─── Phase timeline ─── */
 type Phase =
@@ -73,57 +73,16 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
           animate={phase === "logo-exit" ? { opacity: 0 } : { opacity: 1 }}
           transition={phase === "logo-exit" ? { duration: 1.2, ease: [0.65, 0, 0.35, 1] } : {}}
         >
-          {/* Deep ocean background */}
+          {/* Background */}
           <motion.div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, hsl(200,80%,10%) 0%, hsl(210,90%,7%) 50%, hsl(220,85%,5%) 100%)",
-            }}
+            className="absolute inset-0 bg-[#F9F7F4]"
             animate={
               phase === "logo-exit"
-                ? { background: "linear-gradient(180deg, hsl(200,80%,18%) 0%, hsl(210,90%,12%) 50%, hsl(185,70%,8%) 100%)" }
-                : {}
+                ? { opacity: 0 }
+                : { opacity: 1 }
             }
             transition={{ duration: 1.2, ease: "easeInOut" }}
           />
-
-          {/* Caustic light rays */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute top-0 pointer-events-none"
-              style={{
-                left: `${15 + i * 14}%`,
-                width: "2px",
-                height: "60%",
-                background: `linear-gradient(to bottom, hsla(185,80%,80%,${0.04 + (i % 3) * 0.02}) 0%, transparent 100%)`,
-                transform: `rotate(${-8 + i * 3}deg)`,
-                transformOrigin: "top center",
-                filter: "blur(4px)",
-              }}
-              animate={{ opacity: [0.3, 0.7, 0.3], scaleY: [0.95, 1.05, 0.95] }}
-              transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
-            />
-          ))}
-
-          {/* Floating bubbles */}
-          {BUBBLES.map((b) => (
-            <motion.div
-              key={b.id}
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                left: `${b.x}%`,
-                bottom: 0,
-                width: b.size,
-                height: b.size,
-                background: "radial-gradient(circle at 30% 30%, hsla(0,0%,100%,0.18), transparent)",
-                border: "1px solid hsla(0,0%,100%,0.08)",
-              }}
-              animate={{ y: [0, -(window.innerHeight * 1.1)], opacity: [0, 0.5, 0] }}
-              transition={{ duration: b.dur, delay: b.delay, repeat: Infinity, ease: "easeInOut" }}
-            />
-          ))}
 
           {/* Radial glow behind logo */}
           <motion.div
@@ -131,12 +90,12 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
             style={{
               width: 500,
               height: 500,
-              background: "radial-gradient(circle, hsla(185,100%,60%,0.12) 0%, transparent 65%)",
+              background: "radial-gradient(circle, rgba(238,98,0,0.06) 0%, transparent 65%)",
             }}
             initial={{ scale: 0, opacity: 0 }}
             animate={
               phase === "logo-reveal" || phase === "logo-hold"
-                ? { scale: [1, 1.15, 1], opacity: [0.4, 0.6, 0.4] }
+                ? { scale: [1, 1.15, 1], opacity: [0.6, 0.8, 0.6] }
                 : { scale: 0, opacity: 0 }
             }
             transition={
@@ -167,16 +126,16 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
             <motion.img
               src={flipperLogo}
               alt="Academia Flipper"
-              className="w-[92vw] sm:w-[42rem] max-w-[48rem] h-auto object-contain drop-shadow-[0_0_80px_hsla(185,100%,60%,0.5)]"
+              className="w-[92vw] sm:w-[42rem] max-w-[48rem] h-auto object-contain drop-shadow-[0_8px_32px_rgba(238,98,0,0.15)]"
               style={{ imageRendering: "auto", WebkitFontSmoothing: "antialiased" }}
-              initial={{ rotateY: -15 }}
-              animate={{ rotateY: 0 }}
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
 
             {/* Tagline */}
             <motion.p
-              className="mt-6 text-white/35 text-xs tracking-[0.4em] uppercase font-medium"
+              className="mt-6 text-[#1A2335] text-xs tracking-[0.4em] uppercase font-bold"
               initial={{ opacity: 0, y: 12 }}
               animate={
                 phase === "logo-reveal" || phase === "logo-hold"
@@ -190,8 +149,8 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
 
             {/* Loading bar */}
             <motion.div
-              className="w-40 h-[2px] mt-6 rounded-full overflow-hidden"
-              style={{ background: "hsla(185,80%,60%,0.15)" }}
+              className="w-40 h-[3px] mt-6 rounded-full overflow-hidden"
+              style={{ background: "rgba(238,98,0,0.15)" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: phase === "logo-reveal" || phase === "logo-hold" ? 1 : 0 }}
               transition={{ duration: 0.4, delay: 0.6 }}
@@ -199,7 +158,7 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
               <motion.div
                 className="h-full rounded-full"
                 style={{
-                  background: "linear-gradient(90deg, hsl(185,80%,70%), hsl(195,90%,60%))",
+                  background: "linear-gradient(90deg, #EE6200, #FF8533)",
                 }}
                 initial={{ scaleX: 0, originX: 0 }}
                 animate={{ scaleX: phase === "logo-reveal" || phase === "logo-hold" ? 1 : 0 }}
@@ -210,9 +169,9 @@ export default function IntroAnimation({ onComplete }: { onComplete: () => void 
 
           {/* Bottom hint */}
           <motion.p
-            className="absolute bottom-10 text-white/20 text-[10px] tracking-[0.35em] uppercase font-medium pointer-events-none"
+            className="absolute bottom-10 text-[#8A95A8] text-[10px] tracking-[0.35em] uppercase font-bold pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={phase === "logo-hold" ? { opacity: [0, 0.6, 0.3] } : { opacity: 0 }}
+            animate={phase === "logo-hold" ? { opacity: [0, 1, 0.5] } : { opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
             Mergulhe na sua melhor versão

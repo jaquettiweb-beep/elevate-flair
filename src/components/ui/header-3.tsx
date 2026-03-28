@@ -87,16 +87,16 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
-					className={cn('fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent transition-all duration-300', {
-						'bg-[#111827] border-white/5 shadow-lg': scrolled,
-						'bg-transparent': !scrolled,
+					className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]', {
+						'border-b border-[#222D42] shadow-lg': scrolled,
+						'border-b border-transparent': !scrolled,
 					})}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
 						{/* Esquerda: Logo */}
 						<div className="flex w-full md:w-1/3 items-center justify-start">
 							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 transition-opacity">
-                                <img src={flipperLogo} alt="Academia Flipper" className="h-[52px] w-auto object-contain antialiased" />
+                                <img src={flipperLogo} alt="Academia Flipper" className="h-[44px] w-auto object-contain antialiased" />
 							</Link>
 						</div>
 
@@ -113,8 +113,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#FF6B00] transition-colors font-medium">Academia</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-white p-2 rounded-xl border border-[#E5E7EB] shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Academia</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-[#1A2335] p-2 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
                                         <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
                                           {academiaLinks.map((item, i) => (
                                             <li key={i}>
@@ -126,8 +126,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     </NavigationMenuItem>
 
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#FF6B00] transition-colors font-medium">Sobre</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-white p-2 rounded-xl border border-[#E5E7EB] shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Sobre</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-[#1A2335] p-2 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
                                         <div className="grid w-[460px] grid-cols-2 gap-4">
                                           <ul className="space-y-2 p-2">
                                             {sobreLinks.map((item, i) => (
@@ -141,11 +141,11 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                               <li key={i}>
                                                 <NavigationMenuLink
                                                   asChild
-                                                  className="flex p-2 hover:bg-[#F9F7F4] flex-row rounded-md items-center gap-x-2 transition-colors"
+                                                  className="flex p-2 hover:bg-[#111828] flex-row rounded-md items-center gap-x-2 transition-colors"
                                                 >
                                                   <Link to={item.href}>
-                                                    <item.icon className="text-[#111827]/60 size-4 shrink-0" />
-                                                    <span className="font-medium text-sm text-[#111827]">{item.title}</span>
+                                                    <item.icon className="text-[#EE6200] size-4 shrink-0" />
+                                                    <span className="font-medium text-sm text-[#F0EDE8]">{item.title}</span>
                                                   </Link>
                                                 </NavigationMenuLink>
                                               </li>
@@ -165,7 +165,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-[10px] px-[22px] py-[10px] text-[14px] font-bold text-white bg-[#FF6B00] hover:bg-[#e66000] transition-all duration-300 shadow-md hover:shadow-lg active:scale-95"
+									className="rounded-[8px] px-[30px] py-[13px] text-[15px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95"
 								>
 									Conheça a Flipper
 								</a>
@@ -186,14 +186,14 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
 						<NavigationMenu className="max-w-full">
 							<div className="flex w-full flex-col gap-y-2">
-                                <Link to="/" className="text-sm font-bold p-2 hover:bg-accent rounded-md" onClick={() => setOpen(false)}>Home</Link>
+                                <Link to="/" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Home</Link>
                                 
-                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-muted-foreground">Academia</span>
+                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-[#8A95A8]">Academia</span>
                                 {academiaLinks.map((link, i) => (
                                   <ListItem key={i} {...link} onClick={() => setOpen(false)} />
                                 ))}
                                 
-                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-muted-foreground">Sobre</span>
+                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-[#8A95A8]">Sobre</span>
                                 {sobreLinks.map((link, i) => (
                                   <ListItem key={i} {...link} onClick={() => setOpen(false)} />
                                 ))}
@@ -229,7 +229,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 		<div
 			id="mobile-menu"
 			className={cn(
-				'bg-background/98 supports-[backdrop-filter]:bg-background/80 backdrop-blur-xl',
+				'bg-[#111828] supports-[backdrop-filter]:bg-[#111828]/95 backdrop-blur-xl border-[#222D42]',
 				'fixed top-14 right-0 bottom-0 left-0 z-[120] flex flex-col overflow-hidden border-y md:hidden',
 			)}
 		>
@@ -257,15 +257,15 @@ function NavLink({ to, children, className }: { to: string; children: React.Reac
     <Link
       to={to}
       className={cn(
-        "relative py-2 text-sm font-bold transition-colors group",
-        isActive ? "text-[#FF6B00]" : "text-white/80 hover:text-[#FF6B00]",
+        "relative py-2 text-sm font-semibold transition-colors group",
+        isActive ? "text-[#EE6200]" : "text-[#8A95A8] hover:text-[#EE6200]",
         className
       )}
     >
       {children}
       <span 
         className={cn(
-          "absolute bottom-0 left-0 h-[2px] bg-[#FF6B00] transition-all duration-250",
+          "absolute bottom-0 left-0 h-[2px] bg-[#EE6200] transition-all duration-250",
           isActive ? "w-full" : "w-0 group-hover:w-full"
         )} 
       />
@@ -283,14 +283,14 @@ function ListItem({
 	...props
 }: React.ComponentProps<typeof NavigationMenuLink> & LinkItem & { onClick?: () => void }) {
 	return (
-		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-[#F9F7F4] hover:bg-[#F9F7F4] rounded-lg p-3 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
+		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-[#111828] hover:bg-[#111828] rounded-lg p-3 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
 			<Link to={href} onClick={onClick} className="flex items-center w-full">
-				<div className="bg-[#111827]/5 flex shrink-0 aspect-square size-10 items-center justify-center rounded-lg">
-					<Icon className="text-[#FF6B00] size-5" />
+				<div className="bg-[#111828] border border-[#222D42] flex shrink-0 aspect-square size-10 items-center justify-center rounded-lg">
+					<Icon className="text-[#EE6200] size-5" />
 				</div>
 				<div className="flex flex-col items-start justify-center ml-3">
-					<span className="font-bold text-sm text-[#111827]">{title}</span>
-					{description && <span className="text-[#6B7280] text-[11px] leading-snug">{description}</span>}
+					<span className="font-bold text-sm text-[#F0EDE8]">{title}</span>
+					{description && <span className="text-[#8A95A8] text-[11px] leading-snug">{description}</span>}
 				</div>
 			</Link>
 		</NavigationMenuLink>

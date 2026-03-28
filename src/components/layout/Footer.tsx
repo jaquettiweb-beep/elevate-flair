@@ -21,12 +21,9 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="section-dark relative overflow-hidden">
+    <footer className="relative overflow-hidden bg-[#0C1220] border-t border-[#222D42]">
       <GymDecorFooter />
       <FloatingParticles count={6} color="hsla(0,0%,100%,0.04)" />
-
-      {/* Top glow line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
       <motion.div
         className="container mx-auto px-6 py-20 relative z-10"
@@ -38,15 +35,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24">
           {/* Column 1: Logo + Tagline */}
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
-            <h3 className="font-display text-3xl font-black text-white tracking-tight">FLIPPER</h3>
-            <p className="text-white/60 text-base leading-relaxed max-w-sm">
+            <h3 className="font-display text-3xl font-black text-[#F0EDE8] tracking-tight">FLIPPER</h3>
+            <p className="text-[#8A95A8] text-base leading-relaxed max-w-sm">
               Uma academia humana, feita para pessoas. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
             </p>
           </motion.div>
 
           {/* Column 2: Quick Links */}
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
-            <h4 className="font-display font-bold text-white text-lg">Explorar</h4>
+            <h4 className="font-display font-bold text-[#F0EDE8] text-lg">Explorar</h4>
             <nav className="flex flex-col gap-4" aria-label="Links do rodapé">
               {[
                 { label: "Home", path: "/" },
@@ -58,7 +55,7 @@ export default function Footer() {
                 <Link
                   key={l.path}
                   to={l.path}
-                  className="text-white/50 text-sm font-medium hover:text-[#FF6B00] hover:translate-x-1 transition-all duration-200"
+                  className="text-[#8A95A8] text-sm font-medium hover:text-[#EE6200] hover:translate-x-1 transition-all duration-200"
                 >
                   {l.label}
                 </Link>
@@ -69,7 +66,7 @@ export default function Footer() {
           {/* Column 3: Social + Contact */}
           <motion.div variants={itemVariants} className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
-              <h4 className="font-display font-bold text-white text-lg">Conecte-se</h4>
+              <h4 className="font-display font-bold text-[#F0EDE8] text-lg">Conecte-se</h4>
               <div className="flex flex-wrap gap-4">
                 {[
                   { icon: Instagram, href: "https://www.instagram.com/academia.flipper/", label: "Instagram" },
@@ -81,7 +78,7 @@ export default function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 text-white/70 hover:bg-[#FF6B00] hover:text-white transition-all duration-300"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#111828] border border-[#222D42] text-[#8A95A8] hover:bg-[#EE6200] hover:border-[#EE6200] hover:text-[#F0EDE8] transition-all duration-300"
                     aria-label={`Seguir no ${label}`}
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.9 }}
@@ -92,14 +89,14 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 border-t border-white/10 pt-6">
-              <div className="flex items-start gap-3 text-sm text-white/60">
-                <MapPin size={18} className="shrink-0 text-[#FF6B00] mt-0.5" />
+            <div className="flex flex-col gap-4 border-t border-[#222D42] pt-6">
+              <div className="flex items-start gap-3 text-sm text-[#8A95A8]">
+                <MapPin size={18} className="shrink-0 text-[#EE6200] mt-0.5" />
                 <span>Av. Vereador José Diniz, 2583 – Brooklin, SP</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-white/60">
-                <Phone size={18} className="shrink-0 text-[#FF6B00]" />
-                <a href="tel:+551138762340" className="hover:text-white transition-colors">
+              <div className="flex items-center gap-3 text-sm text-[#8A95A8]">
+                <Phone size={18} className="shrink-0 text-[#EE6200]" />
+                <a href="tel:+551138762340" className="hover:text-[#EE6200] transition-colors">
                   (11) 3876-2340
                 </a>
               </div>
@@ -107,7 +104,7 @@ export default function Footer() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center justify-center gap-2 bg-[#FF6B00] text-white rounded-[10px] px-6 py-3 text-sm font-bold shadow-lg shadow-orange-600/20"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-[8px] px-[30px] py-[13px] text-[15px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)]"
               >
                 Atendimento via WhatsApp
               </a>
@@ -117,7 +114,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <motion.div
-          className="mt-16 pt-8 border-t border-white/5 text-center text-white/30 text-xs"
+          className="mt-16 pt-8 border-t border-[#222D42] text-center text-[#8A95A8] text-xs"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

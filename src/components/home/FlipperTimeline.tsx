@@ -106,7 +106,7 @@ export default function FlipperTimeline() {
   };
 
   return (
-    <section className="py-24 lg:py-28 relative overflow-hidden">
+    <section className="relative overflow-hidden">
       {/* ─── Ambient ocean background ─── */}
       {/* Radial glow center */}
       <div
@@ -200,10 +200,10 @@ export default function FlipperTimeline() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">
-            Conheça a <span className="text-secondary font-extrabold">Academia Flipper</span>
+          <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#F0EDE8] mb-4">
+            Conheça a <span className="text-[#EE6200] font-extrabold">Academia Flipper</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
+          <p className="text-[#8A95A8] max-w-xl mx-auto text-base md:text-lg">
             Mais de 50 anos transformando vidas através do esporte. Explore nossa história e modalidades.
           </p>
         </motion.div>

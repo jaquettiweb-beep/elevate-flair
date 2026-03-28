@@ -11,11 +11,11 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
 
 const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
-  "Aquático": { bg: "#EBF5FF", text: "#1E40AF" },
-  "Luta": { bg: "#FEF2F2", text: "#991B1B" },
-  "Bem-estar": { bg: "#F0FDF4", text: "#166534" },
-  "Fitness": { bg: "#FFFBEB", text: "#92400E" },
-  "Infantil": { bg: "#F5F3FF", text: "#5B21B6" },
+  "Aquático": { bg: "rgba(30,64,175,0.2)", text: "#93C5FD" },
+  "Luta": { bg: "rgba(153,27,27,0.2)", text: "#FCA5A5" },
+  "Bem-estar": { bg: "rgba(22,101,52,0.2)", text: "#86EFAC" },
+  "Fitness": { bg: "rgba(146,64,14,0.2)", text: "#FCD34D" },
+  "Infantil": { bg: "rgba(91,33,182,0.2)", text: "#C4B5FD" },
 };
 
 const MODALITIES = [
@@ -66,11 +66,11 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
   return (
     <motion.div
       variants={cardVariants}
-      className="group bg-white border border-[#E5E7EB] rounded-[14px] overflow-hidden transition-all duration-250 hover:-translate-y-1 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] cursor-pointer"
+      className="group bg-[#1A2335] border border-[#222D42] rounded-[14px] overflow-hidden transition-all duration-250 hover:-translate-y-[3px] hover:border-[#EE6200] hover:shadow-[0_8px_32px_rgba(238,98,0,0.15)] cursor-pointer"
       onClick={() => navigate(mod.link)}
     >
-      <div className="h-[3px] bg-[#FF6B00] w-full" />
-      <div className="h-[160px] w-full overflow-hidden">
+      <div className="h-[3px] bg-[#EE6200] w-full" />
+      <div className="h-[160px] w-full overflow-hidden border-b border-[#222D42]">
         <img src={mod.img} alt={mod.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
       
@@ -81,12 +81,12 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
         >
           {mod.category}
         </span>
-        <h3 className="text-[17px] font-bold text-[#111827] mb-1 leading-tight">{mod.name}</h3>
-        <p className="text-[13px] text-[#9CA3AF] mb-3 line-clamp-2 leading-[1.7]">
+        <h3 className="text-[17px] font-bold text-[#F0EDE8] mb-1 leading-tight">{mod.name}</h3>
+        <p className="text-[13px] text-[#8A95A8] mb-3 line-clamp-2 leading-[1.7]">
           {mod.desc}
         </p>
 
-        <div className="flex items-center text-[#FF6B00] font-medium text-[13px]">
+        <div className="flex items-center text-[#EE6200] font-medium text-[13px]">
           <span>Saiba mais</span>
           <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
         </div>
@@ -97,20 +97,14 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
 
 export default function Modalities() {
   return (
-    <section id="modalidades" className="py-12 lg:py-20 px-5 lg:px-10 bg-[#F9F7F4] relative z-10 transition-colors duration-500">
+    <section id="modalidades" className="px-5 lg:px-10 relative z-10 transition-colors duration-500">
       <div className="container mx-auto">
-        <div className="text-center mb-12 sm:text-left sm:mb-16">
+        <div className="text-center mb-10 sm:text-left sm:mb-12">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            style={{
-              background: "linear-gradient(135deg, #FF6B00 0%, #FF8533 50%, #FF6B00 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-            className="block text-[11px] font-bold tracking-[0.14em] uppercase mb-3"
+            className="block text-[11px] font-bold tracking-[0.14em] uppercase mb-3 text-[#EE6200]"
           >
             Nossas Modalidades
           </motion.span>
@@ -119,16 +113,16 @@ export default function Modalities() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-[clamp(24px,4vw,32px)] font-semibold text-[#111827] mb-2"
+            className="text-[clamp(24px,4vw,32px)] font-semibold text-[#F0EDE8] mb-2"
           >
-            Escolha sua <span className="text-[#FF6B00]">atividade</span>
+            Escolha sua <span className="text-[#EE6200]">atividade</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-[#6B7280] text-[15px] leading-[1.7]"
+            className="text-[#8A95A8] text-[15px] leading-[1.7]"
           >
             Mais de 15 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
           </motion.p>
@@ -139,7 +133,7 @@ export default function Modalities() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-4"
         >
           {MODALITIES.map((mod) => (
             <ModalityCard key={mod.name} mod={mod} />
@@ -151,9 +145,9 @@ export default function Modalities() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ y: -2, backgroundColor: "#FF6B00", color: "#FFFFFF" }}
+            whileHover={{ y: -2, backgroundColor: "#EE6200", color: "#FFFFFF" }}
             whileTap={{ scale: 0.98 }}
-            className="border-[1.5px] border-[#FF6B00] bg-transparent text-[#FF6B00] rounded-[8px] px-8 py-3 font-semibold text-sm transition-all duration-300"
+            className="border-[1.5px] border-[#EE6200] bg-transparent text-[#EE6200] rounded-[8px] px-8 py-3 font-semibold text-sm transition-all duration-300 hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)]"
           >
             Ver todas as modalidades
           </motion.button>

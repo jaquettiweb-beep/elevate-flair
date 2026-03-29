@@ -277,7 +277,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
             </motion.div>
 
             <motion.div
-              className="flex flex-row gap-6 sm:gap-10"
+              className="flex flex-row gap-6 sm:gap-10 mb-16 lg:mb-24"
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.9 }}

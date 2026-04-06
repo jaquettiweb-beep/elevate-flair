@@ -87,10 +87,9 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
-					className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]', {
-						'border-b border-[#222D42] shadow-lg': scrolled,
-						'border-b border-transparent': !scrolled,
-					})}
+				className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]', {
+					'shadow-lg': scrolled,
+				})}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
 						{/* Esquerda: Logo */}

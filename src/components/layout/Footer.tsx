@@ -91,6 +91,10 @@ export default function Footer() {
 
             <div className="flex flex-col gap-4 border-t border-[#222D42] pt-6">
               <div className="flex items-start gap-3 text-sm text-[#8A95A8]">
+                <Clock size={18} className="shrink-0 text-[#EE6200] mt-0.5" />
+                <span>Seg – Sex: 6h às 22h | Sáb: 7h às 16h</span>
+              </div>
+              <div className="flex items-start gap-3 text-sm text-[#8A95A8]">
                 <MapPin size={18} className="shrink-0 text-[#EE6200] mt-0.5" />
                 <span>Av. Vereador José Diniz, 2583 – Brooklin, SP</span>
               </div>

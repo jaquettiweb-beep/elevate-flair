@@ -23,22 +23,22 @@ const BemEstar = () => {
         description="Yoga, Pilates e aulas de relaxamento na Academia Flipper. Equilíbrio entre corpo e mente para uma vida mais saudável."
       />
       <PageTransition>
-        <section className="relative overflow-hidden">
-          <div className="container mx-auto px-4 relative z-10">
+        <section className="relative overflow-hidden bg-white text-slate-900">
+          <div className="container mx-auto px-4 relative z-10 pt-24 pb-16">
             <ScrollReveal>
               <BackToModalities />
-              <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-                <Link to="/" className="hover:text-secondary transition-colors">Início</Link>
+              <nav className="flex items-center gap-2 text-sm text-slate-500 mb-8 mt-4">
+                <Link to="/" className="hover:text-[#EE6200] transition-colors">Início</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground font-medium">Bem-estar</span>
+                <span className="text-slate-900 font-medium">Bem-estar</span>
               </nav>
             </ScrollReveal>
 
             <ScrollReveal>
-              <h1 className="font-display text-4xl lg:text-6xl font-bold text-foreground mb-6">
-                <span className="text-secondary">Bem-estar</span> — Corpo & Mente
+              <h1 className="font-display text-4xl lg:text-6xl font-bold text-slate-900 mb-6">
+                <span className="text-[#EE6200]">Bem-estar</span> — Corpo & Mente
               </h1>
-              <p className="text-muted-foreground text-lg max-w-2xl mb-12">
+              <p className="text-slate-600 text-lg max-w-2xl mb-12">
                 Yoga, Pilates e práticas de relaxamento para equilíbrio físico e mental. Cuide de você de forma integral.
               </p>
             </ScrollReveal>
@@ -80,21 +80,21 @@ const BemEstar = () => {
                 { icon: Heart, title: "Relaxamento", desc: "Sessões de respiração guiada e meditação para reduzir estresse e promover bem-estar emocional." },
               ].map((item, i) => (
                 <ScrollReveal key={i}>
-                  <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-8">
-                    <div className="w-14 h-14 rounded-full bg-secondary/20 border-2 border-secondary flex items-center justify-center mb-4">
-                      <item.icon className="w-7 h-7 text-secondary" />
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
+                    <div className="w-14 h-14 rounded-full bg-[#EE6200]/10 border-2 border-[#EE6200] flex items-center justify-center mb-4">
+                      <item.icon className="w-7 h-7 text-[#EE6200]" />
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </ScrollReveal>
               ))}
             </div>
 
             <ScrollReveal>
-              <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-4">Benefícios do Bem-estar</h2>
-                <ul className="space-y-3 text-muted-foreground text-lg">
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">Benefícios do Bem-estar</h2>
+                <ul className="space-y-3 text-slate-600 text-lg">
                   <li>• Redução do estresse e ansiedade</li>
                   <li>• Melhora da postura e flexibilidade</li>
                   <li>• Fortalecimento muscular de baixo impacto</li>

@@ -60,6 +60,16 @@ const plans = [
     ],
     description: "Aulas de natação para todas as idades.",
   },
+  {
+    name: "Ginástica",
+    tagline: "Breve novidades",
+    color: "hsl(0,0%,40%)",
+    colorLight: "hsla(0,0%,40%,0.12)",
+    icon: Check,
+    features: [],
+    description: "Novas modalidades de ginástica chegando em breve.",
+    disabled: true,
+  },
 ];
 
 const WHATSAPP_URL =
@@ -168,7 +178,7 @@ export default function Planos() {
 
             {/* Plans grid */}
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto mb-14"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 max-w-7xl mx-auto mb-14"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
@@ -177,11 +187,11 @@ export default function Planos() {
                 <motion.div
                   key={plan.name}
                   variants={{
-                    hidden: { opacity: 0, y: 40, scale: plan.popular ? 0.88 : 0.92 },
+                    hidden: { opacity: 0, y: 40, scale: plan.popular ? 0.88 : (plan.disabled ? 0.95 : 0.92) },
                     visible: cardVariants.visible
                   }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="group relative"
+                  whileHover={!plan.disabled ? { y: -8, transition: { duration: 0.3 } } : {}}
+                  className={`group relative ${plan.disabled ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
                 >
                   {plan.popular && (
                     <div
@@ -191,6 +201,14 @@ export default function Planos() {
                       Mais Popular
                     </div>
                   )}
+                  {plan.disabled && (
+                    <div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-[10px] font-bold tracking-wider uppercase px-4 py-1 rounded-full text-white bg-slate-600 whitespace-nowrap whitespace-nowrap shadow-lg"
+                    >
+                      Em breve — em atualização
+                    </div>
+                  )}
+                  
                   <div
                     className="rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-300 relative"
                     style={{
@@ -206,10 +224,12 @@ export default function Planos() {
                     }}
                   >
                     {/* Hover glow */}
-                    <div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{ background: `radial-gradient(circle at 50% 20%, ${plan.colorLight}, transparent 70%)` }}
-                    />
+                    {!plan.disabled && (
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: `radial-gradient(circle at 50% 20%, ${plan.colorLight}, transparent 70%)` }}
+                      />
+                    )}
 
                     <div className="p-6 flex-1 flex flex-col relative z-10">
                       {/* Icon */}
@@ -234,6 +254,11 @@ export default function Planos() {
                             {f}
                           </li>
                         ))}
+                        {plan.disabled && (
+                          <li className="flex items-start gap-2 text-sm text-white/50 italic">
+                            Detalhes serão anunciados em breve.
+                          </li>
+                        )}
                       </ul>
 
                       <p className="text-white/30 text-xs leading-relaxed">{plan.description}</p>

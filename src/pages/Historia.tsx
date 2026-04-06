@@ -28,7 +28,7 @@ const timelineData = [
     title: "Década de 70",
     content: (
       <div>
-        <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Em <strong className="text-secondary font-semibold">1974</strong>, <strong className="text-secondary font-semibold">Nelson Guerra</strong> fundou a Escola de Natação Flipper no bairro do Brooklin, em São Paulo.
           Desde o início, a piscina semiolímpica aquecida se tornou referência na região, contribuindo com a aprendizagem e o aperfeiçoamento de alunos de diversas partes do mundo.
         </p>
@@ -63,7 +63,7 @@ const timelineData = [
     title: "Décadas de 80 e 90",
     content: (
       <div>
-        <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com o crescimento da demanda, a Flipper expandiu sua infraestrutura e passou a oferecer{" "}
           <strong className="text-secondary font-semibold">musculação</strong>,{" "}
           <strong className="text-secondary font-semibold">judô</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
@@ -99,7 +99,7 @@ const timelineData = [
     title: "Anos 2000",
     content: (
       <div>
-        <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           A Flipper incorporou{" "}
           <strong className="text-secondary font-semibold">yoga</strong>,{" "}
           <strong className="text-secondary font-semibold">pilates</strong>,{" "}
@@ -137,7 +137,7 @@ const timelineData = [
     title: "Hoje",
     content: (
       <div>
-        <p className="text-white/70 text-sm md:text-base font-normal mb-6 leading-relaxed">
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e mais de <strong className="text-secondary font-semibold">8 mil alunos</strong> que já passaram por nossas instalações,
           a Flipper segue sob a direção de <strong className="text-secondary font-semibold">Nelson Guerra</strong>, firme na missão de proporcionar o melhor em esporte e atividade física. Somos a academia mais tradicional do Brooklin e referência em natação.
         </p>
@@ -152,7 +152,7 @@ const timelineData = [
           ].map((item) => (
             <div
               key={item}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs md:text-sm text-white/80 font-medium"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs md:text-sm text-[#F0EDE8]/90 font-medium"
               style={{
                 background: "hsla(185,80%,45%,0.08)",
                 border: "1px solid hsla(185,80%,45%,0.15)",
@@ -213,7 +213,7 @@ const Historia = () => {
           <div
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(180deg, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 95%) 30%, hsl(0, 0%, 92%) 100%)`,
+              background: "#1E2A3A",
             }}
           />
 
@@ -230,7 +230,7 @@ const Historia = () => {
               <div
                 className="absolute inset-0"
                 style={{
-                  background: "linear-gradient(180deg, hsla(0,0%,98%,0.5) 0%, hsla(0,0%,95%,0.8) 60%, hsl(0,0%,98%) 100%)",
+                  background: "linear-gradient(180deg, rgba(30,42,58,0.85) 0%, rgba(30,42,58,0.95) 60%, rgba(30,42,58,1) 100%)",
                 }}
               />
             </motion.div>
@@ -239,9 +239,9 @@ const Historia = () => {
               <div className="container mx-auto px-4">
                 {/* Breadcrumb */}
                 <nav className="flex items-center gap-2 text-sm mb-10">
-                  <Link to="/" className="text-white/40 hover:text-secondary transition-colors">Início</Link>
-                  <ChevronRight className="w-3.5 h-3.5 text-white/25" />
-                  <span className="text-white/70 font-medium">Nossa Jornada</span>
+                  <Link to="/" className="text-[#F0EDE8]/60 hover:text-secondary transition-colors">Início</Link>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#F0EDE8]/40" />
+                  <span className="text-[#F0EDE8]/90 font-medium">Nossa Jornada</span>
                 </nav>
 
                 {/* Badge */}
@@ -262,7 +262,7 @@ const Historia = () => {
                 </motion.div>
 
                 <motion.h1
-                  className="font-display text-4xl lg:text-7xl font-bold text-white mb-5 leading-tight"
+                  className="font-display text-4xl lg:text-7xl font-bold text-[#F0EDE8] mb-5 leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, type: "spring", stiffness: 60 }}
@@ -281,7 +281,7 @@ const Historia = () => {
                 </motion.h1>
 
                 <motion.p
-                  className="text-white/50 text-lg max-w-2xl mb-12 leading-relaxed"
+                  className="text-[#F0EDE8]/70 text-lg max-w-2xl mb-12 leading-relaxed"
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 60 }}
@@ -311,8 +311,8 @@ const Historia = () => {
                     >
                       <stat.icon size={18} className="text-secondary flex-shrink-0" />
                       <div>
-                        <p className="text-white font-bold text-sm leading-none">{stat.value}</p>
-                        <p className="text-white/40 text-[10px] mt-0.5">{stat.label}</p>
+                        <p className="text-[#F0EDE8] font-bold text-sm leading-none">{stat.value}</p>
+                        <p className="text-[#F0EDE8]/50 text-[10px] mt-0.5">{stat.label}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -326,8 +326,8 @@ const Historia = () => {
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <span className="text-white/25 text-[10px] tracking-[0.2em] uppercase font-medium">Role para explorar</span>
-              <div className="w-5 h-8 rounded-full border border-white/15 flex items-start justify-center p-1">
+              <span className="text-[#F0EDE8]/40 text-[10px] tracking-[0.2em] uppercase font-medium">Role para explorar</span>
+              <div className="w-5 h-8 rounded-full border border-[#F0EDE8]/20 flex items-start justify-center p-1">
                 <motion.div
                   className="w-1 h-2 rounded-full bg-secondary/60"
                   animate={{ y: [0, 10, 0] }}
@@ -358,10 +358,10 @@ const Historia = () => {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ type: "spring", stiffness: 60, damping: 16 }}
               >
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-3">
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F0EDE8] mb-3">
                   Faça parte dessa <span className="text-secondary">história</span>
                 </h3>
-                <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                <p className="text-[#F0EDE8]/70 text-sm mb-6 leading-relaxed">
                   Venha conhecer a Flipper e descubra por que somos a academia mais tradicional do Brooklin há mais de 50 anos.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">

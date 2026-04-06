@@ -25,7 +25,7 @@ function MergulheWord() {
   return (
     <motion.span
       className="block"
-      style={{ lineHeight: 1.05, overflow: "visible", paddingBottom: "0.22em" }}
+      style={{ lineHeight: 1.2, overflow: "visible", paddingBottom: "0.1em" }}
       variants={{
         hidden: { opacity: 0 },
         show: { opacity: 1, transition: { staggerChildren: 0.055, delayChildren: 0.15 } },
@@ -158,7 +158,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               style={{ background: "hsla(200,80%,12%,1)", opacity: tintOpacity, mixBlendMode: "multiply" }}
             />
 
-            {/* Info overlay */}
+            {/* Info overlay removed as requested */}
             <motion.div
               className="absolute inset-0 z-20 flex flex-col justify-between p-8 pointer-events-none"
               style={{ opacity: overlayOpacity, y: overlayY }}
@@ -174,34 +174,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                 >
                   Academia Flipper
                 </span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                {[
-                  { icon: Clock, title: "Seg – Sex: 6h às 22h", sub: "Sáb: 7h às 16h" },
-                  { icon: MapPin, title: "Av. Ver. José Diniz, 2583", sub: "Brooklin, SP" },
-                ].map(({ icon: Icon, title, sub }) => (
-                  <div
-                    key={title}
-                    className="flex items-center gap-3 px-4 py-3 rounded-2xl w-fit"
-                    style={{
-                      background: "hsla(200,80%,12%,0.6)",
-                      border: "1px solid hsla(185,80%,70%,0.12)",
-                      backdropFilter: "blur(12px)",
-                    }}
-                  >
-                    <div
-                      className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))" }}
-                    >
-                      <Icon size={13} className="text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white/90 text-xs font-semibold leading-tight">{title}</p>
-                      <p className="text-white/40 text-[10px] tracking-wide">{sub}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
             </motion.div>
           </motion.div>

@@ -13,8 +13,6 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div id="scroll-progress" className="scroll-progress" />
-      {/* On home page, header visibility is driven by hero scroll events */}
       <Header alwaysVisible={!isHome} />
       <main>{children}</main>
       <Footer />

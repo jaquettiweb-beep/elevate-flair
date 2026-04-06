@@ -70,7 +70,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "pilates-solo": {
     name: "Pilates Solo",
     slug: "pilates-solo",
-    heroImg: pilatesImg,
+    heroImg: yogaNew1,
+    galleryImgs: [yogaNew2, yogaNew3],
     emoji: "🤸",
     description: "Exercícios de fortalecimento do core, alongamento e consciência corporal realizados no solo, com acompanhamento profissional para todos os níveis.",
     benefits: ["Fortalecimento muscular sem impacto", "Melhora da flexibilidade", "Correção postural", "Redução de dores nas costas", "Turmas em grupo motivadoras"],
@@ -91,7 +92,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    heroImg: martialImg,
+    heroImg: jiujitsu1,
     emoji: "🥊",
     description: "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
     benefits: ["Condicionamento físico intenso", "Defesa pessoal eficiente", "Queima calórica elevada", "Aumento da confiança", "Disciplina e foco mental"],
@@ -124,7 +125,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
-    heroImg: martialImg,
+    heroImg: aikido1,
+    galleryImgs: [aikido2, aikido3],
     emoji: "🛡️",
     description: "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",
     benefits: ["Defesa pessoal prática e realista", "Condicionamento físico intenso", "Autoconfiança em situações de risco", "Reflexos e tempo de reação", "Controle emocional sob pressão"],
@@ -156,7 +158,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "ginastica": {
     name: "Ginástica",
     slug: "ginastica",
-    heroImg: musculacaoImg,
+    heroImg: ballet1,
+    galleryImgs: [ballet2],
     emoji: "🤾",
     description: "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",
     benefits: ["Condicionamento cardiovascular", "Flexibilidade e coordenação", "Queima calórica eficiente", "Motivação em grupo", "Variedade de exercícios"],
@@ -166,7 +169,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "hidroterapia": {
     name: "Hidroterapia",
     slug: "hidroterapia",
-    heroImg: hidro1,
+    heroImg: hidro4,
+    galleryImgs: [],
     emoji: "💧",
     description: "Reabilitação e bem-estar através de exercícios aquáticos terapêuticos em piscina aquecida. Acompanhamento especializado para recuperação.",
     benefits: ["Reabilitação de lesões articulares", "Alívio de dores crônicas", "Recuperação pós-cirúrgica", "Relaxamento muscular profundo", "Melhora da mobilidade"],
@@ -176,7 +180,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    heroImg: yogaImg,
+    heroImg: hidro3,
+    galleryImgs: [hidro4],
     emoji: "❤️",
     description: "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",
     benefits: ["Exercícios adaptados e seguros", "Manutenção da mobilidade", "Socialização e bem-estar emocional", "Prevenção de quedas", "Acompanhamento profissional dedicado"],

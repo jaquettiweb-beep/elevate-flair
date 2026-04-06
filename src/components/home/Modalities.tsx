@@ -11,11 +11,11 @@ import musculacaoImg from "@/assets/musculacao.jpg";
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
 
 const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
-  "Aquático": { bg: "rgba(30,64,175,0.2)", text: "#93C5FD" },
-  "Luta": { bg: "rgba(153,27,27,0.2)", text: "#FCA5A5" },
-  "Bem-estar": { bg: "rgba(22,101,52,0.2)", text: "#86EFAC" },
-  "Fitness": { bg: "rgba(146,64,14,0.2)", text: "#FCD34D" },
-  "Infantil": { bg: "rgba(91,33,182,0.2)", text: "#C4B5FD" },
+  "Aquático": { bg: "rgba(12,42,61,0.85)", text: "#60b4e8" },
+  "Fitness": { bg: "rgba(42,30,8,0.85)", text: "#f0a940" },
+  "Bem-estar": { bg: "rgba(14,42,26,0.85)", text: "#6dcfa0" },
+  "Luta": { bg: "rgba(45,16,16,0.85)", text: "#e87878" },
+  "Infantil": { bg: "rgba(30,16,48,0.85)", text: "#a987e8" },
 };
 
 const MODALITIES = [
@@ -66,23 +66,22 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
   return (
     <motion.div
       variants={cardVariants}
-      className="group bg-[#1A2335] border border-[#222D42] rounded-[14px] overflow-hidden transition-all duration-250 hover:-translate-y-[3px] hover:border-[#EE6200] hover:shadow-[0_8px_32px_rgba(238,98,0,0.15)] cursor-pointer"
+      className="group bg-[#1A2335] border border-[#222D42] border-t-[3px] border-t-[#EE6200] rounded-[14px] overflow-hidden transition-all duration-[250ms] ease-in-out hover:-translate-y-[4px] hover:border-[#EE6200] hover:shadow-[0_8px_28px_rgba(238,98,0,0.15)] cursor-pointer"
       onClick={() => navigate(mod.link)}
     >
-      <div className="h-[3px] bg-[#EE6200] w-full" />
-      <div className="h-[160px] w-full overflow-hidden border-b border-[#222D42]">
+      <div className="relative h-[180px] w-full overflow-hidden border-b border-[#222D42]">
         <img src={mod.img} alt={mod.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-      </div>
-      
-      <div className="p-[14px_16px_18px]">
         <span 
-          className="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium mb-2"
+          className="absolute top-[10px] right-[10px] px-[8px] py-[3px] rounded-[10px] text-[10px] font-[600]"
           style={{ backgroundColor: style.bg, color: style.text }}
         >
           {mod.category}
         </span>
+      </div>
+      
+      <div className="p-[14px_16px_18px]">
         <h3 className="text-[17px] font-bold text-[#F0EDE8] mb-1 leading-tight">{mod.name}</h3>
-        <p className="text-[13px] text-[#8A95A8] mb-3 line-clamp-2 leading-[1.7]">
+        <p className="text-[13px] text-[#8A95A8] mb-3 truncate">
           {mod.desc}
         </p>
 
@@ -96,10 +95,18 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
 }
 
 export default function Modalities() {
+  const [activeFilter, setActiveFilter] = useState("Todas");
+
+  const filteredModalities = activeFilter === "Todas" 
+    ? MODALITIES 
+    : MODALITIES.filter(m => m.category === (activeFilter === "Lutas" ? "Luta" : activeFilter));
+
+  const filterOptions = ["Todas", "Aquático", "Fitness", "Lutas", "Bem-estar", "Infantil"];
+
   return (
     <section id="modalidades" className="px-5 lg:px-10 relative z-10 transition-colors duration-500">
       <div className="container mx-auto">
-        <div className="text-center mb-10 sm:text-left sm:mb-12">
+        <div className="text-center mb-6 sm:text-left sm:mb-8">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -128,26 +135,47 @@ export default function Modalities() {
           </motion.p>
         </div>
 
+        {/* Filters */}
+        <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-8">
+          {filterOptions.map((cat) => {
+            const isActive = activeFilter === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                className={`px-[14px] py-[5px] rounded-[20px] text-[12px] transition-colors ${
+                  isActive 
+                    ? "bg-[#EE6200] text-[#fff] border border-[#EE6200]" 
+                    : "bg-transparent text-[#8A95A8] border border-[#222D42] hover:border-[#EE6200]/50"
+                }`}
+              >
+                {cat}
+              </button>
+            )
+          })}
+        </div>
+
         <motion.div 
+          key={activeFilter}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px]"
         >
-          {MODALITIES.map((mod) => (
+          {filteredModalities.map((mod) => (
             <ModalityCard key={mod.name} mod={mod} />
           ))}
         </motion.div>
 
-        <div className="mt-8 pt-4 flex justify-center">
+        <div className="mt-2 text-center">
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ y: -2, backgroundColor: "#EE6200", color: "#FFFFFF" }}
+            whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
-            className="border-[1.5px] border-[#EE6200] bg-transparent text-[#EE6200] rounded-[8px] px-8 py-3 font-semibold text-sm transition-all duration-300 hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)]"
+            className="bg-[#EE6200] text-[#fff] border-none px-[28px] py-[12px] rounded-[8px] font-[600] block mx-auto mt-[24px] w-fit cursor-pointer transition-all duration-300 hover:shadow-[0_6px_20px_rgba(238,98,0,0.3)]"
           >
             Ver todas as modalidades
           </motion.button>

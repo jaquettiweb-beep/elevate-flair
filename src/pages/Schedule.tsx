@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Phone } from "lucide-react";
+import { useState, useMemo } from "react";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20hor%C3%A1rios...";
@@ -59,7 +60,32 @@ function getCellColor(val: string) {
   return "bg-muted text-muted-foreground border-border";
 }
 
+const ALL_MODALITIES = Array.from(new Set([
+  "Musculação",
+  ...SCHEDULE_DATA.flatMap(row => DAYS.flatMap(d => {
+    const val = row[d.key as "mon"|"tue"|"wed"|"thu"|"fri"|"sat"];
+    return Array.isArray(val) ? val : [];
+  }))
+])).sort();
+
 export default function Schedule() {
+  const [selectedModality, setSelectedModality] = useState<string | null>(null);
+
+  const filteredData = useMemo(() => {
+    if (!selectedModality || selectedModality === "Musculação") return [];
+    return SCHEDULE_DATA.map(row => {
+      const newRow: any = { time: row.time };
+      let hasClass = false;
+      DAYS.forEach(d => {
+        const classes = row[d.key as "mon"|"tue"|"wed"|"thu"|"fri"|"sat"];
+        const filtered = classes.filter(c => c === selectedModality);
+        newRow[d.key] = filtered;
+        if (filtered.length > 0) hasClass = true;
+      });
+      return hasClass ? newRow : null;
+    }).filter(row => row !== null);
+  }, [selectedModality]);
+
   return (
     <Layout>
       <PageTransition>
@@ -86,65 +112,116 @@ export default function Schedule() {
         </div>
       </section>
 
+      {/* Modality Selector */}
+      <section className="py-12 bg-background border-b border-border/50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl font-bold mb-8 text-foreground">Escolha uma modalidade</h2>
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            {ALL_MODALITIES.map(mod => {
+              const isSelected = selectedModality === mod;
+              const colorClasses = getCellColor(mod);
+              
+              return (
+                <button
+                  key={mod}
+                  onClick={() => setSelectedModality(mod)}
+                  className={`px-5 py-2.5 rounded-full border text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md ${
+                    isSelected
+                      ? colorClasses + " ring-2 ring-primary ring-offset-2 ring-offset-background scale-105"
+                      : "bg-background border-border text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {mod}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Schedule Table */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <ScrollReveal direction="up" intensity="high">
-            <div className="overflow-x-auto rounded-xl border border-border">
-              <table className="w-full min-w-[700px] text-sm">
-                <thead>
-                  <tr className="bg-muted">
-                    <th className="px-4 py-3 text-left font-semibold text-foreground sticky left-0 bg-muted z-10">Horário</th>
-                    {DAYS.map((d) => (
-                      <th key={d.key} className="px-4 py-3 text-center font-semibold text-foreground">{d.label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {SCHEDULE_DATA.map((row) => (
-                    <tr key={row.time} className="border-t border-border hover:bg-muted/50 transition-colors">
-                      <td className="px-4 py-3 font-mono font-semibold text-foreground sticky left-0 bg-background z-10 whitespace-nowrap align-top">
-                        {row.time}
-                      </td>
-                      {DAYS.map((d) => {
-                        const classes = row[d.key as keyof typeof row] as string[];
-                        return (
-                          <td key={d.key} className="px-3 py-2 text-center align-top min-w-[140px]">
-                            {classes.length === 0 ? (
-                              <span className="text-muted-foreground/30">—</span>
-                            ) : (
-                              <div className="flex flex-col gap-1.5 items-center">
-                                {classes.map((c, i) => (
-                                  <span key={i} className={`inline-block px-3 py-1.5 rounded-md text-xs font-medium border w-full leading-tight ${getCellColor(c)}`}>
-                                    {c}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal direction="up" intensity="medium">
-            <div className="bg-[hsl(221,70%,96%)] border border-[hsl(221,70%,85%)] rounded-xl p-6 mt-12 text-center max-w-2xl mx-auto shadow-sm">
-              <h3 className="font-bold text-lg mb-2 text-[hsl(221,70%,30%)]">Musculação – Horário Livre</h3>
-              <p className="text-[hsl(221,70%,40%)]">
-                A musculação não possui horários fixos de aula. O espaço fica livre para treino durante todo o horário de funcionamento da academia:
-              </p>
-              <div className="mt-3 font-medium text-[hsl(221,70%,30%)]">
-                Segunda a Sexta: 06h às 22h <br/>
-                Sábados: 08h às 13h
+          {!selectedModality ? (
+            <div className="text-center py-12">
+              <div className="bg-muted/30 border border-border/50 rounded-xl p-8 max-w-lg mx-auto">
+                <p className="text-lg text-muted-foreground font-medium">
+                  Selecione uma modalidade acima para visualizar seus horários.
+                </p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm mt-6 text-center">
-              * Horários sujeitos a alteração. Entre em contato para confirmar disponibilidade.
-            </p>
-          </ScrollReveal>
+          ) : selectedModality === "Musculação" ? (
+            <ScrollReveal direction="up" intensity="high" key="musculacao">
+              <div className="bg-[hsl(221,70%,96%)] border border-[hsl(221,70%,85%)] rounded-xl p-8 text-center max-w-2xl mx-auto shadow-sm">
+                <h3 className="font-bold text-2xl mb-4 text-[hsl(221,70%,30%)]">Musculação – Horário Livre</h3>
+                <p className="text-[hsl(221,70%,40%)] text-lg mb-6 leading-relaxed">
+                  A musculação não possui horários fixos de aula. O espaço fica livre para treino durante todo o horário de funcionamento da academia.
+                </p>
+                <div className="inline-block bg-white/60 px-6 py-4 rounded-xl text-left shadow-sm">
+                  <div className="flex items-center gap-3 mb-2 text-[hsl(221,70%,30%)]">
+                    <span className="font-bold w-36">Segunda a Sexta:</span> 06h às 22h
+                  </div>
+                  <div className="flex items-center gap-3 text-[hsl(221,70%,30%)]">
+                    <span className="font-bold w-36">Sábados:</span> 08h às 13h
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ) : (
+            <ScrollReveal direction="up" intensity="high" key={selectedModality}>
+              <div className="overflow-x-auto rounded-xl border border-border shadow-sm">
+                <table className="w-full min-w-[700px] text-sm">
+                  <thead>
+                    <tr className="bg-muted">
+                      <th className="px-4 py-4 text-left font-semibold text-foreground sticky left-0 bg-muted z-10 w-24">Horário</th>
+                      {DAYS.map((d) => (
+                        <th key={d.key} className="px-4 py-4 text-center font-semibold text-foreground w-[calc((100%-6rem)/6)]">{d.label}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.length > 0 ? (
+                      filteredData.map((row: any) => (
+                        <tr key={row.time} className="border-t border-border hover:bg-muted/30 transition-colors">
+                          <td className="px-4 py-4 font-mono font-semibold text-foreground sticky left-0 bg-background z-10 align-top">
+                            {row.time}
+                          </td>
+                          {DAYS.map((d) => {
+                            const classes = row[d.key] as string[];
+                            return (
+                              <td key={d.key} className="px-3 py-3 text-center align-top border-l border-border/30">
+                                {classes.length === 0 ? (
+                                  <span className="text-muted-foreground/30">—</span>
+                                ) : (
+                                  <div className="flex flex-col gap-1.5 items-center">
+                                    {classes.map((c, i) => (
+                                      <span key={i} className={`inline-block px-3 py-2 rounded-md text-xs font-bold border w-full leading-tight shadow-sm ${getCellColor(c)}`}>
+                                        {c}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                          Nenhum horário encontrado para esta modalidade.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </ScrollReveal>
+          )}
+
+          <p className="text-muted-foreground text-sm mt-8 text-center">
+            * Horários sujeitos a alteração. Entre em contato para confirmar disponibilidade.
+          </p>
 
           {/* CTA */}
           <ScrollReveal direction="zoom" intensity="high">

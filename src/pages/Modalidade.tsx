@@ -11,6 +11,36 @@ import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
+import hidro1 from "@/assets/hidro-1.jpg";
+import hidro2 from "@/assets/hidro-2.jpg";
+import hidro3 from "@/assets/hidro-3.jpg";
+import hidro4 from "@/assets/hidro-4.jpg";
+
+import yogaNew1 from "@/assets/yoga_new-1.jpg";
+import yogaNew2 from "@/assets/yoga_new-2.jpg";
+import yogaNew3 from "@/assets/yoga_new-3.jpg";
+import yogaNew4 from "@/assets/yoga_new-4.jpg";
+
+import judo1 from "@/assets/judo-1.jpg";
+import judo2 from "@/assets/judo-2.jpg";
+import judo3 from "@/assets/judo-3.jpg";
+import judo4 from "@/assets/judo-4.jpg";
+
+import jiujitsu1 from "@/assets/jiujitsu-1.jpg";
+import jiujitsu2 from "@/assets/jiujitsu-2.jpg";
+import jiujitsu3 from "@/assets/jiujitsu-3.jpg";
+import jiujitsu4 from "@/assets/jiujitsu-4.jpg";
+
+import aikido1 from "@/assets/aikido-1.jpg";
+import aikido2 from "@/assets/aikido-2.jpg";
+import aikido3 from "@/assets/aikido-3.jpg";
+import aikido4 from "@/assets/aikido-4.jpg";
+
+import ballet1 from "@/assets/ballet-1.jpg";
+import ballet2 from "@/assets/ballet-2.jpg";
+import ballet3 from "@/assets/ballet-3.jpg";
+import ballet4 from "@/assets/ballet-4.jpg";
+
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20";
 
@@ -18,6 +48,7 @@ interface ModalityData {
   name: string;
   slug: string;
   heroImg: string;
+  galleryImgs?: string[];
   emoji: string;
   description: string;
   benefits: string[];
@@ -49,7 +80,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "hidroginastica": {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    heroImg: swimmingImg,
+    heroImg: hidro1,
+    galleryImgs: [hidro2, hidro3, hidro4],
     emoji: "🌊",
     description: "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
     benefits: ["Exercício de baixo impacto nas articulações", "Melhora cardiovascular", "Fortalecimento muscular na água", "Socialização e bem-estar", "Ideal para gestantes e idosos"],
@@ -69,7 +101,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "jiu-jitsu": {
     name: "Jiu Jitsu",
     slug: "jiu-jitsu",
-    heroImg: martialImg,
+    heroImg: jiujitsu1,
+    galleryImgs: [jiujitsu2, jiujitsu3, jiujitsu4],
     emoji: "🥋",
     description: "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
     benefits: ["Defesa pessoal completa", "Fortalecimento de todo o corpo", "Desenvolvimento de raciocínio estratégico", "Comunidade e companheirismo", "Superação de limites pessoais"],
@@ -79,23 +112,15 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    heroImg: martialImg,
+    heroImg: judo1,
+    galleryImgs: [judo2, judo3, judo4],
     emoji: "🥋",
     description: "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",
     benefits: ["Desenvolvimento da coordenação motora", "Disciplina e respeito", "Socialização saudável", "Autoconfiança", "Condicionamento físico infantil"],
     schedule: "Terça e quinta, 15h",
     audience: "Crianças de 4 a 12 anos",
   },
-  "kung-fu": {
-    name: "Kung Fu",
-    slug: "kung-fu",
-    heroImg: martialImg,
-    emoji: "🥋",
-    description: "Arte marcial chinesa milenar que trabalha equilíbrio, técnica, flexibilidade e filosofia de vida. Formas tradicionais e aplicação prática.",
-    benefits: ["Flexibilidade e equilíbrio", "Concentração e disciplina mental", "Tradição e filosofia marcial", "Condicionamento físico completo", "Defesa pessoal"],
-    schedule: "Terça e quinta, 20h / Sábado, 10h",
-    audience: "A partir de 10 anos",
-  },
+
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
@@ -109,7 +134,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "aikido": {
     name: "Aikidô",
     slug: "aikido",
-    heroImg: martialImg,
+    heroImg: aikido1,
+    galleryImgs: [aikido2, aikido3, aikido4],
     emoji: "☯️",
     description: "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária.",
     benefits: ["Harmonia corpo-mente", "Defesa pessoal não-violenta", "Flexibilidade articular", "Equilíbrio e centragem", "Filosofia de vida pacífica"],
@@ -119,7 +145,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "ballet-infantil": {
     name: "Ballet (Infantil)",
     slug: "ballet-infantil",
-    heroImg: pilatesImg,
+    heroImg: ballet1,
+    galleryImgs: [ballet2, ballet3, ballet4],
     emoji: "🩰",
     description: "Expressão artística, postura e ritmo para crianças. Aulas lúdicas que desenvolvem a coordenação, musicalidade e autoexpressão.",
     benefits: ["Postura e elegância", "Coordenação motora e ritmo", "Expressão artística", "Disciplina e foco", "Socialização entre crianças"],
@@ -139,7 +166,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "hidroterapia": {
     name: "Hidroterapia",
     slug: "hidroterapia",
-    heroImg: swimmingImg,
+    heroImg: hidro1,
     emoji: "💧",
     description: "Reabilitação e bem-estar através de exercícios aquáticos terapêuticos em piscina aquecida. Acompanhamento especializado para recuperação.",
     benefits: ["Reabilitação de lesões articulares", "Alívio de dores crônicas", "Recuperação pós-cirúrgica", "Relaxamento muscular profundo", "Melhora da mobilidade"],
@@ -149,7 +176,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    heroImg: swimmingImg,
+    heroImg: yogaImg,
     emoji: "❤️",
     description: "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",
     benefits: ["Exercícios adaptados e seguros", "Manutenção da mobilidade", "Socialização e bem-estar emocional", "Prevenção de quedas", "Acompanhamento profissional dedicado"],
@@ -159,7 +186,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "yoga": {
     name: "Yoga",
     slug: "yoga",
-    heroImg: yogaImg,
+    heroImg: yogaNew1,
+    galleryImgs: [yogaNew2, yogaNew3, yogaNew4],
     emoji: "🧘",
     description: "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Melhore flexibilidade, força, equilíbrio e concentração com instrutores certificados.",
     benefits: ["Redução do estresse e ansiedade", "Melhora da flexibilidade", "Fortalecimento muscular", "Equilíbrio e concentração", "Consciência respiratória"],
@@ -223,10 +251,27 @@ const Modalidade = () => {
 
               {/* Hero image */}
               <ScrollReveal>
-                <div className="rounded-2xl overflow-hidden mb-16 shadow-2xl">
+                <div className="rounded-2xl overflow-hidden mb-8 shadow-2xl">
                   <img src={data.heroImg} alt={data.name} className="w-full h-[400px] object-cover" />
                 </div>
               </ScrollReveal>
+
+              {/* Specific Gallery if exists */}
+              {data.galleryImgs && data.galleryImgs.length > 0 && (
+                <ScrollReveal>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
+                    {data.galleryImgs.map((imgSrc, i) => (
+                      <div key={i} className="rounded-xl overflow-hidden shadow-lg h-[200px]">
+                        <img
+                          src={imgSrc}
+                          alt={`${data.name} galeria ${i + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </ScrollReveal>
+              )}
 
               {/* Info cards */}
               <div className="grid md:grid-cols-3 gap-6 mb-16">

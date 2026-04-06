@@ -5,14 +5,20 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
-import { useGalleryImages } from "@/hooks/useGalleryImages";
-import swimmingImg from "@/assets/swimming.jpg";
+import hidro1 from "@/assets/hidro-1.jpg";
+import hidro2 from "@/assets/hidro-2.jpg";
+import hidro3 from "@/assets/hidro-3.jpg";
+import hidro4 from "@/assets/hidro-4.jpg";
+import hidro5 from "@/assets/hidro-5.jpg";
 
 const Natacao = () => {
-  const { data: images } = useGalleryImages("Natação");
-
-  const heroImage = images?.[0]?.image_url || swimmingImg;
-  const extraImages = images?.slice(1) || [];
+  const heroImage = hidro1;
+  const extraImages = [
+    { id: 2, image_url: hidro2, alt_text: "Aula de hidroginástica e natação 2" },
+    { id: 3, image_url: hidro3, alt_text: "Aula de hidroginástica e natação 3" },
+    { id: 4, image_url: hidro4, alt_text: "Aula de hidroginástica e natação 4" },
+    { id: 5, image_url: hidro5, alt_text: "Aula de hidroginástica e natação 5" },
+  ];
 
   return (
     <Layout>

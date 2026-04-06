@@ -7,6 +7,13 @@ import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
+import hidroImg from "@/assets/hidro-1.jpg";
+import judoImg from "@/assets/judo-1.jpg";
+import jiujitsuImg from "@/assets/jiujitsu-1.jpg";
+import aikidoImg from "@/assets/aikido-1.jpg";
+import balletImg from "@/assets/ballet-1.jpg";
+import yogaNewImg from "@/assets/yoga_new-1.jpg";
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
 
@@ -21,20 +28,19 @@ const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
 const MODALITIES = [
   { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, link: "/natacao" },
   { name: "Musculação", category: "Fitness" as Category, desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, link: "/musculacao" },
-  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
+  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaNewImg, link: "/modalidade/yoga" },
   { name: "Pilates Studio", category: "Bem-estar" as Category, desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, link: "/modalidade/pilates-studio" },
   { name: "Pilates Solo", category: "Fitness" as Category, desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: pilatesImg, link: "/modalidade/pilates-solo" },
-  { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: swimmingImg, link: "/modalidade/hidroginastica" },
+  { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },
   { name: "Muay Thai", category: "Luta" as Category, desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: martialImg, link: "/modalidade/muay-thai" },
-  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: martialImg, link: "/modalidade/jiu-jitsu" },
-  { name: "Judô (infantil)", category: "Infantil" as Category, desc: "Disciplina e coordenação motora para crianças.", img: martialImg, link: "/modalidade/judo-infantil" },
-  { name: "Kung Fu", category: "Luta" as Category, desc: "Arte marcial chinesa milenar — equilíbrio e técnica.", img: martialImg, link: "/modalidade/kung-fu" },
+  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: jiujitsuImg, link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", category: "Infantil" as Category, desc: "Disciplina e coordenação motora para crianças.", img: judoImg, link: "/modalidade/judo-infantil" },
   { name: "Krav Maga", category: "Luta" as Category, desc: "Sistema de defesa pessoal prático e eficiente.", img: martialImg, link: "/modalidade/krav-maga" },
-  { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: martialImg, link: "/modalidade/aikido" },
-  { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: pilatesImg, link: "/modalidade/ballet-infantil" },
+  { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: aikidoImg, link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
   { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: musculacaoImg, link: "/modalidade/ginastica" },
-  { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: swimmingImg, link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: swimmingImg, link: "/modalidade/programa-60-saude" },
+  { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: hidroImg, link: "/modalidade/hidroterapia" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaImg, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {

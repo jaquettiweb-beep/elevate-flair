@@ -653,6 +653,14 @@ section:nth-of-type(odd) {
               var(--color-dark) !important;
 }
 
+/* Override for white background modality pages */
+section.page-white,
+section.page-white:nth-of-type(even),
+section.page-white:nth-of-type(odd) {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
 /* Global Section Padding - Reduced Spacing */
 section {
   padding-top: clamp(48px, 6vw, 80px) !important;

@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/swimming.jpg";     // Natação ✅
-import pilatesImg from "@/assets/pilates.jpg";         // Pilates Studio
+import pilatesImg from "@/assets/pilates.jpg";         // Pilates Studio ✅
 import musculacaoImg from "@/assets/musculacao.jpg";   // Musculação ✅
+import yogaImg from "@/assets/yoga.jpg";               // Yoga ✅
 
 // Confirmed by user:
 import hidroImg from "@/assets/hidro-1.jpg";           // Hidroginástica ✅
-import hidro2Img from "@/assets/hidro-2.jpg";          // Hidroterapia (aquatic, different photo)
+import hidro2Img from "@/assets/hidro-2.jpg";          // Hidroterapia ✅
 import judoImg from "@/assets/judo-1.jpg";             // Judô ✅
 import jiujitsuImg from "@/assets/jiujitsu-1.jpg";     // Jiu Jitsu ✅
-import jiujitsu2Img from "@/assets/jiujitsu-2.jpg";   // Muay Thai placeholder (similar combat sport)
+import jiujitsu2Img from "@/assets/jiujitsu-2.jpg";    // Muay Thai (placeholder - arte marcial)
 import aikidoImg from "@/assets/aikido-1.jpg";         // Aikidô ✅
-import aikido2Img from "@/assets/aikido-2.jpg";        // Krav Maga placeholder (distinct from aikido card)
+import aikido2Img from "@/assets/aikido-2.jpg";        // Krav Maga (placeholder - arte marcial diferente)
 import balletImg from "@/assets/ballet-1.jpg";         // Ballet ✅
-import ballet3Img from "@/assets/ballet-3.jpg";        // Ginástica (movement/fitness, distinct from ballet card)
-import yogaNewImg from "@/assets/yoga_new-1.jpg";     // Yoga ✅ / Pilates Solo / 60+
+import ballet3Img from "@/assets/ballet-3.jpg";        // Ginástica (movimento corporal)
+import yogaNewImg from "@/assets/yoga_new-1.jpg";      // Pilates Solo / Programa 60+
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
@@ -31,7 +32,7 @@ const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
 const MODALITIES = [
   { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, link: "/natacao" },
   { name: "Musculação", category: "Fitness" as Category, desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, link: "/musculacao" },
-  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaNewImg, link: "/modalidade/yoga" },
+  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
   { name: "Pilates Studio", category: "Bem-estar" as Category, desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, link: "/modalidade/pilates-studio" },
   { name: "Pilates Solo", category: "Fitness" as Category, desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: yogaNewImg, link: "/modalidade/pilates-solo" },
   { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },
@@ -43,7 +44,7 @@ const MODALITIES = [
   { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
   { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ballet3Img, link: "/modalidade/ginastica" },
   { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: hidro2Img, link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaNewImg, link: "/modalidade/programa-60-saude" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaImg, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {

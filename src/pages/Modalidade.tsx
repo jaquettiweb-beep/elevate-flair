@@ -6,36 +6,42 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { ChevronRight, Clock, MapPin, Users, Star } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import swimmingImg from "@/assets/swimming.jpg";
-import yogaImg from "@/assets/yoga.jpg";
-import martialImg from "@/assets/martial-arts.jpg";
-import pilatesImg from "@/assets/pilates.jpg";
-import musculacaoImg from "@/assets/musculacao.jpg";
+import yogaImg from "@/assets/yoga.jpg";             // Yoga ✅
+import pilatesImg from "@/assets/pilates.jpg";         // Pilates ✅
+import musculacaoImg from "@/assets/musculacao.jpg";   // Musculação ✅
 
-import hidro1 from "@/assets/judo-1.jpg";   // judo-1 visually shows a POOL
+// Hidro — confirmed by user: hidro-1 to hidro-5 are all Hidroginástica
+import hidro1 from "@/assets/hidro-1.jpg";
 import hidro2 from "@/assets/hidro-2.jpg";
 import hidro3 from "@/assets/hidro-3.jpg";
 import hidro4 from "@/assets/hidro-4.jpg";
+import hidro5 from "@/assets/hidro-5.jpg";
 
+// Yoga — confirmed by user: yoga_new-1 to yoga_new-4 are Yoga
 import yogaNew1 from "@/assets/yoga_new-1.jpg";
 import yogaNew2 from "@/assets/yoga_new-2.jpg";
 import yogaNew3 from "@/assets/yoga_new-3.jpg";
 import yogaNew4 from "@/assets/yoga_new-4.jpg";
 
+// Judô — confirmed by user: judo-1 to judo-3 are Judô
 import judo1 from "@/assets/judo-1.jpg";
 import judo2 from "@/assets/judo-2.jpg";
 import judo3 from "@/assets/judo-3.jpg";
 import judo4 from "@/assets/judo-4.jpg";
 
+// Jiu Jitsu — confirmed by user: jiujitsu-1 to jiujitsu-3 are Jiu Jitsu
 import jiujitsu1 from "@/assets/jiujitsu-1.jpg";
 import jiujitsu2 from "@/assets/jiujitsu-2.jpg";
 import jiujitsu3 from "@/assets/jiujitsu-3.jpg";
 import jiujitsu4 from "@/assets/jiujitsu-4.jpg";
 
+// Aikidô — confirmed by user: aikido-1 and aikido-2 are Aikidô
 import aikido1 from "@/assets/aikido-1.jpg";
 import aikido2 from "@/assets/aikido-2.jpg";
 import aikido3 from "@/assets/aikido-3.jpg";
 import aikido4 from "@/assets/aikido-4.jpg";
 
+// Ballet — confirmed by user: ballet-1 to ballet-5 are Ballet
 import ballet1 from "@/assets/ballet-1.jpg";
 import ballet2 from "@/assets/ballet-2.jpg";
 import ballet3 from "@/assets/ballet-3.jpg";
@@ -82,7 +88,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
     name: "Hidroginástica",
     slug: "hidroginastica",
     heroImg: hidro1,
-    galleryImgs: [hidro2, hidro3, hidro4],
+    galleryImgs: [hidro2, hidro3, hidro4, hidro5],
     emoji: "🌊",
     description: "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
     benefits: ["Exercício de baixo impacto nas articulações", "Melhora cardiovascular", "Fortalecimento muscular na água", "Socialização e bem-estar", "Ideal para gestantes e idosos"],
@@ -93,6 +99,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
     name: "Muay Thai",
     slug: "muay-thai",
     heroImg: jiujitsu1,
+    galleryImgs: [jiujitsu2, jiujitsu3],
     emoji: "🥊",
     description: "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
     benefits: ["Condicionamento físico intenso", "Defesa pessoal eficiente", "Queima calórica elevada", "Aumento da confiança", "Disciplina e foco mental"],
@@ -121,7 +128,6 @@ const MODALITY_DATA: Record<string, ModalityData> = {
     schedule: "Terça e quinta, 15h",
     audience: "Crianças de 4 a 12 anos",
   },
-
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
@@ -140,7 +146,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [aikido2, aikido3, aikido4],
     emoji: "☯️",
     description: "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária.",
-    benefits: ["Harmonia corpo-mente", "Defesa pessoal não-violenta", "Flexibilidade articular", "Equilíbrio e centragem", "Filosofia de vida pacífica"],
+    benefits: ["Harmonia corpo-mente", "Defesa pessoal não-violenta", "Flexibilidade articular", "Equilíbrio e centração", "Filosofia de vida pacífica"],
     schedule: "Terça e quinta, 19h",
     audience: "Todas as idades",
   },
@@ -151,15 +157,15 @@ const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [ballet2, ballet3, ballet4],
     emoji: "🩰",
     description: "Expressão artística, postura e ritmo para crianças. Aulas lúdicas que desenvolvem a coordenação, musicalidade e autoexpressão.",
-    benefits: ["Postura e elegância", "Coordenação motora e ritmo", "Expressão artística", "Disciplina e foco", "Socialização entre crianças"],
+    benefits: ["Postura e elegaância", "Coordenação motora e ritmo", "Expressão artística", "Disciplina e foco", "Socialização entre crianças"],
     schedule: "Terça e quinta, 14h",
     audience: "Crianças de 3 a 10 anos",
   },
   "ginastica": {
     name: "Ginástica",
     slug: "ginastica",
-    heroImg: ballet1,
-    galleryImgs: [ballet2],
+    heroImg: ballet3,
+    galleryImgs: [ballet4],
     emoji: "🤾",
     description: "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",
     benefits: ["Condicionamento cardiovascular", "Flexibilidade e coordenação", "Queima calórica eficiente", "Motivação em grupo", "Variedade de exercícios"],
@@ -169,8 +175,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "hidroterapia": {
     name: "Hidroterapia",
     slug: "hidroterapia",
-    heroImg: hidro4,
-    galleryImgs: [],
+    heroImg: hidro1,
+    galleryImgs: [hidro2, hidro3],
     emoji: "💧",
     description: "Reabilitação e bem-estar através de exercícios aquáticos terapêuticos em piscina aquecida. Acompanhamento especializado para recuperação.",
     benefits: ["Reabilitação de lesões articulares", "Alívio de dores crônicas", "Recuperação pós-cirúrgica", "Relaxamento muscular profundo", "Melhora da mobilidade"],
@@ -180,8 +186,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    heroImg: hidro3,
-    galleryImgs: [hidro4],
+    heroImg: yogaImg,
+    galleryImgs: [yogaNew1, yogaNew2],
     emoji: "❤️",
     description: "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",
     benefits: ["Exercícios adaptados e seguros", "Manutenção da mobilidade", "Socialização e bem-estar emocional", "Prevenção de quedas", "Acompanhamento profissional dedicado"],
@@ -191,8 +197,8 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "yoga": {
     name: "Yoga",
     slug: "yoga",
-    heroImg: yogaNew1,
-    galleryImgs: [yogaNew2, yogaNew3, yogaNew4],
+    heroImg: yogaImg,
+    galleryImgs: [yogaNew1, yogaNew2, yogaNew3, yogaNew4],
     emoji: "🧘",
     description: "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Melhore flexibilidade, força, equilíbrio e concentração com instrutores certificados.",
     benefits: ["Redução do estresse e ansiedade", "Melhora da flexibilidade", "Fortalecimento muscular", "Equilíbrio e concentração", "Consciência respiratória"],

@@ -7,11 +7,13 @@ import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
-import hidroImg from "@/assets/hidro-1.jpg";
-import judoImg from "@/assets/judo-1.jpg";
+// Note: judo-1.jpg visually shows a POOL → used as hidroImg
+// Note: hidro-1.jpg visually shows a MARTIAL ARTS TATAME → used as judoImg
+import hidroImg from "@/assets/judo-1.jpg";
+import judoImg from "@/assets/hidro-1.jpg";
 import jiujitsuImg from "@/assets/jiujitsu-1.jpg";
 import aikidoImg from "@/assets/aikido-1.jpg";
-import balletImg from "@/assets/ballet-1.jpg";
+import balletImg from "@/assets/ballet-2.jpg";
 import yogaNewImg from "@/assets/yoga_new-1.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -40,7 +42,7 @@ const MODALITIES = [
   { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
   { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: balletImg, link: "/modalidade/ginastica" },
   { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: hidroImg, link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: hidroImg, link: "/modalidade/programa-60-saude" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaNewImg, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {

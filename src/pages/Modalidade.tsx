@@ -11,7 +11,7 @@ import martialImg from "@/assets/martial-arts.jpg";
 import pilatesImg from "@/assets/pilates.jpg";
 import musculacaoImg from "@/assets/musculacao.jpg";
 
-import hidro1 from "@/assets/hidro-1.jpg";
+import hidro1 from "@/assets/judo-1.jpg";   // judo-1 visually shows a POOL
 import hidro2 from "@/assets/hidro-2.jpg";
 import hidro3 from "@/assets/hidro-3.jpg";
 import hidro4 from "@/assets/hidro-4.jpg";

@@ -33,10 +33,10 @@ const Musculacao = () => {
             </ScrollReveal>
 
             <ScrollReveal>
-              <h1 className="font-display text-4xl lg:text-6xl font-bold text-slate-900 mb-6">
+              <h1 className="font-display text-4xl lg:text-6xl font-bold mb-6" style={{ color: '#0f172a' }}>
                 <span className="text-[#EE6200]">Musculação</span> de Alta Performance
               </h1>
-              <p className="text-slate-600 text-lg max-w-2xl mb-12">
+              <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
                 Equipamentos modernos, ambiente motivador e profissionais qualificados para o seu melhor treino.
               </p>
             </ScrollReveal>

@@ -27,18 +27,18 @@ const BemEstar = () => {
           <div className="container mx-auto px-4 relative z-10 pt-24 pb-16">
             <ScrollReveal>
               <BackToModalities />
-              <nav className="flex items-center gap-2 text-sm text-slate-500 mb-8 mt-4">
-                <Link to="/" className="hover:text-[#EE6200] transition-colors">Início</Link>
+              <nav className="flex items-center gap-2 text-sm mb-8 mt-4" style={{ color: '#64748b' }}>
+                <Link to="/" className="hover:text-[#EE6200] transition-colors" style={{ color: '#64748b' }}>Início</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-slate-900 font-medium">Bem-estar</span>
+                <span className="font-medium" style={{ color: '#0f172a' }}>Bem-estar</span>
               </nav>
             </ScrollReveal>
 
             <ScrollReveal>
-              <h1 className="font-display text-4xl lg:text-6xl font-bold text-slate-900 mb-6">
+              <h1 className="font-display text-4xl lg:text-6xl font-bold mb-6" style={{ color: '#0f172a' }}>
                 <span className="text-[#EE6200]">Bem-estar</span> — Corpo & Mente
               </h1>
-              <p className="text-slate-600 text-lg max-w-2xl mb-12">
+              <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
                 Yoga, Pilates e práticas de relaxamento para equilíbrio físico e mental. Cuide de você de forma integral.
               </p>
             </ScrollReveal>
@@ -84,8 +84,8 @@ const BemEstar = () => {
                     <div className="w-14 h-14 rounded-full bg-[#EE6200]/10 border-2 border-[#EE6200] flex items-center justify-center mb-4">
                       <item.icon className="w-7 h-7 text-[#EE6200]" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-xl font-bold mb-2" style={{ color: '#0f172a' }}>{item.title}</h3>
+                    <p className="leading-relaxed" style={{ color: '#475569' }}>{item.desc}</p>
                   </div>
                 </ScrollReveal>
               ))}
@@ -93,8 +93,8 @@ const BemEstar = () => {
 
             <ScrollReveal>
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Benefícios do Bem-estar</h2>
-                <ul className="space-y-3 text-slate-600 text-lg">
+                <h2 className="text-2xl font-bold mb-4" style={{ color: '#0f172a' }}>Benefícios do Bem-estar</h2>
+                <ul className="space-y-3 text-lg" style={{ color: '#475569' }}>
                   <li>• Redução do estresse e ansiedade</li>
                   <li>• Melhora da postura e flexibilidade</li>
                   <li>• Fortalecimento muscular de baixo impacto</li>

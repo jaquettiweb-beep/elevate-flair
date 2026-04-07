@@ -30,10 +30,10 @@ const Natacao = () => {
             </ScrollReveal>
 
             <ScrollReveal>
-              <h1 className="font-display text-4xl lg:text-6xl font-bold text-slate-900 mb-6">
+              <h1 className="font-display text-4xl lg:text-6xl font-bold mb-6" style={{ color: '#0f172a' }}>
                 <span className="text-[#EE6200]">Natação</span> para Todas as Idades
               </h1>
-              <p className="text-slate-600 text-lg max-w-2xl mb-12">
+              <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
                 Piscina semiolímpica aquecida com aulas para bebês, crianças, adultos e idosos. Referência em São Paulo há mais de 50 anos.
               </p>
             </ScrollReveal>

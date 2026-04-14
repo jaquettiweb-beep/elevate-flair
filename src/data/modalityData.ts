@@ -108,7 +108,9 @@ import judoReal7 from "@/assets/judo-real-7.jpg";
 import judoReal8 from "@/assets/judo-real-8.jpg";
 import judoReal9 from "@/assets/judo-real-9.jpg";
 
-// Aikidô real (9)
+// Muay Thai real (1)
+import muayThaiReal1 from "@/assets/muay-thai-real-1.jpg";
+
 import aikidoReal1 from "@/assets/aikido-real-1.jpg";
 import aikidoReal2 from "@/assets/aikido-real-2.jpg";
 import aikidoReal3 from "@/assets/aikido-real-3.jpg";

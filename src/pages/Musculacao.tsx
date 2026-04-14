@@ -6,18 +6,26 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Dumbbell, Target, TrendingUp, Shield } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import ImageCarousel from "@/components/ImageCarousel";
-import musc1 from "@/assets/musculacao-real-1.jpg";
-import musc2 from "@/assets/musculacao-real-2.jpg";
-import musc3 from "@/assets/musculacao-real-3.jpg";
-import musc4 from "@/assets/musculacao-real-4.jpg";
-import musc5 from "@/assets/musculacao-real-5.jpg";
+import musc1 from "@/assets/muscu-new-1.jpg";
+import musc2 from "@/assets/muscu-new-2.jpg";
+import musc3 from "@/assets/muscu-new-3.jpg";
+import musc4 from "@/assets/muscu-new-4.jpg";
+import musc5 from "@/assets/muscu-new-5.jpg";
+import musc6 from "@/assets/muscu-new-6.jpg";
+import musc7 from "@/assets/muscu-new-7.jpg";
+import musc8 from "@/assets/muscu-new-8.jpg";
+import musc9 from "@/assets/muscu-new-9.jpg";
 
 const MUSCULACAO_IMAGES = [
-  { src: musc1, alt: "Sala de musculação da Academia Flipper — halteres e aparelhos" },
-  { src: musc2, alt: "Academia Flipper — máquinas de musculação com espelho" },
-  { src: musc3, alt: "Academia Flipper — crossover e rack de halteres" },
-  { src: musc4, alt: "Aluna treinando na Academia Flipper" },
-  { src: musc5, alt: "Academia Flipper — leg press e vista para a cidade" },
+  { src: musc1, alt: "Academia Flipper — sala de musculação com equipamentos" },
+  { src: musc2, alt: "Academia Flipper — aparelhos de musculação" },
+  { src: musc3, alt: "Academia Flipper — equipamentos com vista" },
+  { src: musc4, alt: "Academia Flipper — sala de treino completa" },
+  { src: musc5, alt: "Academia Flipper — área de bikes e máquinas" },
+  { src: musc6, alt: "Academia Flipper — esteiras" },
+  { src: musc7, alt: "Academia Flipper — halteres" },
+  { src: musc8, alt: "Academia Flipper — turma de musculação" },
+  { src: musc9, alt: "Academia Flipper — alunos treinando" },
 ];
 
 const Musculacao = () => {

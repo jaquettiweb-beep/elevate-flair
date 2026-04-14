@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/natacao-1.jpg";
 import pilatesImg from "@/assets/pilates-real-1.jpg";
-import musculacaoImg from "@/assets/musculacao-real-1.jpg";
+import musculacaoImg from "@/assets/muscu-new-1.jpg";
 import yogaImg from "@/assets/yoga-flipper-1.jpg";
 import hidroImg from "@/assets/hidro-extra-1.jpg";
 import yogaNewImg from "@/assets/yoga_new-1.jpg";

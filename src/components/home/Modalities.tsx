@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/natacao-1.jpg";
 import pilatesImg from "@/assets/yoga-real-2.jpg";
 import musculacaoImg from "@/assets/musculacao-real-1.jpg";
-import yogaImg from "@/assets/yoga-real-1.jpg";
-import hidroImg from "@/assets/hidro-1.jpg";
-import yogaNewImg2 from "@/assets/yoga_new-2.jpg";
-import judoImg from "@/assets/judo-1.jpg";
-import jiujitsuImg from "@/assets/jiujitsu-1.jpg";
-import jiujitsu2Img from "@/assets/jiujitsu-3.jpg";
-import aikidoImg from "@/assets/aikido-1.jpg";
-import aikido2Img from "@/assets/aikido-4.jpg";
-import balletImg from "@/assets/ballet-real-1.jpg";
-import ballet3Img from "@/assets/ballet-real-3.jpg";
+import yogaImg from "@/assets/yoga-flipper-1.jpg";
+import hidroImg from "@/assets/hidro-extra-1.jpg";
 import yogaNewImg from "@/assets/yoga_new-1.jpg";
+import judoImg from "@/assets/judo-new-1.jpg";
+import jiuJitsuImg from "@/assets/jiu-jitsu-real-1.jpg";
+import muayThaiImg from "@/assets/aikido-1.jpg";
+import aikidoImg from "@/assets/aikido-real-1.jpg";
+import balletImg from "@/assets/ballet-new-1.jpg";
+import ginasticaImg from "@/assets/ginastica-real-1.jpg";
+import programa60Img from "@/assets/programa60-real-1.jpg";
+import kravMagaImg from "@/assets/aikido-3.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";
@@ -34,14 +34,14 @@ const MODALITIES = [
   { name: "Pilates Studio", category: "Bem-estar" as Category, desc: "Aparelhos de Pilates com acompanhamento individual.", img: pilatesImg, link: "/modalidade/pilates-studio" },
   { name: "Pilates Solo", category: "Fitness" as Category, desc: "Fortalecimento e flexibilidade no solo para todos os níveis.", img: yogaNewImg, link: "/modalidade/pilates-solo" },
   { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },
-  { name: "Muay Thai", category: "Luta" as Category, desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: jiujitsu2Img, link: "/modalidade/muay-thai" },
-  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: jiujitsuImg, link: "/modalidade/jiu-jitsu" },
+  { name: "Muay Thai", category: "Luta" as Category, desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: muayThaiImg, link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: jiuJitsuImg, link: "/modalidade/jiu-jitsu" },
   { name: "Judô (infantil)", category: "Infantil" as Category, desc: "Disciplina e coordenação motora para crianças.", img: judoImg, link: "/modalidade/judo-infantil" },
-  { name: "Krav Maga", category: "Luta" as Category, desc: "Sistema de defesa pessoal prático e eficiente.", img: aikido2Img, link: "/modalidade/krav-maga" },
+  { name: "Krav Maga", category: "Luta" as Category, desc: "Sistema de defesa pessoal prático e eficiente.", img: kravMagaImg, link: "/modalidade/krav-maga" },
   { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: aikidoImg, link: "/modalidade/aikido" },
   { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
-  { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ballet3Img, link: "/modalidade/ginastica" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaNewImg2, link: "/modalidade/programa-60-saude" },
+  { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ginasticaImg, link: "/modalidade/ginastica" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: programa60Img, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {

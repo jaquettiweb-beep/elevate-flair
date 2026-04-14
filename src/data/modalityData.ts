@@ -174,39 +174,24 @@ export const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20";
 
 export const MODALITY_DATA: Record<string, ModalityData> = {
-  "pilates-studio": {
-    name: "Pilates Studio",
-    slug: "pilates-studio",
+  pilates: {
+    name: "Pilates",
+    slug: "pilates",
     galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
     emoji: "🤸",
     description:
-      "Aulas com aparelhos (Reformer, Cadillac, Chair) para reabilitação, fortalecimento e melhora postural. Acompanhamento individualizado com profissionais especializados.",
+      "Aulas de Pilates Studio (com aparelhos Reformer, Cadillac e Chair) e Pilates Solo para fortalecimento do core, alongamento, reabilitação e consciência corporal. Acompanhamento individualizado com profissionais especializados.",
     benefits: [
       "Melhora da postura e alinhamento corporal",
       "Fortalecimento profundo do core",
       "Reabilitação de lesões",
       "Aumento da flexibilidade e mobilidade",
       "Consciência corporal aprimorada",
+      "Correção postural",
+      "Turmas em grupo e atendimento individual",
     ],
     schedule: "Segunda a sexta, diversos horários",
     audience: "Todos os níveis, com atenção especial para reabilitação",
-  },
-  "pilates-solo": {
-    name: "Pilates Solo",
-    slug: "pilates-solo",
-    galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
-    emoji: "🤸",
-    description:
-      "Exercícios de fortalecimento do core, alongamento e consciência corporal realizados no solo, com acompanhamento profissional para todos os níveis.",
-    benefits: [
-      "Fortalecimento muscular sem impacto",
-      "Melhora da flexibilidade",
-      "Correção postural",
-      "Redução de dores nas costas",
-      "Turmas em grupo motivadoras",
-    ],
-    schedule: "Segunda a sexta, manhã e noite",
-    audience: "Iniciantes a avançados",
   },
   hidroginastica: {
     name: "Hidroginástica",

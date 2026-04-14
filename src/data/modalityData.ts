@@ -211,7 +211,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, natacao1, natacao2],
+    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9, natacao1, natacao2],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
@@ -262,7 +262,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
+    galleryImgs: [judoNew1, judoNew2, judoNew3, judoNew4, judoNew5, judoNew6, judoNew7, judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",

@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/natacao-1.jpg";
 import pilatesImg from "@/assets/yoga-real-2.jpg";
 import musculacaoImg from "@/assets/musculacao-real-1.jpg";
-import yogaImg from "@/assets/yoga-real-1.jpg";
-import hidroImg from "@/assets/hidro-1.jpg";
-import yogaNewImg2 from "@/assets/yoga_new-2.jpg";
-import judoImg from "@/assets/judo-1.jpg";
-import jiujitsuImg from "@/assets/jiujitsu-1.jpg";
-import jiujitsu2Img from "@/assets/jiujitsu-3.jpg";
-import aikidoImg from "@/assets/aikido-1.jpg";
-import aikido2Img from "@/assets/aikido-4.jpg";
-import balletImg from "@/assets/ballet-real-1.jpg";
-import ballet3Img from "@/assets/ballet-real-3.jpg";
+import yogaImg from "@/assets/yoga-flipper-1.jpg";
+import hidroImg from "@/assets/hidro-extra-1.jpg";
 import yogaNewImg from "@/assets/yoga_new-1.jpg";
+import judoImg from "@/assets/judo-new-1.jpg";
+import jiuJitsuImg from "@/assets/jiu-jitsu-real-1.jpg";
+import muayThaiImg from "@/assets/aikido-1.jpg";
+import aikidoImg from "@/assets/aikido-real-1.jpg";
+import balletImg from "@/assets/ballet-new-1.jpg";
+import ginasticaImg from "@/assets/ginastica-real-1.jpg";
+import programa60Img from "@/assets/programa60-real-1.jpg";
+import kravMagaImg from "@/assets/aikido-3.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";

@@ -108,7 +108,9 @@ import judoReal7 from "@/assets/judo-real-7.jpg";
 import judoReal8 from "@/assets/judo-real-8.jpg";
 import judoReal9 from "@/assets/judo-real-9.jpg";
 
-// Aikidô real (9)
+// Muay Thai real (1)
+import muayThaiReal1 from "@/assets/muay-thai-real-1.jpg";
+
 import aikidoReal1 from "@/assets/aikido-real-1.jpg";
 import aikidoReal2 from "@/assets/aikido-real-2.jpg";
 import aikidoReal3 from "@/assets/aikido-real-3.jpg";
@@ -216,7 +218,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [judoOld1, judoOld2, judoOld3, judoOld4, judoOld5, judoOld6, judoOld7, judoOld8, judoOld9],
+    galleryImgs: [muayThaiReal1],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",

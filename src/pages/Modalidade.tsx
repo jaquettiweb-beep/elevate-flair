@@ -7,7 +7,7 @@ import { ChevronRight, Clock, MapPin, Users, Star } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import ImageCarousel from "@/components/ImageCarousel";
 
-// Natação / Hidro
+// Natação / Hidro (corretos)
 import natacao1 from "@/assets/natacao-1.jpg";
 import natacao2 from "@/assets/natacao-2.jpg";
 import hidro1 from "@/assets/hidro-1.jpg";
@@ -15,6 +15,9 @@ import hidro2 from "@/assets/hidro-2.jpg";
 import hidro3 from "@/assets/hidro-3.jpg";
 import hidro4 from "@/assets/hidro-4.jpg";
 import hidro5 from "@/assets/hidro-5.jpg";
+
+// Pilates
+import pilatesImg from "@/assets/pilates.jpg";
 
 // Yoga — set novo (15 fotos disponíveis, usamos 6 para variedade)
 import yogaNew1 from "@/assets/yoga_new-1.jpg";
@@ -24,22 +27,41 @@ import yogaNew4 from "@/assets/yoga_new-4.jpg";
 import yogaNew5 from "@/assets/yoga_new-5.jpg";
 import yogaNew6 from "@/assets/yoga_new-6.jpg";
 
-// Yoga real (para 60+, ambiente do estúdio Flipper)
+// Yoga/60+ real (rooftop Flipper — arquivos "judo-7..12" contêm fotos de yoga/60+)
+import yoga60_1 from "@/assets/judo-7.jpg";
+import yoga60_2 from "@/assets/judo-8.jpg";
+import yoga60_3 from "@/assets/judo-9.jpg";
+import yoga60_4 from "@/assets/judo-10.jpg";
+import yoga60_5 from "@/assets/judo-11.jpg";
+import yoga60_6 from "@/assets/judo-12.jpg";
+
+// Yoga real (fotos dedicadas do estúdio)
 import yogaReal1 from "@/assets/yoga-real-1.jpg";
 import yogaReal2 from "@/assets/yoga-real-2.jpg";
 import yogaReal3 from "@/assets/yoga-real-3.jpg";
 import yogaReal4 from "@/assets/yoga-real-4.jpg";
 
-// Judô (14 fotos disponíveis, usamos 6)
-import judo1 from "@/assets/judo-1.jpg";
-import judo2 from "@/assets/judo-2.jpg";
-import judo3 from "@/assets/judo-3.jpg";
-import judo4 from "@/assets/judo-4.jpg";
-import judo5 from "@/assets/judo-5.jpg";
-import judo6 from "@/assets/judo-6.jpg";
+// JUDÔ REAL — arquivos "aikido-1..18" contêm fotos reais de judô
+// (tatame vermelho/azul no rooftop da Flipper, judogis brancos, professor faixa preta)
+import judoReal1 from "@/assets/aikido-1.jpg";
+import judoReal2 from "@/assets/aikido-2.jpg";
+import judoReal3 from "@/assets/aikido-3.jpg";
+import judoReal4 from "@/assets/aikido-4.jpg";
+import judoReal5 from "@/assets/aikido-5.jpg";
+import judoReal6 from "@/assets/aikido-6.jpg";
+import judoReal7 from "@/assets/aikido-7.jpg";
+import judoReal8 from "@/assets/aikido-8.jpg";
+import judoReal9 from "@/assets/aikido-9.jpg";
 
-// NOTA: jiujitsu-1..10 contêm fotos reais de BALLET da Flipper (crianças de tutu rosa, barra laranja)
-// Usamos para Ballet Infantil — são as melhores fotos do estúdio disponíveis
+// HIDROGINÁSTICA EXTRA — arquivos "judo-1..6" contêm fotos da piscina (festas, aulas)
+import hidroExtra1 from "@/assets/judo-1.jpg";
+import hidroExtra2 from "@/assets/judo-2.jpg";
+import hidroExtra3 from "@/assets/judo-3.jpg";
+import hidroExtra4 from "@/assets/judo-4.jpg";
+import hidroExtra5 from "@/assets/judo-5.jpg";
+import hidroExtra6 from "@/assets/judo-6.jpg";
+
+// BALLET real (jiujitsu-1..10 = fotos reais de ballet da Flipper)
 import balletInfantil1 from "@/assets/jiujitsu-1.jpg";
 import balletInfantil2 from "@/assets/jiujitsu-2.jpg";
 import balletInfantil3 from "@/assets/jiujitsu-3.jpg";
@@ -66,11 +88,11 @@ import balletReal3 from "@/assets/ballet-real-3.jpg";
 import balletReal4 from "@/assets/ballet-real-4.jpg";
 import balletReal5 from "@/assets/ballet-real-5.jpg";
 
-// Ballet real (para Ballet e Ginástica)
-import ballet1 from "@/assets/ballet-real-1.jpg";
-import ballet2 from "@/assets/ballet-real-2.jpg";
-import ballet3 from "@/assets/ballet-real-3.jpg";
-import ballet4 from "@/assets/ballet-real-4.jpg";
+// Ballet genérico (para Ginástica)
+import ballet1 from "@/assets/ballet-1.jpg";
+import ballet2 from "@/assets/ballet-2.jpg";
+import ballet3 from "@/assets/ballet-3.jpg";
+import ballet4 from "@/assets/ballet-4.jpg";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20";
@@ -90,7 +112,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "pilates-studio": {
     name: "Pilates Studio",
     slug: "pilates-studio",
-    galleryImgs: [yogaReal2, yogaReal3, yogaReal4],
+    galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
     emoji: "🤸",
     description:
       "Aulas com aparelhos (Reformer, Cadillac, Chair) para reabilitação, fortalecimento e melhora postural. Acompanhamento individualizado com profissionais especializados.",
@@ -107,7 +129,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "pilates-solo": {
     name: "Pilates Solo",
     slug: "pilates-solo",
-    galleryImgs: [yogaNew1, yogaNew2, yogaReal1],
+    galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
     emoji: "🤸",
     description:
       "Exercícios de fortalecimento do core, alongamento e consciência corporal realizados no solo, com acompanhamento profissional para todos os níveis.",
@@ -124,7 +146,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, natacao1, natacao2],
+    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, natacao1, natacao2],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
@@ -141,7 +163,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [aikido1, aikido2, aikido3, aikido4, aikido5, aikido6],
+    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
@@ -158,7 +180,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "jiu-jitsu": {
     name: "Jiu Jitsu",
     slug: "jiu-jitsu",
-    galleryImgs: [judo1, judo2, judo3, judo4, judo5, judo6],
+    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🥋",
     description:
       "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
@@ -175,7 +197,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [judo1, judo2, judo3, judo4, judo5, judo6],
+    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",
@@ -192,7 +214,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
-    galleryImgs: [aikido1, aikido2, aikido3, aikido4, aikido5, aikido6],
+    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🛡️",
     description:
       "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",
@@ -209,7 +231,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   aikido: {
     name: "Aikidô",
     slug: "aikido",
-    galleryImgs: [aikido1, aikido2, aikido3, aikido4, aikido5, aikido6],
+    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "☯️",
     description:
       "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária.",
@@ -246,7 +268,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [ballet3, yogaNew4, yogaNew5, yogaNew6],
+    galleryImgs: [ginasticaImg, yogaNew4, yogaNew5, yogaNew6],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",
@@ -263,7 +285,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [yogaReal1, yogaReal2, yogaReal3, yogaReal4],
+    galleryImgs: [yoga60_1, yoga60_2, yoga60_3, yoga60_4, yoga60_5, yoga60_6, yogaReal1, yogaReal2, yogaReal3, yogaReal4],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",

@@ -41,7 +41,7 @@ const ImageCarousel = ({
   if (!images || images.length === 0) return null;
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden shadow-2xl ${height} ${className}`}>
+    <div className={`relative rounded-2xl overflow-hidden shadow-2xl aspect-video ${className}`}>
       {/* Slides */}
       {images.map((img, i) => (
         <div

@@ -52,10 +52,14 @@ const ImageCarousel = ({
           <img
             src={img.src}
             alt={img.alt}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+            style={{ 
+              filter: "contrast(1.08) saturate(1.12) brightness(1.02)",
+              transformOrigin: "center"
+            }}
           />
           {/* subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
         </div>
       ))}
 

@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
-import swimmingImg from "@/assets/natacao-1.jpg";
-import musculacaoImg from "@/assets/musculacao-real-2.jpg";
-import yogaImg from "@/assets/yoga-real-1.jpg";
+import swimmingImg from "@/assets/natacao-card-1.jpg";
+import musculacaoImg from "@/assets/muscu-new-1.jpg";
+import yogaImg from "@/assets/yoga-flipper-1.jpg";
 import communityImg from "@/assets/flipper-comunidade-hoje.jpeg";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 

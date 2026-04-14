@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState } from "react";
-import dolphinImg from "@/assets/dolphin-mascot.png";
+import flipperLogo from "@/assets/flipper-logo-transparent.png";
 
 export default function DolphinMascot() {
   const { scrollYProgress } = useScroll();
@@ -17,7 +17,7 @@ export default function DolphinMascot() {
       style={{ width: 72, height: 50 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      title="🐬 Flipper!"
+      title="Academia Flipper"
     >
       {/* Subtle glow behind */}
       <motion.div
@@ -42,7 +42,7 @@ export default function DolphinMascot() {
         </>
       )}
 
-      {/* Dolphin */}
+      {/* Flipper logo */}
       <motion.div
         className="text-primary"
         style={{ rotate, y, scaleX }}
@@ -57,7 +57,7 @@ export default function DolphinMascot() {
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img src={dolphinImg} alt="Flipper" className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)] object-contain" />
+          <img src={flipperLogo} alt="Logo da Academia Flipper" className="w-full h-full drop-shadow-[0_2px_8px_hsla(200,100%,50%,0.3)] object-contain" />
         </motion.div>
       </motion.div>
 

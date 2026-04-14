@@ -1,41 +1,41 @@
 
 
-## Plano: Adicionar 6 fotos de Yoga + executar plano unificado pendente
+## Plano: Adicionar 7 fotos ao Judô Infantil + 9 fotos à Hidroginástica
 
-Este plano adiciona as 6 novas fotos de Yoga ao plano unificado já aprovado (41 fotos em 6 modalidades + fix do build error). Total: **47 fotos em 7 modalidades**.
+Consolida os dois pedidos pendentes.
 
-O vídeo enviado (MP4) não será utilizado pois o carrossel suporta apenas imagens.
+### Hidroginástica (9 fotos)
+| Upload | Asset |
+|---|---|
+| `WhatsApp_Image_2026-03-11_at_08.43.48.jpeg` | `hidro-extra-1.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.43.48_1.jpeg` | `hidro-extra-2.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.43.48_2.jpeg` | `hidro-extra-3.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.43.48_3.jpeg` | `hidro-extra-4.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.44.47.jpeg` | `hidro-extra-5.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.44.47_1.jpeg` | `hidro-extra-6.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.44.47_2.jpeg` | `hidro-extra-7.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.44.47_3.jpeg` | `hidro-extra-8.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.44.47_4.jpeg` | `hidro-extra-9.jpg` |
 
----
-
-### Yoga (6 fotos novas)
-- `WhatsApp_Image_2026-03-11_at_08.45.34.jpeg` → `yoga-flipper-1.jpg`
-- `WhatsApp_Image_2026-03-11_at_08.45.35_1.jpeg` → `yoga-flipper-2.jpg`
-- `WhatsApp_Image_2026-03-11_at_08.45.35_2.jpeg` → `yoga-flipper-3.jpg`
-- `WhatsApp_Image_2026-03-11_at_08.46.03.jpeg` → `yoga-flipper-4.jpg`
-- `WhatsApp_Image_2026-03-11_at_08.46.03_3.jpeg` → `yoga-flipper-5.jpg`
-- `WhatsApp_Image_2026-03-11_at_08.46.04.jpeg` → `yoga-flipper-6.jpg`
-
-### Resumo completo (plano unificado + yoga)
-
-| Modalidade | Fotos | Ação |
-|---|---|---|
-| Jiu Jitsu | 6 | Adicionar |
-| Judô (Infantil) | 9 | Substituir |
-| Aikidô | 9 | Substituir |
-| Ballet Infantil | 10 | Adicionar |
-| Ginástica | 4 | Substituir (corrige build error) |
-| Programa 60+ | 3 | Adicionar |
-| Yoga | 6 | Adicionar às existentes |
+### Judô Infantil (7 fotos)
+| Upload | Asset |
+|---|---|
+| `WhatsApp_Image_2026-03-11_at_08.47.25_4.jpeg` | `judo-new-1.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.25_5.jpeg` | `judo-new-2.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.25_6.jpeg` | `judo-new-3.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.26.jpeg` | `judo-new-4.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.26_2.jpeg` | `judo-new-5.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.26_3.jpeg` | `judo-new-6.jpg` |
+| `WhatsApp_Image_2026-03-11_at_08.47.26_4.jpeg` | `judo-new-7.jpg` |
 
 ### Etapas
 
-1. Copiar 47 fotos para `src/assets/`
-2. Corrigir build error: substituir `ginasticaImg` (linha 271) pelas fotos reais de ginástica
-3. Importar todas as novas fotos em `src/pages/Modalidade.tsx`
-4. Atualizar `galleryImgs` de cada modalidade com as fotos correspondentes
-5. Na entrada `yoga`: adicionar as 6 novas fotos (`yoga-flipper-1` a `6`) ao array existente (yogaNew1-6)
+1. Copiar 16 fotos para `src/assets/`
+2. Atualizar `src/data/modalityData.ts`:
+   - Importar as 16 novas fotos
+   - Adicionar 9 fotos ao array `galleryImgs` de `hidroginastica`
+   - Adicionar 7 fotos ao array `galleryImgs` de `judo-infantil`
 
 ### Arquivo editado
-- `src/pages/Modalidade.tsx`
+- `src/data/modalityData.ts`
 

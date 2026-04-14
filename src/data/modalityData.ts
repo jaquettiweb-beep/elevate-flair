@@ -139,6 +139,26 @@ import programa60Real1 from "@/assets/programa60-real-1.jpg";
 import programa60Real2 from "@/assets/programa60-real-2.jpg";
 import programa60Real3 from "@/assets/programa60-real-3.jpg";
 
+// Hidroginástica novas (9)
+import hidroNew1 from "@/assets/hidro-extra-1.jpg";
+import hidroNew2 from "@/assets/hidro-extra-2.jpg";
+import hidroNew3 from "@/assets/hidro-extra-3.jpg";
+import hidroNew4 from "@/assets/hidro-extra-4.jpg";
+import hidroNew5 from "@/assets/hidro-extra-5.jpg";
+import hidroNew6 from "@/assets/hidro-extra-6.jpg";
+import hidroNew7 from "@/assets/hidro-extra-7.jpg";
+import hidroNew8 from "@/assets/hidro-extra-8.jpg";
+import hidroNew9 from "@/assets/hidro-extra-9.jpg";
+
+// Judô Infantil novas (7)
+import judoNew1 from "@/assets/judo-new-1.jpg";
+import judoNew2 from "@/assets/judo-new-2.jpg";
+import judoNew3 from "@/assets/judo-new-3.jpg";
+import judoNew4 from "@/assets/judo-new-4.jpg";
+import judoNew5 from "@/assets/judo-new-5.jpg";
+import judoNew6 from "@/assets/judo-new-6.jpg";
+import judoNew7 from "@/assets/judo-new-7.jpg";
+
 export interface ModalityData {
   name: string;
   slug: string;
@@ -191,7 +211,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, natacao1, natacao2],
+    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9, natacao1, natacao2],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
@@ -242,7 +262,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
+    galleryImgs: [judoNew1, judoNew2, judoNew3, judoNew4, judoNew5, judoNew6, judoNew7, judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",

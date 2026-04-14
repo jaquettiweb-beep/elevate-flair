@@ -4,7 +4,6 @@ import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
 import { ChevronRight, CalendarX, Bell, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
-import dolphinMascot from "@/assets/dolphin-mascot.png";
 
 export default function Eventos() {
   return (
@@ -77,15 +76,6 @@ export default function Eventos() {
                   boxShadow: "0 12px 48px hsla(0,0%,0%,0.15), inset 0 1px 0 hsla(0,0%,100%,0.06)",
                 }}
               >
-                {/* Animated dolphin */}
-                <motion.img
-                  src={dolphinMascot}
-                  alt="Flipper mascote"
-                  className="w-20 h-20 mx-auto mb-6 opacity-40"
-                  animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                />
-
                 <CalendarX size={40} className="mx-auto mb-4 text-white/20" />
 
                 <h2 className="font-display text-xl font-bold text-white mb-3">

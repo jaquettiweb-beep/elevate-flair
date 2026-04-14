@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import heroImg from "@/assets/hero-gym.jpg";
-import swimmingImg from "@/assets/swimming.jpg";
-import yogaImg from "@/assets/yoga.jpg";
-import martialImg from "@/assets/martial-arts.jpg";
-import pilatesImg from "@/assets/pilates.jpg";
-import musculacaoImg from "@/assets/musculacao.jpg";
+import communityImg from "@/assets/flipper-comunidade-hoje.jpeg";
+import natacaoImg from "@/assets/natacao-1.jpg";
+import yogaImg from "@/assets/yoga-real-1.jpg";
+import martialImg from "@/assets/jiujitsu-1.jpg";
+import pilatesImg from "@/assets/yoga-real-2.jpg";
+import musculacaoImg from "@/assets/musculacao-real-1.jpg";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 const LOCAL_ASSET_MAP: Record<string, string> = {
-  "/src/assets/hero-gym.jpg": heroImg,
-  "/src/assets/swimming.jpg": swimmingImg,
+  "/src/assets/hero-gym.jpg": communityImg,
+  "/src/assets/swimming.jpg": natacaoImg,
   "/src/assets/yoga.jpg": yogaImg,
   "/src/assets/martial-arts.jpg": martialImg,
   "/src/assets/pilates.jpg": pilatesImg,

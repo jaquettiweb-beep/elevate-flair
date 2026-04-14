@@ -3,12 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
-import swimmingImg from "@/assets/swimming.jpg";
-import musculacaoImg from "@/assets/musculacao.jpg";
-import yogaImg from "@/assets/yoga.jpg";
-import heroImg from "@/assets/hero-gym.jpg";
+import swimmingImg from "@/assets/natacao-1.jpg";
+import musculacaoImg from "@/assets/musculacao-real-2.jpg";
+import yogaImg from "@/assets/yoga-real-1.jpg";
+import communityImg from "@/assets/flipper-comunidade-hoje.jpeg";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
-import martialImg from "@/assets/martial-arts.jpg";
 
 const timelineData = [
   {
@@ -73,7 +72,7 @@ const timelineData = [
     relatedIds: [4, 6],
     status: "in-progress" as const,
     energy: 80,
-    image: heroImg,
+    image: communityImg,
   },
   {
     id: 6,

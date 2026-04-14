@@ -16,9 +16,6 @@ import hidro3 from "@/assets/hidro-3.jpg";
 import hidro4 from "@/assets/hidro-4.jpg";
 import hidro5 from "@/assets/hidro-5.jpg";
 
-// Pilates
-import pilatesImg from "@/assets/pilates.jpg";
-
 // Yoga — set novo (15 fotos disponíveis, usamos 6 para variedade)
 import yogaNew1 from "@/assets/yoga_new-1.jpg";
 import yogaNew2 from "@/assets/yoga_new-2.jpg";
@@ -69,11 +66,11 @@ import balletReal3 from "@/assets/ballet-real-3.jpg";
 import balletReal4 from "@/assets/ballet-real-4.jpg";
 import balletReal5 from "@/assets/ballet-real-5.jpg";
 
-// Ballet genérico (para Ginástica)
-import ballet1 from "@/assets/ballet-1.jpg";
-import ballet2 from "@/assets/ballet-2.jpg";
-import ballet3 from "@/assets/ballet-3.jpg";
-import ballet4 from "@/assets/ballet-4.jpg";
+// Ballet real (para Ballet e Ginástica)
+import ballet1 from "@/assets/ballet-real-1.jpg";
+import ballet2 from "@/assets/ballet-real-2.jpg";
+import ballet3 from "@/assets/ballet-real-3.jpg";
+import ballet4 from "@/assets/ballet-real-4.jpg";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20sobre%20";
@@ -93,7 +90,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "pilates-studio": {
     name: "Pilates Studio",
     slug: "pilates-studio",
-    galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
+    galleryImgs: [yogaReal2, yogaReal3, yogaReal4],
     emoji: "🤸",
     description:
       "Aulas com aparelhos (Reformer, Cadillac, Chair) para reabilitação, fortalecimento e melhora postural. Acompanhamento individualizado com profissionais especializados.",
@@ -110,7 +107,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "pilates-solo": {
     name: "Pilates Solo",
     slug: "pilates-solo",
-    galleryImgs: [pilatesImg, pilatesImg, pilatesImg],
+    galleryImgs: [yogaNew1, yogaNew2, yogaReal1],
     emoji: "🤸",
     description:
       "Exercícios de fortalecimento do core, alongamento e consciência corporal realizados no solo, com acompanhamento profissional para todos os níveis.",

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Heart, Flower2, Wind, Sun } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import { useGalleryImages } from "@/hooks/useGalleryImages";
-import yogaImg from "@/assets/yoga.jpg";
-import pilatesImg from "@/assets/pilates.jpg";
+import yogaImg from "@/assets/yoga-real-1.jpg";
+import pilatesImg from "@/assets/yoga-real-2.jpg";
 
 const BemEstar = () => {
   const { data: images } = useGalleryImages("Bem-Estar");
@@ -46,12 +46,12 @@ const BemEstar = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img src={firstImage} alt="Aula de Yoga na Flipper" className="w-full h-[300px] object-cover" />
+                  <img src={firstImage} alt="Aula de bem-estar na Flipper" className="w-full h-[300px] object-cover" />
                 </div>
               </ScrollReveal>
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img src={secondImage} alt="Aula de Pilates na Flipper" className="w-full h-[300px] object-cover" />
+                  <img src={secondImage} alt="Espaço de práticas corporais na Flipper" className="w-full h-[300px] object-cover" />
                 </div>
               </ScrollReveal>
             </div>

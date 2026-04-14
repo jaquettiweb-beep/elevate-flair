@@ -4,7 +4,6 @@ import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
 import { ChevronRight, Newspaper, Play, ExternalLink, Tv, Award } from "lucide-react";
 import { motion } from "framer-motion";
-import dolphinMascot from "@/assets/dolphin-mascot.png";
 
 const pressVideos = [
   {
@@ -109,15 +108,6 @@ export default function Imprensa() {
               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-
-          {/* Floating dolphin decoration */}
-          <motion.img
-            src={dolphinMascot}
-            alt=""
-            className="absolute top-20 right-8 w-16 h-16 opacity-10 pointer-events-none hidden lg:block"
-            animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
 
           <div className="container mx-auto px-4 relative z-10 pt-32 pb-24">
             {/* Breadcrumb */}

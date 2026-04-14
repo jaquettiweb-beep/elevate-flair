@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import swimmingImg from "@/assets/swimming.jpg";     // Natação ✅
-import pilatesImg from "@/assets/pilates.jpg";         // Pilates Studio ✅
-import musculacaoImg from "@/assets/musculacao.jpg";   // Musculação ✅
-import yogaImg from "@/assets/yoga.jpg";               // Yoga ✅
-
-// Confirmed by user:
-import hidroImg from "@/assets/hidro-1.jpg";           // Hidroginástica ✅
-import yogaNewImg2 from "@/assets/yoga_new-2.jpg";     // Programa 60+
-import judoImg from "@/assets/judo-1.jpg";             // Judô ✅
-import jiujitsuImg from "@/assets/jiujitsu-1.jpg";     // Jiu Jitsu ✅
-import jiujitsu2Img from "@/assets/jiujitsu-2.jpg";    // Muay Thai (placeholder - arte marcial)
-import aikidoImg from "@/assets/aikido-1.jpg";         // Aikidô ✅
-import aikido2Img from "@/assets/aikido-2.jpg";        // Krav Maga (placeholder - arte marcial diferente)
-import balletImg from "@/assets/ballet-1.jpg";         // Ballet ✅
-import ballet3Img from "@/assets/ballet-3.jpg";        // Ginástica (movimento corporal)
-import yogaNewImg from "@/assets/yoga_new-1.jpg";      // Pilates Solo / Programa 60+
+import swimmingImg from "@/assets/natacao-1.jpg";
+import pilatesImg from "@/assets/yoga-real-2.jpg";
+import musculacaoImg from "@/assets/musculacao-real-1.jpg";
+import yogaImg from "@/assets/yoga-real-1.jpg";
+import hidroImg from "@/assets/hidro-1.jpg";
+import yogaNewImg2 from "@/assets/yoga_new-2.jpg";
+import judoImg from "@/assets/judo-1.jpg";
+import jiujitsuImg from "@/assets/jiujitsu-1.jpg";
+import jiujitsu2Img from "@/assets/jiujitsu-3.jpg";
+import aikidoImg from "@/assets/aikido-1.jpg";
+import aikido2Img from "@/assets/aikido-4.jpg";
+import balletImg from "@/assets/ballet-real-1.jpg";
+import ballet3Img from "@/assets/ballet-real-3.jpg";
+import yogaNewImg from "@/assets/yoga_new-1.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";

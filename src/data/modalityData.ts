@@ -196,7 +196,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [hidro1, hidro2, hidro3, hidro4, hidro5, hidroExtra1, hidroExtra2, hidroExtra3, hidroExtra4, hidroExtra5, hidroExtra6, hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9, natacao1, natacao2],
+    galleryImgs: [hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
@@ -230,7 +230,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "jiu-jitsu": {
     name: "Jiu Jitsu",
     slug: "jiu-jitsu",
-    galleryImgs: [jiuJitsuReal1, jiuJitsuReal2, jiuJitsuReal3, jiuJitsuReal4, jiuJitsuReal5, jiuJitsuReal6, judoOld1, judoOld2, judoOld3, judoOld4, judoOld5, judoOld6, judoOld7, judoOld8, judoOld9],
+    galleryImgs: [jiuJitsuReal1, jiuJitsuReal2, jiuJitsuReal3, jiuJitsuReal4, jiuJitsuReal5, jiuJitsuReal6],
     emoji: "🥋",
     description:
       "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
@@ -301,8 +301,6 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [
       balletNew1, balletNew2, balletNew3, balletNew4, balletNew5,
       balletNew6, balletNew7, balletNew8, balletNew9, balletNew10,
-      balletInfantil1, balletInfantil2, balletInfantil3, balletInfantil4, balletInfantil5,
-      balletInfantil6, balletInfantil7, balletInfantil8, balletInfantil9, balletInfantil10,
     ],
     emoji: "🩰",
     description:
@@ -337,7 +335,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [programa60Real1, programa60Real2, programa60Real3, yoga60_1, yoga60_2, yoga60_3, yoga60_4, yoga60_5, yoga60_6, yogaReal1, yogaReal2, yogaReal3, yogaReal4],
+    galleryImgs: [programa60Real1, programa60Real2, programa60Real3],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",
@@ -354,7 +352,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   yoga: {
     name: "Yoga",
     slug: "yoga",
-    galleryImgs: [yogaFlipper1, yogaFlipper2, yogaFlipper3, yogaFlipper4, yogaFlipper5, yogaFlipper6, yogaNew1, yogaNew2, yogaNew3, yogaNew4, yogaNew5, yogaNew6],
+    galleryImgs: [yogaFlipper1, yogaFlipper2, yogaFlipper3, yogaFlipper4, yogaFlipper5, yogaFlipper6],
     emoji: "🧘",
     description:
       "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Melhore flexibilidade, força, equilíbrio e concentração com instrutores certificados.",

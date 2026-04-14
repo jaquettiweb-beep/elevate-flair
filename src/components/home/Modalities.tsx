@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swimmingImg from "@/assets/natacao-1.jpg";
-import pilatesImg from "@/assets/yoga-real-2.jpg";
+import pilatesImg from "@/assets/pilates-real-1.jpg";
 import musculacaoImg from "@/assets/musculacao-real-1.jpg";
 import yogaImg from "@/assets/yoga-flipper-1.jpg";
 import hidroImg from "@/assets/hidro-extra-1.jpg";

@@ -41,13 +41,18 @@ import judo4 from "@/assets/judo-4.jpg";
 import judo5 from "@/assets/judo-5.jpg";
 import judo6 from "@/assets/judo-6.jpg";
 
-// Jiu Jitsu (10 fotos disponíveis, usamos 6)
-import jiujitsu1 from "@/assets/jiujitsu-1.jpg";
-import jiujitsu2 from "@/assets/jiujitsu-2.jpg";
-import jiujitsu3 from "@/assets/jiujitsu-3.jpg";
-import jiujitsu4 from "@/assets/jiujitsu-4.jpg";
-import jiujitsu5 from "@/assets/jiujitsu-5.jpg";
-import jiujitsu6 from "@/assets/jiujitsu-6.jpg";
+// NOTA: jiujitsu-1..10 contêm fotos reais de BALLET da Flipper (crianças de tutu rosa, barra laranja)
+// Usamos para Ballet Infantil — são as melhores fotos do estúdio disponíveis
+import balletInfantil1 from "@/assets/jiujitsu-1.jpg";
+import balletInfantil2 from "@/assets/jiujitsu-2.jpg";
+import balletInfantil3 from "@/assets/jiujitsu-3.jpg";
+import balletInfantil4 from "@/assets/jiujitsu-4.jpg";
+import balletInfantil5 from "@/assets/jiujitsu-5.jpg";
+import balletInfantil6 from "@/assets/jiujitsu-6.jpg";
+import balletInfantil7 from "@/assets/jiujitsu-7.jpg";
+import balletInfantil8 from "@/assets/jiujitsu-8.jpg";
+import balletInfantil9 from "@/assets/jiujitsu-9.jpg";
+import balletInfantil10 from "@/assets/jiujitsu-10.jpg";
 
 // Aikidô (18 fotos disponíveis, usamos 6)
 import aikido1 from "@/assets/aikido-1.jpg";
@@ -57,7 +62,7 @@ import aikido4 from "@/assets/aikido-4.jpg";
 import aikido5 from "@/assets/aikido-5.jpg";
 import aikido6 from "@/assets/aikido-6.jpg";
 
-// Ballet real (estúdio Flipper — tutus rosa, barra laranja)
+// Ballet real (estúdio Flipper — fotos do evento de final de ano)
 import balletReal1 from "@/assets/ballet-real-1.jpg";
 import balletReal2 from "@/assets/ballet-real-2.jpg";
 import balletReal3 from "@/assets/ballet-real-3.jpg";
@@ -139,7 +144,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [jiujitsu1, jiujitsu2, jiujitsu3, jiujitsu4, jiujitsu5, jiujitsu6],
+    galleryImgs: [aikido1, aikido2, aikido3, aikido4, aikido5, aikido6],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
@@ -156,7 +161,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "jiu-jitsu": {
     name: "Jiu Jitsu",
     slug: "jiu-jitsu",
-    galleryImgs: [jiujitsu1, jiujitsu2, jiujitsu3, jiujitsu4, jiujitsu5, jiujitsu6],
+    galleryImgs: [judo1, judo2, judo3, judo4, judo5, judo6],
     emoji: "🥋",
     description:
       "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
@@ -224,7 +229,10 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   "ballet-infantil": {
     name: "Ballet (Infantil)",
     slug: "ballet-infantil",
-    galleryImgs: [balletReal1, balletReal2, balletReal3, balletReal4, balletReal5],
+    galleryImgs: [
+      balletInfantil1, balletInfantil2, balletInfantil3, balletInfantil4, balletInfantil5,
+      balletInfantil6, balletInfantil7, balletInfantil8, balletInfantil9, balletInfantil10
+    ],
     emoji: "🩰",
     description:
       "Expressão artística, postura e ritmo para crianças. Aulas lúdicas que desenvolvem a coordenação, musicalidade e autoexpressão.",
@@ -241,7 +249,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [ballet1, ballet2, ballet3, ballet4],
+    galleryImgs: [ginasticaFitness, yogaNew4, yogaNew5, yogaNew6],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",

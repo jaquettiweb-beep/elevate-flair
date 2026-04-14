@@ -216,7 +216,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [judoOld1, judoOld2, judoOld3, judoOld4, judoOld5, judoOld6, judoOld7, judoOld8, judoOld9],
+    galleryImgs: [muayThaiReal1],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",

@@ -9,7 +9,7 @@ import hidroImg from "@/assets/hidro-extra-1.jpg";
 import yogaNewImg from "@/assets/yoga_new-1.jpg";
 import judoImg from "@/assets/judo-new-1.jpg";
 import jiuJitsuImg from "@/assets/jiu-jitsu-real-1.jpg";
-import muayThaiImg from "@/assets/aikido-1.jpg";
+import muayThaiImg from "@/assets/muay-thai-real-1.jpg";
 import aikidoImg from "@/assets/aikido-real-1.jpg";
 import balletImg from "@/assets/ballet-new-1.jpg";
 import ginasticaImg from "@/assets/ginastica-real-1.jpg";

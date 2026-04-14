@@ -7,11 +7,13 @@ import hidro3 from "@/assets/hidro-3.jpg";
 import hidro4 from "@/assets/hidro-4.jpg";
 import hidro5 from "@/assets/hidro-5.jpg";
 
-// Pilates real (4)
+// Pilates real (6)
 import pilatesReal1 from "@/assets/pilates-real-1.jpg";
 import pilatesReal2 from "@/assets/pilates-real-2.jpg";
 import pilatesReal3 from "@/assets/pilates-real-3.jpg";
 import pilatesReal4 from "@/assets/pilates-real-4.jpg";
+import pilatesReal5 from "@/assets/pilates-real-5.jpg";
+import pilatesReal6 from "@/assets/pilates-real-6.jpg";
 
 // Yoga — set novo
 import yogaNew1 from "@/assets/yoga_new-1.jpg";
@@ -182,7 +184,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   pilates: {
     name: "Pilates",
     slug: "pilates",
-    galleryImgs: [pilatesReal1, pilatesReal2, pilatesReal3, pilatesReal4],
+    galleryImgs: [pilatesReal1, pilatesReal2, pilatesReal3, pilatesReal4, pilatesReal5, pilatesReal6],
     emoji: "🤸",
     description:
       "Aulas de Pilates Studio (com aparelhos Reformer, Cadillac e Chair) e Pilates Solo para fortalecimento do core, alongamento, reabilitação e consciência corporal. Acompanhamento individualizado com profissionais especializados.",

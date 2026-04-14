@@ -1,66 +1,41 @@
 
 
-## Plano Unificado: Adicionar fotos em 8 modalidades + corrigir build error
+## Plano: Adicionar 6 fotos de Yoga + executar plano unificado pendente
 
-Este plano consolida todas as solicitações pendentes de fotos em um único passo de implementação.
+Este plano adiciona as 6 novas fotos de Yoga ao plano unificado já aprovado (41 fotos em 6 modalidades + fix do build error). Total: **47 fotos em 7 modalidades**.
+
+O vídeo enviado (MP4) não será utilizado pois o carrossel suporta apenas imagens.
 
 ---
 
-### Resumo das mudanças
+### Yoga (6 fotos novas)
+- `WhatsApp_Image_2026-03-11_at_08.45.34.jpeg` → `yoga-flipper-1.jpg`
+- `WhatsApp_Image_2026-03-11_at_08.45.35_1.jpeg` → `yoga-flipper-2.jpg`
+- `WhatsApp_Image_2026-03-11_at_08.45.35_2.jpeg` → `yoga-flipper-3.jpg`
+- `WhatsApp_Image_2026-03-11_at_08.46.03.jpeg` → `yoga-flipper-4.jpg`
+- `WhatsApp_Image_2026-03-11_at_08.46.03_3.jpeg` → `yoga-flipper-5.jpg`
+- `WhatsApp_Image_2026-03-11_at_08.46.04.jpeg` → `yoga-flipper-6.jpg`
 
-| Modalidade | Fotos novas | Ação |
+### Resumo completo (plano unificado + yoga)
+
+| Modalidade | Fotos | Ação |
 |---|---|---|
-| Jiu Jitsu | 6 fotos | Adicionar ao gallery |
-| Judô (Infantil) | 9 fotos | Substituir gallery |
-| Aikidô | 9 fotos | Substituir gallery |
-| Ballet Infantil | 10 fotos | Adicionar ao gallery |
-| Ginástica | 4 fotos | Substituir gallery (corrige build error) |
-| Programa 60+ | 3 fotos | Adicionar ao gallery |
-| Muay Thai | 1 foto (já adicionada em mensagem anterior) | Verificar |
-| Pilates (junção Studio+Solo) | 8 fotos (já adicionada em mensagem anterior) | Verificar |
+| Jiu Jitsu | 6 | Adicionar |
+| Judô (Infantil) | 9 | Substituir |
+| Aikidô | 9 | Substituir |
+| Ballet Infantil | 10 | Adicionar |
+| Ginástica | 4 | Substituir (corrige build error) |
+| Programa 60+ | 3 | Adicionar |
+| Yoga | 6 | Adicionar às existentes |
 
----
+### Etapas
 
-### Etapa 1 — Copiar 41 fotos para `src/assets/`
+1. Copiar 47 fotos para `src/assets/`
+2. Corrigir build error: substituir `ginasticaImg` (linha 271) pelas fotos reais de ginástica
+3. Importar todas as novas fotos em `src/pages/Modalidade.tsx`
+4. Atualizar `galleryImgs` de cada modalidade com as fotos correspondentes
+5. Na entrada `yoga`: adicionar as 6 novas fotos (`yoga-flipper-1` a `6`) ao array existente (yogaNew1-6)
 
-**Jiu Jitsu (6):**
-- `jiu-jitsu-real-1.jpg` a `jiu-jitsu-real-6.jpg`
-
-**Judô (9):**
-- `judo-real-1.jpg` a `judo-real-9.jpg`
-
-**Aikidô (9):**
-- `aikido-real-1.jpg` a `aikido-real-9.jpg`
-
-**Ballet Infantil (10):**
-- `ballet-new-1.jpg` a `ballet-new-10.jpg`
-
-**Ginástica (4):**
-- `ginastica-real-1.jpg` a `ginastica-real-4.jpg`
-
-**Programa 60+ (3):**
-- `programa60-real-1.jpg` a `programa60-real-3.jpg`
-
----
-
-### Etapa 2 — Atualizar `src/pages/Modalidade.tsx`
-
-1. **Importar** as 41 novas fotos
-2. **Corrigir build error** na linha 271: substituir `ginasticaImg` pelas 4 fotos reais de ginástica
-3. **Atualizar galleryImgs** de cada modalidade:
-   - `jiu-jitsu`: adicionar 6 fotos reais
-   - `judo-infantil`: substituir por 9 fotos reais de judô
-   - `aikido`: substituir por 9 fotos reais de aikidô
-   - `ballet-infantil`: adicionar 10 fotos novas às existentes
-   - `ginastica`: usar 4 fotos reais
-   - `programa-60-saude`: adicionar 3 fotos às existentes
-
-### Etapa 3 — Atualizar `src/components/home/Modalities.tsx`
-
-- Importar fotos-destaque das novas para os cards do grid na homepage (opcional, se necessário atualizar thumbnails)
-
----
-
-### Arquivo principal editado
+### Arquivo editado
 - `src/pages/Modalidade.tsx`
 

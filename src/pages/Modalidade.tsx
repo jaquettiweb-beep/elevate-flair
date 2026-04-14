@@ -249,7 +249,7 @@ const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [ginasticaFitness, yogaNew4, yogaNew5, yogaNew6],
+    galleryImgs: [ballet3, yogaNew4, yogaNew5, yogaNew6],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",

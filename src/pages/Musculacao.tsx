@@ -5,15 +5,22 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Dumbbell, Target, TrendingUp, Shield } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
-import { useGalleryImages } from "@/hooks/useGalleryImages";
-import musculacaoImg from "@/assets/musculacao.jpg";
+import ImageCarousel from "@/components/ImageCarousel";
+import musc1 from "@/assets/musculacao-real-1.jpg";
+import musc2 from "@/assets/musculacao-real-2.jpg";
+import musc3 from "@/assets/musculacao-real-3.jpg";
+import musc4 from "@/assets/musculacao-real-4.jpg";
+import musc5 from "@/assets/musculacao-real-5.jpg";
+
+const MUSCULACAO_IMAGES = [
+  { src: musc1, alt: "Sala de musculação da Academia Flipper — halteres e aparelhos" },
+  { src: musc2, alt: "Academia Flipper — máquinas de musculação com espelho" },
+  { src: musc3, alt: "Academia Flipper — crossover e rack de halteres" },
+  { src: musc4, alt: "Aluna treinando na Academia Flipper" },
+  { src: musc5, alt: "Academia Flipper — leg press e vista para a cidade" },
+];
 
 const Musculacao = () => {
-  const { data: images } = useGalleryImages("Musculação");
-
-  const heroImage = images?.[0]?.image_url || musculacaoImg;
-  const extraImages = images?.slice(1) || [];
-
   return (
     <Layout>
       <SEOHead
@@ -42,26 +49,10 @@ const Musculacao = () => {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="rounded-2xl overflow-hidden mb-16 shadow-2xl">
-                <img src={heroImage} alt="Sala de musculação da Academia Flipper" className="w-full h-[400px] object-cover" />
+              <div className="mb-16">
+                <ImageCarousel images={MUSCULACAO_IMAGES} height="h-[460px]" />
               </div>
             </ScrollReveal>
-
-            {extraImages.length > 0 && (
-              <ScrollReveal>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
-                  {extraImages.map((img) => (
-                    <div key={img.id} className="rounded-xl overflow-hidden shadow-lg">
-                      <img
-                        src={img.image_url}
-                        alt={img.alt_text}
-                        className="w-full h-[200px] object-cover hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            )}
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[

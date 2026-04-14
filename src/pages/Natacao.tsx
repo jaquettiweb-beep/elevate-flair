@@ -5,12 +5,16 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
-import swimmingImg from "@/assets/swimming.jpg";
+import ImageCarousel from "@/components/ImageCarousel";
+import natacao1 from "@/assets/natacao-1.jpg";
+import natacao2 from "@/assets/natacao-2.jpg";
+
+const NATACAO_IMAGES = [
+  { src: natacao1, alt: "Piscina da Academia Flipper — nadador com prancha" },
+  { src: natacao2, alt: "Aula de natação na Academia Flipper — professor e alunos" },
+];
 
 const Natacao = () => {
-  const heroImage = swimmingImg;
-  const extraImages: any[] = [];
-
   return (
     <Layout>
       <SEOHead
@@ -39,26 +43,10 @@ const Natacao = () => {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="rounded-2xl overflow-hidden mb-16 shadow-2xl">
-                <img src={heroImage} alt="Piscina da Academia Flipper" className="w-full h-[400px] object-cover" />
+              <div className="mb-16">
+                <ImageCarousel images={NATACAO_IMAGES} height="h-[420px]" />
               </div>
             </ScrollReveal>
-
-            {extraImages.length > 0 && (
-              <ScrollReveal>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
-                  {extraImages.map((img) => (
-                    <div key={img.id} className="rounded-xl overflow-hidden shadow-lg">
-                      <img
-                        src={img.image_url}
-                        alt={img.alt_text}
-                        className="w-full h-[200px] object-cover hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            )}
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[
@@ -101,3 +89,5 @@ const Natacao = () => {
 };
 
 export default Natacao;
+
+

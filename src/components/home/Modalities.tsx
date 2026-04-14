@@ -8,7 +8,7 @@ import yogaImg from "@/assets/yoga.jpg";               // Yoga ✅
 
 // Confirmed by user:
 import hidroImg from "@/assets/hidro-1.jpg";           // Hidroginástica ✅
-import hidro2Img from "@/assets/hidro-2.jpg";          // Hidroterapia ✅
+import yogaNewImg2 from "@/assets/yoga_new-2.jpg";     // Programa 60+
 import judoImg from "@/assets/judo-1.jpg";             // Judô ✅
 import jiujitsuImg from "@/assets/jiujitsu-1.jpg";     // Jiu Jitsu ✅
 import jiujitsu2Img from "@/assets/jiujitsu-2.jpg";    // Muay Thai (placeholder - arte marcial)
@@ -43,8 +43,7 @@ const MODALITIES = [
   { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: aikidoImg, link: "/modalidade/aikido" },
   { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
   { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ballet3Img, link: "/modalidade/ginastica" },
-  { name: "Hidroterapia", category: "Aquático" as Category, desc: "Reabilitação e bem-estar por exercícios aquáticos terapêuticos.", img: hidro2Img, link: "/modalidade/hidroterapia" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaImg, link: "/modalidade/programa-60-saude" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: yogaNewImg2, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {
@@ -141,7 +140,7 @@ export default function Modalities() {
             transition={{ delay: 0.2 }}
             className="text-[#8A95A8] text-[15px] leading-[1.7]"
           >
-            Mais de 15 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
+            Mais de 14 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
           </motion.p>
         </div>
 

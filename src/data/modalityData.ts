@@ -411,7 +411,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [modalidadePrograma601, modalidadePrograma602, modalidadePrograma603],
+    galleryImgs: [modalidadePrograma602],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",

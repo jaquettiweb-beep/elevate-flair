@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Heart, Flower2, Wind, Sun } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import { useGalleryImages } from "@/hooks/useGalleryImages";
-import yogaImg from "@/assets/yoga-real-1.jpg";
-import pilatesImg from "@/assets/yoga-real-2.jpg";
+import yogaImg from "@/assets/modalidade-bem-estar-1.jpg";
+import pilatesImg from "@/assets/modalidade-bem-estar-2.jpg";
 
 const BemEstar = () => {
   const { data: images } = useGalleryImages("Bem-Estar");

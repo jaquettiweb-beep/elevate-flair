@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Waves, Droplets, Baby, User, Users, GraduationCap, Heart } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import ImageCarousel from "@/components/ImageCarousel";
-import natacao1 from "@/assets/natacao-new-1.jpg";
-import natacao2 from "@/assets/natacao-new-2.jpg";
-import natacao3 from "@/assets/natacao-new-3.jpg";
-import natacao4 from "@/assets/natacao-new-4.jpg";
+import natacao1 from "@/assets/modalidade-natacao-1.jpg";
+import natacao2 from "@/assets/modalidade-natacao-2.jpg";
+import natacao3 from "@/assets/modalidade-natacao-3.jpg";
+import natacao4 from "@/assets/modalidade-natacao-4.jpg";
 
 const NATACAO_IMAGES = [
   { src: natacao1, alt: "Aula de natação na Academia Flipper — professor e alunos na piscina" },

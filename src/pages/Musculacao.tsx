@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Dumbbell, Target, TrendingUp, Shield } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import ImageCarousel from "@/components/ImageCarousel";
-import musc1 from "@/assets/muscu-new-1.jpg";
-import musc2 from "@/assets/muscu-new-2.jpg";
-import musc3 from "@/assets/muscu-new-3.jpg";
-import musc4 from "@/assets/muscu-new-4.jpg";
-import musc5 from "@/assets/muscu-new-5.jpg";
-import musc6 from "@/assets/muscu-new-6.jpg";
-import musc7 from "@/assets/muscu-new-7.jpg";
-import musc8 from "@/assets/muscu-new-8.jpg";
-import musc9 from "@/assets/muscu-new-9.jpg";
+import musc1 from "@/assets/modalidade-musculacao-1.jpg";
+import musc2 from "@/assets/modalidade-musculacao-2.jpg";
+import musc3 from "@/assets/modalidade-musculacao-3.jpg";
+import musc4 from "@/assets/modalidade-musculacao-4.jpg";
+import musc5 from "@/assets/modalidade-musculacao-5.jpg";
+import musc6 from "@/assets/modalidade-musculacao-6.jpg";
+import musc7 from "@/assets/modalidade-musculacao-7.jpg";
+import musc8 from "@/assets/modalidade-musculacao-8.jpg";
+import musc9 from "@/assets/modalidade-musculacao-9.jpg";
 
 const MUSCULACAO_IMAGES = [
   { src: musc1, alt: "Academia Flipper — sala de musculação com equipamentos" },

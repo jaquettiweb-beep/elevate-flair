@@ -32,8 +32,8 @@ const Musculacao = () => {
   return (
     <Layout>
       <SEOHead
-        title="Musculação - Academia Flipper | Equipamentos Modernos"
-        description="Musculação com equipamentos modernos e profissionais qualificados na Academia Flipper. Treinos personalizados para todos os níveis."
+        title="Musculação - Academia Flipper | Treino Funcional e Seguro"
+        description="Musculação com foco em funcionalidade, segurança e treino eficiente na Academia Flipper. Instrutores com CREF ativo presentes o dia todo."
       />
       <PageTransition>
         <section className="relative overflow-hidden page-white" style={{ background: '#ffffff', color: '#0f172a' }}>
@@ -49,10 +49,10 @@ const Musculacao = () => {
 
             <ScrollReveal>
               <h1 className="font-display text-4xl lg:text-6xl font-bold mb-6" style={{ color: '#0f172a' }}>
-                <span className="text-[#EE6200]">Musculação</span> de Alta Performance
+                <span className="text-[#EE6200]">Musculação</span> Funcional e Segura
               </h1>
               <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
-                Equipamentos modernos, ambiente motivador e profissionais qualificados para o seu melhor treino.
+                Não utilizamos equipamentos de última geração, mas priorizamos funcionalidade, segurança e treino eficiente. Nossos instrutores são profissionais certificados, com registro ativo no CREF, e estão presentes na área de treino durante todo o dia.
               </p>
             </ScrollReveal>
 
@@ -64,9 +64,9 @@ const Musculacao = () => {
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[
-                { icon: Dumbbell, title: "Equipamentos Modernos", desc: "Aparelhos de última geração para treinos de força, hipertrofia e resistência, com manutenção constante." },
-                { icon: Target, title: "Treino Personalizado", desc: "Avaliação física completa e programa de treino individualizado, atualizado periodicamente conforme sua evolução." },
-                { icon: TrendingUp, title: "Acompanhamento", desc: "Professores sempre presentes na sala para orientação, correção de postura e motivação durante o treino." },
+                { icon: Dumbbell, title: "Equipamentos Funcionais", desc: "Aparelhos com foco em funcionalidade e segurança para treinos de força, hipertrofia e resistência." },
+                { icon: Target, title: "Treino Eficiente", desc: "Programa de treino orientado pelos nossos instrutores, com foco em resultados e evolução contínua." },
+                { icon: TrendingUp, title: "Instrutores CREF", desc: "Nossos instrutores são profissionais certificados com registro ativo no CREF, presentes na área de treino durante todo o dia." },
                 { icon: Shield, title: "Segurança", desc: "Ambiente seguro com protocolos de higiene, espaço bem ventilado e equipamentos higienizados regularmente." },
               ].map((item, i) => (
                 <ScrollReveal key={i}>
@@ -85,7 +85,7 @@ const Musculacao = () => {
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Horário da Musculação</h2>
                 <p className="text-slate-600 text-lg">
-                  Segunda a sexta das 6h às 22h, sábados das 6h às 13h. Sala ampla com espaço para treinar com conforto.
+                  Segunda a sexta das 6h às 22h, sábados das 8h às 13h. Sala ampla com espaço para treinar com conforto.
                 </p>
               </div>
             </ScrollReveal>

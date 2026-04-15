@@ -74,7 +74,7 @@ const BemEstar = () => {
 
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {[
-                { icon: Flower2, title: "Yoga", desc: "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Melhore flexibilidade, força, equilíbrio e concentração." },
+                { icon: Flower2, title: "Yoga", desc: "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Terça e quinta às 7h, sexta às 17h." },
                 { icon: Wind, title: "Pilates Solo", desc: "Exercícios de fortalecimento do core, alongamento e consciência corporal com acompanhamento individualizado." },
                 { icon: Sun, title: "Pilates Studio", desc: "Aulas com aparelhos (Reformer, Cadillac) para reabilitação, fortalecimento e melhora postural." },
                 { icon: Heart, title: "Relaxamento", desc: "Sessões de respiração guiada e meditação para reduzir estresse e promover bem-estar emocional." },

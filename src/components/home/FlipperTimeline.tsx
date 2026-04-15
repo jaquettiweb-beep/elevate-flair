@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 
 import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
 import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";
@@ -27,7 +29,7 @@ const timelineData = [
     id: 2,
     title: "Natação",
     date: "Referência SP",
-    content: "Duas piscinas de 17m e uma de 7m, aquecidas e com tratamento salino, para todas as idades.",
+    content: "Duas piscinas de 15m e uma de 7m, aquecidas e com tratamento salino, para todas as idades.",
     category: "Modalidade",
     icon: Waves,
     relatedIds: [1, 3],
@@ -94,6 +96,7 @@ const allImages = timelineData.map((t) => t.image).filter(Boolean);
 
 export default function FlipperTimeline() {
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const handleActiveChange = (id: number | null) => {
     if (id === null) {
@@ -103,6 +106,41 @@ export default function FlipperTimeline() {
       setActiveImage(item?.image || null);
     }
   };
+
+  // Mobile: simple card list instead of orbital animation
+  if (isMobile) {
+    return (
+      <section className="relative overflow-hidden py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="font-display text-3xl font-bold text-[#F0EDE8] mb-4">
+              Conheça a <span className="text-[#EE6200] font-extrabold">Academia Flipper</span>
+            </h2>
+            <p className="text-[#8A95A8] max-w-xl mx-auto text-base">
+              Mais de 50 anos transformando vidas através do esporte. Explore nossa história e modalidades.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {timelineData.map((item) => (
+              <Link
+                key={item.id}
+                to={item.link || "#"}
+                className="bg-[#1A2335] border border-[#222D42] rounded-xl overflow-hidden flex items-center gap-4 p-4 hover:border-[#EE6200] transition-colors"
+              >
+                {item.image && (
+                  <img src={item.image} alt={item.title} className="w-20 h-20 rounded-lg object-cover shrink-0" />
+                )}
+                <div>
+                  <h3 className="text-[#F0EDE8] font-bold text-base">{item.title}</h3>
+                  <p className="text-[#8A95A8] text-sm mt-1 line-clamp-2">{item.content}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden">

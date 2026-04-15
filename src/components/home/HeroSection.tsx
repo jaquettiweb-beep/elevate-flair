@@ -105,7 +105,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   }, [scrollYProgress]);
 
   return (
-    <div ref={wrapperRef} style={{ height: "125vh" }}>
+    <div ref={wrapperRef} style={{ height: "100vh" }}>
       <section
         className="sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
@@ -238,8 +238,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
             >
-              <span className="text-white/80 font-semibold">5.000 alunos</span> já alcançaram seus objetivos com natação, musculação e 14+ modalidades.{" "}
-              <span className="text-white/70 font-medium">Brooklin, SP</span> • Desde 1974 • <span className="text-white/70 font-medium">★ 4.6</span> no Google
+              Uma academia humanizada, feita para pessoas de todas as idades, focada em bem-estar, saúde e desenvolvimento pessoal.
             </motion.p>
 
             {/* ── CTAs ── */}

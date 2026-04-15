@@ -1,7 +1,6 @@
 import React, { useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-// lucide-react icons removed (no longer needed)
 import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
 import pilatesImg from "@/assets/modalidade-pilates-1.jpg";
 import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";
@@ -73,76 +72,7 @@ const cardVariants: any = {
   },
 };
 
-/* ─── Featured Card (Natação, Musculação) ─── */
-const FeaturedModalityCard = memo(function FeaturedModalityCard({ mod }: { mod: Modality }) {
-  const navigate = useNavigate();
-  const style = CATEGORY_STYLES[mod.category];
-
-  return (
-    <motion.div
-      variants={cardVariants}
-      className="group relative col-span-1 sm:col-span-2 lg:col-span-3 cursor-pointer"
-      onClick={() => navigate(mod.link)}
-    >
-      <div className="bg-[#1A2335] border border-[#222D42] border-t-[3px] border-t-[#EE6200] rounded-[14px] overflow-hidden transition-all duration-[250ms] ease-in-out hover:-translate-y-[4px] hover:border-[#EE6200] hover:shadow-[0_12px_40px_rgba(238,98,0,0.2)]">
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          {/* Image */}
-          <div className="relative h-[220px] sm:h-full min-h-[280px] overflow-hidden">
-            <img src={mod.img} alt={mod.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#1A2335]/80 hidden sm:block" />
-            
-            {mod.badge && (
-              <span 
-                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide text-white"
-                style={{ background: "linear-gradient(135deg, #EE6200, #FF9E52)", boxShadow: "0 4px 12px rgba(238,98,0,0.3)" }}
-              >
-                ⭐ {mod.badge}
-              </span>
-            )}
-            
-            <span 
-              className="absolute top-4 right-4 px-[8px] py-[3px] rounded-[10px] text-[10px] font-[600]"
-              style={{ backgroundColor: style.bg, color: style.text }}
-            >
-              {mod.category}
-            </span>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 sm:p-8 flex flex-col justify-center">
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#F0EDE8] mb-2 leading-tight">{mod.name}</h3>
-            <p className="text-[14px] text-[#8A95A8] mb-5 leading-relaxed">
-              {mod.desc}
-            </p>
-
-            {/* Stats */}
-            {mod.stats && (
-              <div className="flex flex-wrap gap-4 mb-5">
-                {mod.stats.map((stat) => (
-                  <div key={stat.text} className="flex items-center gap-1.5">
-                    <stat.icon size={14} className="text-[#EE6200]" />
-                    <span className="text-[12px] text-[#8A95A8] font-medium">{stat.text}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <span className="inline-flex items-center justify-center gap-2 bg-[#EE6200] text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-[#CC5400] transition-colors">
-                Agendar Aula Experimental
-              </span>
-              <span className="inline-flex items-center text-[#EE6200] font-medium text-[13px] group-hover:translate-x-1 transition-transform">
-                Ver detalhes →
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-});
-
-/* ─── Standard Card ─── */
+/* ─── Card ─── */
 const ModalityCard = memo(function ModalityCard({ mod }: { mod: Modality }) {
   const navigate = useNavigate();
   const style = CATEGORY_STYLES[mod.category];

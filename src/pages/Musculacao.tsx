@@ -52,7 +52,7 @@ const Musculacao = () => {
                 <span className="text-[#EE6200]">Musculação</span> Funcional e Segura
               </h1>
               <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
-                Não utilizamos equipamentos de última geração, mas priorizamos funcionalidade, segurança e treino eficiente. Nossos instrutores são profissionais certificados, com registro ativo no CREF, e estão presentes na área de treino durante todo o dia.
+                Priorizamos funcionalidade, segurança e treino eficiente. Nossos instrutores são profissionais certificados, com registro ativo no CREF, e estão presentes na área de treino durante todo o dia.
               </p>
             </ScrollReveal>
 

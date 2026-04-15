@@ -105,7 +105,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   }, [scrollYProgress]);
 
   return (
-    <div ref={wrapperRef} style={{ height: "125vh" }}>
+    <div ref={wrapperRef} style={{ height: "100vh" }}>
       <section
         className="sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
@@ -238,8 +238,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
             >
-              <span className="text-white/80 font-semibold">5.000 alunos</span> já alcançaram seus objetivos com natação, musculação e 14+ modalidades.{" "}
-              <span className="text-white/70 font-medium">Brooklin, SP</span> • Desde 1974 • <span className="text-white/70 font-medium">★ 4.6</span> no Google
+              Uma academia humanizada, feita para pessoas de todas as idades, focada em bem-estar, saúde e desenvolvimento pessoal.
             </motion.p>
 
             {/* ── CTAs ── */}
@@ -271,68 +270,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               </motion.div>
             </motion.div>
 
-            {/* ── Trust Badges ── */}
-            <motion.div
-              className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.95 }}
-            >
-              {TRUST_BADGES.map((badge, i) => (
-                <div
-                  key={badge.label}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
-                  style={{
-                    background: "hsla(200,80%,20%,0.3)",
-                    border: "1px solid hsla(185,80%,70%,0.1)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
-                  <div
-                    className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                    style={{
-                      background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
-                      boxShadow: "0 2px 8px hsla(185,80%,45%,0.25)",
-                    }}
-                  >
-                    <badge.icon size={13} className="text-white" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-xs font-display font-bold text-white leading-none">{badge.label}</p>
-                    <p className="text-[9px] text-white/40 font-medium tracking-wide">{badge.sublabel}</p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* ── Quick Stats (kept for backward compat but visually reduced) ── */}
-            <motion.div
-              className="flex flex-row gap-6 sm:gap-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 1.1 }}
-            >
-              {STATS.map((stat, i) => (
-                <div key={stat.label} className="flex items-center gap-2.5">
-                  <div
-                    className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                    style={{
-                      background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
-                      boxShadow: "0 4px 12px hsla(185,80%,45%,0.25)",
-                    }}
-                  >
-                    <stat.icon size={14} className="text-white" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-lg font-display font-black text-white leading-none">{stat.value}</p>
-                    <p className="text-[10px] text-white/40 font-medium tracking-widest uppercase">{stat.label}</p>
-                  </div>
-                  {i < STATS.length - 1 && (
-                    <div className="hidden sm:block w-px h-7 bg-white/10 ml-2" />
-                  )}
-                </div>
-              ))}
-            </motion.div>
+            {/* Trust badges and stats removed per client request */}
           </motion.div>
         </motion.div>
 

@@ -33,7 +33,7 @@ const Natacao = () => {
     <Layout>
       <SEOHead
         title="Natação - Academia Flipper | Piscinas Aquecidas"
-        description="Aulas de natação para todas as idades na Academia Flipper. Duas piscinas de 17m e uma de 7m, aquecidas e com tratamento salino."
+        description="Aulas de natação para todas as idades na Academia Flipper. Duas piscinas de 15m e uma de 7m, aquecidas e com tratamento salino."
       />
       <PageTransition>
         <section className="relative overflow-hidden page-white" style={{ background: '#ffffff', color: '#0f172a' }}>
@@ -52,7 +52,7 @@ const Natacao = () => {
                 <span className="text-[#EE6200]">Natação</span> para Todas as Idades
               </h1>
               <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
-                Duas piscinas de 17 metros e uma de 7 metros, todas aquecidas e com tratamento salino — sem adição de produtos químicos agressivos. Aulas para bebês, crianças, adultos e idosos. Referência em São Paulo há mais de 50 anos.
+                Duas piscinas de 15 metros e uma de 7 metros, todas aquecidas e com tratamento salino — sem adição de produtos químicos agressivos. Aulas para bebês, crianças, adultos e idosos. Referência em São Paulo há mais de 50 anos.
               </p>
             </ScrollReveal>
 
@@ -110,7 +110,7 @@ const Natacao = () => {
                   <Waves className="w-7 h-7 text-[#EE6200]" /> Nossas Piscinas
                 </h2>
                 <ul className="space-y-3 text-slate-600 text-lg">
-                  <li>• Duas piscinas de 17 metros aquecidas</li>
+                  <li>• Duas piscinas de 15 metros aquecidas</li>
                   <li>• Uma piscina de 7 metros aquecida</li>
                   <li>• Tratamento com sistema salino — sem adição de produtos químicos agressivos</li>
                   <li>• Vestiários completos com chuveiro quente</li>

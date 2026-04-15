@@ -42,7 +42,7 @@ const MODALITIES: Modality[] = [
   { 
     name: "Natação", 
     category: "Aquático", 
-    desc: "Adulto, infantil e bebê. Piscina semiolímpica aquecida com turmas por nível.", 
+    desc: "Adulto, infantil e bebê. Piscinas aquecidas com turmas por nível.", 
     img: swimmingImg, 
     link: "/natacao",
     featured: true,
@@ -56,7 +56,7 @@ const MODALITIES: Modality[] = [
   { 
     name: "Musculação", 
     category: "Fitness", 
-    desc: "Equipamentos de última geração com orientação profissional individualizada.", 
+    desc: "Treino funcional e seguro com orientação profissional individualizada.", 
     img: musculacaoImg, 
     link: "/musculacao",
     featured: true,
@@ -219,10 +219,6 @@ export default function Modalities() {
     setActiveFilter(cat);
   }, []);
 
-  // Separate featured from standard
-  const featuredMods = filteredModalities.filter(m => m.featured);
-  const standardMods = filteredModalities.filter(m => !m.featured);
-
   return (
     <section id="modalidades" className="px-5 lg:px-10 relative z-10 transition-colors duration-500">
       <div className="container mx-auto">
@@ -277,32 +273,16 @@ export default function Modalities() {
           })}
         </div>
 
-        {/* Featured Cards */}
-        {featuredMods.length > 0 && (
-          <motion.div 
-            key={`featured-${activeFilter}`}
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px] mb-4"
-          >
-            {featuredMods.map((mod) => (
-              <FeaturedModalityCard key={mod.name} mod={mod} />
-            ))}
-          </motion.div>
-        )}
-
-        {/* Standard Cards */}
+        {/* All Cards - Same Size Grid */}
         <motion.div 
           key={activeFilter}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px]"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-[16px]"
         >
-          {standardMods.map((mod) => (
+          {filteredModalities.map((mod) => (
             <ModalityCard key={mod.name} mod={mod} />
           ))}
         </motion.div>

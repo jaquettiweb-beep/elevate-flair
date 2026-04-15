@@ -42,9 +42,9 @@ const plans: Plan[] = [
     features: [
       { text: "Musculação ilimitada" },
       { text: "1 Luta 1x por semana" },
-      { text: "Avaliação física gratuita", badge: "Incluso" },
+      { text: "Acesso a 1 atividade (exceto natação)" },
     ],
-    description: "Ideal para quem quer começar com foco em uma modalidade.",
+    description: "Ideal para quem quer começar com foco em uma modalidade. Acesso a 1 atividade à sua escolha.",
     price: { monthly: 189.90, quarterly: 169.90 },
     bestFor: "Iniciantes e quem quer experimentar",
   },
@@ -93,7 +93,7 @@ const plans: Plan[] = [
     features: [
       { text: "Natação adulto ou infantil" },
       { text: "2x por semana" },
-      { text: "Piscina semiolímpica aquecida" },
+      { text: "Piscinas aquecidas com tratamento salino" },
     ],
     description: "Aulas de natação do bebê ao adulto com professores certificados.",
     price: { monthly: 199.90, quarterly: 179.90 },
@@ -144,7 +144,7 @@ const comparisonData: ComparisonRow[] = [
   { feature: "Yoga, Pilates, Ginástica", uno: "—", terra: "✓", agua: "—", hidro: "—" },
   { feature: "Natação (Adulto/Infantil)", uno: "—", terra: "—", agua: "2x/sem", hidro: "—" },
   { feature: "Hidroginástica", uno: "—", terra: "—", agua: "—", hidro: "2x/sem" },
-  { feature: "Avaliação Física", uno: "✓", terra: "✓", agua: "✓", hidro: "✓" },
+  { feature: "Instrutores CREF presentes", uno: "✓", terra: "✓", agua: "✓", hidro: "✓" },
   { feature: "Aulas Coletivas", uno: "—", terra: "✓", agua: "—", hidro: "—" },
 ];
 
@@ -216,17 +216,8 @@ export default function Planos() {
                 transition={{ delay: 0.1, type: "spring", stiffness: 60 }}
               >
                 <span className="text-white">Seu Plano Perfeito </span>
-                <span className="relative inline-block">
-                  <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, hsl(185,80%,55%), hsl(200,90%,60%))" }}>
-                    a Partir de R$ 179,90
-                  </span>
-                  <motion.span
-                    className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full"
-                    style={{ background: "linear-gradient(90deg, hsl(185,80%,55%), hsl(200,90%,60%))" }}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-                  />
+                <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, hsl(185,80%,55%), hsl(200,90%,60%))" }}>
+                    para Você
                 </span>
               </motion.h1>
 
@@ -236,7 +227,7 @@ export default function Planos() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Compare, escolha e comece sua transformação. Todos os planos incluem aula experimental grátis e avaliação física.
+                Compare, escolha e comece sua transformação. Todos os planos incluem aula experimental grátis.
               </motion.p>
 
               {/* Billing toggle */}

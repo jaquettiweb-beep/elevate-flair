@@ -53,13 +53,13 @@ const Index = () => {
       <Layout>
         <SEOHead
           title="Academia Flipper - Natação, Musculação e +14 Modalidades | Brooklin SP Desde 1974"
-          description="A melhor academia do Brooklin com natação, musculação, yoga, pilates, jiu jitsu e artes marciais. Piscina aquecida semiolímpica. 5.000+ alunos. Aula experimental grátis!"
+          description="Academia humanizada no Brooklin com natação, musculação, yoga, pilates, jiu jitsu e artes marciais. Piscinas aquecidas. Aula experimental grátis!"
           keywords="academia brooklin, natação são paulo, musculação brooklin, yoga, pilates, jiu jitsu, academia flipper, piscina aquecida"
           schema={{
             "@context": "https://schema.org",
             "@type": "SportsActivityLocation",
             "name": "Academia Flipper",
-            "description": "Academia completa com natação, musculação, yoga, pilates, artes marciais e mais de 14 modalidades no Brooklin, São Paulo.",
+            "description": "Academia humanizada com natação, musculação, yoga, pilates, artes marciais e mais de 14 modalidades no Brooklin, São Paulo.",
             "url": "https://www.academiaflipper.com.br",
             "telephone": "+55-11-3876-2340",
             "address": {

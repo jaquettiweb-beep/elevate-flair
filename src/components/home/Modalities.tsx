@@ -28,8 +28,8 @@ const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
 };
 
 const MODALITIES = [
-  { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Piscina aquecida semiolímpica.", img: swimmingImg, link: "/natacao" },
-  { name: "Musculação", category: "Fitness" as Category, desc: "Equipamentos de última geração com orientação profissional.", img: musculacaoImg, link: "/musculacao" },
+  { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Duas piscinas de 17m e uma de 7m, aquecidas.", img: swimmingImg, link: "/natacao" },
+  { name: "Musculação", category: "Fitness" as Category, desc: "Treino funcional e seguro com instrutores CREF presentes o dia todo.", img: musculacaoImg, link: "/musculacao" },
   { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
   { name: "Pilates", category: "Bem-estar" as Category, desc: "Studio e Solo — fortalecimento, reabilitação e consciência corporal.", img: pilatesImg, link: "/modalidade/pilates" },
   { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },

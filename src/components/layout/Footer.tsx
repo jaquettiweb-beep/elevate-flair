@@ -37,7 +37,7 @@ export default function Footer() {
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <h3 className="font-display text-3xl font-black text-[#F0EDE8] tracking-tight">FLIPPER</h3>
             <p className="text-[#8A95A8] text-base leading-relaxed max-w-sm">
-              Uma academia humana, feita para pessoas. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
+              Uma academia humana, feita para pessoas de todas as idades, focada em bem-estar, saúde e desenvolvimento pessoal. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
             </p>
           </motion.div>
 
@@ -92,7 +92,7 @@ export default function Footer() {
             <div className="flex flex-col gap-4 border-t border-[#222D42] pt-6">
               <div className="flex items-start gap-3 text-sm text-[#8A95A8]">
                 <Clock size={18} className="shrink-0 text-[#EE6200] mt-0.5" />
-                <span>Seg – Sex: 6h às 22h | Sáb: 7h às 16h</span>
+                <span>Seg – Sex: 6h às 22h | Sáb: 8h às 13h</span>
               </div>
               <div className="flex items-start gap-3 text-sm text-[#8A95A8]">
                 <MapPin size={18} className="shrink-0 text-[#EE6200] mt-0.5" />
@@ -163,7 +163,7 @@ export default function Footer() {
               {
                 "@type": "OpeningHoursSpecification",
                 dayOfWeek: "Saturday",
-                opens: "06:00",
+                opens: "08:00",
                 closes: "13:00",
               },
             ],

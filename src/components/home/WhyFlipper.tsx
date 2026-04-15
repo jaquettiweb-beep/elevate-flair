@@ -6,19 +6,19 @@ const FEATURES = [
   {
     icon: Dumbbell,
     title: "Infraestrutura Completa",
-    desc: "Equipamentos modernos, piscina semiolímpica aquecida, salas climatizadas e vestiários completos.",
+    desc: "Duas piscinas de 17m, uma de 7m, salas climatizadas e vestiários completos — incluindo vestiário família.",
     accent: "from-primary to-primary-glow",
   },
   {
     icon: Award,
     title: "Professores Qualificados",
-    desc: "Profissionais certificados e experientes, prontos para orientar seu treino com segurança.",
+    desc: "Profissionais certificados com CREF ativo, presentes na área de treino durante todo o dia.",
     accent: "from-secondary to-[hsl(15,90%,50%)]",
   },
   {
     icon: Clock,
     title: "Horários Flexíveis",
-    desc: "Segunda a sexta das 6h às 22h, sábado das 6h às 13h. Encaixe o treino na sua rotina com facilidade.",
+    desc: "Segunda a sexta das 6h às 22h, sábado das 8h às 13h. Encaixe o treino na sua rotina com facilidade.",
     accent: "from-[hsl(var(--neon-blue))] to-primary",
   },
 ];

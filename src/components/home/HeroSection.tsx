@@ -217,8 +217,8 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
             >
-              Natação, musculação, pilates, artes marciais e muito mais.{" "}
-              <span className="text-white/75 font-medium">Tudo em um só lugar.</span>
+              Natação, musculação, pilates, artes marciais, yoga e muito mais.{" "}
+              <span className="text-white/75 font-medium">Uma academia humana, feita para pessoas de todas as idades.</span>
             </motion.p>
 
             <motion.div

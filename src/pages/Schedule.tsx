@@ -162,7 +162,7 @@ export default function Schedule() {
                     <span className="font-bold w-36">Segunda a Sexta:</span> 06h às 22h
                   </div>
                   <div className="flex items-center gap-3 text-[hsl(221,70%,30%)]">
-                    <span className="font-bold w-36">Sábados:</span> 08h às 13h
+                     <span className="font-bold w-36">Sábados:</span> 08h às 13h
                   </div>
                 </div>
               </div>

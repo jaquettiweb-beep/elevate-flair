@@ -3,7 +3,7 @@ import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock, Star, Shield, 
 import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import fachadaFlipper from "@/assets/fachada-flipper.jpg";
-import SectionWave from "../SectionWave";
+
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";

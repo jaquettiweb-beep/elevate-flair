@@ -166,6 +166,78 @@ import judoNew5 from "@/assets/judo-new-5.jpg";
 import judoNew6 from "@/assets/judo-new-6.jpg";
 import judoNew7 from "@/assets/judo-new-7.jpg";
 
+import modalidadePilates1 from "@/assets/modalidade-pilates-1.jpg";
+import modalidadePilates2 from "@/assets/modalidade-pilates-2.jpg";
+import modalidadePilates3 from "@/assets/modalidade-pilates-3.jpg";
+import modalidadePilates4 from "@/assets/modalidade-pilates-4.jpg";
+import modalidadePilates5 from "@/assets/modalidade-pilates-5.jpg";
+import modalidadePilates6 from "@/assets/modalidade-pilates-6.jpg";
+import modalidadeHidro1 from "@/assets/modalidade-hidroginastica-1.jpg";
+import modalidadeHidro2 from "@/assets/modalidade-hidroginastica-2.jpg";
+import modalidadeHidro3 from "@/assets/modalidade-hidroginastica-3.jpg";
+import modalidadeHidro4 from "@/assets/modalidade-hidroginastica-4.jpg";
+import modalidadeHidro5 from "@/assets/modalidade-hidroginastica-5.jpg";
+import modalidadeHidro6 from "@/assets/modalidade-hidroginastica-6.jpg";
+import modalidadeHidro7 from "@/assets/modalidade-hidroginastica-7.jpg";
+import modalidadeHidro8 from "@/assets/modalidade-hidroginastica-8.jpg";
+import modalidadeHidro9 from "@/assets/modalidade-hidroginastica-9.jpg";
+import modalidadeYoga1 from "@/assets/modalidade-yoga-1.jpg";
+import modalidadeYoga2 from "@/assets/modalidade-yoga-2.jpg";
+import modalidadeYoga3 from "@/assets/modalidade-yoga-3.jpg";
+import modalidadeYoga4 from "@/assets/modalidade-yoga-4.jpg";
+import modalidadeYoga5 from "@/assets/modalidade-yoga-5.jpg";
+import modalidadeYoga6 from "@/assets/modalidade-yoga-6.jpg";
+import modalidadeJiuJitsu1 from "@/assets/modalidade-jiu-jitsu-1.jpg";
+import modalidadeJiuJitsu2 from "@/assets/modalidade-jiu-jitsu-2.jpg";
+import modalidadeJiuJitsu3 from "@/assets/modalidade-jiu-jitsu-3.jpg";
+import modalidadeJiuJitsu4 from "@/assets/modalidade-jiu-jitsu-4.jpg";
+import modalidadeJiuJitsu5 from "@/assets/modalidade-jiu-jitsu-5.jpg";
+import modalidadeJiuJitsu6 from "@/assets/modalidade-jiu-jitsu-6.jpg";
+import modalidadeJudo1 from "@/assets/modalidade-judo-infantil-1.jpg";
+import modalidadeJudo2 from "@/assets/modalidade-judo-infantil-2.jpg";
+import modalidadeJudo3 from "@/assets/modalidade-judo-infantil-3.jpg";
+import modalidadeJudo4 from "@/assets/modalidade-judo-infantil-4.jpg";
+import modalidadeJudo5 from "@/assets/modalidade-judo-infantil-5.jpg";
+import modalidadeJudo6 from "@/assets/modalidade-judo-infantil-6.jpg";
+import modalidadeJudo7 from "@/assets/modalidade-judo-infantil-7.jpg";
+import modalidadeJudo8 from "@/assets/modalidade-judo-infantil-8.jpg";
+import modalidadeJudo9 from "@/assets/modalidade-judo-infantil-9.jpg";
+import modalidadeJudo10 from "@/assets/modalidade-judo-infantil-10.jpg";
+import modalidadeJudo11 from "@/assets/modalidade-judo-infantil-11.jpg";
+import modalidadeJudo12 from "@/assets/modalidade-judo-infantil-12.jpg";
+import modalidadeJudo13 from "@/assets/modalidade-judo-infantil-13.jpg";
+import modalidadeJudo14 from "@/assets/modalidade-judo-infantil-14.jpg";
+import modalidadeJudo15 from "@/assets/modalidade-judo-infantil-15.jpg";
+import modalidadeJudo16 from "@/assets/modalidade-judo-infantil-16.jpg";
+import modalidadeKravMaga1 from "@/assets/modalidade-krav-maga-1.jpg";
+import modalidadeAikido1 from "@/assets/modalidade-aikido-1.jpg";
+import modalidadeAikido2 from "@/assets/modalidade-aikido-2.jpg";
+import modalidadeAikido3 from "@/assets/modalidade-aikido-3.jpg";
+import modalidadeAikido4 from "@/assets/modalidade-aikido-4.jpg";
+import modalidadeAikido5 from "@/assets/modalidade-aikido-5.jpg";
+import modalidadeAikido6 from "@/assets/modalidade-aikido-6.jpg";
+import modalidadeAikido7 from "@/assets/modalidade-aikido-7.jpg";
+import modalidadeAikido8 from "@/assets/modalidade-aikido-8.jpg";
+import modalidadeAikido9 from "@/assets/modalidade-aikido-9.jpg";
+import modalidadeBallet1 from "@/assets/modalidade-ballet-infantil-1.jpg";
+import modalidadeBallet2 from "@/assets/modalidade-ballet-infantil-2.jpg";
+import modalidadeBallet3 from "@/assets/modalidade-ballet-infantil-3.jpg";
+import modalidadeBallet4 from "@/assets/modalidade-ballet-infantil-4.jpg";
+import modalidadeBallet5 from "@/assets/modalidade-ballet-infantil-5.jpg";
+import modalidadeBallet6 from "@/assets/modalidade-ballet-infantil-6.jpg";
+import modalidadeBallet7 from "@/assets/modalidade-ballet-infantil-7.jpg";
+import modalidadeBallet8 from "@/assets/modalidade-ballet-infantil-8.jpg";
+import modalidadeBallet9 from "@/assets/modalidade-ballet-infantil-9.jpg";
+import modalidadeBallet10 from "@/assets/modalidade-ballet-infantil-10.jpg";
+import modalidadeGinastica1 from "@/assets/modalidade-ginastica-1.jpg";
+import modalidadeGinastica2 from "@/assets/modalidade-ginastica-2.jpg";
+import modalidadeGinastica3 from "@/assets/modalidade-ginastica-3.jpg";
+import modalidadeGinastica4 from "@/assets/modalidade-ginastica-4.jpg";
+import modalidadePrograma601 from "@/assets/modalidade-programa-60-saude-1.jpg";
+import modalidadePrograma602 from "@/assets/modalidade-programa-60-saude-2.jpg";
+import modalidadePrograma603 from "@/assets/modalidade-programa-60-saude-3.jpg";
+import modalidadeMuayThai1 from "@/assets/modalidade-muay-thai-1.jpg";
+
 export interface ModalityData {
   name: string;
   slug: string;
@@ -184,7 +256,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   pilates: {
     name: "Pilates",
     slug: "pilates",
-    galleryImgs: [pilatesReal1, pilatesReal2, pilatesReal3, pilatesReal4, pilatesReal5, pilatesReal6],
+    galleryImgs: [modalidadePilates1, modalidadePilates2, modalidadePilates3, modalidadePilates4, modalidadePilates5, modalidadePilates6],
     emoji: "🤸",
     description:
       "Aulas de Pilates Studio (com aparelhos Reformer, Cadillac e Chair) e Pilates Solo para fortalecimento do core, alongamento, reabilitação e consciência corporal. Acompanhamento individualizado com profissionais especializados.",
@@ -203,7 +275,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9],
+    galleryImgs: [modalidadeHidro1, modalidadeHidro2, modalidadeHidro3, modalidadeHidro4, modalidadeHidro5, modalidadeHidro6, modalidadeHidro7, modalidadeHidro8, modalidadeHidro9],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossas piscinas aquecidas com tratamento salino. Ideal para todas as idades e condicionamentos físicos.",
@@ -220,7 +292,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [muayThaiReal1],
+    galleryImgs: [modalidadeMuayThai1],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
@@ -237,7 +309,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "jiu-jitsu": {
     name: "Jiu Jitsu",
     slug: "jiu-jitsu",
-    galleryImgs: [jiuJitsuReal1, jiuJitsuReal2, jiuJitsuReal3, jiuJitsuReal4, jiuJitsuReal5, jiuJitsuReal6],
+    galleryImgs: [modalidadeJiuJitsu1, modalidadeJiuJitsu2, modalidadeJiuJitsu3, modalidadeJiuJitsu4, modalidadeJiuJitsu5, modalidadeJiuJitsu6],
     emoji: "🥋",
     description:
       "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
@@ -254,7 +326,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [judoNew1, judoNew2, judoNew3, judoNew4, judoNew5, judoNew6, judoNew7, judoReal1, judoReal2, judoReal3, judoReal4, judoReal5, judoReal6, judoReal7, judoReal8, judoReal9],
+    galleryImgs: [modalidadeJudo1, modalidadeJudo2, modalidadeJudo3, modalidadeJudo4, modalidadeJudo5, modalidadeJudo6, modalidadeJudo7, modalidadeJudo8, modalidadeJudo9, modalidadeJudo10, modalidadeJudo11, modalidadeJudo12, modalidadeJudo13, modalidadeJudo14, modalidadeJudo15, modalidadeJudo16],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",
@@ -271,7 +343,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
-    galleryImgs: [judoOld1, judoOld2, judoOld3, judoOld4, judoOld5, judoOld6, judoOld7, judoOld8, judoOld9],
+    galleryImgs: [modalidadeKravMaga1],
     emoji: "🛡️",
     description:
       "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",
@@ -288,7 +360,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   aikido: {
     name: "Aikidô",
     slug: "aikido",
-    galleryImgs: [aikidoReal1, aikidoReal2, aikidoReal3, aikidoReal4, aikidoReal5, aikidoReal6, aikidoReal7, aikidoReal8, aikidoReal9],
+    galleryImgs: [modalidadeAikido1, modalidadeAikido2, modalidadeAikido3, modalidadeAikido4, modalidadeAikido5, modalidadeAikido6, modalidadeAikido7, modalidadeAikido8, modalidadeAikido9],
     emoji: "☯️",
     description:
       "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária.",
@@ -305,10 +377,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "ballet-infantil": {
     name: "Ballet (Infantil)",
     slug: "ballet-infantil",
-    galleryImgs: [
-      balletNew1, balletNew2, balletNew3, balletNew4, balletNew5,
-      balletNew6, balletNew7, balletNew8, balletNew9, balletNew10,
-    ],
+    galleryImgs: [modalidadeBallet1, modalidadeBallet2, modalidadeBallet3, modalidadeBallet4, modalidadeBallet5, modalidadeBallet6, modalidadeBallet7, modalidadeBallet8, modalidadeBallet9, modalidadeBallet10],
     emoji: "🩰",
     description:
       "Expressão artística, postura e ritmo para crianças. Aulas lúdicas que desenvolvem a coordenação, musicalidade e autoexpressão.",
@@ -325,7 +394,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [ginasticaReal1, ginasticaReal2, ginasticaReal3, ginasticaReal4],
+    galleryImgs: [modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",
@@ -342,7 +411,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [programa60Real1, programa60Real2, programa60Real3],
+    galleryImgs: [modalidadePrograma601, modalidadePrograma602, modalidadePrograma603],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",
@@ -359,7 +428,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   yoga: {
     name: "Yoga",
     slug: "yoga",
-    galleryImgs: [yogaFlipper1, yogaFlipper2, yogaFlipper3, yogaFlipper4, yogaFlipper5, yogaFlipper6],
+    galleryImgs: [modalidadeYoga1, modalidadeYoga2, modalidadeYoga3, modalidadeYoga4, modalidadeYoga5, modalidadeYoga6],
     emoji: "🧘",
     description:
       "Aulas de Hatha e Vinyasa Yoga para todos os níveis. Melhore flexibilidade, força, equilíbrio e concentração com instrutores certificados.",

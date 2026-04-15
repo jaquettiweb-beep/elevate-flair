@@ -110,33 +110,39 @@ export default function FlipperTimeline() {
   // Mobile: simple card list instead of orbital animation
   if (isMobile) {
     return (
-      <section className="relative overflow-hidden py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="font-display text-3xl font-bold text-[#F0EDE8] mb-4">
-              Conheça a <span className="text-[#EE6200] font-extrabold">Academia Flipper</span>
-            </h2>
-            <p className="text-[#8A95A8] max-w-xl mx-auto text-base">
-              Mais de 50 anos transformando vidas através do esporte. Explore nossa história e modalidades.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            {timelineData.map((item) => (
-              <Link
-                key={item.id}
-                to={item.link || "#"}
-                className="bg-[#1A2335] border border-[#222D42] rounded-xl overflow-hidden flex items-center gap-4 p-4 hover:border-[#EE6200] transition-colors"
-              >
-                {item.image && (
-                  <img src={item.image} alt={item.title} className="w-20 h-20 rounded-lg object-cover shrink-0" />
-                )}
-                <div>
-                  <h3 className="text-[#F0EDE8] font-bold text-base">{item.title}</h3>
-                  <p className="text-[#8A95A8] text-sm mt-1 line-clamp-2">{item.content}</p>
+      <section className="relative overflow-hidden py-10 px-4">
+        <div className="text-center mb-6">
+          <h2 className="font-display text-2xl font-bold text-[#F0EDE8] mb-2">
+            Conheça a <span className="text-[#EE6200] font-extrabold">Academia Flipper</span>
+          </h2>
+          <p className="text-[#8A95A8] text-sm leading-relaxed">
+            Mais de 50 anos transformando vidas através do esporte.
+          </p>
+        </div>
+
+        {/* 2-column grid for mobile */}
+        <div className="grid grid-cols-2 gap-3">
+          {timelineData.map((item) => (
+            <Link
+              key={item.id}
+              to={item.link || "#"}
+              className="bg-[#1A2335] border border-[#222D42] rounded-xl overflow-hidden hover:border-[#EE6200] transition-colors"
+            >
+              {item.image && (
+                <div className="relative h-24 w-full overflow-hidden">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A2335] to-transparent" />
                 </div>
-              </Link>
-            ))}
-          </div>
+              )}
+              <div className="p-3 -mt-4 relative z-10">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <item.icon size={14} className="text-[#EE6200] shrink-0" />
+                  <h3 className="text-[#F0EDE8] font-bold text-sm truncate">{item.title}</h3>
+                </div>
+                <p className="text-[#8A95A8] text-[11px] leading-snug line-clamp-2">{item.content}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     );

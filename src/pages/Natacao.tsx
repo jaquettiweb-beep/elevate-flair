@@ -33,7 +33,7 @@ const Natacao = () => {
     <Layout>
       <SEOHead
         title="Natação - Academia Flipper | Piscinas Aquecidas"
-        description="Aulas de natação para todas as idades na Academia Flipper. Duas piscinas de 17m e uma de 7m, aquecidas e com tratamento salino."
+        description="Aulas de natação para todas as idades na Academia Flipper. Duas piscinas de 15m e uma de 7m, aquecidas e com tratamento salino."
       />
       <PageTransition>
         <section className="relative overflow-hidden page-white" style={{ background: '#ffffff', color: '#0f172a' }}>

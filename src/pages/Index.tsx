@@ -11,7 +11,7 @@ import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import IntroAnimation from "@/components/IntroAnimation";
-import SectionDivider from "@/components/home/SectionDivider";
+
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 
 const sectionVariants = {

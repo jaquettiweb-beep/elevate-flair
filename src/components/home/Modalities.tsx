@@ -1,7 +1,7 @@
 import React, { useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Users, Star, Clock } from "lucide-react";
+import {} from "lucide-react";
 import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
 import pilatesImg from "@/assets/modalidade-pilates-1.jpg";
 import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";

@@ -1,7 +1,7 @@
 import React, { useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import {} from "lucide-react";
+// lucide-react icons removed (no longer needed)
 import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
 import pilatesImg from "@/assets/modalidade-pilates-1.jpg";
 import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";
@@ -33,9 +33,6 @@ type Modality = {
   desc: string;
   img: string;
   link: string;
-  featured?: boolean;
-  stats?: { icon: typeof Users; text: string }[];
-  badge?: string;
 };
 
 const MODALITIES: Modality[] = [

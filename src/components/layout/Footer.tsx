@@ -37,7 +37,7 @@ export default function Footer() {
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <h3 className="font-display text-3xl font-black text-[#F0EDE8] tracking-tight">FLIPPER</h3>
             <p className="text-[#8A95A8] text-base leading-relaxed max-w-sm">
-              Uma academia humana, feita para pessoas. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
+              Uma academia humana, feita para pessoas de todas as idades, focada em bem-estar, saúde e desenvolvimento pessoal. Transformando vidas através do esporte e do acolhimento familiar há mais de 50 anos no Brooklin.
             </p>
           </motion.div>
 

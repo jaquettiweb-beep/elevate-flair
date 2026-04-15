@@ -291,8 +291,6 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           </motion.div>
         </motion.div>
 
-        {/* Wave Divider to next section */}
-        <SectionWave position="bottom" color="hsl(185, 70%, 92%)" />
       </section>
     </div>
   );

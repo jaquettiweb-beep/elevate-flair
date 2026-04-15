@@ -145,7 +145,6 @@ const timelineData = [
         <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Avós que um dia trouxeram seus filhos agora trazem seus netos. Esse legado é construído sobre cuidado, confiança e amor pelo ensino da natação infantil.
         </p>
-        </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
           {[
             "Natação & Hidroginástica",

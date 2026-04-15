@@ -6,7 +6,7 @@ import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
 import pilatesImg from "@/assets/modalidade-pilates-1.jpg";
 import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";
 import yogaImg from "@/assets/modalidade-yoga-1.jpg";
-import hidroImg from "@/assets/modalidade-hidroginastica-1.jpg";
+import hidroImg from "@/assets/modalidade-hidroginastica-2.jpg";
 import judoImg from "@/assets/modalidade-judo-infantil-1.jpg";
 import jiuJitsuImg from "@/assets/modalidade-jiu-jitsu-1.jpg";
 import muayThaiImg from "@/assets/modalidade-muay-thai-1.jpg";
@@ -39,33 +39,8 @@ type Modality = {
 };
 
 const MODALITIES: Modality[] = [
-  { 
-    name: "Natação", 
-    category: "Aquático", 
-    desc: "Adulto, infantil e bebê. Piscinas aquecidas com turmas por nível.", 
-    img: swimmingImg, 
-    link: "/natacao",
-    featured: true,
-    badge: "Mais Procurada",
-    stats: [
-      { icon: Users, text: "1.200+ alunos" },
-      { icon: Star, text: "4.8★ satisfação" },
-      { icon: Clock, text: "45 min aulas" },
-    ],
-  },
-  { 
-    name: "Musculação", 
-    category: "Fitness", 
-    desc: "Treino funcional e seguro com orientação profissional individualizada.", 
-    img: musculacaoImg, 
-    link: "/musculacao",
-    featured: true,
-    stats: [
-      { icon: Users, text: "2.000+ alunos" },
-      { icon: Star, text: "4.7★ satisfação" },
-      { icon: Clock, text: "Horário livre" },
-    ],
-  },
+  { name: "Natação", category: "Aquático", desc: "Adulto, infantil e bebê. Piscinas aquecidas com turmas por nível.", img: swimmingImg, link: "/natacao" },
+  { name: "Musculação", category: "Fitness", desc: "Treino funcional e seguro com orientação profissional individualizada.", img: musculacaoImg, link: "/musculacao" },
   { name: "Yoga", category: "Bem-estar", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
   { name: "Pilates", category: "Bem-estar", desc: "Studio e Solo — fortalecimento, reabilitação e consciência corporal.", img: pilatesImg, link: "/modalidade/pilates" },
   { name: "Hidroginástica", category: "Aquático", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },

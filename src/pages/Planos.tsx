@@ -158,8 +158,8 @@ export default function Planos() {
   return (
     <Layout>
       <SEOHead
-        title="Planos de Natação e Musculação Brooklin SP a partir de R$179 | Academia Flipper"
-        description="Planos de academia com natação, musculação e 14+ modalidades no Brooklin. A partir de R$179,90/mês. 5.000+ alunos. Aula experimental grátis. Agende agora!"
+        title="Planos de Natação e Musculação Brooklin SP | Academia Flipper"
+        description="Planos de academia com natação, musculação e 14+ modalidades no Brooklin. Aula experimental grátis. Agende agora!"
         path="/planos"
       />
       <PageTransition>

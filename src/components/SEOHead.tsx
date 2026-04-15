@@ -5,11 +5,14 @@ interface SEOHeadProps {
   description: string;
   path?: string;
   image?: string;
+  keywords?: string;
+  schema?: Record<string, any>;
 }
 
 const BASE_URL = "https://www.academiaflipper.com.br";
+const DEFAULT_OG_IMAGE = "/og-flipper-default.jpg";
 
-export default function SEOHead({ title, description, path = "/", image }: SEOHeadProps) {
+export default function SEOHead({ title, description, path = "/", image, keywords, schema }: SEOHeadProps) {
   useEffect(() => {
     document.title = title;
 
@@ -27,6 +30,9 @@ export default function SEOHead({ title, description, path = "/", image }: SEOHe
     setMeta("description", description);
     setMeta("robots", "index, follow, max-image-preview:large");
     setMeta("author", "Academia Flipper");
+    if (keywords) {
+      setMeta("keywords", keywords);
+    }
 
     // OG
     setMeta("og:type", "website", true);
@@ -35,13 +41,13 @@ export default function SEOHead({ title, description, path = "/", image }: SEOHe
     setMeta("og:url", `${BASE_URL}${path}`, true);
     setMeta("og:site_name", "Academia Flipper", true);
     setMeta("og:locale", "pt_BR", true);
-    if (image) setMeta("og:image", image, true);
+    setMeta("og:image", image || DEFAULT_OG_IMAGE, true);
 
     // Twitter
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", title);
     setMeta("twitter:description", description);
-    if (image) setMeta("twitter:image", image);
+    setMeta("twitter:image", image || DEFAULT_OG_IMAGE);
 
     // Canonical
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -51,7 +57,25 @@ export default function SEOHead({ title, description, path = "/", image }: SEOHe
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", `${BASE_URL}${path}`);
-  }, [title, description, path, image]);
+
+    // JSON-LD Schema
+    if (schema) {
+      const existingSchema = document.querySelector('script[data-seo-schema]');
+      if (existingSchema) {
+        existingSchema.remove();
+      }
+      const scriptEl = document.createElement("script");
+      scriptEl.setAttribute("type", "application/ld+json");
+      scriptEl.setAttribute("data-seo-schema", "true");
+      scriptEl.textContent = JSON.stringify(schema);
+      document.head.appendChild(scriptEl);
+
+      return () => {
+        const el = document.querySelector('script[data-seo-schema]');
+        if (el) el.remove();
+      };
+    }
+  }, [title, description, path, image, keywords, schema]);
 
   return null;
 }

@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Phone, ArrowRight, Sparkles } from "lucide-react";
+import { Phone, ArrowRight, Sparkles, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
+  "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
 
 export default function CTASection() {
   return (
@@ -62,8 +62,8 @@ export default function CTASection() {
               className="rounded-[8px] px-[30px] py-[13px] text-[15px] font-semibold flex items-center justify-center gap-3 text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)]"
               whileTap={{ scale: 0.97 }}
             >
-              <Phone size={20} className="relative z-10" />
-              <span className="relative z-10">Falar no WhatsApp</span>
+              <Calendar size={20} className="relative z-10" />
+              <span className="relative z-10">Agendar Aula Grátis</span>
             </motion.a>
 
             <motion.div whileTap={{ scale: 0.97 }}>

@@ -52,8 +52,41 @@ const Index = () => {
 
       <Layout>
         <SEOHead
-          title="Academia Flipper - Natação, Musculação e Mais em São Paulo"
-          description="A melhor academia de São Paulo com natação, musculação, yoga, pilates e artes marciais. Infraestrutura completa e professores qualificados."
+          title="Academia Flipper - Natação, Musculação e +14 Modalidades | Brooklin SP Desde 1974"
+          description="A melhor academia do Brooklin com natação, musculação, yoga, pilates, jiu jitsu e artes marciais. Piscina aquecida semiolímpica. 5.000+ alunos. Aula experimental grátis!"
+          keywords="academia brooklin, natação são paulo, musculação brooklin, yoga, pilates, jiu jitsu, academia flipper, piscina aquecida"
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "SportsActivityLocation",
+            "name": "Academia Flipper",
+            "description": "Academia completa com natação, musculação, yoga, pilates, artes marciais e mais de 14 modalidades no Brooklin, São Paulo.",
+            "url": "https://www.academiaflipper.com.br",
+            "telephone": "+55-11-3876-2340",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Av. Vereador José Diniz, 2583",
+              "addressLocality": "São Paulo",
+              "addressRegion": "SP",
+              "postalCode": "04726-001",
+              "addressCountry": "BR"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": -23.6234957,
+              "longitude": -46.6813073
+            },
+            "openingHoursSpecification": [
+              { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "06:00", "closes": "22:00" },
+              { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "06:00", "closes": "13:00" }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.6",
+              "reviewCount": "230",
+              "bestRating": "5"
+            },
+            "priceRange": "R$ 179 - R$ 289"
+          }}
         />
         <PageTransition>
           <HeroSection introComplete={introComplete} />
@@ -65,15 +98,15 @@ const Index = () => {
 
           <Modalities />
 
-          <section id="stats">
-            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
-              <Stats />
-            </motion.div>
-          </section>
-
           <section id="testimonials">
             <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
               <Testimonials />
+            </motion.div>
+          </section>
+
+          <section id="stats">
+            <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+              <Stats />
             </motion.div>
           </section>
 

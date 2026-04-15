@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
-import { Star, Users, Calendar, ThumbsUp, ShieldCheck, Clock, Award, Heart, Waves, Dumbbell, MessageCircle } from "lucide-react";
+import { Star, Users, Calendar, ThumbsUp, ShieldCheck, Clock, Award, Heart, Waves, Dumbbell, MessageCircle, ArrowRight, ExternalLink } from "lucide-react";
 import { TestimonialStack, Testimonial } from "@/components/ui/glass-testimonial-swiper";
+import { Link } from "react-router-dom";
+
+const WHATSAPP_URL =
+  "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
 
 const testimonialsData: Testimonial[] = [
   {
@@ -102,29 +106,34 @@ export default function Testimonials() {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: "spring", stiffness: 60, damping: 16 }}
         >
-          {/* Badge */}
+          {/* Google Rating Badge */}
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6"
             style={{
-              background: "#1A2335",
+              background: "linear-gradient(135deg, #1A2335, #222D42)",
               border: "1px solid #222D42",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <MessageCircle size={14} style={{ color: "#EE6200" }} />
-            <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: "#EE6200" }}>
-              Depoimentos Reais
-            </span>
+            <div className="flex items-center gap-1">
+              {[1,2,3,4,5].map((s) => (
+                <Star key={s} size={12} className={s <= 4 ? "text-yellow-400 fill-yellow-400" : "text-yellow-400/40 fill-yellow-400/40"} />
+              ))}
+            </div>
+            <span className="text-xs font-bold text-[#F0EDE8]">4.6</span>
+            <span className="text-[10px] text-[#8A95A8]">no Google • 230+ avaliações</span>
           </motion.div>
 
           <h2 className="font-display text-3xl lg:text-5xl font-bold text-[#F0EDE8] mb-4">
-            O que nossos <span className="text-[#EE6200]">alunos</span> dizem
+            +5.000 Alunos{" "}
+            <span className="text-[#EE6200]">Transformados</span>
           </h2>
           <p className="text-[#8A95A8] max-w-xl mx-auto text-lg">
-            Milhares de alunos confiam na Flipper para alcançar seus objetivos e transformar suas vidas.
+            Veja o que dizem quem já treina na Flipper. Estes são depoimentos reais do Google.
           </p>
         </motion.div>
 
@@ -150,6 +159,37 @@ export default function Testimonials() {
             Arraste para ver mais depoimentos
           </p>
           <div className="h-[1px] w-12" style={{ background: "linear-gradient(90deg, #222D42, transparent)" }} />
+        </motion.div>
+
+        {/* CTA + Google Reviews Link */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-[#8A95A8] text-sm mb-4">Quer fazer parte dessa família?</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#EE6200] text-white font-semibold text-sm hover:bg-[#CC5400] transition-all hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)]"
+            >
+              <Calendar size={16} />
+              Agendar Aula Grátis
+            </a>
+            <a
+              href="https://www.google.com/maps/place/Academia+Flipper/@-23.6234957,-46.6813073,17z/data=!4m8!3m7!1s0x94ce50978ff3462b:0x84af2af537efb30a!8m2!3d-23.6234957!4d-46.6813073!9m1!1b1!16s%2Fg%2F1tddtwkx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[#8A95A8] text-sm font-medium hover:text-[#F0EDE8] transition-colors"
+            >
+              Ver todas avaliações no Google
+              <ExternalLink size={14} />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

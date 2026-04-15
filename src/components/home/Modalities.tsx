@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import swimmingImg from "@/assets/natacao-card-1.jpg";
+import { Users, Star, Clock } from "lucide-react";
+import swimmingImg from "@/assets/natacao-new-3.jpg";
 import pilatesImg from "@/assets/pilates-real-1.jpg";
 import musculacaoImg from "@/assets/muscu-new-1.jpg";
 import yogaImg from "@/assets/yoga-flipper-1.jpg";
@@ -27,20 +28,56 @@ const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
   "Infantil": { bg: "rgba(30,16,48,0.85)", text: "#a987e8" },
 };
 
-const MODALITIES = [
-  { name: "Natação", category: "Aquático" as Category, desc: "Adulto, infantil e bebê. Duas piscinas de 17m e uma de 7m, aquecidas.", img: swimmingImg, link: "/natacao" },
-  { name: "Musculação", category: "Fitness" as Category, desc: "Treino funcional e seguro com instrutores CREF presentes o dia todo.", img: musculacaoImg, link: "/musculacao" },
-  { name: "Yoga", category: "Bem-estar" as Category, desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
-  { name: "Pilates", category: "Bem-estar" as Category, desc: "Studio e Solo — fortalecimento, reabilitação e consciência corporal.", img: pilatesImg, link: "/modalidade/pilates" },
-  { name: "Hidroginástica", category: "Aquático" as Category, desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },
-  { name: "Muay Thai", category: "Luta" as Category, desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: muayThaiImg, link: "/modalidade/muay-thai" },
-  { name: "Jiu Jitsu", category: "Luta" as Category, desc: "Técnicas de grappling e defesa pessoal no tatame.", img: jiuJitsuImg, link: "/modalidade/jiu-jitsu" },
-  { name: "Judô (infantil)", category: "Infantil" as Category, desc: "Disciplina e coordenação motora para crianças.", img: judoImg, link: "/modalidade/judo-infantil" },
-  { name: "Krav Maga", category: "Luta" as Category, desc: "Sistema de defesa pessoal prático e eficiente.", img: kravMagaImg, link: "/modalidade/krav-maga" },
-  { name: "Aikidô", category: "Luta" as Category, desc: "Arte marcial japonesa baseada em harmonia e força.", img: aikidoImg, link: "/modalidade/aikido" },
-  { name: "Ballet (infantil)", category: "Infantil" as Category, desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
-  { name: "Ginástica", category: "Fitness" as Category, desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ginasticaImg, link: "/modalidade/ginastica" },
-  { name: "Programa 60+ Saúde", category: "Bem-estar" as Category, desc: "Atividades físicas especialmente para a melhor idade.", img: programa60Img, link: "/modalidade/programa-60-saude" },
+type Modality = {
+  name: string;
+  category: Category;
+  desc: string;
+  img: string;
+  link: string;
+  featured?: boolean;
+  stats?: { icon: typeof Users; text: string }[];
+  badge?: string;
+};
+
+const MODALITIES: Modality[] = [
+  { 
+    name: "Natação", 
+    category: "Aquático", 
+    desc: "Adulto, infantil e bebê. Piscina semiolímpica aquecida com turmas por nível.", 
+    img: swimmingImg, 
+    link: "/natacao",
+    featured: true,
+    badge: "Mais Procurada",
+    stats: [
+      { icon: Users, text: "1.200+ alunos" },
+      { icon: Star, text: "4.8★ satisfação" },
+      { icon: Clock, text: "45 min aulas" },
+    ],
+  },
+  { 
+    name: "Musculação", 
+    category: "Fitness", 
+    desc: "Equipamentos de última geração com orientação profissional individualizada.", 
+    img: musculacaoImg, 
+    link: "/musculacao",
+    featured: true,
+    stats: [
+      { icon: Users, text: "2.000+ alunos" },
+      { icon: Star, text: "4.7★ satisfação" },
+      { icon: Clock, text: "Horário livre" },
+    ],
+  },
+  { name: "Yoga", category: "Bem-estar", desc: "Equilíbrio entre corpo e mente com instrutores certificados.", img: yogaImg, link: "/modalidade/yoga" },
+  { name: "Pilates", category: "Bem-estar", desc: "Studio e Solo — fortalecimento, reabilitação e consciência corporal.", img: pilatesImg, link: "/modalidade/pilates" },
+  { name: "Hidroginástica", category: "Aquático", desc: "Exercícios aquáticos de baixo impacto para todas as idades.", img: hidroImg, link: "/modalidade/hidroginastica" },
+  { name: "Muay Thai", category: "Luta", desc: "Arte marcial tailandesa — força, técnica e condicionamento.", img: muayThaiImg, link: "/modalidade/muay-thai" },
+  { name: "Jiu Jitsu", category: "Luta", desc: "Técnicas de grappling e defesa pessoal no tatame.", img: jiuJitsuImg, link: "/modalidade/jiu-jitsu" },
+  { name: "Judô (infantil)", category: "Infantil", desc: "Disciplina e coordenação motora para crianças.", img: judoImg, link: "/modalidade/judo-infantil" },
+  { name: "Krav Maga", category: "Luta", desc: "Sistema de defesa pessoal prático e eficiente.", img: kravMagaImg, link: "/modalidade/krav-maga" },
+  { name: "Aikidô", category: "Luta", desc: "Arte marcial japonesa baseada em harmonia e força.", img: aikidoImg, link: "/modalidade/aikido" },
+  { name: "Ballet (infantil)", category: "Infantil", desc: "Expressão artística, postura e ritmo para crianças.", img: balletImg, link: "/modalidade/ballet-infantil" },
+  { name: "Ginástica", category: "Fitness", desc: "Coordenação, flexibilidade e condicionamento físico global.", img: ginasticaImg, link: "/modalidade/ginastica" },
+  { name: "Programa 60+ Saúde", category: "Bem-estar", desc: "Atividades físicas especialmente para a melhor idade.", img: programa60Img, link: "/modalidade/programa-60-saude" },
 ];
 
 const containerVariants = {
@@ -65,7 +102,77 @@ const cardVariants: any = {
   },
 };
 
-function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
+/* ─── Featured Card (Natação, Musculação) ─── */
+const FeaturedModalityCard = memo(function FeaturedModalityCard({ mod }: { mod: Modality }) {
+  const navigate = useNavigate();
+  const style = CATEGORY_STYLES[mod.category];
+
+  return (
+    <motion.div
+      variants={cardVariants}
+      className="group relative col-span-1 sm:col-span-2 lg:col-span-3 cursor-pointer"
+      onClick={() => navigate(mod.link)}
+    >
+      <div className="bg-[#1A2335] border border-[#222D42] border-t-[3px] border-t-[#EE6200] rounded-[14px] overflow-hidden transition-all duration-[250ms] ease-in-out hover:-translate-y-[4px] hover:border-[#EE6200] hover:shadow-[0_12px_40px_rgba(238,98,0,0.2)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2">
+          {/* Image */}
+          <div className="relative h-[220px] sm:h-full min-h-[280px] overflow-hidden">
+            <img src={mod.img} alt={mod.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#1A2335]/80 hidden sm:block" />
+            
+            {mod.badge && (
+              <span 
+                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide text-white"
+                style={{ background: "linear-gradient(135deg, #EE6200, #FF9E52)", boxShadow: "0 4px 12px rgba(238,98,0,0.3)" }}
+              >
+                ⭐ {mod.badge}
+              </span>
+            )}
+            
+            <span 
+              className="absolute top-4 right-4 px-[8px] py-[3px] rounded-[10px] text-[10px] font-[600]"
+              style={{ backgroundColor: style.bg, color: style.text }}
+            >
+              {mod.category}
+            </span>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 sm:p-8 flex flex-col justify-center">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#F0EDE8] mb-2 leading-tight">{mod.name}</h3>
+            <p className="text-[14px] text-[#8A95A8] mb-5 leading-relaxed">
+              {mod.desc}
+            </p>
+
+            {/* Stats */}
+            {mod.stats && (
+              <div className="flex flex-wrap gap-4 mb-5">
+                {mod.stats.map((stat) => (
+                  <div key={stat.text} className="flex items-center gap-1.5">
+                    <stat.icon size={14} className="text-[#EE6200]" />
+                    <span className="text-[12px] text-[#8A95A8] font-medium">{stat.text}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <span className="inline-flex items-center justify-center gap-2 bg-[#EE6200] text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-[#CC5400] transition-colors">
+                Agendar Aula Experimental
+              </span>
+              <span className="inline-flex items-center text-[#EE6200] font-medium text-[13px] group-hover:translate-x-1 transition-transform">
+                Ver detalhes →
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+/* ─── Standard Card ─── */
+const ModalityCard = memo(function ModalityCard({ mod }: { mod: Modality }) {
   const navigate = useNavigate();
   const style = CATEGORY_STYLES[mod.category];
 
@@ -98,7 +205,7 @@ function ModalityCard({ mod }: { mod: typeof MODALITIES[0] }) {
       </div>
     </motion.div>
   );
-}
+});
 
 export default function Modalities() {
   const [activeFilter, setActiveFilter] = useState("Todas");
@@ -108,6 +215,14 @@ export default function Modalities() {
     : MODALITIES.filter(m => m.category === (activeFilter === "Lutas" ? "Luta" : activeFilter));
 
   const filterOptions = ["Todas", "Aquático", "Fitness", "Lutas", "Bem-estar", "Infantil"];
+
+  const handleFilterChange = useCallback((cat: string) => {
+    setActiveFilter(cat);
+  }, []);
+
+  // Separate featured from standard
+  const featuredMods = filteredModalities.filter(m => m.featured);
+  const standardMods = filteredModalities.filter(m => !m.featured);
 
   return (
     <section id="modalidades" className="px-5 lg:px-10 relative z-10 transition-colors duration-500">
@@ -128,7 +243,8 @@ export default function Modalities() {
             transition={{ delay: 0.1 }}
             className="text-[clamp(24px,4vw,32px)] font-semibold text-[#F0EDE8] mb-2"
           >
-            Escolha sua <span className="text-[#EE6200]">atividade</span>
+            <span className="text-[#EE6200]">14 Modalidades Premium.</span>{" "}
+            Qual é a Sua?
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
@@ -137,18 +253,19 @@ export default function Modalities() {
             transition={{ delay: 0.2 }}
             className="text-[#8A95A8] text-[15px] leading-[1.7]"
           >
-            Mais de 14 atividades esportivas e aquáticas para você encontrar o equilíbrio perfeito para sua saúde.
+            De natação a jiu jitsu, encontre o equilíbrio perfeito para sua saúde. Aula experimental grátis em todas.
           </motion.p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-8">
+        <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-8" role="group" aria-label="Filtrar modalidades">
           {filterOptions.map((cat) => {
             const isActive = activeFilter === cat;
             return (
               <button
                 key={cat}
-                onClick={() => setActiveFilter(cat)}
+                onClick={() => handleFilterChange(cat)}
+                aria-pressed={isActive}
                 className={`px-[14px] py-[5px] rounded-[20px] text-[12px] transition-colors ${
                   isActive 
                     ? "bg-[#EE6200] text-[#fff] border border-[#EE6200]" 
@@ -161,6 +278,23 @@ export default function Modalities() {
           })}
         </div>
 
+        {/* Featured Cards */}
+        {featuredMods.length > 0 && (
+          <motion.div 
+            key={`featured-${activeFilter}`}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px] mb-4"
+          >
+            {featuredMods.map((mod) => (
+              <FeaturedModalityCard key={mod.name} mod={mod} />
+            ))}
+          </motion.div>
+        )}
+
+        {/* Standard Cards */}
         <motion.div 
           key={activeFilter}
           variants={containerVariants}
@@ -169,7 +303,7 @@ export default function Modalities() {
           viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px]"
         >
-          {filteredModalities.map((mod) => (
+          {standardMods.map((mod) => (
             <ModalityCard key={mod.name} mod={mod} />
           ))}
         </motion.div>

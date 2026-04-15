@@ -14,10 +14,10 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { LucideIcon, Waves, Dumbbell, Heart, Calendar, CreditCard, History, Camera, PartyPopper, Newspaper, ShoppingBag, Briefcase, Mail } from 'lucide-react';
+import { LucideIcon, Waves, Dumbbell, Heart, Calendar, CreditCard, History, Camera, Droplets, Swords, Hand, Baby, PersonStanding, Sparkles } from 'lucide-react';
 import flipperLogo from "@/assets/flipper-logo-header.png";
 
-const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
+const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
 
 type LinkItem = {
 	title: string;
@@ -26,26 +26,64 @@ type LinkItem = {
 	description?: string;
 };
 
-const academiaLinks: LinkItem[] = [
-  { title: "Natação", href: "/natacao", icon: Waves, description: "Aulas para idades e níveis" },
-  { title: "Musculação", href: "/musculacao", icon: Dumbbell, description: "Treinos e equipamentos modernos" },
-  { title: "Bem-Estar", href: "/bem-estar", icon: Heart, description: "Pilates, Yoga e muito mais" },
-  { title: "Horários", href: "/horarios", icon: Calendar, description: "Confira horários das aulas" },
-  { title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
+type CategoryGroup = {
+	label: string;
+	icon: LucideIcon;
+	color: string;
+	items: LinkItem[];
+};
+
+const modalityCategories: CategoryGroup[] = [
+	{
+		label: "Aquáticas",
+		icon: Waves,
+		color: "#60b4e8",
+		items: [
+			{ title: "Natação", href: "/natacao", icon: Waves, description: "Adulto, infantil e bebê" },
+			{ title: "Hidroginástica", href: "/modalidade/hidroginastica", icon: Droplets, description: "Exercícios de baixo impacto" },
+		],
+	},
+	{
+		label: "Fitness",
+		icon: Dumbbell,
+		color: "#f0a940",
+		items: [
+			{ title: "Musculação", href: "/musculacao", icon: Dumbbell, description: "Equipamentos modernos" },
+			{ title: "Ginástica", href: "/modalidade/ginastica", icon: Sparkles, description: "Condicionamento global" },
+		],
+	},
+	{
+		label: "Bem-estar",
+		icon: Heart,
+		color: "#6dcfa0",
+		items: [
+			{ title: "Yoga", href: "/modalidade/yoga", icon: Heart, description: "Corpo e mente em equilíbrio" },
+			{ title: "Pilates", href: "/modalidade/pilates", icon: PersonStanding, description: "Studio e Solo" },
+			{ title: "Programa 60+", href: "/modalidade/programa-60-saude", icon: Heart, description: "Saúde na melhor idade" },
+		],
+	},
+	{
+		label: "Lutas",
+		icon: Swords,
+		color: "#e87878",
+		items: [
+			{ title: "Jiu Jitsu", href: "/modalidade/jiu-jitsu", icon: Swords, description: "Grappling e defesa" },
+			{ title: "Muay Thai", href: "/modalidade/muay-thai", icon: Hand, description: "Arte marcial tailandesa" },
+			{ title: "Judô Infantil", href: "/modalidade/judo-infantil", icon: Baby, description: "Disciplina para crianças" },
+			{ title: "Aikidô", href: "/modalidade/aikido", icon: Swords, description: "Harmonia e técnica" },
+			{ title: "Krav Maga", href: "/modalidade/krav-maga", icon: Swords, description: "Defesa pessoal prática" },
+		],
+	},
 ];
 
-const sobreLinks: LinkItem[] = [
-  { title: "Nossa Jornada", href: "/historia", icon: History, description: "Mais de 50 anos de tradição" },
-  { title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da academia Flipper" },
-  { title: "Eventos", href: "/eventos", icon: PartyPopper, description: "Confira nossos eventos" },
-  { title: "Imprensa", href: "/imprensa", icon: Newspaper, description: "Flipper na televisão" },
+const topNavLinks: LinkItem[] = [
+	{ title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
+	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos" },
+	{ title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da academia" },
 ];
 
-const sobreLinks2: LinkItem[] = [
-  { title: "Produtos", href: "/produtos", icon: ShoppingBag },
-  { title: "Trabalhe Conosco", href: "/trabalhe-conosco", icon: Briefcase },
-  { title: "Contato", href: "/contato", icon: Mail },
-];
+// Mobile-only: all modalities flat
+const allModalityLinks = modalityCategories.flatMap(cat => cat.items);
 
 export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 	const [open, setOpen] = React.useState(false);
@@ -92,14 +130,14 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 				})}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
-						{/* Esquerda: Logo */}
+						{/* Left: Logo */}
 						<div className="flex w-full md:w-1/3 items-center justify-start">
 							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 transition-opacity">
                                 <img src={flipperLogo} alt="Academia Flipper" className="h-[44px] w-auto object-contain antialiased" />
 							</Link>
 						</div>
 
-						{/* Centro: Links (Escondidos no mobile) */}
+						{/* Center: Links (Hidden on mobile) */}
 						<div className="hidden md:flex w-1/3 items-center justify-center">
 							<NavigationMenu>
 								<NavigationMenuList>
@@ -111,62 +149,55 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                       </NavigationMenuLink>
                                     </NavigationMenuItem>
 
+                                    {/* Modalidades Mega Menu */}
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Academia</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-[#1A2335] p-2 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-                                        <ul className="grid w-[420px] grid-cols-2 gap-2 p-2">
-                                          {academiaLinks.map((item, i) => (
-                                            <li key={i}>
-                                              <ListItem {...item} />
-                                            </li>
+                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Modalidades</NavigationMenuTrigger>
+                                      <NavigationMenuContent className="bg-[#1A2335] p-4 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+                                        <div className="grid w-[520px] grid-cols-2 gap-4">
+                                          {modalityCategories.map((cat) => (
+                                            <div key={cat.label}>
+                                              <div className="flex items-center gap-2 mb-2 px-2">
+                                                <cat.icon size={14} style={{ color: cat.color }} />
+                                                <span className="text-[10px] font-bold tracking-wider uppercase" style={{ color: cat.color }}>{cat.label}</span>
+                                              </div>
+                                              <ul className="space-y-1">
+                                                {cat.items.map((item, i) => (
+                                                  <li key={i}>
+                                                    <ListItem {...item} />
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                            </div>
                                           ))}
-                                        </ul>
-                                      </NavigationMenuContent>
-                                    </NavigationMenuItem>
-
-                                    <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Sobre</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-[#1A2335] p-2 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-                                        <div className="grid w-[460px] grid-cols-2 gap-4">
-                                          <ul className="space-y-2 p-2">
-                                            {sobreLinks.map((item, i) => (
-                                              <li key={i}>
-                                                <ListItem {...item} />
-                                              </li>
-                                            ))}
-                                          </ul>
-                                          <ul className="space-y-2 p-3 border-l border-[#F3F4F6]">
-                                            {sobreLinks2.map((item, i) => (
-                                              <li key={i}>
-                                                <NavigationMenuLink
-                                                  asChild
-                                                  className="flex p-2 hover:bg-[#111828] flex-row rounded-md items-center gap-x-2 transition-colors"
-                                                >
-                                                  <Link to={item.href}>
-                                                    <item.icon className="text-[#EE6200] size-4 shrink-0" />
-                                                    <span className="font-medium text-sm text-[#F0EDE8]">{item.title}</span>
-                                                  </Link>
-                                                </NavigationMenuLink>
-                                              </li>
-                                            ))}
-                                          </ul>
                                         </div>
                                       </NavigationMenuContent>
                                     </NavigationMenuItem>
+
+                                    {/* Direct links */}
+                                    {topNavLinks.map((link) => (
+                                      <NavigationMenuItem key={link.href}>
+                                        <NavigationMenuLink className="px-3" asChild>
+                                          <NavLink to={link.href}>
+                                            {link.title}
+                                          </NavLink>
+                                        </NavigationMenuLink>
+                                      </NavigationMenuItem>
+                                    ))}
 								</NavigationMenuList>
 							</NavigationMenu>
 						</div>
 
-						{/* Direita: CTA / Mobile Menu Toggle */}
+						{/* Right: CTA / Mobile Menu Toggle */}
 						<div className="flex w-1/3 items-center justify-end gap-2">
 							<div className="hidden md:flex items-center gap-2">
 								<a
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-[8px] px-[30px] py-[13px] text-[15px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95"
+									className="rounded-[8px] px-[24px] py-[13px] text-[14px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95 flex items-center gap-2"
 								>
-									Conheça a Flipper
+									<Calendar size={16} />
+									Agendar Aula Grátis
 								</a>
 							</div>
 							<Button
@@ -187,16 +218,23 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 							<div className="flex w-full flex-col gap-y-2">
                                 <Link to="/" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Home</Link>
                                 
-                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-[#8A95A8]">Academia</span>
-                                {academiaLinks.map((link, i) => (
-                                  <ListItem key={i} {...link} onClick={() => setOpen(false)} />
+                                {/* Modalities by category */}
+                                {modalityCategories.map((cat) => (
+                                  <React.Fragment key={cat.label}>
+                                    <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 flex items-center gap-2" style={{ color: cat.color }}>
+                                      <cat.icon size={12} />
+                                      {cat.label}
+                                    </span>
+                                    {cat.items.map((link, i) => (
+                                      <ListItem key={i} {...link} onClick={() => setOpen(false)} />
+                                    ))}
+                                  </React.Fragment>
                                 ))}
                                 
-                                <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-[#8A95A8]">Sobre</span>
-                                {sobreLinks.map((link, i) => (
-                                  <ListItem key={i} {...link} onClick={() => setOpen(false)} />
-                                ))}
-                                {sobreLinks2.map((link, i) => (
+                                <div className="h-px bg-[#222D42] my-2" />
+                                
+                                {/* Direct links */}
+                                {topNavLinks.map((link, i) => (
                                   <ListItem key={i} {...link} onClick={() => setOpen(false)} />
                                 ))}
 							</div>
@@ -206,9 +244,10 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								href={WHATSAPP_URL}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="btn-cta rounded-full px-4 py-3 text-center text-sm font-semibold shadow-sm"
+								className="btn-cta rounded-full px-4 py-3 text-center text-sm font-semibold shadow-sm flex items-center justify-center gap-2"
 							>
-								Agende sua Aula Exploratória
+								<Calendar size={16} />
+								Agendar Aula Grátis
 							</a>
 						</div>
 					</MobileMenu>

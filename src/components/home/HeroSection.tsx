@@ -1,39 +1,42 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock } from "lucide-react";
+import { Phone, ChevronDown, Waves, Users, Trophy, MapPin, Clock, Star, Shield, Calendar, ArrowRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import fachadaFlipper from "@/assets/fachada-flipper.jpg";
 import SectionWave from "../SectionWave";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre...";
+  "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
 
 const STATS = [
   { icon: Users, value: "5.000+", label: "Alunos" },
   { icon: Trophy, value: "50+", label: "Anos" },
-  { icon: Waves, value: "15+", label: "Modalidades" },
+  { icon: Waves, value: "14+", label: "Modalidades" },
+];
+
+const TRUST_BADGES = [
+  { icon: Star, label: "4.6★ Google", sublabel: "230+ avaliações" },
+  { icon: Users, label: "5.000+", sublabel: "Alunos ativos" },
+  { icon: Calendar, label: "50 anos", sublabel: "Desde 1974" },
+  { icon: Shield, label: "Única", sublabel: "Piscina Brooklin" },
 ];
 
 /* ─────────────────────────────────────────────────────
-   Letter-by-letter blur-stagger for "Mergulhe"
+   Letter-by-letter blur-stagger for "Transforme"
 ───────────────────────────────────────────────────── */
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as any } },
-};
-
-function MergulheWord() {
+function AnimatedWord({ word }: { word: string }) {
   return (
     <motion.span
-      className="block"
+      className="inline-block"
       style={{ lineHeight: 1.2, overflow: "visible", paddingBottom: "0.1em" }}
       variants={{
         hidden: { opacity: 0 },
-        show: { opacity: 1, transition: { staggerChildren: 0.055, delayChildren: 0.15 } },
+        show: { opacity: 1, transition: { staggerChildren: 0.045, delayChildren: 0.15 } },
       }}
       initial="hidden"
       animate="show"
     >
-      {"Mergulhe".split("").map((char, i) => (
+      {word.split("").map((char, i) => (
         <motion.span
           key={i}
           style={{
@@ -125,7 +128,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           className="absolute top-0 right-0 h-full w-full z-[5] pointer-events-none"
           style={{ opacity: imageOpacity }}
         >
-          {/* New Requested Gradient Overlay - Brand Legibility */}
+          {/* Gradient Overlay - Brand Legibility */}
           <div 
             className="absolute inset-0 z-15" 
             style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%)' }} 
@@ -138,7 +141,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           >
             <motion.img
               src={fachadaFlipper}
-              alt="Academia Flipper"
+              alt="Fachada da Academia Flipper no Brooklin, São Paulo - Piscina aquecida e musculação"
               className="absolute inset-0 w-full h-full object-cover object-center"
               style={{ y: imageInnerY, scale: 1.06 }}
             />
@@ -158,7 +161,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               style={{ background: "hsla(200,80%,12%,1)", opacity: tintOpacity, mixBlendMode: "multiply" }}
             />
 
-            {/* Info overlay removed as requested */}
+            {/* Info overlay */}
             <motion.div
               className="absolute inset-0 z-20 flex flex-col justify-between p-8 pointer-events-none"
               style={{ opacity: overlayOpacity, y: overlayY }}
@@ -179,80 +182,135 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
           </motion.div>
         </motion.div>
 
-        {/* â•â•â•â• CONTENT COLUMN â•â•â•â• */}
+        {/* ──── CONTENT COLUMN ──── */}
         <motion.div
           className="absolute top-0 left-0 right-0 h-full z-10 flex items-center justify-center"
         >
           <motion.div className="flex flex-col items-center text-center px-6 w-full" style={{ maxWidth: innerMaxWidth }}>
             {/* Badge */}
             <motion.div
-              className="flex items-center gap-2 mb-10"
+              className="flex items-center gap-2 mb-8"
               initial={{ opacity: 0, y: -16 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.2 }}
             >
               <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/40 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
-                Academia Flipper • São Paulo
+                Academia Flipper • Brooklin, SP
               </span>
             </motion.div>
 
+            {/* ── Main Headline ── */}
             <h1
-              className="font-display text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.95] mb-8 tracking-tighter w-full"
-              style={{ lg: { letterSpacing: '-0.04em' } } as any}
+              className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] mb-6 tracking-tighter w-full"
             >
-              <MergulheWord />
+              <AnimatedWord word="Transforme" />
               <motion.span
                 className="block text-white mt-2"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.5 }}
               >
-                na sua melhor versão.
+                Seu Corpo e Mente
+              </motion.span>
+              <motion.span
+                className="block mt-1"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.65 }}
+              >
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #FF6B00 0%, #FF9E52 50%, #FF6B00 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  em 30 Dias.
+                </span>
               </motion.span>
             </h1>
 
+            {/* ── Subtitle with social proof ── */}
             <motion.p
-              className="text-base sm:text-lg text-white/50 mb-10 max-w-md leading-relaxed"
-              initial={{ opacity: 0, y: 24 }}
-              animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.55 }}
-            >
-              Natação, musculação, pilates, artes marciais, yoga e muito mais.{" "}
-              <span className="text-white/75 font-medium">Uma academia humana, feita para pessoas de todas as idades.</span>
-            </motion.p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 mb-14"
+              className="text-base sm:text-lg text-white/55 mb-8 max-w-lg leading-relaxed"
               initial={{ opacity: 0, y: 24 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
+            >
+              <span className="text-white/80 font-semibold">5.000 alunos</span> já alcançaram seus objetivos com natação, musculação e 14+ modalidades.{" "}
+              <span className="text-white/70 font-medium">Brooklin, SP</span> • Desde 1974 • <span className="text-white/70 font-medium">★ 4.6</span> no Google
+            </motion.p>
+
+            {/* ── CTAs ── */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 mb-10 w-full sm:w-auto"
+              initial={{ opacity: 0, y: 24 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : {}}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.8 }}
             >
               <motion.a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-[12px] px-10 py-4 text-lg font-black flex items-center justify-center gap-3 text-white bg-[#FF6B00] shadow-xl shadow-orange-600/30"
+                className="rounded-[12px] px-8 py-4 text-lg font-black flex items-center justify-center gap-3 text-white bg-[#FF6B00] shadow-xl shadow-orange-600/30 min-h-[56px] w-full sm:w-auto"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.96 }}
               >
-                <Phone size={20} fill="white" />
-                Matricule-se Agora
+                <Calendar size={20} />
+                Agendar Aula Grátis
               </motion.a>
-              <motion.a
-                href="#modalidades"
-                className="rounded-full px-7 py-3.5 text-sm font-semibold text-white/70 border border-white/12 hover:border-white/25 hover:bg-white/[0.05] transition-all text-center backdrop-blur-sm"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Ver Modalidades
-              </motion.a>
+              <motion.div className="w-full sm:w-auto">
+                <Link
+                  to="/planos"
+                  className="rounded-full px-7 py-3.5 text-sm font-semibold text-white/70 border border-white/12 hover:border-white/25 hover:bg-white/[0.05] transition-all text-center backdrop-blur-sm flex items-center justify-center gap-2 min-h-[56px] sm:min-h-0 w-full sm:w-auto"
+                >
+                  Ver Planos e Preços
+                  <ArrowRight size={16} className="opacity-60" />
+                </Link>
+              </motion.div>
             </motion.div>
 
+            {/* ── Trust Badges ── */}
             <motion.div
-              className="flex flex-row gap-6 sm:gap-10 mb-16 lg:mb-24"
+              className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.9 }}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.95 }}
+            >
+              {TRUST_BADGES.map((badge, i) => (
+                <div
+                  key={badge.label}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
+                  style={{
+                    background: "hsla(200,80%,20%,0.3)",
+                    border: "1px solid hsla(185,80%,70%,0.1)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  <div
+                    className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                    style={{
+                      background: "linear-gradient(135deg, hsl(185,80%,45%), hsl(195,75%,38%))",
+                      boxShadow: "0 2px 8px hsla(185,80%,45%,0.25)",
+                    }}
+                  >
+                    <badge.icon size={13} className="text-white" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-display font-bold text-white leading-none">{badge.label}</p>
+                    <p className="text-[9px] text-white/40 font-medium tracking-wide">{badge.sublabel}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* ── Quick Stats (kept for backward compat but visually reduced) ── */}
+            <motion.div
+              className="flex flex-row gap-6 sm:gap-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={introComplete ? { opacity: 1, y: 0 } : {}}
+              transition={{ type: "spring", stiffness: 50, damping: 14, delay: 1.1 }}
             >
               {STATS.map((stat, i) => (
                 <div key={stat.label} className="flex items-center gap-2.5">

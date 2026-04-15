@@ -30,7 +30,7 @@ const timelineData = [
       <div>
         <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Em <strong className="text-secondary font-semibold">1974</strong>, <strong className="text-secondary font-semibold">Nelson Guerra</strong> fundou a Escola de Natação Flipper no bairro do Brooklin, em São Paulo.
-          Desde o início, a piscina semiolímpica aquecida se tornou referência na região, contribuindo com a aprendizagem e o aperfeiçoamento de alunos de diversas partes do mundo.
+          Desde o início, as piscinas aquecidas se tornaram referência na região, contribuindo com a aprendizagem e o aperfeiçoamento de alunos de diversas partes do mundo.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -66,7 +66,8 @@ const timelineData = [
         <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
           Com o crescimento da demanda, a Flipper expandiu sua infraestrutura e passou a oferecer{" "}
           <strong className="text-secondary font-semibold">musculação</strong>,{" "}
-          <strong className="text-secondary font-semibold">judô</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
+          <strong className="text-secondary font-semibold">judô</strong>,{" "}
+          <strong className="text-secondary font-semibold">ballet</strong> e ginástica, tornando-se a academia mais tradicional do Brooklin.
         </p>
         <div className="grid grid-cols-2 gap-3">
           <div className="relative group overflow-hidden rounded-xl">
@@ -137,9 +138,13 @@ const timelineData = [
     title: "Hoje",
     content: (
       <div>
-        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-4 leading-relaxed">
           Com mais de <strong className="text-secondary font-semibold">50 anos de história</strong> e mais de <strong className="text-secondary font-semibold">8 mil alunos</strong> que já passaram por nossas instalações,
           a Flipper segue sob a direção de <strong className="text-secondary font-semibold">Nelson Guerra</strong>, firme na missão de proporcionar o melhor em esporte e atividade física. Somos a academia mais tradicional do Brooklin e referência em natação.
+        </p>
+        <p className="text-[#F0EDE8]/80 text-sm md:text-base font-normal mb-6 leading-relaxed">
+          Avós que um dia trouxeram seus filhos agora trazem seus netos. Esse legado é construído sobre cuidado, confiança e amor pelo ensino da natação infantil.
+        </p>
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
           {[

@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Link } from "react-router-dom";
-import { ChevronRight, Waves, Droplets, Baby, User, Users } from "lucide-react";
+import { ChevronRight, Waves, Droplets, Baby, User, Users, GraduationCap, Heart } from "lucide-react";
 import BackToModalities from "@/components/BackToModalities";
 import ImageCarousel from "@/components/ImageCarousel";
 import natacao1 from "@/assets/natacao-new-1.jpg";
@@ -14,16 +14,26 @@ import natacao4 from "@/assets/natacao-new-4.jpg";
 const NATACAO_IMAGES = [
   { src: natacao1, alt: "Aula de natação na Academia Flipper — professor e alunos na piscina" },
   { src: natacao2, alt: "Alunos com certificado de natação da Academia Flipper" },
-  { src: natacao3, alt: "Piscina semiolímpica da Academia Flipper com bandeiras" },
+  { src: natacao3, alt: "Piscina da Academia Flipper com bandeiras" },
   { src: natacao4, alt: "Aluno nadando na piscina da Academia Flipper" },
+];
+
+const SWIM_LEVELS = [
+  { name: "Baby", emoji: "👶", desc: "Estimulação aquática para bebês a partir de 6 meses." },
+  { name: "Nível 1 – Estrela do Mar", emoji: "⭐", desc: "Familiarização e adaptação ao meio aquático." },
+  { name: "Nível 2 – Foca", emoji: "🦭", desc: "Primeiros movimentos e flutuação." },
+  { name: "Nível 3 – Linguado", emoji: "🐟", desc: "Introdução aos nados e respiração." },
+  { name: "Nível 4 – Peixe Dourado", emoji: "🐠", desc: "Aperfeiçoamento de técnica nos nados." },
+  { name: "Nível 5 – Peixe Espada", emoji: "🗡️", desc: "Nados completos e resistência." },
+  { name: "Nível 6 – Golfinho Flipper", emoji: "🐬", desc: "Excelência técnica e domínio aquático." },
 ];
 
 const Natacao = () => {
   return (
     <Layout>
       <SEOHead
-        title="Natação - Academia Flipper | Piscina Semiolímpica Aquecida"
-        description="Aulas de natação para todas as idades na Academia Flipper. Piscina semiolímpica aquecida, do bebê ao idoso."
+        title="Natação - Academia Flipper | Piscinas Aquecidas"
+        description="Aulas de natação para todas as idades na Academia Flipper. Duas piscinas de 17m e uma de 7m, aquecidas e com tratamento salino."
       />
       <PageTransition>
         <section className="relative overflow-hidden page-white" style={{ background: '#ffffff', color: '#0f172a' }}>
@@ -42,7 +52,7 @@ const Natacao = () => {
                 <span className="text-[#EE6200]">Natação</span> para Todas as Idades
               </h1>
               <p className="text-lg max-w-2xl mb-12" style={{ color: '#475569' }}>
-                Piscina semiolímpica aquecida com aulas para bebês, crianças, adultos e idosos. Referência em São Paulo há mais de 50 anos.
+                Duas piscinas de 17 metros e uma de 7 metros, todas aquecidas e com tratamento salino — sem adição de produtos químicos agressivos. Aulas para bebês, crianças, adultos e idosos. Referência em São Paulo há mais de 50 anos.
               </p>
             </ScrollReveal>
 
@@ -71,18 +81,53 @@ const Natacao = () => {
               ))}
             </div>
 
+            {/* Swimming Levels */}
+            <ScrollReveal>
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 mb-16">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                  <GraduationCap className="w-7 h-7 text-[#EE6200]" /> Níveis de Natação
+                </h2>
+                <p className="text-slate-600 text-lg mb-6 leading-relaxed">
+                  Nosso programa de natação é dividido em níveis progressivos, baseado em um método pedagógico desenvolvido ao longo de mais de 50 anos de experiência no ensino de natação infantil.
+                </p>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {SWIM_LEVELS.map((level, i) => (
+                    <div key={i} className="flex items-start gap-3 bg-white border border-slate-200 rounded-xl p-4">
+                      <span className="text-2xl">{level.emoji}</span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">{level.name}</h4>
+                        <p className="text-slate-500 text-xs mt-1">{level.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal>
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 mb-16">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                  <Waves className="w-7 h-7 text-[#EE6200]" /> Nossas Piscinas
+                </h2>
+                <ul className="space-y-3 text-slate-600 text-lg">
+                  <li>• Duas piscinas de 17 metros aquecidas</li>
+                  <li>• Uma piscina de 7 metros aquecida</li>
+                  <li>• Tratamento com sistema salino — sem adição de produtos químicos agressivos</li>
+                  <li>• Vestiários completos com chuveiro quente</li>
+                  <li>• Profissionais formados e experientes com CREF ativo</li>
+                  <li>• Turmas reduzidas para melhor atenção</li>
+                </ul>
+              </div>
+            </ScrollReveal>
+
             <ScrollReveal>
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-                  <Waves className="w-7 h-7 text-[#EE6200]" /> Nossa Piscina
+                  <Heart className="w-7 h-7 text-[#EE6200]" /> Vestiário Família
                 </h2>
-                <ul className="space-y-3 text-slate-600 text-lg">
-                  <li>• Piscina semiolímpica (25m) aquecida</li>
-                  <li>• Tratamento com ozônio — menos cloro, mais conforto</li>
-                  <li>• Vestiários completos com chuveiro quente</li>
-                  <li>• Profissionais formados e experientes</li>
-                  <li>• Turmas reduzidas para melhor atenção</li>
-                </ul>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Oferecemos um vestiário família dedicado para crianças, facilitando o momento do banho e da troca de roupa para pais e responsáveis.
+                </p>
               </div>
             </ScrollReveal>
           </div>

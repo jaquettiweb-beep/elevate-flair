@@ -206,7 +206,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [hidroNew1, hidroNew2, hidroNew3, hidroNew4, hidroNew5, hidroNew6, hidroNew7, hidroNew8, hidroNew9],
     emoji: "🌊",
     description:
-      "Exercícios aquáticos de baixo impacto realizados em nossa piscina semiolímpica aquecida. Ideal para todas as idades e condicionamentos físicos.",
+      "Exercícios aquáticos de baixo impacto realizados em nossas piscinas aquecidas com tratamento salino. Ideal para todas as idades e condicionamentos físicos.",
     benefits: [
       "Exercício de baixo impacto nas articulações",
       "Melhora cardiovascular",

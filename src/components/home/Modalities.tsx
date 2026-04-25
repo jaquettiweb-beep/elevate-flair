@@ -13,7 +13,7 @@ import aikidoImg from "@/assets/modalidade-aikido-1.jpg";
 import balletImg from "@/assets/modalidade-ballet-infantil-1.jpg";
 import ginasticaImg from "@/assets/modalidade-ginastica-1.jpg";
 import programa60Img from "@/assets/modalidade-programa-60-saude-1.jpg";
-import kravMagaImg from "@/assets/modalidade-krav-maga-1.jpg";
+import kravMagaImg from "@/assets/krav-maga-real-1.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 type Category = "Aquático" | "Luta" | "Bem-estar" | "Fitness" | "Infantil";

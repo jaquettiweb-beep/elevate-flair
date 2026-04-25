@@ -50,6 +50,8 @@ export default function Footer() {
                 { label: "Planos", path: "/planos" },
                 { label: "Horários", path: "/horarios" },
                 { label: "Nossa História", path: "/historia" },
+                { label: "Imprensa", path: "/imprensa" },
+                { label: "Galeria", path: "/galeria" },
                 { label: "Contato", path: "/contato" },
               ].map((l) => (
                 <Link

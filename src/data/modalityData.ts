@@ -157,6 +157,20 @@ import hidroNew7 from "@/assets/hidro-extra-7.jpg";
 import hidroNew8 from "@/assets/hidro-extra-8.jpg";
 import hidroNew9 from "@/assets/hidro-extra-9.jpg";
 
+// Krav Maga real (fotos de treino)
+import kravMagaReal1 from "@/assets/krav-maga-real-1.jpg";
+import kravMagaReal2 from "@/assets/krav-maga-real-2.jpg";
+import kravMagaReal3 from "@/assets/krav-maga-real-3.jpg";
+import kravMagaReal4 from "@/assets/krav-maga-real-4.jpg";
+import kravMagaReal5 from "@/assets/krav-maga-real-5.jpg";
+
+// Programa 60+ real (novas fotos de treino)
+import programa60Real4 from "@/assets/programa60-real-4.jpg";
+import programa60Real5 from "@/assets/programa60-real-5.jpg";
+import programa60Real6 from "@/assets/programa60-real-6.jpg";
+import programa60Real7 from "@/assets/programa60-real-7.jpg";
+import programa60Real8 from "@/assets/programa60-real-8.jpg";
+
 // Judô Infantil novas (7)
 import judoNew1 from "@/assets/judo-new-1.jpg";
 import judoNew2 from "@/assets/judo-new-2.jpg";
@@ -343,7 +357,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
-    galleryImgs: [modalidadeKravMaga1],
+    galleryImgs: [kravMagaReal1, kravMagaReal2, kravMagaReal3, kravMagaReal4, kravMagaReal5, modalidadeKravMaga1],
     emoji: "🛡️",
     description:
       "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",
@@ -354,7 +368,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Reflexos e tempo de reação",
       "Controle emocional sob pressão",
     ],
-    schedule: "Terça e quinta, 17h",
+    schedule: "Quarta e Sexta 19h | Sábado 11h | Terça e Quinta 7h",
     audience: "Adultos, todos os níveis",
   },
   aikido: {
@@ -411,7 +425,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [modalidadePrograma602],
+    galleryImgs: [programa60Real4, programa60Real5, programa60Real6, programa60Real7, programa60Real8, modalidadePrograma602],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",

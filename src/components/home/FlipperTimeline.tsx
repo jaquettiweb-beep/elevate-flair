@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Waves, Dumbbell, Award, Heart, Users, Clock } from "lucide-react";
-import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Link } from "react-router-dom";
+import { Waves, Dumbbell, Award, Heart, Users, Clock, ArrowRight, MapPin, Train } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import swimmingImg from "@/assets/modalidade-natacao-3.jpg";
-import musculacaoImg from "@/assets/modalidade-musculacao-1.jpg";
-import yogaImg from "@/assets/modalidade-bem-estar-1.jpg";
+import swimmingImg from "@/assets/natacao-card-1.jpg";
+import musculacaoImg from "@/assets/muscu-new-1.jpg";
+import yogaImg from "@/assets/yoga-flipper-1.jpg";
 import communityImg from "@/assets/flipper-comunidade-hoje.jpeg";
 import fachadaImg from "@/assets/fachada-flipper.jpg";
 
@@ -19,9 +17,7 @@ const timelineData = [
     content: "A Flipper nasce com a missão de transformar vidas através do esporte e da natação em São Paulo.",
     category: "História",
     icon: Award,
-    relatedIds: [2],
     status: "completed" as const,
-    energy: 100,
     link: "/historia",
     image: fachadaImg,
   },
@@ -29,12 +25,10 @@ const timelineData = [
     id: 2,
     title: "Natação",
     date: "Referência SP",
-    content: "Duas piscinas de 15m e uma de 7m, aquecidas e com tratamento salino, para todas as idades.",
+    content: "Duas piscinas de 17m e uma de 7m, aquecidas e com tratamento salino, para todas as idades.",
     category: "Modalidade",
     icon: Waves,
-    relatedIds: [1, 3],
     status: "completed" as const,
-    energy: 95,
     link: "/natacao",
     image: swimmingImg,
   },
@@ -45,9 +39,7 @@ const timelineData = [
     content: "Equipamentos funcionais e seguros, com instrutores certificados (CREF) presentes o dia todo.",
     category: "Modalidade",
     icon: Dumbbell,
-    relatedIds: [2, 4],
     status: "completed" as const,
-    energy: 90,
     link: "/musculacao",
     image: musculacaoImg,
   },
@@ -58,9 +50,7 @@ const timelineData = [
     content: "Yoga, Pilates e aulas de relaxamento para equilíbrio físico e mental.",
     category: "Modalidade",
     icon: Heart,
-    relatedIds: [3, 5],
     status: "in-progress" as const,
-    energy: 85,
     link: "/bem-estar",
     image: yogaImg,
   },
@@ -71,9 +61,7 @@ const timelineData = [
     content: "Uma família de mais de 5 mil alunos ativos que crescem juntos há mais de 50 anos.",
     category: "Comunidade",
     icon: Users,
-    relatedIds: [4, 6],
     status: "in-progress" as const,
-    energy: 80,
     image: communityImg,
   },
   {
@@ -83,75 +71,34 @@ const timelineData = [
     content: "Segunda a sexta das 6h às 22h, sábado das 8h às 13h. Flexibilidade para a sua rotina.",
     category: "Atendimento",
     icon: Clock,
-    relatedIds: [5, 1],
     status: "completed" as const,
-    energy: 100,
     link: "/horarios",
     image: fachadaImg,
   },
 ];
 
-// Preload all timeline images on mount
-const allImages = timelineData.map((t) => t.image).filter(Boolean);
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 60,
+      damping: 18,
+      delay: i * 0.1,
+    },
+  }),
+};
 
 export default function FlipperTimeline() {
-  const [activeImage, setActiveImage] = useState<string | null>(null);
-  const isMobile = useIsMobile();
-
-  const handleActiveChange = (id: number | null) => {
-    if (id === null) {
-      setActiveImage(null);
-    } else {
-      const item = timelineData.find((t) => t.id === id);
-      setActiveImage(item?.image || null);
-    }
-  };
-
-  // Mobile: simple card list instead of orbital animation
-  if (isMobile) {
-    return (
-      <section className="relative overflow-hidden py-10 px-4">
-        <div className="text-center mb-6">
-          <h2 className="font-display text-2xl font-bold text-[#F0EDE8] mb-2">
-            Conheça a <span className="text-[#EE6200] font-extrabold">Academia Flipper</span>
-          </h2>
-          <p className="text-[#8A95A8] text-sm leading-relaxed">
-            Mais de 50 anos transformando vidas através do esporte.
-          </p>
-        </div>
-
-        {/* 2-column grid for mobile */}
-        <div className="grid grid-cols-2 gap-3">
-          {timelineData.map((item) => (
-            <Link
-              key={item.id}
-              to={item.link || "#"}
-              className="bg-[#1A2335] border border-[#222D42] rounded-xl overflow-hidden hover:border-[#EE6200] transition-colors"
-            >
-              {item.image && (
-                <div className="relative h-24 w-full overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A2335] to-transparent" />
-                </div>
-              )}
-              <div className="p-3 -mt-4 relative z-10">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <item.icon size={14} className="text-[#EE6200] shrink-0" />
-                  <h3 className="text-[#F0EDE8] font-bold text-sm truncate">{item.title}</h3>
-                </div>
-                <p className="text-[#8A95A8] text-[11px] leading-snug line-clamp-2">{item.content}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-    );
-  }
+  const navigate = useNavigate();
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
-    <section className="relative overflow-hidden">
-      {/* ─── Ambient ocean background ─── */}
-      {/* Radial glow center */}
+    <section className="relative overflow-hidden py-16 md:py-24">
+      {/* ─── Ambient background ─── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -159,45 +106,6 @@ export default function FlipperTimeline() {
             "radial-gradient(ellipse 70% 50% at 50% 50%, hsla(24,95%,53%,0.08) 0%, transparent 70%)",
         }}
       />
-      {/* Animated caustic pattern */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
-        animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-        transition={{ duration: 30, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' seed='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='30'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%23ff6b00' stroke-width='1' filter='url(%23c)'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%23ff6b00' stroke-width='0.8' filter='url(%23c)'/%3E%3C/svg%3E")`,
-          backgroundSize: "400px 400px",
-        }}
-      />
-      {/* Floating bubbles */}
-      {[
-        { size: 6, left: "12%", delay: 0, dur: 14 },
-        { size: 4, left: "28%", delay: 3, dur: 18 },
-        { size: 8, left: "45%", delay: 1, dur: 12 },
-        { size: 3, left: "62%", delay: 5, dur: 20 },
-        { size: 5, left: "78%", delay: 2, dur: 16 },
-        { size: 7, left: "90%", delay: 4, dur: 15 },
-      ].map((b, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            width: b.size,
-            height: b.size,
-            left: b.left,
-            bottom: "-2%",
-            background: "radial-gradient(circle at 30% 30%, hsla(24,95%,80%,0.25), hsla(24,95%,53%,0.04))",
-            border: "1px solid hsla(185,80%,70%,0.15)",
-          }}
-          animate={{ y: [0, -800], opacity: [0, 0.6, 0.4, 0] }}
-          transition={{
-            duration: b.dur,
-            repeat: Infinity,
-            delay: b.delay,
-            ease: "linear",
-          }}
-        />
-      ))}
       {/* Subtle cross-pattern texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -206,38 +114,9 @@ export default function FlipperTimeline() {
         }}
       />
 
-      {/* Hidden preload images for instant display */}
-      <div className="hidden" aria-hidden="true">
-        {allImages.map((src) => (
-          <img key={src} src={src} alt="" />
-        ))}
-      </div>
-
-      {/* Translucent background image */}
-      <AnimatePresence mode="wait">
-        {activeImage && (
-          <motion.div
-            key={activeImage}
-            className="absolute inset-0 z-0"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
-            <img
-              src={activeImage}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{ opacity: 0.18, filter: "blur(2px)" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mb-10 md:mb-8"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -251,7 +130,150 @@ export default function FlipperTimeline() {
           </p>
         </motion.div>
 
-        <RadialOrbitalTimeline timelineData={timelineData} onActiveChange={handleActiveChange} />
+        {/* ─── Metro station proximity badges ─── */}
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+        >
+          <div
+            className="flex items-center gap-3 px-5 py-3 rounded-xl"
+            style={{
+              background: "hsla(45,90%,55%,0.08)",
+              border: "1px solid hsla(45,90%,55%,0.18)",
+            }}
+          >
+            <Train size={18} style={{ color: "hsl(45,90%,55%)" }} />
+            <div className="text-left">
+              <span className="text-[#F0EDE8] text-sm font-semibold block leading-tight">
+                300m da Estação Vereador José Diniz
+              </span>
+              <span className="text-xs" style={{ color: "hsl(45,90%,65%)" }}>
+                Linha 15 – Prata (Monotrilho)
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex items-center gap-3 px-5 py-3 rounded-xl"
+            style={{
+              background: "hsla(280,60%,55%,0.08)",
+              border: "1px solid hsla(280,60%,55%,0.18)",
+            }}
+          >
+            <Train size={18} style={{ color: "hsl(280,60%,65%)" }} />
+            <div className="text-left">
+              <span className="text-[#F0EDE8] text-sm font-semibold block leading-tight">
+                700m da Estação Campo Belo
+              </span>
+              <span className="text-xs" style={{ color: "hsl(280,60%,75%)" }}>
+                Linha 5 – Lilás
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ─── Cards Grid (static, no rotation) ─── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto">
+          {timelineData.map((item, index) => {
+            const Icon = item.icon;
+            const isHovered = hoveredId === item.id;
+
+            return (
+              <motion.div
+                key={item.id}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                onHoverStart={() => setHoveredId(item.id)}
+                onHoverEnd={() => setHoveredId(null)}
+                onClick={() => item.link && navigate(item.link)}
+                className={`group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ${
+                  item.link ? "hover:-translate-y-2 hover:shadow-2xl" : ""
+                }`}
+                style={{
+                  background: "hsla(220,30%,12%,0.6)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  border: isHovered
+                    ? "1px solid hsla(24,95%,53%,0.3)"
+                    : "1px solid hsla(220,30%,30%,0.3)",
+                  boxShadow: isHovered
+                    ? "0 12px 40px hsla(24,95%,53%,0.12), inset 0 1px 0 hsla(0,0%,100%,0.06)"
+                    : "0 4px 20px hsla(0,0%,0%,0.15), inset 0 1px 0 hsla(0,0%,100%,0.04)",
+                }}
+              >
+                {/* Background image */}
+                <div className="absolute inset-0 z-0">
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    style={{ opacity: 0.15 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C1220]/95 via-[#0C1220]/70 to-transparent" />
+                </div>
+
+                <div className="relative z-10 p-6">
+                  {/* Category badge */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className="text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full"
+                      style={{
+                        background: "hsla(24,95%,53%,0.12)",
+                        color: "#EE6200",
+                      }}
+                    >
+                      {item.category}
+                    </span>
+                    <span className="text-xs text-[#8A95A8]">{item.date}</span>
+                  </div>
+
+                  {/* Icon + Title */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300"
+                      style={{
+                        background: isHovered
+                          ? "hsla(24,95%,53%,0.2)"
+                          : "hsla(220,30%,20%,0.6)",
+                        border: isHovered
+                          ? "1px solid hsla(24,95%,53%,0.3)"
+                          : "1px solid hsla(220,30%,30%,0.3)",
+                      }}
+                    >
+                      <Icon
+                        className="w-6 h-6 transition-colors duration-300"
+                        style={{
+                          color: isHovered ? "#EE6200" : "#8A95A8",
+                        }}
+                      />
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-[#F0EDE8] group-hover:text-[#EE6200] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[#8A95A8] text-sm leading-relaxed mb-4">
+                    {item.content}
+                  </p>
+
+                  {/* Link indicator */}
+                  {item.link && (
+                    <div className="flex items-center gap-2 text-[#EE6200] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
+                      Saiba mais
+                      <ArrowRight size={16} />
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

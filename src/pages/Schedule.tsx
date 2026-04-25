@@ -32,8 +32,8 @@ const SCHEDULE_DATA = [
   { time: "17:30", mon: ["Ginástica Funcional"], tue: ["Pilates Studio", "Natação Baby"], wed: ["Ginástica Funcional"], thu: ["Pilates Studio", "Natação Baby"], fri: [], sat: [] },
   { time: "18:00", mon: ["Localizada", "Muay Thai"], tue: [], wed: ["Localizada", "Muay Thai"], thu: [], fri: [], sat: [] },
   { time: "18:15", mon: ["Hidroginástica", "Natação"], tue: ["Natação"], wed: ["Hidroginástica", "Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
-  { time: "18:30", mon: ["Mat Pilates"], tue: ["Pilates Studio"], wed: ["Mat Pilates"], thu: ["Pilates Studio"], fri: [], sat: [] },
-  { time: "19:00", mon: ["Natação"], tue: ["Aikido / Jiu Jitsu", "Natação"], wed: ["Krav Maga", "Natação"], thu: ["Aikido / Jiu Jitsu", "Natação"], fri: ["Krav Maga", "Natação"], sat: [] },
+  { time: "18:30", mon: ["Pilates de Solo"], tue: ["Pilates Studio"], wed: ["Pilates de Solo"], thu: ["Pilates Studio"], fri: [], sat: [] },
+  { time: "19:00", mon: ["Natação"], tue: ["Jiu Jitsu", "Natação"], wed: ["Krav Maga", "Natação"], thu: ["Jiu Jitsu", "Natação"], fri: ["Krav Maga", "Natação"], sat: [] },
   { time: "19:30", mon: [], tue: ["Pilates Studio"], wed: [], thu: ["Pilates Studio"], fri: [], sat: [] },
   { time: "19:45", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
   { time: "20:30", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
@@ -54,7 +54,7 @@ function getCellColor(val: string) {
   if (val.includes("Yoga") || val.includes("Pilates") || val.includes("Alongamento") || val.includes("Equilíbrio")) return "bg-[hsl(160,60%,90%)] text-[hsl(160,60%,28%)] border-[hsl(160,60%,80%)]";
   if (val.includes("Muay") || val.includes("Krav") || val.includes("Jiu") || val.includes("Kung") || val.includes("Aikido") || val.includes("Judô"))
     return "bg-[hsl(0,70%,92%)] text-[hsl(0,70%,30%)] border-[hsl(0,70%,85%)]";
-  if (val.includes("Hidro") || val.includes("60+") || val.includes("Ginástica") || val.includes("Localizada") || val.includes("Funcional") || val.includes("Fortal"))
+  if (val.includes("Hidro") || val.includes("60+") || val.includes("Ginástica") || val.includes("Localizada") || val.includes("Funcional") || val.includes("Fortal") || val.includes("Solo"))
     return "bg-[hsl(40,80%,90%)] text-[hsl(40,80%,30%)] border-[hsl(40,80%,80%)]";
   if (val.includes("Ballet")) return "bg-[hsl(320,60%,92%)] text-[hsl(320,60%,30%)] border-[hsl(320,60%,85%)]";
   return "bg-muted text-muted-foreground border-border";

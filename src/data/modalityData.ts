@@ -357,7 +357,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "krav-maga": {
     name: "Krav Maga",
     slug: "krav-maga",
-    galleryImgs: [kravMagaReal1, kravMagaReal2, kravMagaReal3, kravMagaReal4, kravMagaReal5, modalidadeKravMaga1],
+    galleryImgs: [kravMagaReal1, kravMagaReal2, kravMagaReal3, kravMagaReal4, kravMagaReal5],
     emoji: "🛡️",
     description:
       "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",

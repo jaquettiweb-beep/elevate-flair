@@ -1,0 +1,1 @@
+DELETE FROM public.gallery_images WHERE image_url LIKE '/src/assets/%';

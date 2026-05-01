@@ -251,6 +251,10 @@ import modalidadePrograma601 from "@/assets/modalidade-programa-60-saude-1.jpg";
 import modalidadePrograma602 from "@/assets/modalidade-programa-60-saude-2.jpg";
 import modalidadePrograma603 from "@/assets/modalidade-programa-60-saude-3.jpg";
 import modalidadeMuayThai1 from "@/assets/modalidade-muay-thai-1.jpg";
+import judoCoverNew from "@/assets/judo-cover-new.jpg";
+import ginasticaCoverNew from "@/assets/ginastica-cover-new.jpg";
+import muayThaiCoverNew from "@/assets/muay-thai-cover-new.jpg";
+import muayThaiExtra1 from "@/assets/muay-thai-extra-1.jpg";
 
 export interface ModalityData {
   name: string;
@@ -306,7 +310,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [modalidadeMuayThai1],
+    galleryImgs: [muayThaiCoverNew, muayThaiExtra1, modalidadeMuayThai1],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
@@ -340,7 +344,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [modalidadeJudo1, modalidadeJudo2, modalidadeJudo3, modalidadeJudo4, modalidadeJudo5, modalidadeJudo6, modalidadeJudo7, modalidadeJudo8, modalidadeJudo9, modalidadeJudo10, modalidadeJudo11, modalidadeJudo12, modalidadeJudo13, modalidadeJudo14, modalidadeJudo15, modalidadeJudo16],
+    galleryImgs: [judoCoverNew, modalidadeJudo1, modalidadeJudo2, modalidadeJudo3, modalidadeJudo4, modalidadeJudo5, modalidadeJudo6, modalidadeJudo7, modalidadeJudo8, modalidadeJudo9, modalidadeJudo10, modalidadeJudo11, modalidadeJudo12, modalidadeJudo13, modalidadeJudo14, modalidadeJudo15, modalidadeJudo16],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",
@@ -408,7 +412,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
+    galleryImgs: [ginasticaCoverNew, modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",

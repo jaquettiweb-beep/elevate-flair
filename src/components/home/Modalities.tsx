@@ -10,9 +10,9 @@ import judoImg from "@/assets/judo-cover-new.jpg";
 import jiuJitsuImg from "@/assets/modalidade-jiu-jitsu-1.jpg";
 import muayThaiImg from "@/assets/muay-thai-cover-new.jpg";
 import aikidoImg from "@/assets/modalidade-aikido-1.jpg";
-import balletImg from "@/assets/modalidade-ballet-infantil-1.jpg";
+import balletImg from "@/assets/ballet-cover-new.jpg";
 import ginasticaImg from "@/assets/ginastica-cover-new.jpg";
-import programa60Img from "@/assets/modalidade-programa-60-saude-1.jpg";
+import programa60Img from "@/assets/programa60-cover-new.jpg";
 import kravMagaImg from "@/assets/krav-maga-real-1.jpg";
 
 // ─── Data ────────────────────────────────────────────────────────────────────

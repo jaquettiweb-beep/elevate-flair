@@ -312,9 +312,55 @@ export default function Imprensa() {
               ))}
             </motion.div>
 
+            {/* Official Flipper page link */}
+            <motion.div
+              className="max-w-3xl mx-auto mt-14"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              <a
+                href="https://www.academiaflipper.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-2xl p-6 lg:p-7 transition-all hover:scale-[1.01]"
+                style={{
+                  background: "hsla(190,60%,95%,0.08)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  border: "1px solid hsla(185,80%,70%,0.15)",
+                  boxShadow: "0 8px 32px hsla(0,0%,0%,0.15), inset 0 1px 0 hsla(0,0%,100%,0.06)",
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className="flex size-12 shrink-0 items-center justify-center rounded-xl"
+                    style={{ background: "linear-gradient(135deg, hsl(185,80%,40%), hsl(200,90%,45%))" }}
+                  >
+                    <Newspaper size={22} className="text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span
+                      className="inline-block text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full mb-1.5"
+                      style={{ background: "hsla(185,80%,45%,0.15)", color: "hsl(185,80%,70%)" }}
+                    >
+                      Site Oficial
+                    </span>
+                    <h3 className="font-display font-bold text-white text-base lg:text-lg leading-snug">
+                      Conheça a página oficial da Academia Flipper
+                    </h3>
+                    <p className="text-white/40 text-xs lg:text-sm mt-0.5">
+                      academiaflipper.com.br
+                    </p>
+                  </div>
+                  <ExternalLink size={18} className="text-white/40 group-hover:text-secondary transition-colors shrink-0" />
+                </div>
+              </a>
+            </motion.div>
+
             {/* CTA */}
             <motion.div
-              className="text-center mt-14"
+              className="text-center mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}

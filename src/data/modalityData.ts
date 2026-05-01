@@ -255,6 +255,8 @@ import judoCoverNew from "@/assets/judo-cover-new.jpg";
 import ginasticaCoverNew from "@/assets/ginastica-cover-new.jpg";
 import muayThaiCoverNew from "@/assets/muay-thai-cover-new.jpg";
 import muayThaiExtra1 from "@/assets/muay-thai-extra-1.jpg";
+import programa60CoverNew from "@/assets/programa60-cover-new.jpg";
+import balletCoverNew from "@/assets/ballet-cover-new.jpg";
 
 export interface ModalityData {
   name: string;
@@ -321,7 +323,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Aumento da confiança",
       "Disciplina e foco mental",
     ],
-    schedule: "Segunda, quarta e sexta, 18h",
+    schedule: "Segunda e quarta, 18h",
     audience: "A partir de 14 anos",
   },
   "jiu-jitsu": {
@@ -338,7 +340,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Comunidade e companheirismo",
       "Superação de limites pessoais",
     ],
-    schedule: "Segunda, quarta e sexta, 19h",
+    schedule: "Terça e quinta, 19h",
     audience: "Adultos, todos os níveis",
   },
   "judo-infantil": {
@@ -355,7 +357,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Autoconfiança",
       "Condicionamento físico infantil",
     ],
-    schedule: "Terça e quinta, 15h",
+    schedule: "Segunda e quarta, 16h",
     audience: "Crianças de 4 a 12 anos",
   },
   "krav-maga": {
@@ -372,7 +374,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Reflexos e tempo de reação",
       "Controle emocional sob pressão",
     ],
-    schedule: "Quarta e Sexta 19h | Sábado 11h | Terça e Quinta 7h",
+    schedule: "Quarta e sexta às 19h | Sábado às 11h | Terça e quinta às 7h",
     audience: "Adultos, todos os níveis",
   },
   aikido: {
@@ -395,7 +397,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "ballet-infantil": {
     name: "Ballet (Infantil)",
     slug: "ballet-infantil",
-    galleryImgs: [modalidadeBallet1, modalidadeBallet2, modalidadeBallet3, modalidadeBallet4, modalidadeBallet5, modalidadeBallet6, modalidadeBallet7, modalidadeBallet8, modalidadeBallet9, modalidadeBallet10],
+    galleryImgs: [balletCoverNew, modalidadeBallet1, modalidadeBallet2, modalidadeBallet3, modalidadeBallet4, modalidadeBallet5, modalidadeBallet6, modalidadeBallet7, modalidadeBallet8, modalidadeBallet9, modalidadeBallet10],
     emoji: "🩰",
     description:
       "Expressão artística, postura e ritmo para crianças. Aulas lúdicas que desenvolvem a coordenação, musicalidade e autoexpressão.",
@@ -413,6 +415,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     name: "Ginástica",
     slug: "ginastica",
     galleryImgs: [ginasticaCoverNew, modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
+    // ginastica gallery cover updated
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",
@@ -423,13 +426,13 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Motivação em grupo",
       "Variedade de exercícios",
     ],
-    schedule: "Sexta, 20h",
+    schedule: "Segunda e quarta — 17h30 Funcional, 18h Localizada, 18h30 Pilates de Solo",
     audience: "Adultos",
   },
   "programa-60-saude": {
     name: "Programa 60+ Saúde",
     slug: "programa-60-saude",
-    galleryImgs: [programa60Real4, programa60Real5, programa60Real6, programa60Real7, programa60Real8, modalidadePrograma602],
+    galleryImgs: [programa60CoverNew, programa60Real4, programa60Real5, programa60Real6, programa60Real7, programa60Real8, modalidadePrograma602],
     emoji: "❤️",
     description:
       "Programa especial de atividades físicas adaptadas para a melhor idade. Exercícios seguros e acompanhados para manter a saúde e a qualidade de vida.",

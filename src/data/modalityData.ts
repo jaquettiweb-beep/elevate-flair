@@ -310,7 +310,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "muay-thai": {
     name: "Muay Thai",
     slug: "muay-thai",
-    galleryImgs: [modalidadeMuayThai1],
+    galleryImgs: [muayThaiCoverNew, muayThaiExtra1, modalidadeMuayThai1],
     emoji: "🥊",
     description:
       "Arte marcial tailandesa conhecida como a 'arte dos oito membros'. Treinos intensos de força, técnica e condicionamento com instrutores experientes.",
@@ -344,7 +344,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   "judo-infantil": {
     name: "Judô (Infantil)",
     slug: "judo-infantil",
-    galleryImgs: [modalidadeJudo1, modalidadeJudo2, modalidadeJudo3, modalidadeJudo4, modalidadeJudo5, modalidadeJudo6, modalidadeJudo7, modalidadeJudo8, modalidadeJudo9, modalidadeJudo10, modalidadeJudo11, modalidadeJudo12, modalidadeJudo13, modalidadeJudo14, modalidadeJudo15, modalidadeJudo16],
+    galleryImgs: [judoCoverNew, modalidadeJudo1, modalidadeJudo2, modalidadeJudo3, modalidadeJudo4, modalidadeJudo5, modalidadeJudo6, modalidadeJudo7, modalidadeJudo8, modalidadeJudo9, modalidadeJudo10, modalidadeJudo11, modalidadeJudo12, modalidadeJudo13, modalidadeJudo14, modalidadeJudo15, modalidadeJudo16],
     emoji: "🥋",
     description:
       "Disciplina, coordenação motora e respeito através da arte marcial japonesa. Aulas lúdicas e seguras para o desenvolvimento integral da criança.",
@@ -412,7 +412,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   ginastica: {
     name: "Ginástica",
     slug: "ginastica",
-    galleryImgs: [modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
+    galleryImgs: [ginasticaCoverNew, modalidadeGinastica1, modalidadeGinastica2, modalidadeGinastica3, modalidadeGinastica4],
     emoji: "🤾",
     description:
       "Aulas de ginástica que trabalham coordenação, flexibilidade e condicionamento físico global. Diversas modalidades para todos os perfis.",

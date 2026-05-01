@@ -129,20 +129,20 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					'shadow-lg': scrolled,
 				})}
 				>
-					<nav className="mx-auto flex h-20 w-full items-center justify-between px-6 md:px-12 lg:px-20 relative">
+					<nav className="mx-auto flex h-20 w-full items-center justify-between gap-4 px-6 md:px-8 lg:px-12 relative">
 						{/* Left: Logo */}
-						<div className="flex w-full md:w-1/3 items-center justify-start">
+						<div className="flex items-center justify-start shrink-0">
 							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 transition-opacity">
                                 <img src={flipperLogo} alt="Academia Flipper" className="h-[44px] w-auto object-contain antialiased" />
 							</Link>
 						</div>
 
 						{/* Center: Links (Hidden on mobile) */}
-						<div className="hidden md:flex w-1/3 items-center justify-center">
+						<div className="hidden md:flex flex-1 items-center justify-center min-w-0">
 							<NavigationMenu>
-								<NavigationMenuList>
+								<NavigationMenuList className="gap-1">
                                     <NavigationMenuItem>
-                                      <NavigationMenuLink className="px-4" asChild>
+                                      <NavigationMenuLink className="px-3" asChild>
                                         <NavLink to="/">
                                           Home
                                         </NavLink>
@@ -151,7 +151,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 
                                     {/* Modalidades Mega Menu */}
                                     <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium">Modalidades</NavigationMenuTrigger>
+                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium whitespace-nowrap">Modalidades</NavigationMenuTrigger>
                                       <NavigationMenuContent className="bg-[#1A2335] p-4 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
                                         <div className="grid w-[520px] grid-cols-2 gap-4">
                                           {modalityCategories.map((cat) => (
@@ -177,7 +177,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     {topNavLinks.map((link) => (
                                       <NavigationMenuItem key={link.href}>
                                         <NavigationMenuLink className="px-3" asChild>
-                                          <NavLink to={link.href}>
+                                          <NavLink to={link.href} className="whitespace-nowrap">
                                             {link.title}
                                           </NavLink>
                                         </NavigationMenuLink>
@@ -188,13 +188,13 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 						</div>
 
 						{/* Right: CTA / Mobile Menu Toggle */}
-						<div className="flex w-1/3 items-center justify-end gap-2">
+						<div className="flex items-center justify-end gap-2 shrink-0">
 							<div className="hidden md:flex items-center gap-2">
 								<a
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-[8px] px-[24px] py-[13px] text-[14px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95 flex items-center gap-2"
+									className="rounded-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95 flex items-center gap-2 whitespace-nowrap"
 								>
 									<Calendar size={16} />
 									Agendar Aula Grátis

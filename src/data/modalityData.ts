@@ -251,6 +251,10 @@ import modalidadePrograma601 from "@/assets/modalidade-programa-60-saude-1.jpg";
 import modalidadePrograma602 from "@/assets/modalidade-programa-60-saude-2.jpg";
 import modalidadePrograma603 from "@/assets/modalidade-programa-60-saude-3.jpg";
 import modalidadeMuayThai1 from "@/assets/modalidade-muay-thai-1.jpg";
+import judoCoverNew from "@/assets/judo-cover-new.jpg";
+import ginasticaCoverNew from "@/assets/ginastica-cover-new.jpg";
+import muayThaiCoverNew from "@/assets/muay-thai-cover-new.jpg";
+import muayThaiExtra1 from "@/assets/muay-thai-extra-1.jpg";
 
 export interface ModalityData {
   name: string;

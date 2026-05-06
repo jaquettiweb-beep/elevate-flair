@@ -14,7 +14,7 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { LucideIcon, Waves, Dumbbell, Heart, Calendar, CreditCard, History, Camera, Droplets, Swords, Hand, Baby, PersonStanding, Sparkles } from 'lucide-react';
+import { LucideIcon, Waves, Dumbbell, Heart, Calendar, CreditCard, History, Camera, Droplets, Swords, Hand, Baby, PersonStanding, Sparkles, Newspaper, Music } from 'lucide-react';
 import flipperLogo from "@/assets/flipper-logo-header.png";
 
 const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
@@ -74,12 +74,21 @@ const modalityCategories: CategoryGroup[] = [
 			{ title: "Krav Maga", href: "/modalidade/krav-maga", icon: Swords, description: "Defesa pessoal prática" },
 		],
 	},
+	{
+		label: "Infantil",
+		icon: Baby,
+		color: "#a987e8",
+		items: [
+			{ title: "Ballet Infantil", href: "/modalidade/ballet-infantil", icon: Music, description: "Expressão, postura e ritmo" },
+		],
+	},
 ];
 
 const topNavLinks: LinkItem[] = [
 	{ title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
 	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos" },
 	{ title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da academia" },
+	{ title: "Imprensa", href: "/imprensa", icon: Newspaper, description: "Flipper na mídia" },
 ];
 
 // Mobile-only: all modalities flat

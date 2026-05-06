@@ -32,7 +32,7 @@ const PROFESSORES: Professor[] = [
     img: kamile,
     bio: [
       "Formada em Educação Física pela UNIP.",
-      "Cursos de extensão em treinamento feminino, reabilitação física e musculação para a manutenção e melhora da qualidade de vida de idosos.",
+      "Possui cursos de extensão em treinamento feminino, reabilitação física e musculação para a manutenção e melhora da qualidade de vida de idosos.",
     ],
   },
   {
@@ -40,7 +40,7 @@ const PROFESSORES: Professor[] = [
     role: "Instrutor de Musculação",
     img: alex,
     bio: [
-      "Certificação de musculação pela FPA e curso de Biomecânica da Hipertrofia.",
+      "Possui certificação de musculação pela FPA e curso de Biomecânica da Hipertrofia.",
       "Especialização completa em musculação, emagrecimento, treinamento de força para terceira idade, treinamento concorrente e novas perspectivas no treinamento da musculação.",
     ],
   },
@@ -70,7 +70,7 @@ const PROFESSORES: Professor[] = [
   },
   {
     name: "Sueli Freire Rillo",
-    role: "Professora de Ginástica e Pilates",
+    role: "Professora de Ginástica, Pilates Solo e Studio",
     img: sueli,
     bio: [
       "Professora de Ginástica, Pilates Solo e Studio.",
@@ -81,7 +81,10 @@ const PROFESSORES: Professor[] = [
     name: "Eduarda Zalara",
     role: "Professora de Yoga e Pilates Studio",
     img: eduarda,
-    bio: ["Professora de Yoga nos estilos Hatha Yoga, Yin e Vinyasa. Também ministra aulas de Pilates Studio."],
+    bio: [
+      "Professora de Yoga nos estilos Hatha Yoga, Yin e Vinyasa.",
+      "Professora de Pilates Studio.",
+    ],
   },
   {
     name: "Ana Lidia Guerra",
@@ -99,31 +102,46 @@ const PROFESSORES: Professor[] = [
     name: "Ruy Mantovani Junior",
     role: "Sensei de Judô Infantil",
     img: ruy,
-    bio: ["Faixa preta sho dan."],
+    bio: [
+      "Sensei de Judô Infantil.",
+      "Faixa preta sho dan.",
+    ],
   },
   {
     name: "Silvio Keidi",
     role: "Professor de Jiu Jitsu",
     img: silvio,
-    bio: ["Faixa Preta de Jiu Jitsu Brasileiro, 3º grau, Fusion Jiu Jitsu School."],
+    bio: [
+      "Professor de Jiu Jitsu.",
+      "Faixa Preta de Jiu Jitsu Brasileiro, 3º grau, Fusion Jiu Jitsu School.",
+    ],
   },
   {
     name: "Vagner Ferreira de Almeida",
     role: "Professor de Aikidô",
     img: vagner,
-    bio: ["Faixa preta pela Federação Paulista de Aikido — 4º dan."],
+    bio: [
+      "Professor de Aikidô.",
+      "Faixa preta pela Federação Paulista de Aikido — 4º dan.",
+    ],
   },
   {
     name: "Ricardo Alves de Castro",
     role: "Professor de Krav Maga",
     img: ricardo,
-    bio: ["Certificado pela IKMF (International Krav Maga Federation) — Expert 1."],
+    bio: [
+      "Professor de Krav Maga.",
+      "Certificado pela IKMF (International Krav Maga Federation) — Expert 1.",
+    ],
   },
   {
     name: "José Daniel de Oliveira",
     role: "Professor de Muay Thai",
     img: joseDaniel,
-    bio: ["Educador Físico com pós-graduação em Lutas e Artes Marciais."],
+    bio: [
+      "Professor de Muay Thai.",
+      "Educador Físico com pós-graduação em Lutas e Artes Marciais.",
+    ],
   },
 ];
 

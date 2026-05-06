@@ -443,7 +443,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Prevenção de quedas",
       "Acompanhamento profissional dedicado",
     ],
-    schedule: "Segunda a sexta, parte da manhã",
+    schedule: "11h — Seg/Ter/Sex: Fortalecimento • Qua: Alongamento • Qui: Fortalecimento e Coordenação | 12h — Qua: Equilíbrio e Coordenação • Qui: Alongamento",
     audience: "Pessoas acima de 60 anos",
   },
   yoga: {

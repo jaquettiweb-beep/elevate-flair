@@ -86,6 +86,7 @@ const modalityCategories: CategoryGroup[] = [
 
 const topNavLinks: LinkItem[] = [
 	{ title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
+	{ title: "Professores", href: "/professores", icon: Users, description: "Conheça nosso time" },
 	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos" },
 	{ title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da academia" },
 	{ title: "Imprensa", href: "/imprensa", icon: Newspaper, description: "Flipper na mídia" },

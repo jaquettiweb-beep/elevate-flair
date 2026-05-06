@@ -193,13 +193,6 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                       </NavigationMenuItem>
                                     ))}
 
-                                    <NavigationMenuItem>
-                                      <NavigationMenuLink className="px-3" asChild>
-                                        <NavLink to="/imprensa" className="whitespace-nowrap">
-                                          Imprensa
-                                        </NavLink>
-                                      </NavigationMenuLink>
-                                    </NavigationMenuItem>
 								</NavigationMenuList>
 							</NavigationMenu>
 						</div>

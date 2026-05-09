@@ -162,23 +162,38 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
                                     {/* Modalidades Mega Menu */}
                                     <NavigationMenuItem>
                                       <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium whitespace-nowrap">Modalidades</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-[#1A2335] p-4 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-                                        <div className="grid w-[520px] grid-cols-2 gap-4">
-                                          {modalityCategories.map((cat) => (
-                                            <div key={cat.label}>
-                                              <div className="flex items-center gap-2 mb-2 px-2">
-                                                <cat.icon size={14} style={{ color: cat.color }} />
-                                                <span className="text-[10px] font-bold tracking-wider uppercase" style={{ color: cat.color }}>{cat.label}</span>
-                                              </div>
-                                              <ul className="space-y-1">
-                                                {cat.items.map((item, i) => (
-                                                  <li key={i}>
-                                                    <ListItem {...item} />
-                                                  </li>
-                                                ))}
-                                              </ul>
+                                      <NavigationMenuContent className="bg-[#1A2335] p-5 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+                                        <div className="w-[760px]">
+                                          <div className="grid grid-cols-3 gap-x-5 gap-y-5">
+                                            {/* Coluna 1 */}
+                                            <div className="flex flex-col gap-5">
+                                              <CategoryBlock cat={modalityCategories[0]} />
+                                              <CategoryBlock cat={modalityCategories[1]} />
                                             </div>
-                                          ))}
+                                            {/* Coluna 2 */}
+                                            <div className="flex flex-col gap-5">
+                                              <CategoryBlock cat={modalityCategories[2]} />
+                                              <CategoryBlock cat={modalityCategories[4]} />
+                                            </div>
+                                            {/* Coluna 3 — Lutas (mais itens) */}
+                                            <div className="flex flex-col">
+                                              <CategoryBlock cat={modalityCategories[3]} />
+                                            </div>
+                                          </div>
+                                          <div className="mt-5 pt-4 border-t border-[#222D42] flex items-center justify-between gap-3">
+                                            <p className="text-[12px] text-[#8A95A8]">
+                                              <span className="text-[#F0EDE8] font-semibold">14 modalidades</span> — aula experimental grátis em todas.
+                                            </p>
+                                            <a
+                                              href={WHATSAPP_URL}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-[12px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all whitespace-nowrap"
+                                            >
+                                              <Calendar size={14} />
+                                              Agendar agora
+                                            </a>
+                                          </div>
                                         </div>
                                       </NavigationMenuContent>
                                     </NavigationMenuItem>

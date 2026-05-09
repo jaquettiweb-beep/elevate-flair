@@ -238,7 +238,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ type: "spring", stiffness: 50, damping: 14, delay: 0.7 }}
             >
-              Uma academia humanizada, feita para pessoas de todas as idades, focada em bem-estar, saúde e desenvolvimento pessoal.
+              Mais do que uma academia: um espaço para transformar saúde, movimento e qualidade de vida em parte da sua rotina.
             </motion.p>
 
             {/* ── CTAs ── */}

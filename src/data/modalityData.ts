@@ -408,7 +408,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Disciplina e foco",
       "Socialização entre crianças",
     ],
-    schedule: "Terça e quinta, 14h",
+    schedule: "Segunda e quarta, 9h e 15h",
     audience: "Crianças de 3 a 10 anos",
   },
   ginastica: {

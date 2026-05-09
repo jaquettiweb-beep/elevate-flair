@@ -21,45 +21,6 @@ const TRUST_BADGES = [
   { icon: Shield, label: "Única", sublabel: "Piscina Brooklin" },
 ];
 
-/* ─────────────────────────────────────────────────────
-   Letter-by-letter blur-stagger for "Transforme"
-───────────────────────────────────────────────────── */
-function AnimatedWord({ word }: { word: string }) {
-  return (
-    <motion.span
-      className="inline-block"
-      style={{ lineHeight: 1.2, overflow: "visible", paddingBottom: "0.1em" }}
-      variants={{
-        hidden: { opacity: 0 },
-        show: { opacity: 1, transition: { staggerChildren: 0.045, delayChildren: 0.15 } },
-      }}
-      initial="hidden"
-      animate="show"
-    >
-      {word.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          style={{
-            display: "inline-block",
-            paddingBottom: "0.2em",
-            marginBottom: "-0.2em",
-            background:
-              "linear-gradient(135deg, #FF6B00 0%, #FF9E52 50%, #FF6B00 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-          variants={{
-            hidden: { opacity: 0, filter: "blur(14px)", y: 10 },
-            show: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-          }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
-}
 
 /* ─────────────────────────────────────────────────────
    Main HeroSection

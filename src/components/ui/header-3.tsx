@@ -337,6 +337,61 @@ function NavLink({ to, children, className }: { to: string; children: React.Reac
   );
 }
 
+function CategoryBlock({ cat }: { cat: CategoryGroup }) {
+  return (
+    <div>
+      <div
+        className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded-md"
+        style={{ backgroundColor: `${cat.color}14` }}
+      >
+        <cat.icon size={14} style={{ color: cat.color }} />
+        <span
+          className="text-[10px] font-bold tracking-[0.12em] uppercase"
+          style={{ color: cat.color }}
+        >
+          {cat.label}
+        </span>
+        <span className="ml-auto text-[10px] text-[#8A95A8]">{cat.items.length}</span>
+      </div>
+      <ul className="space-y-0.5">
+        {cat.items.map((item, i) => (
+          <li key={i}>
+            <CompactListItem {...item} accent={cat.color} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CompactListItem({ title, description, icon: Icon, href, accent }: LinkItem & { accent: string }) {
+  return (
+    <NavigationMenuLink asChild>
+      <Link
+        to={href}
+        className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 hover:bg-[#111828] transition-colors"
+      >
+        <span
+          className="flex shrink-0 items-center justify-center size-7 rounded-md border border-[#222D42] bg-[#111828] transition-colors group-hover:border-[color:var(--accent)]"
+          style={{ ['--accent' as any]: accent }}
+        >
+          <Icon className="size-3.5" style={{ color: accent }} />
+        </span>
+        <span className="flex flex-col min-w-0">
+          <span className="text-[12.5px] font-semibold text-[#F0EDE8] leading-tight truncate group-hover:text-[#EE6200] transition-colors">
+            {title}
+          </span>
+          {description && (
+            <span className="text-[10.5px] text-[#8A95A8] leading-tight truncate">
+              {description}
+            </span>
+          )}
+        </span>
+      </Link>
+    </NavigationMenuLink>
+  );
+}
+
 function ListItem({
 	title,
 	description,

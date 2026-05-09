@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Linkedin, Youtube, BadgeCheck } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 import { GymDecorFooter } from "@/components/GymDecorations";
 import FloatingParticles from "@/components/FloatingParticles";
@@ -118,51 +118,9 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Accepted Benefit Programs */}
-        <motion.div
-          className="mt-14 pt-8 border-t border-[#222D42] flex flex-col items-center gap-5"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-        >
-          <div className="flex items-center gap-2 text-[#8A95A8] text-sm font-medium">
-            <BadgeCheck size={18} className="text-[#EE6200]" />
-            <span>Aceitamos convênios</span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <motion.a
-              href="https://totalpass.com/br/academias/academia-flipper/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-[#111828] to-[#161E2E] border border-[#222D42] text-[#F0EDE8] text-sm font-semibold hover:border-[#EE6200] hover:shadow-[0_0_20px_rgba(238,98,0,0.15)] transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label="Saiba mais sobre TotalPass"
-            >
-              <span className="w-7 h-7 rounded-full bg-[#EE6200]/15 flex items-center justify-center text-[#EE6200] text-xs font-black">T</span>
-              TotalPass
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-40"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </motion.a>
-            <motion.a
-              href="https://wellhub.com/pt-br/search/partners/academia-flipper-campo-belo-sao-paulo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-[#111828] to-[#161E2E] border border-[#222D42] text-[#F0EDE8] text-sm font-semibold hover:border-[#EE6200] hover:shadow-[0_0_20px_rgba(238,98,0,0.15)] transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label="Saiba mais sobre WellHub"
-            >
-              <span className="w-7 h-7 rounded-full bg-[#22C55E]/15 flex items-center justify-center text-[#22C55E] text-xs font-black">W</span>
-              WellHub
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-40"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </motion.a>
-          </div>
-        </motion.div>
-
         {/* Bottom */}
         <motion.div
-          className="mt-10 pt-8 border-t border-[#222D42] text-center text-[#8A95A8] text-xs"
+          className="mt-16 pt-8 border-t border-[#222D42] text-center text-[#8A95A8] text-xs"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

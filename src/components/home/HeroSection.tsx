@@ -201,22 +201,37 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
 
             {/* ── Main Headline ── */}
             <h1
-              className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] mb-6 tracking-tighter w-full"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] mb-6 tracking-tighter w-full"
             >
-              <AnimatedWord word="Transforme" />
               <motion.span
-                className="block text-white mt-2"
+                className="block text-white"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.35 }}
+              >
+                Sua melhor versão
+              </motion.span>
+              <motion.span
+                className="block text-white mt-1"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.5 }}
               >
-                Seu Corpo e Mente
+                começa com o cuidado
+              </motion.span>
+              <motion.span
+                className="block text-white mt-1"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.65 }}
+              >
+                que você escolhe ter
               </motion.span>
               <motion.span
                 className="block mt-1"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.65 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, delay: 0.8 }}
               >
                 <span
                   style={{
@@ -226,7 +241,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
                     backgroundClip: "text",
                   }}
                 >
-                  em 30 Dias.
+                  com o seu corpo hoje.
                 </span>
               </motion.span>
             </h1>

@@ -10,6 +10,7 @@ import Modalities from "@/components/home/Modalities";
 import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import Partners from "@/components/home/Partners";
 import IntroAnimation from "@/components/IntroAnimation";
 
 import fachadaImg from "@/assets/fachada-flipper.jpg";
@@ -115,6 +116,10 @@ const Index = () => {
               <CTASection />
             </motion.div>
           </section>
+
+          <motion.div variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.05 }}>
+            <Partners />
+          </motion.div>
         </PageTransition>
       </Layout>
     </>

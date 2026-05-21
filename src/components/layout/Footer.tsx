@@ -118,6 +118,37 @@ export default function Footer() {
           </motion.div>
         </div>
 
+        {/* Parceiros - Benefícios Corporativos */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-16 pt-10 border-t border-[#222D42] flex flex-col items-center text-center gap-5"
+        >
+          <h4 className="font-display font-bold text-[#F0EDE8] text-lg">
+            Aceitamos benefícios corporativos
+          </h4>
+          <p className="text-[#8A95A8] text-sm max-w-xl">
+            Somos parceiros das principais plataformas de wellness do Brasil. Use seu benefício na Flipper.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="https://totalpass.com/br/academias/academia-flipper/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-[8px] px-6 py-3 text-sm font-semibold text-[#F0EDE8] bg-[#111828] border border-[#222D42] hover:border-[#EE6200] hover:text-[#EE6200] transition-all duration-300 hover:-translate-y-[2px]"
+            >
+              TotalPass
+            </a>
+            <a
+              href="https://wellhub.com/pt-br/search/partners/academia-flipper-campo-belo-sao-paulo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-[8px] px-6 py-3 text-sm font-semibold text-[#F0EDE8] bg-[#111828] border border-[#222D42] hover:border-[#EE6200] hover:text-[#EE6200] transition-all duration-300 hover:-translate-y-[2px]"
+            >
+              Wellhub (Gympass)
+            </a>
+          </div>
+        </motion.div>
+
         {/* Bottom */}
         <motion.div
           className="mt-16 pt-8 border-t border-[#222D42] text-center text-[#8A95A8] text-xs"

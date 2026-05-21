@@ -332,7 +332,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [modalidadeJiuJitsu1, modalidadeJiuJitsu2, modalidadeJiuJitsu3, modalidadeJiuJitsu4, modalidadeJiuJitsu5, modalidadeJiuJitsu6],
     emoji: "🥋",
     description:
-      "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes.",
+      "Técnicas de grappling e defesa pessoal no tatame. Arte marcial brasileira reconhecida mundialmente, ensinada por faixas pretas experientes. Somos filiados à Fusion Jiu Jitsu School.",
     benefits: [
       "Defesa pessoal completa",
       "Fortalecimento de todo o corpo",
@@ -366,7 +366,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [kravMagaReal1, kravMagaReal2, kravMagaReal3, kravMagaReal4, kravMagaReal5],
     emoji: "🛡️",
     description:
-      "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado.",
+      "Sistema de defesa pessoal israelense, prático e eficiente. Técnicas diretas para situações reais, com treino de condicionamento integrado. Somos filiados à IKMF - São Paulo, e nosso professor é o diretor da IKMF no Brasil.",
     benefits: [
       "Defesa pessoal prática e realista",
       "Condicionamento físico intenso",
@@ -383,7 +383,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
     galleryImgs: [modalidadeAikido1, modalidadeAikido2, modalidadeAikido3, modalidadeAikido4, modalidadeAikido5, modalidadeAikido6, modalidadeAikido7, modalidadeAikido8, modalidadeAikido9],
     emoji: "☯️",
     description:
-      "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária.",
+      "Arte marcial japonesa baseada em harmonia e redirecionamento de força. Filosofia de paz e autodefesa sem violência desnecessária. Somos filiados à FEPAI-BRASIL (Federação Paulista de Aikido).",
     benefits: [
       "Harmonia corpo-mente",
       "Defesa pessoal não-violenta",

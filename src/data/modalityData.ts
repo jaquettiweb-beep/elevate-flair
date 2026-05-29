@@ -295,7 +295,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
   hidroginastica: {
     name: "Hidroginástica",
     slug: "hidroginastica",
-    galleryImgs: [modalidadeHidro1, modalidadeHidro2, modalidadeHidro3, modalidadeHidro4, modalidadeHidro5, modalidadeHidro6, modalidadeHidro7, modalidadeHidro8, modalidadeHidro9],
+    galleryImgs: [modalidadeHidro2, modalidadeHidro3, modalidadeHidro4, modalidadeHidro5, modalidadeHidro6, modalidadeHidro7, modalidadeHidro8, modalidadeHidro9],
     emoji: "🌊",
     description:
       "Exercícios aquáticos de baixo impacto realizados em nossas piscinas aquecidas com tratamento salino. Ideal para todas as idades e condicionamentos físicos.",

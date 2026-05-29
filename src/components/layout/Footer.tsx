@@ -72,7 +72,7 @@ export default function Footer() {
               <div className="flex flex-wrap gap-4">
                 {[
                   { icon: Instagram, href: "https://www.instagram.com/academia.flipper/", label: "Instagram" },
-                  { icon: Youtube, href: "https://www.youtube.com/@academiaflipper9455", label: "YouTube" },
+                  { icon: Youtube, href: "https://www.youtube.com/@academiaflipper", label: "YouTube" },
                   { icon: Linkedin, href: "https://www.linkedin.com/company/academia-flipper/", label: "LinkedIn" },
                 ].map(({ icon: Icon, href, label }) => (
                   <motion.a

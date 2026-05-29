@@ -2,13 +2,16 @@ import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
-import { ChevronRight, Loader2 } from "lucide-react";
+import { ChevronRight, Loader2, X } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useGalleryImages } from "@/hooks/useGalleryImages";
 
 export default function Gallery() {
   // Apenas fotos da estrutura/ambiente da academia
   const { data: images, isLoading } = useGalleryImages("Academia");
+  const [zoomed, setZoomed] = useState<{ src: string; alt: string } | null>(null);
 
   return (
     <Layout>

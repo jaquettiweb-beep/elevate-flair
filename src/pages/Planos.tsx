@@ -2,142 +2,74 @@ import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
-import { ChevronRight, Dumbbell, Droplets, Waves, Zap, Phone, ArrowRight, HeartPulse, Sparkles, Crown } from "lucide-react";
+import { ChevronRight, Dumbbell, Droplets, Waves, Zap, Phone, ArrowRight, HeartPulse, Sparkles, Crown, Star } from "lucide-react";
 import { motion } from "framer-motion";
-
-type Prices = {
-  anual: number;
-  semestral: number;
-  mensal: number;
-};
-
-type Tier = {
-  label?: string;
-  prices: Prices;
-};
 
 type Plan = {
   name: string;
-  tagline: string;
+  description: string;
   color: string;
   colorLight: string;
   icon: typeof Zap;
-  tiers: Tier[];
   popular?: boolean;
+  exclusive?: boolean;
 };
-
-const MATRICULA = 188;
 
 const plans: Plan[] = [
   {
     name: "Uno",
-    tagline: "Escolha sua atividade: musculação, 1 luta 1x por semana ou ginástica",
+    description:
+      "O ponto de partida perfeito para quem quer começar com clareza. Musculação, luta ou ginástica — você escolhe o que faz mais sentido pra você e treina com toda a estrutura e acompanhamento da Flipper.",
     color: "hsl(221,83%,53%)",
     colorLight: "hsla(221,83%,53%,0.12)",
     icon: Zap,
-    tiers: [{ prices: { anual: 233, semestral: 251, mensal: 305 } }],
   },
   {
     name: "Terra",
-    tagline: "Atividade terrestre adulto e kids",
+    description:
+      "Para quem quer mais liberdade de escolha sem abrir mão de qualidade. Atividades terrestres da academia em um único plano, para adultos e crianças.",
     color: "hsl(24,95%,53%)",
     colorLight: "hsla(24,95%,53%,0.12)",
     icon: Dumbbell,
     popular: true,
-    tiers: [{ prices: { anual: 431, semestral: 458, mensal: 530 } }],
   },
   {
     name: "Hidro",
-    tagline: "Hidroginástica até 2x por semana",
+    description:
+      "Movimento sem impacto, resultado com consistência. A hidroginástica até duas vezes por semana é a escolha ideal para quem quer cuidar do corpo e da saúde de um jeito leve e prazeroso.",
     color: "hsl(185,80%,45%)",
     colorLight: "hsla(185,80%,45%,0.12)",
     icon: Droplets,
-    tiers: [{ prices: { anual: 476, semestral: 503, mensal: 584 } }],
   },
   {
     name: "Água",
-    tagline: "Natação adulto ou infantil",
+    description:
+      "Natação para adultos ou crianças, com toda a qualidade e estrutura que só a Flipper oferece. De bebês aos adultos, a piscina da Flipper tem espaço para todos.",
     color: "hsl(200,90%,50%)",
     colorLight: "hsla(200,90%,50%,0.12)",
     icon: Waves,
-    tiers: [
-      { label: "Natação 1x", prices: { anual: 422, semestral: 485, mensal: 611 } },
-      { label: "Natação 2x", prices: { anual: 566, semestral: 593, mensal: 710 } },
-    ],
   },
   {
     name: "60+ Saúde",
-    tagline: "Aulas exclusivas para 60+",
+    description:
+      "Criado com muito cuidado para quem tem mais de 60 anos e quer viver com mais energia, independência e qualidade de vida. Aulas exclusivas com foco em fortalecimento, equilíbrio e funcionalidade — porque envelhecer bem é uma conquista que se constrói todos os dias. Um programa único que você só encontra aqui.",
     color: "hsl(142,65%,45%)",
     colorLight: "hsla(142,65%,45%,0.12)",
     icon: HeartPulse,
-    tiers: [{ prices: { anual: 485, semestral: 539, mensal: 584 } }],
+    exclusive: true,
   },
   {
     name: "Pilates",
-    tagline: "Para você aproveitar o melhor do nosso Pilates Studio",
+    description:
+      "Para quem quer transformar a relação com o próprio corpo. Nosso Pilates Studio completo oferece uma prática que vai além da técnica — é sobre postura, consciência corporal e bem-estar que você carrega pra vida toda.",
     color: "hsl(280,70%,58%)",
     colorLight: "hsla(280,70%,58%,0.12)",
     icon: Sparkles,
-    tiers: [
-      { label: "1x na semana", prices: { anual: 458, semestral: 548, mensal: 602 } },
-      { label: "2x na semana", prices: { anual: 593, semestral: 683, mensal: 755 } },
-      { label: "3x na semana", prices: { anual: 704, semestral: 781, mensal: 854 } },
-    ],
   },
 ];
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20plano%20";
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.94 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
-
-function formatPrice(price: number) {
-  return price.toLocaleString("pt-BR");
-}
-
-const cycleLabels: { key: keyof Prices; title: string; sub: string }[] = [
-  { key: "anual", title: "Anual", sub: "1 + 11 parcelas" },
-  { key: "semestral", title: "Semestral", sub: "1 + 5 parcelas" },
-  { key: "mensal", title: "Mensal", sub: "à vista" },
-];
-
-function PriceTable({ prices, color }: { prices: Prices; color: string }) {
-  return (
-    <div className="rounded-xl overflow-hidden" style={{ border: "1px solid hsla(185,80%,70%,0.1)" }}>
-      {cycleLabels.map((c, i) => (
-        <div
-          key={c.key}
-          className="flex items-center justify-between gap-3 px-4 py-3"
-          style={{
-            background: i % 2 === 0 ? "hsla(190,60%,95%,0.04)" : "transparent",
-          }}
-        >
-          <div className="flex flex-col">
-            <span className="text-white text-sm font-semibold">{c.title}</span>
-            <span className="text-white/40 text-[11px]">{c.sub}</span>
-          </div>
-          <span className="text-lg font-display font-bold" style={{ color }}>
-            R$ {formatPrice(prices[c.key])}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function Planos() {
   return (
@@ -211,21 +143,32 @@ export default function Planos() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Escolha o plano ideal para você. Matrícula única de R$ {MATRICULA} em todos os planos.
+                Escolha o plano ideal para você e fale com a gente para conhecer os valores.
               </motion.p>
             </div>
 
             {/* Plans grid */}
             <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14"
-              variants={containerVariants}
               initial="hidden"
               animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08 } },
+              }}
             >
               {plans.map((plan) => (
                 <motion.div
                   key={plan.name}
-                  variants={cardVariants}
+                  variants={{
+                    hidden: { opacity: 0, y: 40, scale: 0.94 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.5, ease: "easeOut" as const },
+                    },
+                  }}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   className="group relative"
                 >
@@ -238,14 +181,24 @@ export default function Planos() {
                     </div>
                   )}
 
+                  {plan.exclusive && (
+                    <div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-[10px] font-bold tracking-wider uppercase px-4 py-1 rounded-full text-white flex items-center gap-1"
+                      style={{ background: plan.color, boxShadow: `0 4px 16px ${plan.colorLight}` }}
+                    >
+                      <Star size={10} />
+                      Exclusivo da Academia Flipper
+                    </div>
+                  )}
+
                   <div
                     className="rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-300 relative"
                     style={{
                       background: "hsla(190,60%,95%,0.08)",
                       backdropFilter: "blur(24px)",
                       WebkitBackdropFilter: "blur(24px)",
-                      border: plan.popular ? `2px solid ${plan.color}60` : "1px solid hsla(185,80%,70%,0.1)",
-                      boxShadow: plan.popular
+                      border: plan.popular || plan.exclusive ? `2px solid ${plan.color}60` : "1px solid hsla(185,80%,70%,0.1)",
+                      boxShadow: plan.popular || plan.exclusive
                         ? `0 12px 48px ${plan.colorLight}, inset 0 1px 0 hsla(0,0%,100%,0.08)`
                         : "0 8px 32px hsla(0,0%,0%,0.12), inset 0 1px 0 hsla(0,0%,100%,0.05)",
                     }}
@@ -262,29 +215,8 @@ export default function Planos() {
                       <p className="text-[10px] font-bold tracking-wider uppercase mb-1" style={{ color: plan.color }}>
                         Plano
                       </p>
-                      <h2 className="font-display text-2xl font-bold text-white mb-2">{plan.name}</h2>
-                      <p className="text-white/45 text-sm mb-5 min-h-[40px]">{plan.tagline}</p>
-
-                      {/* Tiers */}
-                      <div className="space-y-4 flex-1">
-                        {plan.tiers.map((tier, ti) => (
-                          <div key={ti}>
-                            {tier.label && (
-                              <p
-                                className="text-xs font-bold uppercase tracking-wider mb-2 px-1"
-                                style={{ color: plan.color }}
-                              >
-                                {tier.label}
-                              </p>
-                            )}
-                            <PriceTable prices={tier.prices} color={plan.color} />
-                          </div>
-                        ))}
-                      </div>
-
-                      <p className="text-white/35 text-[11px] mt-4 mb-4">
-                        Matrícula: R$ {MATRICULA}
-                      </p>
+                      <h2 className="font-display text-2xl font-bold text-white mb-3">{plan.name}</h2>
+                      <p className="text-white/60 text-sm leading-relaxed mb-6 flex-1">{plan.description}</p>
 
                       {/* CTA */}
                       <a

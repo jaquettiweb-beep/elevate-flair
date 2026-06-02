@@ -143,21 +143,32 @@ export default function Planos() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Escolha o plano ideal para você. Matrícula única de R$ {MATRICULA} em todos os planos.
+                Escolha o plano ideal para você e fale com a gente para conhecer os valores.
               </motion.p>
             </div>
 
             {/* Plans grid */}
             <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14"
-              variants={containerVariants}
               initial="hidden"
               animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08 } },
+              }}
             >
               {plans.map((plan) => (
                 <motion.div
                   key={plan.name}
-                  variants={cardVariants}
+                  variants={{
+                    hidden: { opacity: 0, y: 40, scale: 0.94 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.5, ease: "easeOut" as const },
+                    },
+                  }}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   className="group relative"
                 >
@@ -170,14 +181,24 @@ export default function Planos() {
                     </div>
                   )}
 
+                  {plan.exclusive && (
+                    <div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-[10px] font-bold tracking-wider uppercase px-4 py-1 rounded-full text-white flex items-center gap-1"
+                      style={{ background: plan.color, boxShadow: `0 4px 16px ${plan.colorLight}` }}
+                    >
+                      <Star size={10} />
+                      Exclusivo da Academia Flipper
+                    </div>
+                  )}
+
                   <div
                     className="rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-300 relative"
                     style={{
                       background: "hsla(190,60%,95%,0.08)",
                       backdropFilter: "blur(24px)",
                       WebkitBackdropFilter: "blur(24px)",
-                      border: plan.popular ? `2px solid ${plan.color}60` : "1px solid hsla(185,80%,70%,0.1)",
-                      boxShadow: plan.popular
+                      border: plan.popular || plan.exclusive ? `2px solid ${plan.color}60` : "1px solid hsla(185,80%,70%,0.1)",
+                      boxShadow: plan.popular || plan.exclusive
                         ? `0 12px 48px ${plan.colorLight}, inset 0 1px 0 hsla(0,0%,100%,0.08)`
                         : "0 8px 32px hsla(0,0%,0%,0.12), inset 0 1px 0 hsla(0,0%,100%,0.05)",
                     }}
@@ -194,29 +215,8 @@ export default function Planos() {
                       <p className="text-[10px] font-bold tracking-wider uppercase mb-1" style={{ color: plan.color }}>
                         Plano
                       </p>
-                      <h2 className="font-display text-2xl font-bold text-white mb-2">{plan.name}</h2>
-                      <p className="text-white/45 text-sm mb-5 min-h-[40px]">{plan.tagline}</p>
-
-                      {/* Tiers */}
-                      <div className="space-y-4 flex-1">
-                        {plan.tiers.map((tier, ti) => (
-                          <div key={ti}>
-                            {tier.label && (
-                              <p
-                                className="text-xs font-bold uppercase tracking-wider mb-2 px-1"
-                                style={{ color: plan.color }}
-                              >
-                                {tier.label}
-                              </p>
-                            )}
-                            <PriceTable prices={tier.prices} color={plan.color} />
-                          </div>
-                        ))}
-                      </div>
-
-                      <p className="text-white/35 text-[11px] mt-4 mb-4">
-                        Matrícula: R$ {MATRICULA}
-                      </p>
+                      <h2 className="font-display text-2xl font-bold text-white mb-3">{plan.name}</h2>
+                      <p className="text-white/60 text-sm leading-relaxed mb-6 flex-1">{plan.description}</p>
 
                       {/* CTA */}
                       <a

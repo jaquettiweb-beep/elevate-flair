@@ -2,142 +2,74 @@ import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/layout/Layout";
 import PageTransition from "@/components/layout/PageTransition";
 import { Link } from "react-router-dom";
-import { ChevronRight, Dumbbell, Droplets, Waves, Zap, Phone, ArrowRight, HeartPulse, Sparkles, Crown } from "lucide-react";
+import { ChevronRight, Dumbbell, Droplets, Waves, Zap, Phone, ArrowRight, HeartPulse, Sparkles, Crown, Star } from "lucide-react";
 import { motion } from "framer-motion";
-
-type Prices = {
-  anual: number;
-  semestral: number;
-  mensal: number;
-};
-
-type Tier = {
-  label?: string;
-  prices: Prices;
-};
 
 type Plan = {
   name: string;
-  tagline: string;
+  description: string;
   color: string;
   colorLight: string;
   icon: typeof Zap;
-  tiers: Tier[];
   popular?: boolean;
+  exclusive?: boolean;
 };
-
-const MATRICULA = 188;
 
 const plans: Plan[] = [
   {
     name: "Uno",
-    tagline: "Escolha sua atividade: musculação, 1 luta 1x por semana ou ginástica",
+    description:
+      "O ponto de partida perfeito para quem quer começar com clareza. Musculação, luta ou ginástica — você escolhe o que faz mais sentido pra você e treina com toda a estrutura e acompanhamento da Flipper.",
     color: "hsl(221,83%,53%)",
     colorLight: "hsla(221,83%,53%,0.12)",
     icon: Zap,
-    tiers: [{ prices: { anual: 233, semestral: 251, mensal: 305 } }],
   },
   {
     name: "Terra",
-    tagline: "Atividade terrestre adulto e kids",
+    description:
+      "Para quem quer mais liberdade de escolha sem abrir mão de qualidade. Atividades terrestres da academia em um único plano, para adultos e crianças.",
     color: "hsl(24,95%,53%)",
     colorLight: "hsla(24,95%,53%,0.12)",
     icon: Dumbbell,
     popular: true,
-    tiers: [{ prices: { anual: 431, semestral: 458, mensal: 530 } }],
   },
   {
     name: "Hidro",
-    tagline: "Hidroginástica até 2x por semana",
+    description:
+      "Movimento sem impacto, resultado com consistência. A hidroginástica até duas vezes por semana é a escolha ideal para quem quer cuidar do corpo e da saúde de um jeito leve e prazeroso.",
     color: "hsl(185,80%,45%)",
     colorLight: "hsla(185,80%,45%,0.12)",
     icon: Droplets,
-    tiers: [{ prices: { anual: 476, semestral: 503, mensal: 584 } }],
   },
   {
     name: "Água",
-    tagline: "Natação adulto ou infantil",
+    description:
+      "Natação para adultos ou crianças, com toda a qualidade e estrutura que só a Flipper oferece. De bebês aos adultos, a piscina da Flipper tem espaço para todos.",
     color: "hsl(200,90%,50%)",
     colorLight: "hsla(200,90%,50%,0.12)",
     icon: Waves,
-    tiers: [
-      { label: "Natação 1x", prices: { anual: 422, semestral: 485, mensal: 611 } },
-      { label: "Natação 2x", prices: { anual: 566, semestral: 593, mensal: 710 } },
-    ],
   },
   {
     name: "60+ Saúde",
-    tagline: "Aulas exclusivas para 60+",
+    description:
+      "Criado com muito cuidado para quem tem mais de 60 anos e quer viver com mais energia, independência e qualidade de vida. Aulas exclusivas com foco em fortalecimento, equilíbrio e funcionalidade — porque envelhecer bem é uma conquista que se constrói todos os dias. Um programa único que você só encontra aqui.",
     color: "hsl(142,65%,45%)",
     colorLight: "hsla(142,65%,45%,0.12)",
     icon: HeartPulse,
-    tiers: [{ prices: { anual: 485, semestral: 539, mensal: 584 } }],
+    exclusive: true,
   },
   {
     name: "Pilates",
-    tagline: "Para você aproveitar o melhor do nosso Pilates Studio",
+    description:
+      "Para quem quer transformar a relação com o próprio corpo. Nosso Pilates Studio completo oferece uma prática que vai além da técnica — é sobre postura, consciência corporal e bem-estar que você carrega pra vida toda.",
     color: "hsl(280,70%,58%)",
     colorLight: "hsla(280,70%,58%,0.12)",
     icon: Sparkles,
-    tiers: [
-      { label: "1x na semana", prices: { anual: 458, semestral: 548, mensal: 602 } },
-      { label: "2x na semana", prices: { anual: 593, semestral: 683, mensal: 755 } },
-      { label: "3x na semana", prices: { anual: 704, semestral: 781, mensal: 854 } },
-    ],
   },
 ];
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20plano%20";
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.94 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
-
-function formatPrice(price: number) {
-  return price.toLocaleString("pt-BR");
-}
-
-const cycleLabels: { key: keyof Prices; title: string; sub: string }[] = [
-  { key: "anual", title: "Anual", sub: "1 + 11 parcelas" },
-  { key: "semestral", title: "Semestral", sub: "1 + 5 parcelas" },
-  { key: "mensal", title: "Mensal", sub: "à vista" },
-];
-
-function PriceTable({ prices, color }: { prices: Prices; color: string }) {
-  return (
-    <div className="rounded-xl overflow-hidden" style={{ border: "1px solid hsla(185,80%,70%,0.1)" }}>
-      {cycleLabels.map((c, i) => (
-        <div
-          key={c.key}
-          className="flex items-center justify-between gap-3 px-4 py-3"
-          style={{
-            background: i % 2 === 0 ? "hsla(190,60%,95%,0.04)" : "transparent",
-          }}
-        >
-          <div className="flex flex-col">
-            <span className="text-white text-sm font-semibold">{c.title}</span>
-            <span className="text-white/40 text-[11px]">{c.sub}</span>
-          </div>
-          <span className="text-lg font-display font-bold" style={{ color }}>
-            R$ {formatPrice(prices[c.key])}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function Planos() {
   return (

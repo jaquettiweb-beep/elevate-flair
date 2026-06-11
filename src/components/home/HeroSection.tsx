@@ -72,7 +72,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
         aria-label="Apresentação"
         style={{
           background:
-            "linear-gradient(to bottom, hsl(210,85%,8%) 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
+            "linear-gradient(to bottom, #111828 0%, hsl(200,80%,12%) 60%, hsl(185,70%,92%) 100%)",
         }}
       >
         {/* Radial glow */}

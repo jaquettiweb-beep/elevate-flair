@@ -18,7 +18,7 @@ const SCHEDULE_DATA = [
   { time: "09:00", mon: ["Ballet", "Pilates Studio"], tue: ["Pilates Studio"], wed: ["Ballet", "Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
   { time: "09:30", mon: [], tue: [], wed: [], thu: [], fri: [], sat: ["Natação Baby"] },
   { time: "10:00", mon: ["Pilates Studio"], tue: ["Natação Baby", "Pilates Studio"], wed: ["Pilates Studio"], thu: ["Natação Baby", "Pilates Studio"], fri: ["Pilates Studio"], sat: ["Natação Baby"] },
-  { time: "10:30", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: ["Natação Baby"] },
+  { time: "10:30", mon: [], tue: [], wed: [], thu: [], fri: [], sat: ["Natação Baby"] },
   { time: "10:45", mon: ["Hidroginástica"], tue: ["Hidroginástica"], wed: ["Hidroginástica"], thu: ["Hidroginástica"], fri: [], sat: [] },
   { time: "11:00", mon: ["Pilates Studio", "60+ Fortal."], tue: ["Pilates Studio", "60+ Fortal."], wed: ["Pilates Studio", "60+ Alongamento"], thu: ["Pilates Studio", "60+ Fortal."], fri: ["Pilates Studio", "60+ Fortal."], sat: ["Krav Maga"] },
   { time: "11:30", mon: ["Pilates Studio", "Hidrog. (Lotação)"], tue: ["Pilates Studio", "Natação"], wed: ["Pilates Studio", "Hidrog. (Lotação)"], thu: ["Pilates Studio", "Natação"], fri: ["Pilates Studio", "Hidrog. (Lotação)"], sat: [] },

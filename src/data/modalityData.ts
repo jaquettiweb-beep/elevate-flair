@@ -289,7 +289,7 @@ export const MODALITY_DATA: Record<string, ModalityData> = {
       "Correção postural",
       "Turmas em grupo e atendimento individual",
     ],
-    schedule: "Segunda a sexta, diversos horários",
+    schedule: "Seg a Sex: 7h, 8h, 9h, 10h, 11h, 13h, 14h, 15h | Seg e Sex: 16h | Ter/Qua/Qui: 16h30 | Ter e Qui: 17h30, 18h30, 19h30",
     audience: "Todos os níveis, com atenção especial para reabilitação",
   },
   hidroginastica: {

@@ -68,7 +68,7 @@ export default function HeroSection({ introComplete = true }: HeroSectionProps) 
   return (
     <div ref={wrapperRef} style={{ height: "100vh" }}>
       <section
-        className="sticky top-0 h-screen overflow-hidden"
+        className="hero-cinematic sticky top-0 h-screen overflow-hidden"
         aria-label="Apresentação"
         style={{
           background:

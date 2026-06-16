@@ -73,17 +73,6 @@ const testimonialsData: Testimonial[] = [
     avatarGradient: "linear-gradient(135deg, hsl(45,90%,50%), hsl(35,85%,45%))",
     avatarUrl: "https://lh3.googleusercontent.com/a-/AOh14GjiIApfP2GHA0iD0EFfO3Hmkn8MTlwwVYMYYU66=w72-h72-p-c0x00000000-rp-mo-br100",
   },
-  {
-    id: 7,
-    initials: "LE",
-    name: "L. Eduardo",
-    role: "Aluno de Jiu Jitsu",
-    quote: "Excelente academia, infraestrutura da melhor qualidade. Vista panorâmica com localização privilegiada. Mestre Julio César Sardinha é um excelente mestre com muita técnica e disciplina. Ambiente familiar. Recomendo!",
-    tags: [{ text: "Jiu Jitsu", type: "default" }, { text: "Artes Marciais", type: "default" }],
-    stats: [{ icon: Award, text: "Qualidade" }, { icon: ShieldCheck, text: "Verificado" }],
-    avatarGradient: "linear-gradient(135deg, hsl(260,65%,55%), hsl(290,60%,50%))",
-    avatarUrl: "https://lh3.googleusercontent.com/a-/AOh14GgkApGqy6KmfllRFClGRsCzNJdDyyQyF_JBP2YImw=w72-h72-p-c0x00000000-rp-mo-br100",
-  },
 ];
 
 export default function Testimonials() {

@@ -23,6 +23,7 @@ const Planos = lazy(() => import("./pages/Planos"));
 const Eventos = lazy(() => import("./pages/Eventos"));
 const TrabalheConosco = lazy(() => import("./pages/TrabalheConosco"));
 const Professores = lazy(() => import("./pages/Professores"));
+const Parcerias = lazy(() => import("./pages/Parcerias"));
 const Demo = lazy(() => import("./components/ui/demo"));
 
 // Admin pages
@@ -64,6 +65,7 @@ function AnimatedRoutes() {
         <Route path="/eventos" element={<Eventos />} />
         <Route path="/trabalhe-conosco" element={<TrabalheConosco />} />
         <Route path="/professores" element={<Professores />} />
+        <Route path="/parcerias" element={<Parcerias />} />
         <Route path="/galeria" element={<Gallery />} />
         <Route path="/contato" element={<Contact />} />
         <Route path="/demo" element={<Demo />} />

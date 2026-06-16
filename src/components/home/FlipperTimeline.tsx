@@ -151,7 +151,7 @@ export default function FlipperTimeline() {
                 300m da Estação Vereador José Diniz
               </span>
               <span className="text-xs" style={{ color: "hsl(45,90%,65%)" }}>
-                Linha 15 – Prata (Monotrilho)
+                Linha 17 – Ouro (Monotrilho)
               </span>
             </div>
           </div>

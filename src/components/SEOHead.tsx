@@ -10,7 +10,7 @@ interface SEOHeadProps {
 }
 
 const BASE_URL = "https://www.academiaflipper.com.br";
-const DEFAULT_OG_IMAGE = "/og-flipper-default.jpg";
+const DEFAULT_OG_IMAGE = "/favicon.ico";
 
 export default function SEOHead({ title, description, path = "/", image, keywords, schema }: SEOHeadProps) {
   useEffect(() => {

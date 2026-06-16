@@ -10,6 +10,9 @@ import adventista from "@/assets/partners/adventista.png.asset.json";
 import cantoDoBatuque from "@/assets/partners/canto-do-batuque.png.asset.json";
 import brasoes from "@/assets/partners/brasoes.png.asset.json";
 import diversamente from "@/assets/partners/diversamente.png.asset.json";
+import beatissima from "@/assets/partners/beatissima.png";
+import stockler from "@/assets/partners/stockler.png";
+import vilaplay from "@/assets/partners/vilaplay.png";
 
 const wa = (msg: string) =>
   `https://wa.me/5511944440557?text=${encodeURIComponent(msg)}`;
@@ -64,6 +67,9 @@ const schools = [
   { name: "Canto do Batuque", logo: cantoDoBatuque.url },
   { name: "Brasões", logo: brasoes.url },
   { name: "Diversamente", logo: diversamente.url },
+  { name: "Beatíssima", logo: beatissima },
+  { name: "Stockler", logo: stockler },
+  { name: "Vila Play", logo: vilaplay },
 ];
 
 const fadeUp = {
@@ -109,13 +115,13 @@ export default function Parcerias() {
         </section>
 
         {/* Parcerias que temos */}
-        <section className="py-16 bg-background">
+        <section className="py-16 bg-[#111828]">
           <div className="container mx-auto px-4">
             <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="max-w-2xl mb-10">
-              <span className="inline-flex items-center gap-2 text-secondary uppercase tracking-[0.2em] text-xs font-semibold">
+              <span className="text-[#EE6200] uppercase tracking-[0.2em] text-xs font-semibold flex items-center gap-2">
                 <Handshake size={14} /> Parcerias que temos
               </span>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-3">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0EDE8] mt-3">
                 Benefícios que cuidam de você
               </h2>
             </motion.div>
@@ -126,15 +132,15 @@ export default function Parcerias() {
                   key={p.name}
                   {...fadeUp}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group flex flex-col rounded-2xl border border-border bg-card p-6 hover:border-secondary/50 hover:shadow-lg transition-all duration-300"
+                  className="group flex flex-col rounded-2xl border border-[#222D42] bg-[#0C1220] p-6 hover:border-secondary/50 hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex size-11 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
                       <p.icon size={22} />
                     </div>
-                    <h3 className="font-display text-xl font-bold text-foreground">{p.name}</h3>
+                    <h3 className="font-display text-xl font-bold text-[#F0EDE8]">{p.name}</h3>
                   </div>
-                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">{p.description}</p>
+                  <p className="text-[#8A95A8] text-sm leading-relaxed flex-1">{p.description}</p>
                   {p.highlight && (
                     <p className="mt-4 rounded-lg bg-secondary/10 text-secondary font-semibold text-sm px-3 py-2">
                       {p.highlight}
@@ -168,37 +174,37 @@ export default function Parcerias() {
         </section>
 
         {/* Escolas parceiras */}
-        <section className="py-16 bg-muted/40">
+        <section className="py-16 bg-[#0C1220] border-y border-[#222D42]">
           <div className="container mx-auto px-4">
             <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="max-w-2xl mb-10">
-              <span className="inline-flex items-center gap-2 text-secondary uppercase tracking-[0.2em] text-xs font-semibold">
+              <span className="text-[#EE6200] uppercase tracking-[0.2em] text-xs font-semibold flex items-center gap-2">
                 <GraduationCap size={14} /> Escolas parceiras
               </span>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-3">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0EDE8] mt-3">
                 Escolas com desconto na Flipper
               </h2>
-              <p className="text-muted-foreground mt-3">
+              <p className="text-[#8A95A8] mt-3">
                 Alunos e famílias destas escolas contam com condições especiais em nossos planos.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {schools.map((s, i) => (
                 <motion.div
                   key={s.name}
                   {...fadeUp}
                   transition={{ duration: 0.45, delay: i * 0.06 }}
-                  className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                  className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-[#222D42] bg-[#111828] p-5 hover:border-secondary/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="flex h-24 w-full items-center justify-center">
+                  <div className="flex h-24 w-full items-center justify-center bg-white/95 rounded-xl p-3">
                     <img
                       src={s.logo}
                       alt={`Logo ${s.name}`}
                       loading="lazy"
-                      className="max-h-24 max-w-full object-contain"
+                      className="max-h-20 max-w-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-medium text-foreground text-center">{s.name}</span>
+                  <span className="text-sm font-medium text-[#F0EDE8] text-center">{s.name}</span>
                 </motion.div>
               ))}
             </div>
@@ -206,16 +212,16 @@ export default function Parcerias() {
         </section>
 
         {/* Parcerias corporativas */}
-        <section className="py-16 bg-background">
+        <section className="py-16 bg-[#111828]">
           <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-10">
             <motion.div {...fadeUp} transition={{ duration: 0.5 }}>
-              <span className="inline-flex items-center gap-2 text-secondary uppercase tracking-[0.2em] text-xs font-semibold">
+              <span className="text-[#EE6200] uppercase tracking-[0.2em] text-xs font-semibold flex items-center gap-2">
                 <Building2 size={14} /> Para empresas e escolas
               </span>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-3 mb-5">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0EDE8] mt-3 mb-5">
                 Parcerias Corporativas
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <div className="space-y-4 text-[#8A95A8] leading-relaxed">
                 <p>
                   Empresas e escolas da região que desejam oferecer benefícios diferenciados
                   para seus colaboradores, funcionários ou alunos podem contar com a Flipper
@@ -238,10 +244,10 @@ export default function Parcerias() {
                   href={wa("Olá! Quero saber sobre parcerias corporativas com a Flipper.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-border bg-card p-4 hover:border-secondary/50 transition-colors"
+                  className="flex flex-col rounded-xl border border-[#222D42] bg-[#0C1220] p-4 hover:border-secondary/50 transition-colors"
                 >
-                  <span className="text-xs uppercase tracking-wide text-muted-foreground">Produtos e parcerias corporativas</span>
-                  <span className="font-display font-bold text-foreground mt-1">Cibele</span>
+                  <span className="text-xs uppercase tracking-wide text-[#8A95A8]">Produtos e parcerias corporativas</span>
+                  <span className="font-display font-bold text-[#F0EDE8] mt-1">Cibele</span>
                   <span className="inline-flex items-center gap-1.5 text-secondary text-sm font-semibold mt-1">
                     <Phone size={14} /> (11) 97201-1147
                   </span>
@@ -250,10 +256,10 @@ export default function Parcerias() {
                   href={wa("Olá! Quero saber sobre parceria de colégio/escola com a Flipper.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col rounded-xl border border-border bg-card p-4 hover:border-secondary/50 transition-colors"
+                  className="flex flex-col rounded-xl border border-[#222D42] bg-[#0C1220] p-4 hover:border-secondary/50 transition-colors"
                 >
-                  <span className="text-xs uppercase tracking-wide text-muted-foreground">Colégios e escolas</span>
-                  <span className="font-display font-bold text-foreground mt-1">Patricia</span>
+                  <span className="text-xs uppercase tracking-wide text-[#8A95A8]">Colégios e escolas</span>
+                  <span className="font-display font-bold text-[#F0EDE8] mt-1">Patricia</span>
                   <span className="inline-flex items-center gap-1.5 text-secondary text-sm font-semibold mt-1">
                     <Phone size={14} /> (11) 94444-0557
                   </span>
@@ -262,13 +268,13 @@ export default function Parcerias() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }}>
-              <span className="inline-flex items-center gap-2 text-secondary uppercase tracking-[0.2em] text-xs font-semibold">
+              <span className="text-[#EE6200] uppercase tracking-[0.2em] text-xs font-semibold flex items-center gap-2">
                 <Store size={14} /> Para marcas e expositores
               </span>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-3 mb-5">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F0EDE8] mt-3 mb-5">
                 Exposição de Produtos
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <div className="space-y-4 text-[#8A95A8] leading-relaxed">
                 <p>
                   A Flipper recebe diariamente um público engajado, ativo e sempre aberto a
                   descobrir novidades. Se você tem um produto ou serviço que conversa com esse

@@ -86,6 +86,7 @@ const modalityCategories: CategoryGroup[] = [
 
 const topNavLinks: LinkItem[] = [
 	{ title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
+	{ title: "Grade de Horário", href: "/horarios", icon: Calendar, description: "Nossos horários" },
 	{ title: "Professores", href: "/professores", icon: Users, description: "Conheça nosso time" },
 	{ title: "Parcerias", href: "/parcerias", icon: Handshake, description: "Benefícios e descontos" },
 	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos" },

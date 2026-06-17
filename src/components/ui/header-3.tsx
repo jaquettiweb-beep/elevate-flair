@@ -14,7 +14,36 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { LucideIcon, Waves, Dumbbell, Heart, Calendar, CreditCard, History, Camera, Droplets, Swords, Hand, Baby, PersonStanding, Sparkles, Newspaper, Music, Users, Handshake } from 'lucide-react';
+import {
+	Accordion,
+	AccordionItem,
+	AccordionTrigger,
+	AccordionContent,
+} from '@/components/ui/accordion';
+import {
+	LucideIcon,
+	Waves,
+	Dumbbell,
+	Heart,
+	Calendar,
+	CreditCard,
+	History,
+	Camera,
+	Droplets,
+	Swords,
+	Hand,
+	Baby,
+	PersonStanding,
+	Sparkles,
+	Newspaper,
+	Music,
+	Users,
+	Handshake,
+	PartyPopper,
+	ShoppingBag,
+	Briefcase,
+	Mail,
+} from 'lucide-react';
 import flipperLogo from "@/assets/flipper-logo-header.png";
 
 const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=5511944440557&text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flipper%20e%20gostaria%20de%20agendar%20uma%20aula%20experimental%20gr%C3%A1tis!";
@@ -98,9 +127,17 @@ const topNavLinks: LinkItem[] = [
 const allModalityLinks = modalityCategories.flatMap(cat => cat.items);
 
 export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
+	const location = useLocation();
 	const [open, setOpen] = React.useState(false);
+	const [desktopOpen, setDesktopOpen] = React.useState(false);
 	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
 	const scrolled = useScroll(10);
+
+	/* close menus on route change */
+	React.useEffect(() => {
+		setOpen(false);
+		setDesktopOpen(false);
+	}, [location.pathname]);
 
 	/* listen for hero scroll state emitted by HeroSection */
 	React.useEffect(() => {
@@ -149,70 +186,20 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 							</Link>
 						</div>
 
-						{/* Center: Links (Hidden on mobile) */}
+						{/* Center: Desktop Menu Toggle */}
 						<div className="hidden md:flex flex-1 items-center justify-center min-w-0">
-							<NavigationMenu>
-								<NavigationMenuList className="gap-1">
-                                    <NavigationMenuItem>
-                                      <NavigationMenuLink className="px-3" asChild>
-                                        <NavLink to="/">
-                                          Home
-                                        </NavLink>
-                                      </NavigationMenuLink>
-                                    </NavigationMenuItem>
-
-                                    {/* Modalidades Mega Menu */}
-                                    <NavigationMenuItem>
-                                      <NavigationMenuTrigger className="bg-transparent text-[#8A95A8] hover:text-[#EE6200] data-[state=open]:text-[#EE6200] transition-colors font-medium whitespace-nowrap">Modalidades</NavigationMenuTrigger>
-                                      <NavigationMenuContent className="bg-[#1A2335] p-5 rounded-xl border border-[#222D42] shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-                                        <div className="w-[760px]">
-                                          <div className="grid grid-cols-3 gap-x-5 gap-y-5">
-                                            {/* Coluna 1 */}
-                                            <div className="flex flex-col gap-5">
-                                              <CategoryBlock cat={modalityCategories[0]} />
-                                              <CategoryBlock cat={modalityCategories[1]} />
-                                            </div>
-                                            {/* Coluna 2 */}
-                                            <div className="flex flex-col gap-5">
-                                              <CategoryBlock cat={modalityCategories[2]} />
-                                              <CategoryBlock cat={modalityCategories[4]} />
-                                            </div>
-                                            {/* Coluna 3 — Lutas (mais itens) */}
-                                            <div className="flex flex-col">
-                                              <CategoryBlock cat={modalityCategories[3]} />
-                                            </div>
-                                          </div>
-                                          <div className="mt-5 pt-4 border-t border-[#222D42] flex items-center justify-between gap-3">
-                                            <p className="text-[12px] text-[#8A95A8]">
-                                              <span className="text-[#F0EDE8] font-semibold">14 modalidades</span> — aula experimental grátis em todas.
-                                            </p>
-                                            <a
-                                              href={WHATSAPP_URL}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              className="inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-[12px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all whitespace-nowrap"
-                                            >
-                                              <Calendar size={14} />
-                                              Agendar agora
-                                            </a>
-                                          </div>
-                                        </div>
-                                      </NavigationMenuContent>
-                                    </NavigationMenuItem>
-
-                                    {/* Direct links */}
-                                    {topNavLinks.map((link) => (
-                                      <NavigationMenuItem key={link.href}>
-                                        <NavigationMenuLink className="px-3" asChild>
-                                          <NavLink to={link.href} className="whitespace-nowrap">
-                                            {link.title}
-                                          </NavLink>
-                                        </NavigationMenuLink>
-                                      </NavigationMenuItem>
-                                    ))}
-
-								</NavigationMenuList>
-							</NavigationMenu>
+							<button
+								onClick={() => setDesktopOpen(!desktopOpen)}
+								className={cn(
+									"flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all",
+									desktopOpen
+										? "text-[#EE6200] bg-[#1A2335]"
+										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
+								)}
+							>
+								<MenuToggleIcon open={desktopOpen} className="size-5" duration={300} />
+								Menu
+							</button>
 						</div>
 
 						{/* Right: CTA / Mobile Menu Toggle */}
@@ -241,6 +228,116 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 							</Button>
 						</div>
 					</nav>
+
+					{/* Desktop Accordion Panel */}
+					<AnimatePresence>
+						{desktopOpen && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.3, ease: 'easeInOut' }}
+								className="hidden md:block absolute top-full left-0 right-0 bg-[#111828]/98 backdrop-blur-xl border-b border-[#222D42] overflow-hidden z-[110]"
+							>
+								<div className="container mx-auto px-6 py-8 max-w-6xl">
+									<div className="grid grid-cols-3 gap-8">
+										{/* Coluna 1: Modalidades */}
+										<div>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Modalidades</h3>
+											<Accordion type="single" collapsible className="w-full">
+												{modalityCategories.map((cat) => (
+													<AccordionItem key={cat.label} value={cat.label} className="border-[#222D42]">
+														<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+															<span className="flex items-center gap-2">
+																<cat.icon size={14} style={{ color: cat.color }} />
+																{cat.label}
+															</span>
+														</AccordionTrigger>
+														<AccordionContent>
+															<ul className="space-y-1 ml-6">
+																{cat.items.map((item) => (
+																	<li key={item.href}>
+																		<Link
+																			to={item.href}
+																			onClick={() => setDesktopOpen(false)}
+																				className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1"
+																			>
+																				{item.title}
+																			</Link>
+																	</li>
+																))}
+															</ul>
+														</AccordionContent>
+													</AccordionItem>
+												))}
+											</Accordion>
+										</div>
+
+										{/* Coluna 2: A Flipper */}
+										<div>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">A Flipper</h3>
+											<Accordion type="single" collapsible className="w-full">
+												<AccordionItem value="conheca" className="border-[#222D42]">
+													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+														<span className="flex items-center gap-2">
+															<History size={14} className="text-[#EE6200]" />
+															Conheça
+														</span>
+													</AccordionTrigger>
+													<AccordionContent>
+														<ul className="space-y-1 ml-6">
+															<li><Link to="/" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Home</Link></li>
+															<li><Link to="/historia" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Nossa História</Link></li>
+															<li><Link to="/galeria" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Galeria</Link></li>
+															<li><Link to="/imprensa" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Imprensa</Link></li>
+															<li><Link to="/eventos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Eventos</Link></li>
+														</ul>
+													</AccordionContent>
+												</AccordionItem>
+												<AccordionItem value="servicos" className="border-[#222D42]">
+													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+														<span className="flex items-center gap-2">
+															<CreditCard size={14} className="text-[#EE6200]" />
+															Serviços
+														</span>
+													</AccordionTrigger>
+													<AccordionContent>
+														<ul className="space-y-1 ml-6">
+															<li><Link to="/planos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Planos</Link></li>
+															<li><Link to="/horarios" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Grade de Horário</Link></li>
+															<li><Link to="/professores" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Professores</Link></li>
+															<li><Link to="/parcerias" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Parcerias</Link></li>
+															<li><Link to="/produtos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Produtos</Link></li>
+															<li><Link to="/trabalhe-conosco" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Trabalhe Conosco</Link></li>
+															<li><Link to="/contato" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Contato</Link></li>
+														</ul>
+													</AccordionContent>
+												</AccordionItem>
+											</Accordion>
+										</div>
+
+										{/* Coluna 3: Ação rápida */}
+										<div className="flex flex-col gap-4">
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Ação rápida</h3>
+											<a
+												href={WHATSAPP_URL}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="inline-flex items-center justify-center gap-2 rounded-[8px] px-4 py-3 text-sm font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all"
+												onClick={() => setDesktopOpen(false)}
+											>
+												<Calendar size={16} />
+												Agendar Aula Grátis
+											</a>
+											<p className="text-xs text-[#8A95A8] leading-relaxed">
+												14 modalidades com aula experimental gratuita. Venha conhecer a Flipper!
+											</p>
+										</div>
+									</div>
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
 						<NavigationMenu className="max-w-full">
 							<div className="flex w-full flex-col gap-y-2">

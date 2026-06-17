@@ -228,6 +228,116 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 							</Button>
 						</div>
 					</nav>
+
+					{/* Desktop Accordion Panel */}
+					<AnimatePresence>
+						{desktopOpen && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.3, ease: 'easeInOut' }}
+								className="hidden md:block absolute top-full left-0 right-0 bg-[#111828]/98 backdrop-blur-xl border-b border-[#222D42] overflow-hidden z-[110]"
+							>
+								<div className="container mx-auto px-6 py-8 max-w-6xl">
+									<div className="grid grid-cols-3 gap-8">
+										{/* Coluna 1: Modalidades */}
+										<div>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Modalidades</h3>
+											<Accordion type="single" collapsible className="w-full">
+												{modalityCategories.map((cat) => (
+													<AccordionItem key={cat.label} value={cat.label} className="border-[#222D42]">
+														<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+															<span className="flex items-center gap-2">
+																<cat.icon size={14} style={{ color: cat.color }} />
+																{cat.label}
+															</span>
+														</AccordionTrigger>
+														<AccordionContent>
+															<ul className="space-y-1 ml-6">
+																{cat.items.map((item) => (
+																	<li key={item.href}>
+																		<Link
+																			to={item.href}
+																			onClick={() => setDesktopOpen(false)}
+																				className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1"
+																			>
+																				{item.title}
+																			</Link>
+																	</li>
+																))}
+															</ul>
+														</AccordionContent>
+													</AccordionItem>
+												))}
+											</Accordion>
+										</div>
+
+										{/* Coluna 2: A Flipper */}
+										<div>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">A Flipper</h3>
+											<Accordion type="single" collapsible className="w-full">
+												<AccordionItem value="conheca" className="border-[#222D42]">
+													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+														<span className="flex items-center gap-2">
+															<History size={14} className="text-[#EE6200]" />
+															Conheça
+														</span>
+													</AccordionTrigger>
+													<AccordionContent>
+														<ul className="space-y-1 ml-6">
+															<li><Link to="/" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Home</Link></li>
+															<li><Link to="/historia" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Nossa História</Link></li>
+															<li><Link to="/galeria" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Galeria</Link></li>
+															<li><Link to="/imprensa" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Imprensa</Link></li>
+															<li><Link to="/eventos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Eventos</Link></li>
+														</ul>
+													</AccordionContent>
+												</AccordionItem>
+												<AccordionItem value="servicos" className="border-[#222D42]">
+													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
+														<span className="flex items-center gap-2">
+															<CreditCard size={14} className="text-[#EE6200]" />
+															Serviços
+														</span>
+													</AccordionTrigger>
+													<AccordionContent>
+														<ul className="space-y-1 ml-6">
+															<li><Link to="/planos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Planos</Link></li>
+															<li><Link to="/horarios" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Grade de Horário</Link></li>
+															<li><Link to="/professores" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Professores</Link></li>
+															<li><Link to="/parcerias" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Parcerias</Link></li>
+															<li><Link to="/produtos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Produtos</Link></li>
+															<li><Link to="/trabalhe-conosco" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Trabalhe Conosco</Link></li>
+															<li><Link to="/contato" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Contato</Link></li>
+														</ul>
+													</AccordionContent>
+												</AccordionItem>
+											</Accordion>
+										</div>
+
+										{/* Coluna 3: Ação rápida */}
+										<div className="flex flex-col gap-4">
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Ação rápida</h3>
+											<a
+												href={WHATSAPP_URL}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="inline-flex items-center justify-center gap-2 rounded-[8px] px-4 py-3 text-sm font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all"
+												onClick={() => setDesktopOpen(false)}
+											>
+												<Calendar size={16} />
+												Agendar Aula Grátis
+											</a>
+											<p className="text-xs text-[#8A95A8] leading-relaxed">
+												14 modalidades com aula experimental gratuita. Venha conhecer a Flipper!
+											</p>
+										</div>
+									</div>
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
 						<NavigationMenu className="max-w-full">
 							<div className="flex w-full flex-col gap-y-2">

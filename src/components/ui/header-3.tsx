@@ -127,9 +127,17 @@ const topNavLinks: LinkItem[] = [
 const allModalityLinks = modalityCategories.flatMap(cat => cat.items);
 
 export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
+	const location = useLocation();
 	const [open, setOpen] = React.useState(false);
+	const [desktopOpen, setDesktopOpen] = React.useState(false);
 	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
 	const scrolled = useScroll(10);
+
+	/* close menus on route change */
+	React.useEffect(() => {
+		setOpen(false);
+		setDesktopOpen(false);
+	}, [location.pathname]);
 
 	/* listen for hero scroll state emitted by HeroSection */
 	React.useEffect(() => {

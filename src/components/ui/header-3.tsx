@@ -246,13 +246,13 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Modalidades</h3>
 											<Accordion type="single" collapsible className="w-full">
 												{modalityCategories.map((cat) => (
-													<AccordionItem key={cat.label} value={cat.label} className="border-[#222D42]">
-														<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
-															<span className="flex items-center gap-2">
-																<cat.icon size={14} style={{ color: cat.color }} />
-																{cat.label}
-															</span>
-														</AccordionTrigger>
+											<AccordionItem key={cat.label} value={cat.label} className="border-[#222D42]">
+												<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
+													<span className="flex items-center gap-2">
+														<cat.icon size={14} style={{ color: cat.color }} />
+														{cat.label}
+													</span>
+												</AccordionTrigger>
 														<AccordionContent>
 															<ul className="space-y-1 ml-6">
 																{cat.items.map((item) => (
@@ -277,13 +277,13 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 										<div>
 											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">A Flipper</h3>
 											<Accordion type="single" collapsible className="w-full">
-												<AccordionItem value="conheca" className="border-[#222D42]">
-													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
-														<span className="flex items-center gap-2">
-															<History size={14} className="text-[#EE6200]" />
-															Conheça
-														</span>
-													</AccordionTrigger>
+										<AccordionItem value="conheca" className="border-[#222D42]">
+											<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
+												<span className="flex items-center gap-2">
+													<History size={14} className="text-[#EE6200]" />
+													Conheça
+												</span>
+											</AccordionTrigger>
 													<AccordionContent>
 														<ul className="space-y-1 ml-6">
 															<li><Link to="/" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Home</Link></li>
@@ -294,13 +294,13 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 														</ul>
 													</AccordionContent>
 												</AccordionItem>
-												<AccordionItem value="servicos" className="border-[#222D42]">
-													<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 [&[data-state=open]>svg]:text-[#EE6200]">
-														<span className="flex items-center gap-2">
-															<CreditCard size={14} className="text-[#EE6200]" />
-															Serviços
-														</span>
-													</AccordionTrigger>
+										<AccordionItem value="servicos" className="border-[#222D42]">
+											<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
+												<span className="flex items-center gap-2">
+													<CreditCard size={14} className="text-[#EE6200]" />
+													Serviços
+												</span>
+											</AccordionTrigger>
 													<AccordionContent>
 														<ul className="space-y-1 ml-6">
 															<li><Link to="/planos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Planos</Link></li>

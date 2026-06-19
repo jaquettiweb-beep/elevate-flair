@@ -131,7 +131,6 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 	const [open, setOpen] = React.useState(false);
 	const [desktopOpen, setDesktopOpen] = React.useState(false);
 	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
-	const scrolled = useScroll(10);
 
 	/* close menus on route change */
 	React.useEffect(() => {
@@ -174,9 +173,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -80, opacity: 0 }}
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
-				className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]', {
-					'shadow-lg': scrolled,
-				})}
+				className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]')}
 				>
 					<nav className="mx-auto flex h-20 w-full items-center justify-between gap-4 px-6 md:px-8 lg:px-12 relative">
 						{/* Left: Logo */}
@@ -515,21 +512,3 @@ function ListItem({
 	);
 }
 
-function useScroll(threshold: number) {
-	const [scrolled, setScrolled] = React.useState(false);
-
-	const onScroll = React.useCallback(() => {
-		setScrolled(window.scrollY > threshold);
-	}, [threshold]);
-
-	React.useEffect(() => {
-		window.addEventListener('scroll', onScroll);
-		return () => window.removeEventListener('scroll', onScroll);
-	}, [onScroll]);
-
-	React.useEffect(() => {
-		onScroll();
-	}, [onScroll]);
-
-	return scrolled;
-}

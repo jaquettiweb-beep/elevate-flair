@@ -131,7 +131,6 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 	const [open, setOpen] = React.useState(false);
 	const [desktopOpen, setDesktopOpen] = React.useState(false);
 	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
-	const scrolled = useScroll(10);
 
 	/* close menus on route change */
 	React.useEffect(() => {
@@ -513,21 +512,3 @@ function ListItem({
 	);
 }
 
-function useScroll(threshold: number) {
-	const [scrolled, setScrolled] = React.useState(false);
-
-	const onScroll = React.useCallback(() => {
-		setScrolled(window.scrollY > threshold);
-	}, [threshold]);
-
-	React.useEffect(() => {
-		window.addEventListener('scroll', onScroll);
-		return () => window.removeEventListener('scroll', onScroll);
-	}, [onScroll]);
-
-	React.useEffect(() => {
-		onScroll();
-	}, [onScroll]);
-
-	return scrolled;
-}

@@ -175,11 +175,11 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 					transition={{ type: "spring", stiffness: 200, damping: 28, mass: 0.8 }}
 				className={cn('fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 bg-[#111828]')}
 				>
-					<nav className="mx-auto flex h-16 w-full items-center justify-between gap-4 px-6 md:px-8 lg:px-12 relative">
+					<nav className="mx-auto flex h-20 w-full items-center justify-between gap-4 px-6 md:px-8 lg:px-12 relative">
 						{/* Left: Logo */}
 						<div className="flex items-center justify-start shrink-0">
 							<Link to="/" className="rounded-md p-1.5 flex items-center shrink-0 transition-opacity">
-                                <img src={flipperLogo} alt="Academia Flipper" className="h-[38px] w-auto object-contain antialiased" />
+                                <img src={flipperLogo} alt="Academia Flipper" className="h-[44px] w-auto object-contain antialiased" />
 							</Link>
 						</div>
 
@@ -206,7 +206,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									href={WHATSAPP_URL}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-[8px] px-[20px] py-[10px] text-[14px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95 flex items-center gap-2 whitespace-nowrap"
+									className="rounded-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_6px_20px_rgba(238,98,0,0.4)] active:scale-95 flex items-center gap-2 whitespace-nowrap"
 								>
 									<Calendar size={16} />
 									Agendar Aula Grátis
@@ -390,7 +390,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 			id="mobile-menu"
 			className={cn(
 				'bg-[#111828] supports-[backdrop-filter]:bg-[#111828]/95 backdrop-blur-xl border-[#222D42]',
-				'fixed top-16 right-0 bottom-0 left-0 z-[120] flex flex-col overflow-hidden border-y md:hidden',
+				'fixed top-14 right-0 bottom-0 left-0 z-[120] flex flex-col overflow-hidden border-y md:hidden',
 			)}
 		>
 			<div

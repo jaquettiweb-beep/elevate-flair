@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+name: Deploy to Locaweb
 
 on:
   push:
@@ -32,11 +32,7 @@ jobs:
         run: |
           lftp -c "
           set sftp:auto-confirm yes;
-          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }}:65002;
-          mirror -R ./dist/ ./domains/lightyellow-chough-202902.hostingersite.com/public_html/;
+          set ssl:verify-certificate no;
+          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }};
+          mirror -R ./dist/ public_html/;
           "
-
-
-
-
-

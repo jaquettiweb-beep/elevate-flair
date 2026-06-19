@@ -31,8 +31,7 @@ jobs:
       - name: Deploy via lftp SFTP
         run: |
           lftp -c "
-          set sftp:auto-confirm yes;
           set ssl:verify-certificate no;
-          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' sftp://${{ secrets.FTP_SERVER }};
+          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' ftp://${{ secrets.FTP_SERVER }};
           mirror -R ./dist/ public_html/;
           "

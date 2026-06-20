@@ -32,6 +32,6 @@ jobs:
         run: |
           lftp -c "
           set ssl:verify-certificate no;
-          open -u '${{ secrets.FTP_USERNAME }}','${{ secrets.FTP_PASSWORD }}' ftp://${{ secrets.FTP_SERVER }};
+          open -u '${{ secrets.FTP_USER }}','${{ secrets.FTP_PASSWORD }}' ftp://${{ secrets.FTP_HOST }};
           mirror -R ./dist/ public_html/;
           "

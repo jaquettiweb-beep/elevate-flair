@@ -113,7 +113,7 @@ export default function Schedule() {
       </section>
 
       {/* Modality Selector */}
-      <section className="py-12 bg-background border-b border-border/50">
+      <section className="py-12 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold mb-8 text-foreground">Escolha uma modalidade</h2>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">

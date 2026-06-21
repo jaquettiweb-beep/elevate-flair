@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function Partners() {
   return (
-    <section id="parceiros" className="relative py-20 bg-[#0C1220] border-y border-[#222D42]">
+    <section id="parceiros" className="relative py-20 bg-[#0C1220]">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

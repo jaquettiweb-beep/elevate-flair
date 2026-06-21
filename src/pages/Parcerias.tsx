@@ -174,7 +174,7 @@ export default function Parcerias() {
         </section>
 
         {/* Escolas parceiras */}
-        <section className="py-16 bg-[#0C1220] border-y border-[#222D42]">
+        <section className="py-16 bg-[#0C1220]">
           <div className="container mx-auto px-4">
             <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="max-w-2xl mb-10">
               <span className="text-[#EE6200] uppercase tracking-[0.2em] text-xs font-semibold flex items-center gap-2">

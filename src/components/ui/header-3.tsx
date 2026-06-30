@@ -36,13 +36,13 @@ import {
 	PersonStanding,
 	Sparkles,
 	Newspaper,
-	Music,
 	Users,
+	UserCheck,
 	Handshake,
-	PartyPopper,
 	ShoppingBag,
 	Briefcase,
 	Mail,
+	Music,
 } from 'lucide-react';
 import flipperLogo from "@/assets/flipper-logo-header.png";
 
@@ -62,6 +62,7 @@ type CategoryGroup = {
 	items: LinkItem[];
 };
 
+// "Modalidades" — todas as aulas e modalidades, agrupadas por categoria
 const modalityCategories: CategoryGroup[] = [
 	{
 		label: "Aquáticas",
@@ -86,6 +87,7 @@ const modalityCategories: CategoryGroup[] = [
 		icon: Heart,
 		color: "#6dcfa0",
 		items: [
+			{ title: "Bem-Estar", href: "/bem-estar", icon: Heart, description: "Pilates, Yoga e muito mais" },
 			{ title: "Yoga", href: "/modalidade/yoga", icon: Heart, description: "Corpo e mente em equilíbrio" },
 			{ title: "Pilates", href: "/modalidade/pilates", icon: PersonStanding, description: "Studio e Solo" },
 			{ title: "Programa 60+", href: "/modalidade/programa-60-saude", icon: Heart, description: "Saúde na melhor idade" },
@@ -113,14 +115,24 @@ const modalityCategories: CategoryGroup[] = [
 	},
 ];
 
-const topNavLinks: LinkItem[] = [
-	{ title: "Planos", href: "/planos", icon: CreditCard, description: "Encontre seu plano ideal" },
-	{ title: "Grade de Horário", href: "/horarios", icon: Calendar, description: "Nossos horários" },
-	{ title: "Professores", href: "/professores", icon: Users, description: "Conheça nosso time" },
-	{ title: "Parcerias", href: "/parcerias", icon: Handshake, description: "Benefícios e descontos" },
-	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos" },
-	{ title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da academia" },
+// "Conheça a Flipper" — história e identidade da academia (sem Eventos, a pedido)
+const conhecaLinks: LinkItem[] = [
+	{ title: "Nossa História", href: "/historia", icon: History, description: "Mais de 50 anos de tradição" },
+	{ title: "Galeria", href: "/galeria", icon: Camera, description: "Fotos da nossa academia" },
 	{ title: "Imprensa", href: "/imprensa", icon: Newspaper, description: "Flipper na mídia" },
+];
+
+// "Serviços" — pessoas e demais páginas do site
+const servicosLinks: LinkItem[] = [
+	{ title: "Professores", href: "/professores", icon: Users, description: "Conheça nosso corpo docente" },
+	{ title: "Personal Trainers", href: "/personais", icon: UserCheck, description: "Profissionais para treino individual" },
+];
+
+const servicosLinks2: LinkItem[] = [
+	{ title: "Produtos", href: "/produtos", icon: ShoppingBag, description: "Loja e parceiros" },
+	{ title: "Parcerias", href: "/parcerias", icon: Handshake, description: "Benefícios e descontos" },
+	{ title: "Trabalhe Conosco", href: "/trabalhe-conosco", icon: Briefcase, description: "Vagas e oportunidades" },
+	{ title: "Contato", href: "/contato", icon: Mail, description: "Fale com a gente" },
 ];
 
 // Mobile-only: all modalities flat
@@ -129,13 +141,13 @@ const allModalityLinks = modalityCategories.flatMap(cat => cat.items);
 export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 	const location = useLocation();
 	const [open, setOpen] = React.useState(false);
-	const [desktopOpen, setDesktopOpen] = React.useState(false);
+	const [openPanel, setOpenPanel] = React.useState<string | null>(null);
 	const [heroScrolled, setHeroScrolled] = React.useState(alwaysVisible);
 
 	/* close menus on route change */
 	React.useEffect(() => {
 		setOpen(false);
-		setDesktopOpen(false);
+		setOpenPanel(null);
 	}, [location.pathname]);
 
 	/* listen for hero scroll state emitted by HeroSection */
@@ -165,6 +177,8 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 		};
 	}, [open]);
 
+	const togglePanel = (key: string) => setOpenPanel((cur) => (cur === key ? null : key));
+
 	return (
 		<AnimatePresence>
 			<motion.header
@@ -183,19 +197,62 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 							</Link>
 						</div>
 
-						{/* Center: Desktop Menu Toggle */}
-						<div className="hidden md:flex flex-1 items-center justify-center min-w-0">
+						{/* Center: Desktop Nav — 5 tópicos principais (portal para todas as páginas) */}
+						<div className="hidden md:flex flex-1 items-center justify-center min-w-0 gap-1">
 							<button
-								onClick={() => setDesktopOpen(!desktopOpen)}
+								onClick={() => togglePanel('modalidades')}
 								className={cn(
-									"flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all",
-									desktopOpen
+									"flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
+									openPanel === 'modalidades'
 										? "text-[#EE6200] bg-[#1A2335]"
 										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
 								)}
 							>
-								<MenuToggleIcon open={desktopOpen} className="size-5" duration={300} />
-								Menu
+								Modalidades
+							</button>
+							<button
+								onClick={() => togglePanel('conheca')}
+								className={cn(
+									"flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
+									openPanel === 'conheca'
+										? "text-[#EE6200] bg-[#1A2335]"
+										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
+								)}
+							>
+								Conheça a Flipper
+							</button>
+							<Link
+								to="/planos"
+								className={cn(
+									"px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
+									location.pathname === '/planos'
+										? "text-[#EE6200] bg-[#1A2335]"
+										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
+								)}
+							>
+								Planos
+							</Link>
+							<Link
+								to="/horarios"
+								className={cn(
+									"px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
+									location.pathname === '/horarios'
+										? "text-[#EE6200] bg-[#1A2335]"
+										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
+								)}
+							>
+								Horários
+							</Link>
+							<button
+								onClick={() => togglePanel('servicos')}
+								className={cn(
+									"flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
+									openPanel === 'servicos'
+										? "text-[#EE6200] bg-[#1A2335]"
+										: "text-[#8A95A8] hover:text-[#EE6200] hover:bg-[#1A2335]"
+								)}
+							>
+								Serviços
 							</button>
 						</div>
 
@@ -226,9 +283,9 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 						</div>
 					</nav>
 
-					{/* Desktop Accordion Panel */}
+					{/* Desktop Panel: Modalidades */}
 					<AnimatePresence>
-						{desktopOpen && (
+						{openPanel === 'modalidades' && (
 							<motion.div
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: 'auto' }}
@@ -237,128 +294,127 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 								className="hidden md:block absolute top-full left-0 right-0 bg-[#111828]/98 backdrop-blur-xl border-b border-[#222D42] overflow-hidden z-[110]"
 							>
 								<div className="container mx-auto px-6 py-8 max-w-6xl">
-									<div className="grid grid-cols-3 gap-8">
-										{/* Coluna 1: Modalidades */}
+									<div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
+										{modalityCategories.map((cat) => (
+											<CategoryBlock key={cat.label} cat={cat} onNavigate={() => setOpenPanel(null)} />
+										))}
+									</div>
+									<div className="mt-6 pt-4 border-t border-[#222D42] flex items-center justify-between gap-4 flex-wrap">
+										<p className="text-xs text-[#8A95A8]">
+											14 modalidades com aula experimental gratuita.
+										</p>
+										<a
+											href={WHATSAPP_URL}
+											target="_blank"
+											rel="noopener noreferrer"
+											onClick={() => setOpenPanel(null)}
+											className="inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-sm font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all"
+										>
+											<Calendar size={14} />
+											Agendar Aula Grátis
+										</a>
+									</div>
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
+
+					{/* Desktop Panel: Conheça a Flipper */}
+					<AnimatePresence>
+						{openPanel === 'conheca' && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.3, ease: 'easeInOut' }}
+								className="hidden md:block absolute top-full left-0 right-0 bg-[#111828]/98 backdrop-blur-xl border-b border-[#222D42] overflow-hidden z-[110]"
+							>
+								<div className="container mx-auto px-6 py-8 max-w-3xl">
+									<div className="grid grid-cols-3 gap-3">
+										{conhecaLinks.map((item) => (
+											<ListItem key={item.href} {...item} onClick={() => setOpenPanel(null)} />
+										))}
+									</div>
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
+
+					{/* Desktop Panel: Serviços */}
+					<AnimatePresence>
+						{openPanel === 'servicos' && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.3, ease: 'easeInOut' }}
+								className="hidden md:block absolute top-full left-0 right-0 bg-[#111828]/98 backdrop-blur-xl border-b border-[#222D42] overflow-hidden z-[110]"
+							>
+								<div className="container mx-auto px-6 py-8 max-w-5xl">
+									<div className="grid grid-cols-2 gap-8">
 										<div>
-											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Modalidades</h3>
-											<Accordion type="single" collapsible className="w-full">
-												{modalityCategories.map((cat) => (
-											<AccordionItem key={cat.label} value={cat.label} className="border-[#222D42]">
-												<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
-													<span className="flex items-center gap-2">
-														<cat.icon size={14} style={{ color: cat.color }} />
-														{cat.label}
-													</span>
-												</AccordionTrigger>
-														<AccordionContent>
-															<ul className="space-y-1 ml-6">
-																{cat.items.map((item) => (
-																	<li key={item.href}>
-																		<Link
-																			to={item.href}
-																			onClick={() => setDesktopOpen(false)}
-																				className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1"
-																			>
-																				{item.title}
-																			</Link>
-																	</li>
-																))}
-															</ul>
-														</AccordionContent>
-													</AccordionItem>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-3">Profissionais</h3>
+											<div className="space-y-1">
+												{servicosLinks.map((item) => (
+													<ListItem key={item.href} {...item} onClick={() => setOpenPanel(null)} />
 												))}
-											</Accordion>
+											</div>
 										</div>
-
-										{/* Coluna 2: A Flipper */}
 										<div>
-											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">A Flipper</h3>
-											<Accordion type="single" collapsible className="w-full">
-										<AccordionItem value="conheca" className="border-[#222D42]">
-											<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
-												<span className="flex items-center gap-2">
-													<History size={14} className="text-[#EE6200]" />
-													Conheça
-												</span>
-											</AccordionTrigger>
-													<AccordionContent>
-														<ul className="space-y-1 ml-6">
-															<li><Link to="/" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Home</Link></li>
-															<li><Link to="/historia" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Nossa História</Link></li>
-															<li><Link to="/galeria" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Galeria</Link></li>
-															<li><Link to="/imprensa" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Imprensa</Link></li>
-															<li><Link to="/eventos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Eventos</Link></li>
-														</ul>
-													</AccordionContent>
-												</AccordionItem>
-										<AccordionItem value="servicos" className="border-[#222D42]">
-											<AccordionTrigger className="text-[#F0EDE8] text-sm hover:no-underline py-3 data-[state=open]:text-white [&[data-state=open]>svg]:text-[#EE6200]">
-												<span className="flex items-center gap-2">
-													<CreditCard size={14} className="text-[#EE6200]" />
-													Serviços
-												</span>
-											</AccordionTrigger>
-													<AccordionContent>
-														<ul className="space-y-1 ml-6">
-															<li><Link to="/planos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Planos</Link></li>
-															<li><Link to="/horarios" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Grade de Horário</Link></li>
-															<li><Link to="/professores" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Professores</Link></li>
-															<li><Link to="/parcerias" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Parcerias</Link></li>
-															<li><Link to="/produtos" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Produtos</Link></li>
-															<li><Link to="/trabalhe-conosco" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Trabalhe Conosco</Link></li>
-															<li><Link to="/contato" onClick={() => setDesktopOpen(false)} className="text-sm text-[#8A95A8] hover:text-[#EE6200] transition-colors block py-1">Contato</Link></li>
-														</ul>
-													</AccordionContent>
-												</AccordionItem>
-											</Accordion>
-										</div>
-
-										{/* Coluna 3: Ação rápida */}
-										<div className="flex flex-col gap-4">
-											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-4">Ação rápida</h3>
-											<a
-												href={WHATSAPP_URL}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="inline-flex items-center justify-center gap-2 rounded-[8px] px-4 py-3 text-sm font-semibold text-white bg-[#EE6200] hover:bg-[#CC5400] transition-all"
-												onClick={() => setDesktopOpen(false)}
-											>
-												<Calendar size={16} />
-												Agendar Aula Grátis
-											</a>
-											<p className="text-xs text-[#8A95A8] leading-relaxed">
-												14 modalidades com aula experimental gratuita. Venha conhecer a Flipper!
-											</p>
+											<h3 className="text-xs font-bold uppercase tracking-wider text-[#8A95A8] mb-3">Mais</h3>
+											<div className="grid grid-cols-2 gap-1">
+												{servicosLinks2.map((item) => (
+													<ListItem key={item.href} {...item} onClick={() => setOpenPanel(null)} />
+												))}
+											</div>
 										</div>
 									</div>
 								</div>
 							</motion.div>
 						)}
 					</AnimatePresence>
+
+					{/* Mobile Menu */}
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
 						<NavigationMenu className="max-w-full">
 							<div className="flex w-full flex-col gap-y-2">
-                                <Link to="/" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Home</Link>
-                                
-                                {/* Modalities by category */}
-                                {modalityCategories.map((cat) => (
-                                  <React.Fragment key={cat.label}>
-                                    <span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 flex items-center gap-2" style={{ color: cat.color }}>
-                                      <cat.icon size={12} />
-                                      {cat.label}
-                                    </span>
-                                    {cat.items.map((link, i) => (
-                                      <ListItem key={i} {...link} onClick={() => setOpen(false)} />
-                                    ))}
-                                  </React.Fragment>
-                                ))}
-                                
-                                <div className="h-px bg-[#222D42] my-2" />
-                                
-                                {/* Direct links */}
-                                {topNavLinks.map((link, i) => (
-                                  <ListItem key={i} {...link} onClick={() => setOpen(false)} />
-                                ))}
+								<Link to="/" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Início</Link>
+
+								{/* Modalidades by category */}
+								<span className="text-xs font-bold uppercase tracking-wider mt-4 px-2 text-[#EE6200]">Modalidades</span>
+								{modalityCategories.map((cat) => (
+									<React.Fragment key={cat.label}>
+										<span className="text-[10px] font-bold uppercase tracking-wider mt-2 px-2 flex items-center gap-2" style={{ color: cat.color }}>
+											<cat.icon size={11} />
+											{cat.label}
+										</span>
+										{cat.items.map((link, i) => (
+											<ListItem key={i} {...link} onClick={() => setOpen(false)} />
+										))}
+									</React.Fragment>
+								))}
+
+								<div className="h-px bg-[#222D42] my-2" />
+
+								{/* Conheça a Flipper */}
+								<span className="text-xs font-bold uppercase tracking-wider px-2 text-[#EE6200]">Conheça a Flipper</span>
+								{conhecaLinks.map((link, i) => (
+									<ListItem key={i} {...link} onClick={() => setOpen(false)} />
+								))}
+
+								<div className="h-px bg-[#222D42] my-2" />
+
+								{/* Planos & Horários */}
+								<Link to="/planos" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Planos</Link>
+								<Link to="/horarios" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Horários</Link>
+
+								<div className="h-px bg-[#222D42] my-2" />
+
+								{/* Serviços */}
+								<span className="text-xs font-bold uppercase tracking-wider px-2 text-[#EE6200]">Serviços</span>
+								{[...servicosLinks, ...servicosLinks2].map((link, i) => (
+									<ListItem key={i} {...link} onClick={() => setOpen(false)} />
+								))}
 							</div>
 						</NavigationMenu>
 						<div className="flex flex-col gap-2 mt-4">
@@ -423,17 +479,17 @@ function NavLink({ to, children, className }: { to: string; children: React.Reac
       )}
     >
       {children}
-      <span 
+      <span
         className={cn(
           "absolute bottom-0 left-0 h-[2px] bg-[#EE6200] transition-all duration-250",
           isActive ? "w-full" : "w-0 group-hover:w-full"
-        )} 
+        )}
       />
     </Link>
   );
 }
 
-function CategoryBlock({ cat }: { cat: CategoryGroup }) {
+function CategoryBlock({ cat, onNavigate }: { cat: CategoryGroup; onNavigate?: () => void }) {
   return (
     <div>
       <div
@@ -452,7 +508,7 @@ function CategoryBlock({ cat }: { cat: CategoryGroup }) {
       <ul className="space-y-0.5">
         {cat.items.map((item, i) => (
           <li key={i}>
-            <CompactListItem {...item} accent={cat.color} />
+            <CompactListItem {...item} accent={cat.color} onClick={onNavigate} />
           </li>
         ))}
       </ul>
@@ -460,11 +516,12 @@ function CategoryBlock({ cat }: { cat: CategoryGroup }) {
   );
 }
 
-function CompactListItem({ title, description, icon: Icon, href, accent }: LinkItem & { accent: string }) {
+function CompactListItem({ title, description, icon: Icon, href, accent, onClick }: LinkItem & { accent: string; onClick?: () => void }) {
   return (
     <NavigationMenuLink asChild>
       <Link
         to={href}
+        onClick={onClick}
         className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 hover:bg-[#111828] transition-colors"
       >
         <span
@@ -511,4 +568,3 @@ function ListItem({
 		</NavigationMenuLink>
 	);
 }
-

@@ -7,14 +7,6 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import {
-	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuItem,
-	NavigationMenuLink,
-	NavigationMenuList,
-	NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
-import {
 	Accordion,
 	AccordionItem,
 	AccordionTrigger,
@@ -376,7 +368,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 
 					{/* Mobile Menu */}
 					<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
-						<NavigationMenu className="max-w-full">
+						<div className="max-w-full">
 							<div className="flex w-full flex-col gap-y-2">
 								<Link to="/" className="text-sm font-bold p-2 text-[#F0EDE8] hover:bg-[#1A2335] rounded-md" onClick={() => setOpen(false)}>Início</Link>
 
@@ -416,7 +408,7 @@ export function Header({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
 									<ListItem key={i} {...link} onClick={() => setOpen(false)} />
 								))}
 							</div>
-						</NavigationMenu>
+						</div>
 						<div className="flex flex-col gap-2 mt-4">
 							<a
 								href={WHATSAPP_URL}
@@ -518,30 +510,28 @@ function CategoryBlock({ cat, onNavigate }: { cat: CategoryGroup; onNavigate?: (
 
 function CompactListItem({ title, description, icon: Icon, href, accent, onClick }: LinkItem & { accent: string; onClick?: () => void }) {
   return (
-    <NavigationMenuLink asChild>
-      <Link
-        to={href}
-        onClick={onClick}
-        className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 hover:bg-[#111828] transition-colors"
+    <Link
+      to={href}
+      onClick={onClick}
+      className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 hover:bg-[#111828] transition-colors"
+    >
+      <span
+        className="flex shrink-0 items-center justify-center size-7 rounded-md border border-[#222D42] bg-[#111828] transition-colors group-hover:border-[color:var(--accent)]"
+        style={{ ['--accent' as any]: accent }}
       >
-        <span
-          className="flex shrink-0 items-center justify-center size-7 rounded-md border border-[#222D42] bg-[#111828] transition-colors group-hover:border-[color:var(--accent)]"
-          style={{ ['--accent' as any]: accent }}
-        >
-          <Icon className="size-3.5" style={{ color: accent }} />
+        <Icon className="size-3.5" style={{ color: accent }} />
+      </span>
+      <span className="flex flex-col min-w-0">
+        <span className="text-[12.5px] font-semibold text-[#F0EDE8] leading-tight truncate group-hover:text-[#EE6200] transition-colors">
+          {title}
         </span>
-        <span className="flex flex-col min-w-0">
-          <span className="text-[12.5px] font-semibold text-[#F0EDE8] leading-tight truncate group-hover:text-[#EE6200] transition-colors">
-            {title}
+        {description && (
+          <span className="text-[10.5px] text-[#8A95A8] leading-tight truncate">
+            {description}
           </span>
-          {description && (
-            <span className="text-[10.5px] text-[#8A95A8] leading-tight truncate">
-              {description}
-            </span>
-          )}
-        </span>
-      </Link>
-    </NavigationMenuLink>
+        )}
+      </span>
+    </Link>
   );
 }
 
@@ -552,19 +542,20 @@ function ListItem({
 	className,
 	href,
     onClick,
-	...props
-}: React.ComponentProps<typeof NavigationMenuLink> & LinkItem & { onClick?: () => void }) {
+}: LinkItem & { className?: string; onClick?: () => void }) {
 	return (
-		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-3 data-[active=true]:bg-[#111828] hover:bg-[#111828] rounded-lg p-3 transition-all duration-200 cursor-pointer', className)} {...props} asChild>
-			<Link to={href} onClick={onClick} className="flex items-center w-full">
-				<div className="bg-[#111828] border border-[#222D42] flex shrink-0 aspect-square size-10 items-center justify-center rounded-lg">
-					<Icon className="text-[#EE6200] size-5" />
-				</div>
-				<div className="flex flex-col items-start justify-center ml-3">
-					<span className="font-bold text-sm text-[#F0EDE8]">{title}</span>
-					{description && <span className="text-[#8A95A8] text-[11px] leading-snug">{description}</span>}
-				</div>
-			</Link>
-		</NavigationMenuLink>
+		<Link
+			to={href}
+			onClick={onClick}
+			className={cn('w-full flex flex-row gap-x-3 hover:bg-[#111828] rounded-lg p-3 transition-all duration-200 cursor-pointer items-center', className)}
+		>
+			<div className="bg-[#111828] border border-[#222D42] flex shrink-0 aspect-square size-10 items-center justify-center rounded-lg">
+				<Icon className="text-[#EE6200] size-5" />
+			</div>
+			<div className="flex flex-col items-start justify-center ml-3">
+				<span className="font-bold text-sm text-[#F0EDE8]">{title}</span>
+				{description && <span className="text-[#8A95A8] text-[11px] leading-snug">{description}</span>}
+			</div>
+		</Link>
 	);
 }

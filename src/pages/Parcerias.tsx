@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { ChevronRight, ExternalLink, Building2, Stethoscope, Sparkles, Apple, GraduationCap, Phone, ArrowRight, Handshake, Store } from "lucide-react";
 import { motion } from "framer-motion";
 
-import greenbook from "@/assets/partners/greenbook.png.asset.json";
-import adventista from "@/assets/partners/adventista.png.asset.json";
-import cantoDoBatuque from "@/assets/partners/canto-do-batuque.png.asset.json";
-import brasoes from "@/assets/partners/brasoes.png.asset.json";
-import diversamente from "@/assets/partners/diversamente.png.asset.json";
+import greenbook from "@/assets/partners/greenbook.png";
+import adventista from "@/assets/partners/adventista.png";
+import cantoDoBatuque from "@/assets/partners/canto-do-batuque.png";
+import brasoes from "@/assets/partners/brasoes.png";
+import diversamente from "@/assets/partners/diversamente.png";
 import beatissima from "@/assets/partners/beatissima.png";
 import stockler from "@/assets/partners/stockler.png";
 import vilaplay from "@/assets/partners/vilaplay.png";
@@ -62,11 +62,11 @@ const partners: Partner[] = [
 ];
 
 const schools = [
-  { name: "GreenBook", logo: greenbook.url },
-  { name: "Adventista", logo: adventista.url },
-  { name: "Canto do Batuque", logo: cantoDoBatuque.url },
-  { name: "Brasões", logo: brasoes.url },
-  { name: "Diversamente", logo: diversamente.url },
+  { name: "GreenBook", logo: greenbook },
+  { name: "Adventista", logo: adventista },
+  { name: "Canto do Batuque", logo: cantoDoBatuque },
+  { name: "Brasões", logo: brasoes },
+  { name: "Diversamente", logo: diversamente },
   { name: "Beatíssima", logo: beatissima },
   { name: "Stockler", logo: stockler },
   { name: "Vila Play", logo: vilaplay },

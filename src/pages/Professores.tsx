@@ -205,7 +205,7 @@ const Professores = () => {
                         alt={`Professor(a) ${p.name}`}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        style={p.name === "Silvia Aparecida Capuzzo" ? { objectPosition: "25% center" } : undefined}
+                        style={p.name === "Silvia Aparecida Capuzzo" ? { objectPosition: "20% 25%" } : undefined}
                       />
                     </div>
                     <div className="p-5">

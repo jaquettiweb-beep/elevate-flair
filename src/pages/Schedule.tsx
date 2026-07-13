@@ -24,6 +24,7 @@ const SCHEDULE_DATA = [
   { time: "11:30", mon: ["Hidrog. (Lotação)"], tue: ["Natação"], wed: ["Hidrog. (Lotação)"], thu: ["Natação"], fri: ["Hidrog. (Lotação)"], sat: [] },
   { time: "12:00", mon: [], tue: [], wed: ["60+ Equilíbrio"], thu: ["60+ Alongamento"], fri: [], sat: [] },
   { time: "13:00", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
+  { time: "13:45", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
   { time: "14:00", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
   { time: "15:00", mon: ["Ballet", "Pilates Studio"], tue: ["Pilates Studio"], wed: ["Ballet", "Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
   { time: "16:00", mon: ["Judô", "Pilates Studio"], tue: [], wed: ["Judô"], thu: [], fri: ["Pilates Studio"], sat: [] },

@@ -12,7 +12,7 @@ const WHATSAPP_URL =
 const SCHEDULE_DATA = [
   { time: "06:15", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: [], sat: [] },
   { time: "07:00", mon: ["Natação", "Pilates Studio"], tue: ["Yoga", "Krav Maga", "Natação", "Pilates Studio", "Hidroginástica"], wed: ["Natação", "Pilates Studio"], thu: ["Yoga", "Krav Maga", "Natação", "Pilates Studio", "Hidroginástica"], fri: ["Natação", "Pilates Studio"], sat: [] },
-  { time: "07:45", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
+  { time: "07:45", mon: ["Natação"], tue: ["Natação", "Hidroginástica"], wed: ["Natação"], thu: ["Natação", "Hidroginástica"], fri: ["Natação"], sat: [] },
   { time: "08:00", mon: ["Pilates Studio"], tue: ["Pilates Studio"], wed: ["Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },
   { time: "08:30", mon: ["Natação"], tue: [], wed: ["Natação"], thu: [], fri: ["Natação"], sat: [] },
   { time: "09:00", mon: ["Ballet", "Pilates Studio"], tue: ["Pilates Studio"], wed: ["Ballet", "Pilates Studio"], thu: ["Pilates Studio"], fri: ["Pilates Studio"], sat: [] },

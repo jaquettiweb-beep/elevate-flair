@@ -11,16 +11,16 @@ type Personal = {
 
 const PERSONAIS: Personal[] = [
   { name: "Ana Paula Paschoalatto Mateo", phone: "5511983140984" },
+  { name: "Angelo Tarine da Silva", phone: "5511969030556" },
+  { name: "Any Salles Sindra", phone: "5511958583156" },
   { name: "Douglas Galhardi", phone: "5511983562211" },
-  { name: "Eduardo Gomes da Cruz", phone: "5511954709663" },
-  { name: "Fábio de Oliveira Pereira", phone: "5511980559596" },
-  { name: "Glaucione Duarte Purcino", phone: "5511999712436" },
+  { name: "Glaucione Duarte", phone: "5511999712436" },
   { name: "Jeferson Ricardo Lima", phone: "5511995165257" },
+  { name: "José Eduardo Cogni Pompeo", phone: "5511997792288" },
   { name: "Larissa da Silva Lino", phone: "5511940680216" },
-  { name: "Mauricio Santos Rocha", phone: "5511985740868" },
+  { name: "Tamara Verena Teixeira Oliveira", phone: "5511998773737" },
   { name: "Thiago de Santis Goularte", phone: "5511965419596" },
   { name: "Welton Chagas Silva", phone: "5511992805737" },
-  { name: "Any Salles", phone: "5511958583156" },
 ];
 
 const formatPhone = (phone: string) => {

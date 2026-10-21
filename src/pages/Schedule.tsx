@@ -34,7 +34,7 @@ const SCHEDULE_DATA = [
   { time: "18:00", mon: ["Localizada", "Muay Thai"], tue: [], wed: ["Localizada", "Muay Thai"], thu: [], fri: [], sat: [] },
   { time: "18:15", mon: ["Hidroginástica", "Natação"], tue: ["Natação"], wed: ["Hidroginástica", "Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
   { time: "18:30", mon: ["Pilates de Solo"], tue: ["Pilates Studio"], wed: ["Pilates de Solo"], thu: ["Pilates Studio"], fri: [], sat: [] },
-  { time: "19:00", mon: ["Natação"], tue: ["Jiu Jitsu", "Natação"], wed: ["Krav Maga", "Natação"], thu: ["Jiu Jitsu", "Natação"], fri: ["Krav Maga", "Natação"], sat: [] },
+  { time: "19:00", mon: ["Natação"], tue: ["Jiu Jitsu", "Aikido", "Natação"], wed: ["Krav Maga", "Natação"], thu: ["Jiu Jitsu", "Aikido", "Natação"], fri: ["Krav Maga", "Natação"], sat: [] },
   { time: "19:30", mon: [], tue: ["Pilates Studio"], wed: [], thu: ["Pilates Studio"], fri: [], sat: [] },
   { time: "19:45", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
   { time: "20:30", mon: ["Natação"], tue: ["Natação"], wed: ["Natação"], thu: ["Natação"], fri: ["Natação"], sat: [] },
